@@ -1,0 +1,20 @@
+[
+  {
+    "id": "easy",
+    "name": "Easy Exercises",
+    "description": "Introductory tactical exercises.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "intermediate",
+    "name": "Intermediate Exercises",
+    "description": "More demanding tactical exercises.",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "advanced",
+    "name": "Advanced Exercises",
+    "description": "Hard tactical exercises for advanced training.",
+    "difficulty": "advanced"
+  }
+]

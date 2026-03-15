@@ -1,0 +1,54 @@
+[
+  {
+    "id": "advanced-0001",
+    "trainingSetId": "advanced",
+    "puzzleNumber": 1,
+    "fen": "2kr4/ppp2Bpp/8/8/8/8/PPP2PPP/2KR4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxd8",
+      "Kxd8",
+      "Rxd8#"
+    ],
+    "motifTags": [
+      "mate"
+    ],
+    "gameSource": "Sample game 7",
+    "difficulty": "advanced",
+    "createdAt": "2026-03-12T09:56:50.921Z"
+  },
+  {
+    "id": "advanced-0002",
+    "trainingSetId": "advanced",
+    "puzzleNumber": 2,
+    "fen": "8/8/4k3/8/4K3/8/8/4R3 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Re6+"
+    ],
+    "motifTags": [
+      "endgame"
+    ],
+    "gameSource": "Sample game 8",
+    "difficulty": "advanced",
+    "createdAt": "2026-03-12T09:56:50.921Z"
+  },
+  {
+    "id": "advanced-0003",
+    "trainingSetId": "advanced",
+    "puzzleNumber": 3,
+    "fen": "4r1k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxe8",
+      "Rxe8",
+      "Re8"
+    ],
+    "motifTags": [
+      "back-rank"
+    ],
+    "gameSource": "Sample game 9",
+    "difficulty": "advanced",
+    "createdAt": "2026-03-12T09:56:50.921Z"
+  }
+]

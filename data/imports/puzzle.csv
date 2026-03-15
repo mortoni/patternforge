@@ -1,0 +1,10 @@
+trainingSetId,puzzleNumber,fen,sideToMove,solutionMoves,motifTags,gameSource,difficulty
+easy,1,"r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 4",w,"Nf7+",fork,"Sample game 1",easy
+easy,2,"r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4",w,"Qxf7#",checkmate,"Sample game 2",easy
+easy,3,"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",b,"e5",opening,"Sample game 3",easy
+intermediate,1,"r2qkb1r/ppp2ppp/2n1bn2/3pp1B1/3PP3/2N2N2/PPP2PPP/R2QKB1R w KQkq - 0 6",w,"Bxf6 Qxf6 Nxe5",pin,"Sample game 4",intermediate
+intermediate,2,"5rk1/1b3p1p/pp1p4/3P4/2P2Q2/1P4P1/P4P1P/4R1K1 w - - 0 1",w,"Re8 Rxe8 Qf8#",back-rank,"Sample game 5",intermediate
+intermediate,3,"2r3k1/5ppp/8/8/8/8/5PPP/2R3K1 w - - 0 1",w,"Rc8+",back-rank,"Sample game 6",intermediate
+advanced,1,"2kr4/ppp2Bpp/8/8/8/8/PPP2PPP/2KR4 w - - 0 1",w,"Bxd8 Kxd8 Rxd8#",mate,"Sample game 7",advanced
+advanced,2,"8/8/4k3/8/4K3/8/8/4R3 w - - 0 1",w,"Re6+",endgame,"Sample game 8",advanced
+advanced,3,"4r1k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",w,"Rxe8 Rxe8 Re8",back-rank,"Sample game 9",advanced

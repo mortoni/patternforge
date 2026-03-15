@@ -1,0 +1,1 @@
+/* Global type augmentations if needed */

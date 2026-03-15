@@ -1,0 +1,54 @@
+[
+  {
+    "id": "intermediate-0001",
+    "trainingSetId": "intermediate",
+    "puzzleNumber": 1,
+    "fen": "r2qkb1r/ppp2ppp/2n1bn2/3pp1B1/3PP3/2N2N2/PPP2PPP/R2QKB1R w KQkq - 0 6",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf6",
+      "Qxf6",
+      "Nxe5"
+    ],
+    "motifTags": [
+      "pin"
+    ],
+    "gameSource": "Sample game 4",
+    "difficulty": "intermediate",
+    "createdAt": "2026-03-12T09:56:50.921Z"
+  },
+  {
+    "id": "intermediate-0002",
+    "trainingSetId": "intermediate",
+    "puzzleNumber": 2,
+    "fen": "5rk1/1b3p1p/pp1p4/3P4/2P2Q2/1P4P1/P4P1P/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Re8",
+      "Rxe8",
+      "Qf8#"
+    ],
+    "motifTags": [
+      "back-rank"
+    ],
+    "gameSource": "Sample game 5",
+    "difficulty": "intermediate",
+    "createdAt": "2026-03-12T09:56:50.921Z"
+  },
+  {
+    "id": "intermediate-0003",
+    "trainingSetId": "intermediate",
+    "puzzleNumber": 3,
+    "fen": "2r3k1/5ppp/8/8/8/8/5PPP/2R3K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rc8+"
+    ],
+    "motifTags": [
+      "back-rank"
+    ],
+    "gameSource": "Sample game 6",
+    "difficulty": "intermediate",
+    "createdAt": "2026-03-12T09:56:50.921Z"
+  }
+]

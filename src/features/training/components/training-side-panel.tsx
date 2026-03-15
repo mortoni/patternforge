@@ -1,0 +1,116 @@
+"use client";
+
+import * as React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+
+export type PuzzleInteractionState =
+  | "idle"
+  | "move-selected"
+  | "checking"
+  | "correct"
+  | "incorrect";
+
+export interface TrainingSidePanelProps {
+  exerciseIndex: number;
+  totalExercises: number;
+  trainingSetName: string;
+  cycleNumber: number;
+  solvedCount: number;
+  sideToMove: "w" | "b";
+  gameSource?: string;
+  difficulty?: string;
+  /** Current interaction state. */
+  puzzleState: PuzzleInteractionState;
+  onSkipPuzzle?: () => void;
+  onNextPuzzle?: () => void;
+  className?: string;
+}
+
+export function TrainingSidePanel({
+  exerciseIndex,
+  totalExercises,
+  trainingSetName,
+  cycleNumber,
+  solvedCount,
+  sideToMove,
+  gameSource,
+  difficulty,
+  puzzleState,
+  onSkipPuzzle,
+  onNextPuzzle,
+  className,
+}: TrainingSidePanelProps) {
+  const progressPct =
+    totalExercises > 0 ? Math.round((solvedCount / totalExercises) * 100) : 0;
+  const resolved = puzzleState === "correct" || puzzleState === "incorrect";
+  const isChecking = puzzleState === "checking";
+
+  return (
+    <Card className={cn(className)}>
+      <CardContent className="pt-6 space-y-5">
+        <div className="space-y-0.5">
+          <p className="text-sm font-medium text-foreground">
+            Exercise {exerciseIndex + 1} / {totalExercises}
+          </p>
+          <p className="text-sm text-muted-foreground">{trainingSetName}</p>
+          <p className="text-xs text-muted-foreground">Cycle {cycleNumber}</p>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-muted-foreground">Progress</p>
+          <Progress value={solvedCount} max={totalExercises} className="h-2" />
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>
+              {solvedCount} / {totalExercises} solved
+            </span>
+            <span>{progressPct}%</span>
+          </div>
+        </div>
+
+        <dl className="space-y-2 text-sm">
+          <div>
+            <dt className="text-xs text-muted-foreground">Side to move</dt>
+            <dd className="font-medium">{sideToMove === "w" ? "White" : "Black"}</dd>
+          </div>
+          {gameSource != null && gameSource !== "" && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Source</dt>
+              <dd className="font-medium">{gameSource}</dd>
+            </div>
+          )}
+          {difficulty != null && difficulty !== "" && (
+            <div>
+              <dt className="text-xs text-muted-foreground">Difficulty</dt>
+              <dd className="font-medium capitalize">{difficulty}</dd>
+            </div>
+          )}
+        </dl>
+
+        <div className="space-y-2 pt-1">
+          {!resolved && (
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={onSkipPuzzle}
+              disabled={isChecking}
+            >
+              Skip Puzzle
+            </Button>
+          )}
+          {resolved && (
+            <Button
+              variant="default"
+              className="w-full"
+              onClick={onNextPuzzle}
+            >
+              Next Puzzle
+            </Button>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
