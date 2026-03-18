@@ -16,6 +16,7 @@ export interface PuzzleCsvRow {
   motifTags: string;
   gameSource: string;
   difficulty: string;
+  comment?: string;
 }
 
 /** Normalized puzzle ready for JSON output and Dexie. firstMove is derived from solutionMoves[0] when not provided. */
@@ -31,6 +32,8 @@ export interface NormalizedPuzzle {
   motifTags: string[];
   gameSource: string;
   difficulty: DifficultySlug;
+  /** Optional comment / explanation from source (e.g. woodpecker dataset). */
+  comment?: string;
   createdAt: string;
 }
 

@@ -12,6 +12,7 @@ vi.mock("../services/training-sets.service", () => ({
   getTrainingSetsOverview: vi.fn(),
   continueTraining: vi.fn().mockResolvedValue({ success: true, route: "/app/training" }),
   startNextCycle: vi.fn().mockResolvedValue({ success: true, cycleRunId: "c1", route: "/app/training" }),
+  resetAllAndLoadGenerated: vi.fn().mockResolvedValue({ trainingSets: 3, exercises: 9 }),
 }));
 
 import { getTrainingSetsOverview } from "../services/training-sets.service";

@@ -28,7 +28,7 @@ describe("getContinueTrainingCard", () => {
 
   it("returns null when no active cycle", async () => {
     mockGetSettings.mockResolvedValue({ lastTrainingSetId: "set-1" });
-    mockGetTrainingSetById.mockResolvedValue({ id: "set-1", name: "Woodpecker" });
+    mockGetTrainingSetById.mockResolvedValue({ id: "set-1", name: "Sample" });
     mockGetActiveCycleRunForSet.mockResolvedValue(undefined);
     expect(await getContinueTrainingCard()).toBeNull();
   });
@@ -37,7 +37,7 @@ describe("getContinueTrainingCard", () => {
     mockGetSettings.mockResolvedValue({ lastTrainingSetId: "set-1" });
     mockGetTrainingSetById.mockResolvedValue({
       id: "set-1",
-      name: "Woodpecker Easy",
+      name: "Sample Set",
     });
     mockGetActiveCycleRunForSet.mockResolvedValue({
       id: "c1",
@@ -48,7 +48,7 @@ describe("getContinueTrainingCard", () => {
     const result = await getContinueTrainingCard();
     expect(result).toEqual({
       trainingSetId: "set-1",
-      name: "Woodpecker Easy",
+      name: "Sample Set",
       cycleNumber: 1,
       solvedCount: 3,
       totalExercises: 5,

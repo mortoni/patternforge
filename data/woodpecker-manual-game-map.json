@@ -1,0 +1,3 @@
+{
+  "_comment": "Add entries keyed by normalized title: white|black|event|year. Example: \"carl hamppe|wilhelm steinitz|vienna|1860\": { \"pgn\": \"1.e4 e5 2.Nf3 ...\" }"
+}

@@ -50,6 +50,7 @@ export type ActiveTrainingState =
         firstMove?: string;
         gameSource?: string;
         difficulty?: string;
+        comment?: string;
       };
       exerciseIndex: number;
       totalExercises: number;

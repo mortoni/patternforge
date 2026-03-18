@@ -20,11 +20,11 @@ export interface EvaluateFirstMoveResult {
 
 /**
  * Parse UCI string into from, to, promotion.
- * UCI format: "e2e4" or "e7e8q" (promotion).
+ * UCI format: "e2e4" or "e7e8q" (promotion). Only accept valid square notation [a-h][1-8].
  */
 function parseUci(uci: string): { from: string; to: string; promotion?: string } | null {
   const trimmed = uci.trim().toLowerCase();
-  if (trimmed.length === 4) {
+  if (trimmed.length === 4 && /^[a-h][1-8][a-h][1-8]$/.test(trimmed)) {
     return { from: trimmed.slice(0, 2), to: trimmed.slice(2, 4) };
   }
   if (trimmed.length === 5 && /^[a-h][1-8][a-h][1-8][qnrb]$/.test(trimmed)) {
@@ -49,7 +49,7 @@ function toUci(from: string, to: string, promotion?: string): string {
  * Normalize a move (SAN or UCI) to UCI using the given FEN.
  * Returns null if the move is illegal.
  */
-function normalizeMoveToUci(fen: string, move: string): string | null {
+export function normalizeMoveToUci(fen: string, move: string): string | null {
   try {
     const chess = new Chess(fen);
     const parsed = parseUci(move);

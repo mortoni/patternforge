@@ -52,7 +52,7 @@ describe("MistakesPage", () => {
           id: "m1",
           exerciseId: "ex1",
           trainingSetId: "set1",
-          trainingSetName: "Woodpecker Easy",
+          trainingSetName: "Sample Set",
           puzzleLabel: "1 · Lichess",
           difficulty: "easy",
           failedAttempts: 1,

@@ -14,9 +14,18 @@ import type { ExerciseSchema } from "@/db/schema";
 
 const BASE = "/data/generated";
 
+/** Cache-bust so we always load the latest generated data after refresh-data. */
+function cacheBust(url: string): string {
+  const sep = url.includes("?") ? "&" : "?";
+  return `${url}${sep}_t=${Date.now()}`;
+}
+
 async function fetchJson<T>(path: string): Promise<T> {
-  const res = await fetch(path);
-  if (!res.ok) throw new Error(`Failed to fetch ${path}: ${res.status}`);
+  const url = cacheBust(path);
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ${path}: ${res.status} ${res.statusText}. Check that public/data/generated/ exists and run pnpm run refresh-data.`);
+  }
   return res.json();
 }
 
@@ -37,6 +46,7 @@ function toExercise(p: NormalizedPuzzle): ExerciseSchema {
     createdAt: p.createdAt,
     puzzleNumber: p.puzzleNumber,
     difficulty: p.difficulty,
+    comment: p.comment,
   };
 }
 
@@ -100,4 +110,47 @@ export async function resetPuzzleDataForDevelopment(): Promise<void> {
 
   await db.exercises.bulkDelete(exerciseIds);
   await db.trainingSets.bulkDelete(ids);
+}
+
+/**
+ * Remove ALL training sets and all related data (exercises, cycles, sessions, attempts, mistakes).
+ * Dev only. Use before loading from generated JSON so only the 3 Woodpecker sets remain.
+ */
+export async function clearAllTrainingSetsForDevelopment(): Promise<void> {
+  if (process.env.NODE_ENV === "production") return;
+
+  const sets = await db.trainingSets.toArray();
+  const setIds = sets.map((s) => s.id);
+  if (setIds.length === 0) return;
+
+  const cycleRuns = await db.cycleRuns.where("trainingSetId").anyOf(setIds).toArray();
+  const cycleRunIds = cycleRuns.map((c) => c.id);
+
+  await db.transaction(
+    "rw",
+    [
+      db.exerciseAttempts,
+      db.sessions,
+      db.cycleRuns,
+      db.mistakeEntries,
+      db.exercises,
+      db.trainingSets,
+      db.settings,
+    ],
+    async () => {
+      if (cycleRunIds.length > 0) {
+        await db.exerciseAttempts.where("cycleRunId").anyOf(cycleRunIds).delete();
+      }
+      await db.sessions.where("trainingSetId").anyOf(setIds).delete();
+      await db.cycleRuns.where("trainingSetId").anyOf(setIds).delete();
+      await db.mistakeEntries.where("trainingSetId").anyOf(setIds).delete();
+      await db.exercises.where("trainingSetId").anyOf(setIds).delete();
+      await db.trainingSets.bulkDelete(setIds);
+
+      const settings = await db.settings.get("default");
+      if (settings && settings.lastTrainingSetId != null) {
+        await db.settings.put({ ...settings, lastTrainingSetId: undefined });
+      }
+    }
+  );
 }

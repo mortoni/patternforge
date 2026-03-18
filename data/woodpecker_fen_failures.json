@@ -1,0 +1,674 @@
+[
+  {
+    "exercise_number": "1",
+    "title": "Carl Hamppe – Wilhelm Steinitz, Vienna 1860",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "2",
+    "title": "Wilhelm Steinitz – J. Wilson, London 1862",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "3",
+    "title": "Wilhelm Steinitz – Serafino Dubois, London (6) 1862",
+    "move_position": "13",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "4",
+    "title": "Valentine Green – Wilhelm Steinitz, London 1864",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "5",
+    "title": "Wilhelm Steinitz – George Barry, Dublin (simul) 1865",
+    "move_position": "6",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "6",
+    "title": "George Fraser – Wilhelm Steinitz, Dundee 1867",
+    "move_position": "18",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "7",
+    "title": "Wilhelm Steinitz – Jonathan Baker, London (simul) 1868",
+    "move_position": "26",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "8",
+    "title": "Wilhelm Steinitz – Johannes Minckwitz, Baden-Baden 1870",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "9",
+    "title": "Wilhelm Steinitz – Maximilian Fleissig, Vienna 1873",
+    "move_position": "38",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "10",
+    "title": "Wilhelm Steinitz – Oscar Gelbfuhs, Vienna 1873",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "11",
+    "title": "George Mackenzie – Wilhelm Steinitz, Vienna 1882",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "12",
+    "title": "Joseph Blackburne – Wilhelm Steinitz, London 1883",
+    "move_position": "24",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "13",
+    "title": "Isidor Gunsberg – Wilhelm Steinitz, New York (2) 1890",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "14",
+    "title": "Wilhelm Steinitz – Mikhail Chigorin, Havana (8) 1892",
+    "move_position": "19",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "15",
+    "title": "Wilhelm Steinitz – Dirk van Foreest, Haarlem (simul) 1896",
+    "move_position": "37",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "16",
+    "title": "Wilhelm Steinitz – Reyne, Haarlem (simul) 1896",
+    "move_position": "8",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "17",
+    "title": "Wilhelm Steinitz – Falk, Moscow 1896",
+    "move_position": "9",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "18",
+    "title": "Wilhelm Steinitz – T.J.D. Enderle, Haarlem (simul) 1896",
+    "move_position": "5",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "19",
+    "title": "Jackson Showalter – Wilhelm Steinitz, Vienna 1898",
+    "move_position": "26",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "20",
+    "title": "Emanuel Lasker – C.R. McBride, USA (simul) 1902",
+    "move_position": "5",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "21",
+    "title": "Emanuel Lasker – E.W. Witchard, Gloucester (simul) 1908",
+    "move_position": "4",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "22",
+    "title": "Carl Hartlaub – Emanuel Lasker, Germany 1908",
+    "move_position": "6",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "23",
+    "title": "Emanuel Lasker – Dawid Janowski, Berlin (1) 1910",
+    "move_position": "19",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "24",
+    "title": "Emanuel Lasker – Efim Bogoljubov, Atlantic Ocean 1924",
+    "move_position": "18",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "25",
+    "title": "George Thomas – Emanuel Lasker, Nottingham 1936",
+    "move_position": "37",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "26",
+    "title": "Jose Raul Capablanca – C.E. Watson, Schenectady 1909",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "27",
+    "title": "Jose Raul Capablanca – E.B. Schrader, Saint Louis (simul) 1909",
+    "move_position": "22",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "28",
+    "title": "Jose Raul Capablanca – D.W. Pomeroy, Saint Louis (simul) 1909",
+    "move_position": "20",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "29",
+    "title": "Jose Raul Capablanca – T.A. Carter, Saint Louis (simul) 1909",
+    "move_position": "27",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "30",
+    "title": "Jose Raul Capablanca – Frank Marshall, New York 1910",
+    "move_position": "27",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "31",
+    "title": "Jose Raul Capablanca – Luis Piazzini, Buenos Aires 1911",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "32",
+    "title": "Jose Raul Capablanca – Rasmussen, Copenhagen (simul) 1911",
+    "move_position": "34",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "33",
+    "title": "Jose Raul Capablanca – Will Randolph, New York 1912",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "34",
+    "title": "Jose Raul Capablanca – F.S. Dunkelsbuhler, London (simul) 1913",
+    "move_position": "14",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "35",
+    "title": "Albert Beauregard Hodges – Jose Raul Capablanca, New York 1915",
+    "move_position": "23",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "36",
+    "title": "Jose Raul Capablanca – Einar Michelsen, New York (simul) 1915",
+    "move_position": "34",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "37",
+    "title": "Jose Raul Capablanca – N.N., New York 1918",
+    "move_position": "13",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "38",
+    "title": "Jose Raul Capablanca – J. Birch, Glasgow 1919",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "39",
+    "title": "Jose Raul Capablanca – G.H. Hadland, Thornton Heath 1919",
+    "move_position": "20",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "40",
+    "title": "Jose Raul Capablanca – Milan Vidmar, London 1922",
+    "move_position": "21",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "41",
+    "title": "Jose Raul Capablanca – W. Malowan, New York (simul) 1922",
+    "move_position": "35",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "42",
+    "title": "Jose Raul Capablanca – N.N., Moscow (simul) 1925",
+    "move_position": "16",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "43",
+    "title": "Jose Raul Capablanca – Jacques Mieses, Bad Kissingen 1928",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "44",
+    "title": "Jose Raul Capablanca – Arpad Vajda, Budapest 1929",
+    "move_position": "21",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "45",
+    "title": "Jose Raul Capablanca – Albert Becker, Karlsbad 1929",
+    "move_position": "16",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "46",
+    "title": "Jose Raul Capablanca – Manuel Larrea, Mexico (simul) 1933",
+    "move_position": "10",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "47",
+    "title": "Vera Menchik – Jose Raul Capablanca, Margate 1935",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "48",
+    "title": "Jose Raul Capablanca – Grigory Levenfish, Moscow 1935",
+    "move_position": "24",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "49",
+    "title": "Jose Raul Capablanca – Mikhail Botvinnik, Moscow 1936",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "50",
+    "title": "Jose Raul Capablanca – Guillermo Vassaux, Buenos Aires (ol) 1939",
+    "move_position": "27",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "1",
+    "title": "Carl Hamppe – Wilhelm Steinitz, Vienna 1860",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "2",
+    "title": "Wilhelm Steinitz – J. Wilson, London 1862",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "3",
+    "title": "Wilhelm Steinitz – Serafino Dubois, London (6) 1862",
+    "move_position": "13",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "4",
+    "title": "Valentine Green – Wilhelm Steinitz, London 1864",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "5",
+    "title": "Wilhelm Steinitz – George Barry, Dublin (simul) 1865",
+    "move_position": "6",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "6",
+    "title": "George Fraser – Wilhelm Steinitz, Dundee 1867",
+    "move_position": "18",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "7",
+    "title": "Wilhelm Steinitz – Jonathan Baker, London (simul) 1868",
+    "move_position": "26",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "8",
+    "title": "Wilhelm Steinitz – Johannes Minckwitz, Baden-Baden 1870",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "9",
+    "title": "Wilhelm Steinitz – Maximilian Fleissig, Vienna 1873",
+    "move_position": "38",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "10",
+    "title": "Wilhelm Steinitz – Oscar Gelbfuhs, Vienna 1873",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "11",
+    "title": "George Mackenzie – Wilhelm Steinitz, Vienna 1882",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "12",
+    "title": "Joseph Blackburne – Wilhelm Steinitz, London 1883",
+    "move_position": "24",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "13",
+    "title": "Isidor Gunsberg – Wilhelm Steinitz, New York (2) 1890",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "14",
+    "title": "Wilhelm Steinitz – Mikhail Chigorin, Havana (8) 1892",
+    "move_position": "19",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "15",
+    "title": "Wilhelm Steinitz – Dirk van Foreest, Haarlem (simul) 1896",
+    "move_position": "37",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "16",
+    "title": "Wilhelm Steinitz – Reyne, Haarlem (simul) 1896",
+    "move_position": "8",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "17",
+    "title": "Wilhelm Steinitz – Falk, Moscow 1896",
+    "move_position": "9",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "18",
+    "title": "Wilhelm Steinitz – T.J.D. Enderle, Haarlem (simul) 1896",
+    "move_position": "5",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "19",
+    "title": "Jackson Showalter – Wilhelm Steinitz, Vienna 1898",
+    "move_position": "26",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "20",
+    "title": "Emanuel Lasker – C.R. McBride, USA (simul) 1902",
+    "move_position": "5",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "21",
+    "title": "Emanuel Lasker – E.W. Witchard, Gloucester (simul) 1908",
+    "move_position": "4",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "22",
+    "title": "Carl Hartlaub – Emanuel Lasker, Germany 1908",
+    "move_position": "6",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "23",
+    "title": "Emanuel Lasker – Dawid Janowski, Berlin (1) 1910",
+    "move_position": "19",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "24",
+    "title": "Emanuel Lasker – Efim Bogoljubov, Atlantic Ocean 1924",
+    "move_position": "18",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "25",
+    "title": "George Thomas – Emanuel Lasker, Nottingham 1936",
+    "move_position": "37",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "26",
+    "title": "Jose Raul Capablanca – C.E. Watson, Schenectady 1909",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "27",
+    "title": "Jose Raul Capablanca – E.B. Schrader, Saint Louis (simul) 1909",
+    "move_position": "22",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "28",
+    "title": "Jose Raul Capablanca – D.W. Pomeroy, Saint Louis (simul) 1909",
+    "move_position": "20",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "29",
+    "title": "Jose Raul Capablanca – T.A. Carter, Saint Louis (simul) 1909",
+    "move_position": "27",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "30",
+    "title": "Jose Raul Capablanca – Frank Marshall, New York 1910",
+    "move_position": "27",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "31",
+    "title": "Jose Raul Capablanca – Luis Piazzini, Buenos Aires 1911",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "32",
+    "title": "Jose Raul Capablanca – Rasmussen, Copenhagen (simul) 1911",
+    "move_position": "34",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "33",
+    "title": "Jose Raul Capablanca – Will Randolph, New York 1912",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "34",
+    "title": "Jose Raul Capablanca – F.S. Dunkelsbuhler, London (simul) 1913",
+    "move_position": "14",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "35",
+    "title": "Albert Beauregard Hodges – Jose Raul Capablanca, New York 1915",
+    "move_position": "23",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "36",
+    "title": "Jose Raul Capablanca – Einar Michelsen, New York (simul) 1915",
+    "move_position": "34",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "37",
+    "title": "Jose Raul Capablanca – N.N., New York 1918",
+    "move_position": "13",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "38",
+    "title": "Jose Raul Capablanca – J. Birch, Glasgow 1919",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "39",
+    "title": "Jose Raul Capablanca – G.H. Hadland, Thornton Heath 1919",
+    "move_position": "20",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "40",
+    "title": "Jose Raul Capablanca – Milan Vidmar, London 1922",
+    "move_position": "21",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "41",
+    "title": "Jose Raul Capablanca – W. Malowan, New York (simul) 1922",
+    "move_position": "35",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "42",
+    "title": "Jose Raul Capablanca – N.N., Moscow (simul) 1925",
+    "move_position": "16",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "43",
+    "title": "Jose Raul Capablanca – Jacques Mieses, Bad Kissingen 1928",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "44",
+    "title": "Jose Raul Capablanca – Arpad Vajda, Budapest 1929",
+    "move_position": "21",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "45",
+    "title": "Jose Raul Capablanca – Albert Becker, Karlsbad 1929",
+    "move_position": "16",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "46",
+    "title": "Jose Raul Capablanca – Manuel Larrea, Mexico (simul) 1933",
+    "move_position": "10",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "47",
+    "title": "Vera Menchik – Jose Raul Capablanca, Margate 1935",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "48",
+    "title": "Jose Raul Capablanca – Grigory Levenfish, Moscow 1935",
+    "move_position": "24",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "49",
+    "title": "Jose Raul Capablanca – Mikhail Botvinnik, Moscow 1936",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "50",
+    "title": "Jose Raul Capablanca – Guillermo Vassaux, Buenos Aires (ol) 1939",
+    "move_position": "27",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "1",
+    "title": "Carl Hamppe – Wilhelm Steinitz, Vienna 1860",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "2",
+    "title": "Wilhelm Steinitz – J. Wilson, London 1862",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "1",
+    "title": "Carl Hamppe – Wilhelm Steinitz, Vienna 1860",
+    "move_position": "29",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "2",
+    "title": "Wilhelm Steinitz – J. Wilson, London 1862",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "3",
+    "title": "Wilhelm Steinitz – Serafino Dubois, London (6) 1862",
+    "move_position": "13",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "4",
+    "title": "Valentine Green – Wilhelm Steinitz, London 1864",
+    "move_position": "30",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "5",
+    "title": "Wilhelm Steinitz – George Barry, Dublin (simul) 1865",
+    "move_position": "6",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "6",
+    "title": "George Fraser – Wilhelm Steinitz, Dundee 1867",
+    "move_position": "18",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "7",
+    "title": "Wilhelm Steinitz – Jonathan Baker, London (simul) 1868",
+    "move_position": "26",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "8",
+    "title": "Wilhelm Steinitz – Johannes Minckwitz, Baden-Baden 1870",
+    "move_position": "17",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "9",
+    "title": "Wilhelm Steinitz – Maximilian Fleissig, Vienna 1873",
+    "move_position": "38",
+    "reason": "no_matching_game_found"
+  },
+  {
+    "exercise_number": "10",
+    "title": "Wilhelm Steinitz – Oscar Gelbfuhs, Vienna 1873",
+    "move_position": "33",
+    "reason": "no_matching_game_found"
+  }
+]

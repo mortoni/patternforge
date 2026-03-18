@@ -44,12 +44,12 @@ describe("training-set-detail.service", () => {
     it("returns correct detail view model with set metadata", async () => {
       mockGetTrainingSetById.mockResolvedValue({
         id: "set-1",
-        name: "Woodpecker Easy",
+        name: "Sample Set",
         description: "First cycle",
         difficulty: "intermediate",
         exerciseIds: ["e1", "e2", "e3", "e4", "e5"],
         createdAt: "2025-03-12T10:00:00Z",
-        source: "Woodpecker",
+        source: "Sample",
         tags: ["tactics", "mixed"],
       });
       mockGetActiveCycleRunForSet.mockResolvedValue(undefined);
@@ -58,8 +58,8 @@ describe("training-set-detail.service", () => {
       const result = await getTrainingSetDetail("set-1");
       expect(result).not.toBeNull();
       expect(result!.trainingSet.id).toBe("set-1");
-      expect(result!.trainingSet.name).toBe("Woodpecker Easy");
-      expect(result!.trainingSet.source).toBe("Woodpecker");
+      expect(result!.trainingSet.name).toBe("Sample Set");
+      expect(result!.trainingSet.source).toBe("Sample");
       expect(result!.trainingSet.tags).toEqual(["tactics", "mixed"]);
       expect(result!.trainingSet.exerciseCount).toBe(5);
       expect(result!.activeCycle).toBeNull();

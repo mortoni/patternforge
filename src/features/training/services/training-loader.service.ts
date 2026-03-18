@@ -104,6 +104,7 @@ export async function getActiveTrainingState(): Promise<ActiveTrainingState> {
       firstMove: exercise.firstMove ?? (exercise.solutionMoves.length > 0 ? exercise.solutionMoves[0] : undefined),
       gameSource: exercise.source,
       difficulty: exercise.difficulty,
+      comment: exercise.comment,
     },
     exerciseIndex: nextIndex,
     totalExercises: orderedExercises.length,

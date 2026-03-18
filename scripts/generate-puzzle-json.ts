@@ -15,9 +15,24 @@ const OUT_DIR = path.join(process.cwd(), "data", "generated");
 const PUBLIC_OUT_DIR = path.join(process.cwd(), "public", "data", "generated");
 
 const TRAINING_SET_META: GeneratedTrainingSetMeta[] = [
-  { id: "easy", name: "Easy Exercises", description: "Introductory tactical exercises.", difficulty: "easy" },
-  { id: "intermediate", name: "Intermediate Exercises", description: "More demanding tactical exercises.", difficulty: "intermediate" },
-  { id: "advanced", name: "Advanced Exercises", description: "Hard tactical exercises for advanced training.", difficulty: "advanced" },
+  {
+    id: "easy",
+    name: "Woodpecker Easy",
+    description: "Woodpecker method - easier positions.",
+    difficulty: "easy",
+  },
+  {
+    id: "intermediate",
+    name: "Woodpecker Intermediate",
+    description: "Woodpecker method - intermediate level.",
+    difficulty: "intermediate",
+  },
+  {
+    id: "advanced",
+    name: "Woodpecker Advance",
+    description: "Woodpecker method - advanced positions.",
+    difficulty: "advanced",
+  },
 ];
 
 function ensureDir(dir: string) {
@@ -69,7 +84,14 @@ function main() {
 
   console.log("Generated:", OUT_DIR);
   console.log("Also copied to public for in-browser fetch:", PUBLIC_OUT_DIR);
-  console.log("easy:", easy.length, "intermediate:", intermediate.length, "advanced:", advanced.length);
+  console.log(
+    "easy:",
+    easy.length,
+    "intermediate:",
+    intermediate.length,
+    "advanced:",
+    advanced.length
+  );
 }
 
 main();

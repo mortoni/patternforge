@@ -3,10 +3,24 @@ import { render, screen } from "@testing-library/react";
 import { TrainingFeedbackPanel } from "./training-feedback-panel";
 
 describe("TrainingFeedbackPanel", () => {
-  it("shows Correct! and Good move when correct", () => {
+  it("shows Correct! and Good move when correct and no comment", () => {
     render(<TrainingFeedbackPanel state="correct" />);
     expect(screen.getByText("Correct!")).toBeInTheDocument();
     expect(screen.getByText("Good move.")).toBeInTheDocument();
+  });
+
+  it("shows Correct! and comment when correct with comment", () => {
+    render(
+      <TrainingFeedbackPanel
+        state="correct"
+        comment="Black would have been lost without this resource."
+      />
+    );
+    expect(screen.getByText("Correct!")).toBeInTheDocument();
+    expect(
+      screen.getByText("Black would have been lost without this resource.")
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Good move.")).not.toBeInTheDocument();
   });
 
   it("shows Incorrect with attempted and correct move when incorrect", () => {
@@ -32,4 +46,5 @@ describe("TrainingFeedbackPanel", () => {
     expect(screen.queryByText(/you played:/i)).not.toBeInTheDocument();
     expect(screen.getByText(/correct move:/i)).toBeInTheDocument();
   });
+
 });

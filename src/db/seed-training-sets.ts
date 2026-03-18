@@ -106,7 +106,6 @@ function makeCycleRun(
  *
  * Sample strategy: one set per UI state for local development.
  * - Lichess Mixed 1200–1600: library (has exercises, no cycle)
- * - Woodpecker Easy: active cycle
  * - Tournament Warmup: completed cycle
  * - Rook Tactics: empty set (no exercises)
  */
@@ -140,7 +139,7 @@ export async function seedTrainingSetsIfEmpty(): Promise<boolean> {
     tags: ["tactics", "mixed"],
   } satisfies TrainingSetSchema);
 
-  // 2. Woodpecker Easy – active cycle (name matches difficulty)
+  // 2. Tournament Warmup – completed cycle
   const setId2 = createId();
   const exerciseIds2: string[] = [];
   for (let i = 0; i < 5; i++) {
@@ -155,48 +154,16 @@ export async function seedTrainingSetsIfEmpty(): Promise<boolean> {
   }
   await db.trainingSets.add({
     id: setId2,
-    name: "Woodpecker Easy",
-    description: "First woodpecker cycle with easier positions.",
-    difficulty: "easy",
-    exerciseIds: exerciseIds2,
-    createdAt: now,
-    source: "Woodpecker",
-    tags: ["tactics", "mixed"],
-  } satisfies TrainingSetSchema);
-  await db.cycleRuns.add(
-    makeCycleRun(setId2, 5, now, {
-      id: createId(),
-      status: "active",
-      solvedCount: 0,
-      nextExerciseIndex: 0,
-    })
-  );
-
-  // 3. Tournament Warmup – completed cycle
-  const setId3 = createId();
-  const exerciseIds3: string[] = [];
-  for (let i = 0; i < 5; i++) {
-    const ex = makeExercise(
-      setId3,
-      now,
-      SAMPLE_EXERCISES[i] ?? SAMPLE_EXERCISES[0]
-    );
-    ex.id = createId();
-    exerciseIds3.push(ex.id);
-    await db.exercises.add(ex);
-  }
-  await db.trainingSets.add({
-    id: setId3,
     name: "Tournament Warmup",
     description: "Short set to warm up before a game.",
     difficulty: "intermediate",
-    exerciseIds: exerciseIds3,
+    exerciseIds: exerciseIds2,
     createdAt: now,
     source: "Custom",
     tags: ["tournament", "mixed"],
   } satisfies TrainingSetSchema);
   await db.cycleRuns.add(
-    makeCycleRun(setId3, 5, now, {
+    makeCycleRun(setId2, 5, now, {
       id: createId(),
       status: "completed",
       completedAt: now,
@@ -205,10 +172,10 @@ export async function seedTrainingSetsIfEmpty(): Promise<boolean> {
     })
   );
 
-  // 4. Rook Tactics – empty set (no exercises; tests empty-state UI)
-  const setId4 = createId();
+  // 3. Rook Tactics – empty set (no exercises; tests empty-state UI)
+  const setId3 = createId();
   await db.trainingSets.add({
-    id: setId4,
+    id: setId3,
     name: "Rook Tactics",
     description: "Rook-themed tactics (add exercises to get started).",
     difficulty: "easy",

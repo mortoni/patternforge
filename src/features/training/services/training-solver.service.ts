@@ -1,12 +1,17 @@
 /**
  * Training solver service. Persists attempts, records mistakes, updates session, advances cycle.
- * Phase 3: session and cycle progression wired; cycle completion marks session and cycle complete.
+ * Supports multi-move puzzles: only persists and advances cycle when puzzle is fully solved or failed.
  */
 
 import { evaluateFirstMove } from "@/services/puzzle-evaluator.service";
+import {
+  validatePuzzleMove,
+  applyCanonicalAutoMoves,
+  isPuzzleComplete,
+  isUserMoveAtIndex,
+} from "@/lib/training/puzzle-line-validator";
 import { recordFailure, recordSkip } from "@/services/mistake-review.service";
 import {
-  getOrCreateActiveSession,
   recordAttemptOnSession,
   completeSession,
 } from "@/services/training-session.service";
@@ -27,6 +32,14 @@ export interface SubmitAttemptParams {
   attemptedMoveUci: string;
   /** Timestamp (ms) when puzzle became active; used to compute durationMs. */
   attemptStartedAt: number;
+  /** Full solution line (SAN or UCI). If length > 1, multi-move validation is used. */
+  solutionMoves?: string[];
+  /** Side to move at puzzle start ("w" | "b"). Required when solutionMoves is used. */
+  sideToMove?: "w" | "b";
+  /** Index of the next expected move in solutionMoves (0 = first move). Used for in-progress multi-move. */
+  currentSolutionIndex?: number;
+  /** User moves played so far in this puzzle (UCI). Used when failing to record full attempt. */
+  accumulatedUserMoves?: string[];
 }
 
 export interface SubmitAttemptResult {
@@ -35,12 +48,19 @@ export interface SubmitAttemptResult {
   normalizedExpectedMove: string;
   /** Duration of this attempt in ms (for session activeTimeMs). */
   durationMs: number;
+  /** True when the full solution line was completed (puzzle solved). */
+  puzzleComplete?: boolean;
+  /** FEN after user move + auto-played opponent moves. Set when correct and more moves remain. */
+  nextFen?: string;
+  /** Next expected move index. Set when correct and more moves remain. */
+  nextSolutionIndex?: number;
+  /** Opponent moves auto-played (UCI) for UI animation. */
+  autoPlayedMoves?: string[];
 }
 
 /**
- * Evaluate first move, persist attempt, record mistake if incorrect, and advance
- * cycle/session immediately. Refresh after resolution will load the next puzzle.
- * Next Puzzle in the UI only reloads from DB and clears local feedback state.
+ * Submit a move attempt. For single-move puzzles (or first move only legacy), persists and advances immediately.
+ * For multi-move: validates against solutionMoves[currentSolutionIndex]; only persists and advances on full solve or failure.
  */
 export async function submitAttempt(
   params: SubmitAttemptParams
@@ -54,17 +74,129 @@ export async function submitAttempt(
     expectedFirstMove,
     attemptedMoveUci,
     attemptStartedAt,
+    solutionMoves: rawSolutionMoves = [],
+    sideToMove = "w",
+    currentSolutionIndex = 0,
+    accumulatedUserMoves = [],
   } = params;
+
+  const solutionMoves = Array.isArray(rawSolutionMoves)
+    ? rawSolutionMoves
+    : typeof rawSolutionMoves === "string"
+      ? rawSolutionMoves
+          .trim()
+          .split(/\s+/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : [];
+
+  const useMultiMove =
+    solutionMoves.length > 1 &&
+    currentSolutionIndex < solutionMoves.length &&
+    isUserMoveAtIndex(sideToMove, currentSolutionIndex);
+
+  const finishedAtMs = Date.now();
+  const durationMs = Math.max(0, finishedAtMs - attemptStartedAt);
+  const startedAtIso = new Date(attemptStartedAt).toISOString();
+  const nowIso = new Date(finishedAtMs).toISOString();
+
+  if (useMultiMove) {
+    const validation = validatePuzzleMove({
+      fen,
+      solutionMoves,
+      currentSolutionIndex,
+      sideToMove,
+      attemptedMoveUci,
+    });
+
+    if (!validation.isCorrect) {
+      const userMoves = [...accumulatedUserMoves, validation.normalizedAttemptedMove];
+      await addExerciseAttempt({
+        id: crypto.randomUUID(),
+        exerciseId,
+        cycleRunId,
+        sessionId,
+        startedAt: startedAtIso,
+        finishedAt: nowIso,
+        durationMs,
+        result: "incorrect",
+        userMoves,
+      });
+      await recordFailure(exerciseId, trainingSetId);
+      await recordAttemptOnSession(sessionId, "incorrect", durationMs);
+      const advanceResult = await advanceAfterIncorrect(cycleRunId);
+      if (advanceResult.status === "cycle-complete") {
+        await completeSession(sessionId);
+      }
+      return {
+        isCorrect: false,
+        normalizedAttemptedMove: validation.normalizedAttemptedMove,
+        normalizedExpectedMove: validation.normalizedExpectedMove,
+        durationMs,
+      };
+    }
+
+    const { Chess } = await import("chess.js");
+    const chessAfterUser = new Chess(fen);
+    const u = validation.normalizedAttemptedMove;
+    chessAfterUser.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u.length === 5 ? u[4] : undefined });
+    const fenAfterUser = chessAfterUser.fen();
+
+    let nextFen = fenAfterUser;
+    let nextIndex = validation.nextIndex;
+    let autoPlayedMoves: string[] = [];
+
+    if (nextIndex < solutionMoves.length) {
+      const auto = applyCanonicalAutoMoves(fenAfterUser, solutionMoves, nextIndex, sideToMove);
+      nextFen = auto.newFen;
+      nextIndex = auto.nextIndex;
+      autoPlayedMoves = auto.movesPlayed;
+    }
+
+    if (nextIndex < solutionMoves.length) {
+      return {
+        isCorrect: true,
+        normalizedAttemptedMove: validation.normalizedAttemptedMove,
+        normalizedExpectedMove: validation.normalizedExpectedMove,
+        durationMs,
+        puzzleComplete: false,
+        nextFen,
+        nextSolutionIndex: nextIndex,
+        autoPlayedMoves,
+      };
+    }
+
+    const allUserMoves = [...accumulatedUserMoves, validation.normalizedAttemptedMove];
+    await addExerciseAttempt({
+      id: crypto.randomUUID(),
+      exerciseId,
+      cycleRunId,
+      sessionId,
+      startedAt: startedAtIso,
+      finishedAt: nowIso,
+      durationMs,
+      result: "correct",
+      userMoves: allUserMoves,
+    });
+    await recordAttemptOnSession(sessionId, "correct", durationMs);
+    const advanceResult = await advanceAfterCorrect(cycleRunId);
+    if (advanceResult.status === "cycle-complete") {
+      await completeSession(sessionId);
+    }
+    return {
+      isCorrect: true,
+      normalizedAttemptedMove: validation.normalizedAttemptedMove,
+      normalizedExpectedMove: validation.normalizedExpectedMove,
+      durationMs,
+      puzzleComplete: true,
+    };
+  }
+
   const evaluation = evaluateFirstMove({
     fen,
     expectedFirstMove,
     attemptedMove: attemptedMoveUci,
   });
-
-  const finishedAtMs = Date.now();
-  const startedAtIso = new Date(attemptStartedAt).toISOString();
-  const nowIso = new Date(finishedAtMs).toISOString();
-  const durationMs = Math.max(0, finishedAtMs - attemptStartedAt);
 
   await addExerciseAttempt({
     id: crypto.randomUUID(),
@@ -101,6 +233,7 @@ export async function submitAttempt(
     normalizedAttemptedMove: evaluation.normalizedAttemptedMove,
     normalizedExpectedMove: evaluation.normalizedExpectedMove,
     durationMs,
+    puzzleComplete: true,
   };
 }
 

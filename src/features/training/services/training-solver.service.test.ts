@@ -37,8 +37,19 @@ vi.mock("@/services/cycle-progress.service", () => ({
   advanceAfterSkip: (...args: unknown[]) => mockAdvanceAfterSkip(...args),
 }));
 
+const mockValidatePuzzleMove = vi.fn();
+const mockApplyCanonicalAutoMoves = vi.fn();
+const mockIsUserMoveAtIndex = vi.fn();
+vi.mock("@/lib/training/puzzle-line-validator", () => ({
+  validatePuzzleMove: (...args: unknown[]) => mockValidatePuzzleMove(...args),
+  applyCanonicalAutoMoves: (...args: unknown[]) => mockApplyCanonicalAutoMoves(...args),
+  isPuzzleComplete: (moves: string[], idx: number) => idx >= moves.length,
+  isUserMoveAtIndex: (...args: unknown[]) => mockIsUserMoveAtIndex(...args),
+}));
+
 beforeEach(() => {
   vi.clearAllMocks();
+  mockIsUserMoveAtIndex.mockImplementation((_side: string, index: number) => index % 2 === 0);
 });
 
 describe("training-solver.service", () => {
@@ -139,6 +150,124 @@ describe("training-solver.service", () => {
       });
       vi.useRealTimers();
       expect(mockCompleteSession).toHaveBeenCalledWith("s1");
+    });
+
+    it("one-move puzzle marks solved immediately after correct move", async () => {
+      mockAdvanceAfterCorrect.mockResolvedValue({ status: "advanced", nextExerciseIndex: 1, solvedCount: 1, totalExercises: 5 });
+      const result = await submitAttempt({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        expectedFirstMove: "e2e4",
+        attemptedMoveUci: "e2e4",
+        attemptStartedAt: Date.now() - 1000,
+      });
+      expect(result.isCorrect).toBe(true);
+      expect(result.puzzleComplete).toBe(true);
+      expect(mockAddExerciseAttempt).toHaveBeenCalledTimes(1);
+    });
+
+    it("multi-move puzzle does NOT persist or advance after first correct move", async () => {
+      mockValidatePuzzleMove.mockReturnValue({
+        isCorrect: true,
+        normalizedAttemptedMove: "e2e4",
+        normalizedExpectedMove: "e2e4",
+        nextIndex: 1,
+      });
+      mockApplyCanonicalAutoMoves.mockReturnValue({
+        newFen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+        nextIndex: 2,
+        movesPlayed: ["e7e5"],
+      });
+      const result = await submitAttempt({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        expectedFirstMove: "e2e4",
+        attemptedMoveUci: "e2e4",
+        attemptStartedAt: Date.now() - 500,
+        solutionMoves: ["e4", "e5", "Nf3"],
+        sideToMove: "w",
+        currentSolutionIndex: 0,
+        accumulatedUserMoves: [],
+      });
+      expect(result.isCorrect).toBe(true);
+      expect(result.puzzleComplete).toBe(false);
+      expect(result.nextFen).toBeDefined();
+      expect(result.nextSolutionIndex).toBe(2);
+      expect(result.autoPlayedMoves).toEqual(["e7e5"]);
+      expect(mockAddExerciseAttempt).not.toHaveBeenCalled();
+      expect(mockRecordAttemptOnSession).not.toHaveBeenCalled();
+      expect(mockAdvanceAfterCorrect).not.toHaveBeenCalled();
+    });
+
+    it("normalizes solutionMoves from string to array (space-separated)", async () => {
+      mockValidatePuzzleMove.mockReturnValue({
+        isCorrect: true,
+        normalizedAttemptedMove: "e2e4",
+        normalizedExpectedMove: "e2e4",
+        nextIndex: 1,
+      });
+      mockApplyCanonicalAutoMoves.mockReturnValue({
+        newFen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+        nextIndex: 2,
+        movesPlayed: ["e7e5"],
+      });
+      const result = await submitAttempt({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        expectedFirstMove: "e2e4",
+        attemptedMoveUci: "e2e4",
+        attemptStartedAt: Date.now() - 500,
+        solutionMoves: "e4 e5 Nf3" as unknown as string[],
+        sideToMove: "w",
+        currentSolutionIndex: 0,
+        accumulatedUserMoves: [],
+      });
+      expect(result.isCorrect).toBe(true);
+      expect(result.puzzleComplete).toBe(false);
+      expect(mockValidatePuzzleMove).toHaveBeenCalledWith(
+        expect.objectContaining({ solutionMoves: ["e4", "e5", "Nf3"] })
+      );
+    });
+
+    it("multi-move puzzle wrong second user move fails and persists", async () => {
+      mockValidatePuzzleMove.mockReturnValue({
+        isCorrect: false,
+        normalizedAttemptedMove: "g1e3",
+        normalizedExpectedMove: "g1f3",
+        nextIndex: 2,
+      });
+      const result = await submitAttempt({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        fen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+        expectedFirstMove: "e2e4",
+        attemptedMoveUci: "g1e3",
+        attemptStartedAt: Date.now() - 200,
+        solutionMoves: ["e4", "e5", "Nf3"],
+        sideToMove: "w",
+        currentSolutionIndex: 2,
+        accumulatedUserMoves: ["e2e4"],
+      });
+      expect(result.isCorrect).toBe(false);
+      expect(mockAddExerciseAttempt).toHaveBeenCalledWith(
+        expect.objectContaining({
+          result: "incorrect",
+          userMoves: ["e2e4", "g1e3"],
+        })
+      );
+      expect(mockRecordFailure).toHaveBeenCalledWith("ex-1", "set-1");
+      expect(mockAdvanceAfterIncorrect).toHaveBeenCalled();
     });
   });
 

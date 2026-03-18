@@ -53,7 +53,7 @@ describe("getActiveTrainingState", () => {
     });
     mockGetTrainingSetById.mockResolvedValue({
       id: "set-1",
-      name: "Woodpecker Easy",
+      name: "Sample Set",
     });
     mockGetActiveCycleRunForSet.mockResolvedValue(undefined);
     mockGetLatestCycleRunByTrainingSetId.mockResolvedValue(undefined);
@@ -61,7 +61,7 @@ describe("getActiveTrainingState", () => {
     expect(result).toEqual({
       status: "no-active-cycle",
       trainingSetId: "set-1",
-      trainingSetName: "Woodpecker Easy",
+      trainingSetName: "Sample Set",
     });
   });
 
@@ -72,7 +72,7 @@ describe("getActiveTrainingState", () => {
     });
     mockGetTrainingSetById.mockResolvedValue({
       id: "set-1",
-      name: "Woodpecker Easy",
+      name: "Sample Set",
     });
     mockGetActiveCycleRunForSet.mockResolvedValue({
       id: "cycle-1",
@@ -91,7 +91,7 @@ describe("getActiveTrainingState", () => {
     expect(result).toEqual({
       status: "cycle-complete",
       trainingSetId: "set-1",
-      trainingSetName: "Woodpecker Easy",
+      trainingSetName: "Sample Set",
       cycleNumber: 1,
       solvedCount: 0,
       totalExercises: 5,
@@ -105,7 +105,7 @@ describe("getActiveTrainingState", () => {
     });
     mockGetTrainingSetById.mockResolvedValue({
       id: "set-1",
-      name: "Woodpecker Easy",
+      name: "Sample Set",
       description: "Easy puzzles",
     });
     mockGetActiveCycleRunForSet.mockResolvedValue({
@@ -135,7 +135,7 @@ describe("getActiveTrainingState", () => {
     expect(mockGetOrCreateActiveSession).not.toHaveBeenCalled();
     if (result.status === "ready") {
       expect(result.sessionId).toBeUndefined();
-      expect(result.trainingSet.name).toBe("Woodpecker Easy");
+      expect(result.trainingSet.name).toBe("Sample Set");
       expect(result.cycleRun.cycleNumber).toBe(1);
       expect(result.exercise.fen).toContain("rnbqkbnr");
       expect(result.exercise.sideToMove).toBe("w");

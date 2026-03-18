@@ -59,6 +59,8 @@ export const exerciseSchema = z.object({
   createdAt: z.string(),
   puzzleNumber: z.number().int().positive().optional(),
   difficulty: difficultySchema.optional(),
+  /** Optional comment / explanation from source (e.g. woodpecker dataset). */
+  comment: z.string().optional(),
 });
 export type ExerciseSchema = z.infer<typeof exerciseSchema>;
 

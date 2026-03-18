@@ -18,6 +18,7 @@ export const puzzleCsvRowSchema = z
     motifTags: z.string().trim(),
     gameSource: z.string().trim(),
     difficulty: z.enum(["easy", "intermediate", "advanced"]),
+    comment: z.string().trim().optional(),
   })
   .refine(
     (row) => row.trainingSetId === row.difficulty,
@@ -36,6 +37,7 @@ export const puzzleCsvRowInputSchema = z.object({
   motifTags: z.string().trim(),
   gameSource: z.string().trim(),
   difficulty: z.string().trim(),
+  comment: z.string().trim().optional(),
 });
 
 /** Normalized puzzle schema (after transform). */
@@ -50,6 +52,7 @@ export const normalizedPuzzleSchema = z.object({
   motifTags: z.array(z.string()),
   gameSource: z.string(),
   difficulty: trainingSetIdSchema,
+  comment: z.string().optional(),
   createdAt: z.string(),
 });
 

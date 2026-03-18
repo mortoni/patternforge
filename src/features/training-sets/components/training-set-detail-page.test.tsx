@@ -53,9 +53,9 @@ describe("TrainingSetDetailPage", () => {
       data: {
         trainingSet: {
           id: "set-1",
-          name: "Woodpecker Easy",
+          name: "Sample Set",
           description: "First cycle",
-          source: "Woodpecker",
+          source: "Sample",
           difficulty: "intermediate",
           tags: ["tactics", "mixed"],
           exerciseCount: 5,
@@ -75,7 +75,7 @@ describe("TrainingSetDetailPage", () => {
       reload: vi.fn(),
     });
     render(<TrainingSetDetailPage trainingSetId="set-1" />);
-    expect(screen.getByText("Woodpecker Easy")).toBeInTheDocument();
+    expect(screen.getByText("Sample Set")).toBeInTheDocument();
     expect(screen.getByText("First cycle")).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: "Start Cycle 1" }).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("No cycles started yet.")).toBeInTheDocument();

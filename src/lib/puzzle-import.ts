@@ -50,6 +50,7 @@ function transformToNormalized(
     motifTags: string;
     gameSource: string;
     difficulty: "easy" | "intermediate" | "advanced";
+    comment?: string;
   },
   _rowNumber: number
 ): NormalizedPuzzle {
@@ -77,6 +78,7 @@ function transformToNormalized(
     motifTags,
     gameSource: row.gameSource,
     difficulty: row.difficulty,
+    comment: row.comment?.trim() || undefined,
     createdAt: new Date().toISOString(),
   };
 }

@@ -13,9 +13,13 @@
     "test:e2e": "playwright test",
     "validate:puzzles": "tsx scripts/validate-puzzles.ts",
     "generate:puzzles": "tsx scripts/generate-puzzle-json.ts",
-    "import:puzzles": "tsx scripts/import-puzzles.ts"
+    "import:puzzles": "tsx scripts/import-puzzles.ts",
+    "refresh-data": "pnpm run validate:puzzles && pnpm run generate:puzzles",
+    "woodpecker:fill-fens": "tsx scripts/fill-woodpecker-fens.ts",
+    "woodpecker:to-puzzle-csv": "tsx scripts/woodpecker-to-puzzle-csv.ts"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.4",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
     "chess.js": "^1.4.0",

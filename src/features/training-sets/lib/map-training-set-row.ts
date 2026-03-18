@@ -9,7 +9,7 @@ import type { TrainingSetTableRow, TrainingSetSourceLabel, TrainingSetStatusLabe
 /** Use set source when present; otherwise fallback. */
 function deriveSource(overview: TrainingSetOverview): TrainingSetSourceLabel {
   const s = overview.source;
-  if (s === "Woodpecker" || s === "Lichess" || s === "Custom" || s === "Unknown")
+  if (s === "Lichess" || s === "Custom" || s === "Unknown")
     return s;
   return s ? (s as TrainingSetSourceLabel) : "Custom";
 }

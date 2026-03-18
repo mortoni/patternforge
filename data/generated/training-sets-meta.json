@@ -1,20 +1,20 @@
 [
   {
     "id": "easy",
-    "name": "Easy Exercises",
-    "description": "Introductory tactical exercises.",
+    "name": "Woodpecker Easy",
+    "description": "Woodpecker method - easier positions.",
     "difficulty": "easy"
   },
   {
     "id": "intermediate",
-    "name": "Intermediate Exercises",
-    "description": "More demanding tactical exercises.",
+    "name": "Woodpecker Intermediate",
+    "description": "Woodpecker method - intermediate level.",
     "difficulty": "intermediate"
   },
   {
     "id": "advanced",
-    "name": "Advanced Exercises",
-    "description": "Hard tactical exercises for advanced training.",
+    "name": "Woodpecker Advance",
+    "description": "Woodpecker method - advanced positions.",
     "difficulty": "advanced"
   }
 ]

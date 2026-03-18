@@ -11,6 +11,8 @@ export interface TrainingFeedbackPanelProps {
   attemptedMove?: string;
   /** Correct first move (UCI) to show when incorrect. */
   expectedMove?: string;
+  /** Optional comment to show when correct (e.g. from puzzle source). */
+  comment?: string;
   className?: string;
 }
 
@@ -22,6 +24,7 @@ export function TrainingFeedbackPanel({
   state,
   attemptedMove,
   expectedMove,
+  comment,
   className,
 }: TrainingFeedbackPanelProps) {
   if (state === "correct") {
@@ -34,7 +37,11 @@ export function TrainingFeedbackPanel({
         )}
       >
         <p className="font-medium text-green-700 dark:text-green-400">Correct!</p>
-        <p className="text-green-700/80 dark:text-green-400/80 mt-0.5">Good move.</p>
+        {(comment != null && comment.trim() !== "" ? (
+          <p className="text-green-700/80 dark:text-green-400/80 mt-0.5">{comment.trim()}</p>
+        ) : (
+          <p className="text-green-700/80 dark:text-green-400/80 mt-0.5">Good move.</p>
+        ))}
       </div>
     );
   }

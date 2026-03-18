@@ -16,6 +16,7 @@ vi.mock("react-chessboard", () => ({
     return <div data-testid="chessboard-provider">{children}</div>;
   },
   Chessboard: () => <div data-testid="chessboard" />,
+  useChessboardContext: () => ({ draggingPiece: null }),
 }));
 
 describe("TrainingBoardCard", () => {
@@ -37,7 +38,7 @@ describe("TrainingBoardCard", () => {
     expect(capturedOptions.current!.boardOrientation).toBe("white");
   });
 
-  it("passes onSquareClick and onPieceDrop when not disabled", () => {
+  it("passes click/drag handlers and drag activation when not disabled", () => {
     const onMove = vi.fn();
     render(
       <TrainingBoardCard
@@ -48,7 +49,11 @@ describe("TrainingBoardCard", () => {
       />
     );
     expect(typeof capturedOptions.current!.onSquareClick).toBe("function");
+    expect(typeof capturedOptions.current!.onPieceClick).toBe("function");
+    expect(typeof capturedOptions.current!.onPieceDrag).toBe("function");
     expect(typeof capturedOptions.current!.onPieceDrop).toBe("function");
+    expect(typeof capturedOptions.current!.canDragPiece).toBe("function");
+    expect(capturedOptions.current!.dragActivationDistance).toBe(8);
   });
 
   it("passes arrows when correctMoveUci is set", () => {

@@ -10,6 +10,7 @@ export type PuzzleInteractionState =
   | "idle"
   | "move-selected"
   | "checking"
+  | "correct_so_far"
   | "correct"
   | "incorrect";
 
@@ -21,7 +22,6 @@ export interface TrainingSidePanelProps {
   solvedCount: number;
   sideToMove: "w" | "b";
   gameSource?: string;
-  difficulty?: string;
   /** Current interaction state. */
   puzzleState: PuzzleInteractionState;
   onSkipPuzzle?: () => void;
@@ -37,7 +37,6 @@ export function TrainingSidePanel({
   solvedCount,
   sideToMove,
   gameSource,
-  difficulty,
   puzzleState,
   onSkipPuzzle,
   onNextPuzzle,
@@ -47,6 +46,7 @@ export function TrainingSidePanel({
     totalExercises > 0 ? Math.round((solvedCount / totalExercises) * 100) : 0;
   const resolved = puzzleState === "correct" || puzzleState === "incorrect";
   const isChecking = puzzleState === "checking";
+  const isCorrectSoFar = puzzleState === "correct_so_far";
 
   return (
     <Card className={cn(className)}>
@@ -81,16 +81,10 @@ export function TrainingSidePanel({
               <dd className="font-medium">{gameSource}</dd>
             </div>
           )}
-          {difficulty != null && difficulty !== "" && (
-            <div>
-              <dt className="text-xs text-muted-foreground">Difficulty</dt>
-              <dd className="font-medium capitalize">{difficulty}</dd>
-            </div>
-          )}
         </dl>
 
         <div className="space-y-2 pt-1">
-          {!resolved && (
+          {!resolved && !isCorrectSoFar && (
             <Button
               variant="outline"
               className="w-full"
@@ -99,6 +93,9 @@ export function TrainingSidePanel({
             >
               Skip Puzzle
             </Button>
+          )}
+          {isCorrectSoFar && (
+            <p className="text-sm text-muted-foreground">Finish the combination.</p>
           )}
           {resolved && (
             <Button

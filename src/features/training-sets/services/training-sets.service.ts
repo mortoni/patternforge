@@ -21,6 +21,11 @@ import {
   seedTrainingSetsIfEmpty,
   seedDefaultSettingsIfMissing,
 } from "@/db/seed-training-sets";
+import {
+  clearAllTrainingSetsForDevelopment,
+  seedPuzzlesFromGeneratedJson,
+} from "@/db/seed-puzzles";
+import { resetUserProgressPreserveLibrary } from "@/services/reset-user-progress.service";
 import type { TrainingSetOverview } from "../types";
 import type { ContinueTrainingResult, StartNextCycleResult } from "../types";
 
@@ -45,6 +50,50 @@ export async function ensureSeededForDevelopment(): Promise<boolean> {
   if (process.env.NODE_ENV === "production") return false;
   await seedDefaultSettingsIfMissing();
   return seedTrainingSetsIfEmpty();
+}
+
+/**
+ * Remove all training sets and load only the 3 from generated JSON (data/generated) into IndexedDB.
+ * Dev only. Run after: pnpm run generate:puzzles (so public/data/generated/ is up to date).
+ */
+export async function loadGeneratedSetsIntoDb(): Promise<{
+  trainingSets: number;
+  exercises: number;
+}> {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("Load generated sets is development only");
+  }
+  await clearAllTrainingSetsForDevelopment();
+  return seedPuzzlesFromGeneratedJson();
+}
+
+/**
+ * Full reset: clear all user progress and all training sets, then load only the 3 sets from generated JSON.
+ * Dev only. Run after: pnpm run refresh-data (or generate:puzzles).
+ */
+export async function resetAllAndLoadGenerated(): Promise<{
+  trainingSets: number;
+  exercises: number;
+}> {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("Reset and load is development only");
+  }
+  if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+    console.log("[resetAllAndLoadGenerated] Resetting user progress…");
+  }
+  await resetUserProgressPreserveLibrary();
+  if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+    console.log("[resetAllAndLoadGenerated] Clearing all training sets…");
+  }
+  await clearAllTrainingSetsForDevelopment();
+  if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+    console.log("[resetAllAndLoadGenerated] Seeding from generated JSON…");
+  }
+  const result = await seedPuzzlesFromGeneratedJson();
+  if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+    console.log("[resetAllAndLoadGenerated] Done.", result);
+  }
+  return result;
 }
 
 /**

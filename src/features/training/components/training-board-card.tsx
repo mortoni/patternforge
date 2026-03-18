@@ -2,10 +2,16 @@
 
 import * as React from "react";
 import { Chess } from "chess.js";
-import { Chessboard, ChessboardProvider } from "react-chessboard";
+import {
+  Chessboard,
+  ChessboardProvider,
+  useChessboardContext,
+} from "react-chessboard";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { getArrowFromUci } from "@/lib/chess/move-highlights";
+
+type TrainingSquare = string;
 
 export interface TrainingBoardCardProps {
   /** Current position FEN (controlled). Updates after user makes a move. */
@@ -27,9 +33,19 @@ export interface TrainingBoardCardProps {
 function isPawnPromotion(pieceType: string | undefined, targetSquare: string): boolean {
   if (!pieceType) return false;
   const rank = targetSquare[1];
-  return (
-    (pieceType === "p" && rank === "8") || (pieceType === "P" && rank === "1")
-  );
+  // react-chessboard uses wP / bP; FEN-style P / p also possible
+  if (pieceType === "wP" || pieceType === "P")
+    return rank === "8";
+  if (pieceType === "bP" || pieceType === "p") return rank === "1";
+  return false;
+}
+
+/** react-chessboard piece codes are wP, bK, … not single-letter FEN. */
+function isOwnPiece(pieceType: string, turn: "w" | "b"): boolean {
+  if (pieceType.startsWith("w")) return turn === "w";
+  if (pieceType.startsWith("b")) return turn === "b";
+  if (turn === "w") return pieceType === pieceType.toUpperCase();
+  return pieceType === pieceType.toLowerCase();
 }
 
 function parseUci(uci: string): { from: string; to: string; promotion?: string } | null {
@@ -42,9 +58,46 @@ function parseUci(uci: string): { from: string; to: string; promotion?: string }
 }
 
 /**
- * Renders the puzzle position. When onMove is provided and not disabled,
- * user can make one move; the move is validated with chess.js and reported as UCI.
+ * Legal moves from one square via chess.js (single source for click + drag hints).
  */
+function getLegalInfo(fen: string, sourceSquare: TrainingSquare) {
+  try {
+    const chess = new Chess(fen);
+    const verbose = chess.moves({
+      square: sourceSquare as Parameters<Chess["moves"]>[0]["square"],
+      verbose: true,
+    });
+    const legalTargetSquares = [...new Set(verbose.map((m) => m.to))];
+    const captureSquares = new Set<string>();
+    for (const m of verbose) {
+      if (m.captured) captureSquares.add(m.to);
+    }
+    const moveMap = new Map<string, { uci: string; newFen: string }>();
+    for (const m of verbose) {
+      const uci = m.promotion
+        ? `${m.from}${m.to}${m.promotion}`
+        : `${m.from}${m.to}`;
+      const c = new Chess(fen);
+      c.move(m);
+      moveMap.set(m.to, { uci, newFen: c.fen() });
+    }
+    return {
+      legalTargetSquares,
+      captureSquares,
+      moveForDestination: (to: TrainingSquare) => moveMap.get(to) ?? null,
+    };
+  } catch {
+    return {
+      legalTargetSquares: [] as TrainingSquare[],
+      captureSquares: new Set<string>(),
+      moveForDestination: (_: TrainingSquare) => null as {
+        uci: string;
+        newFen: string;
+      } | null,
+    };
+  }
+}
+
 const CORRECT_HIGHLIGHT: React.CSSProperties = {
   backgroundColor: "rgba(34, 197, 94, 0.35)",
 };
@@ -52,16 +105,32 @@ const ATTEMPTED_HIGHLIGHT: React.CSSProperties = {
   backgroundColor: "rgba(239, 68, 68, 0.25)",
 };
 const SELECTED_SQUARE: React.CSSProperties = {
-  backgroundColor: "rgba(59, 130, 246, 0.5)",
+  backgroundColor: "rgba(59, 130, 246, 0.18)",
+  boxShadow: "inset 0 0 0 2px rgba(59, 130, 246, 0.4)",
 };
-const LEGAL_TARGET: React.CSSProperties = {
-  backgroundColor: "rgba(59, 130, 246, 0.25)",
+const LEGAL_DOT: React.CSSProperties = {
+  backgroundImage:
+    "radial-gradient(circle at center, rgba(148, 163, 184, 0.35) 0%, rgba(148, 163, 184, 0.35) 12%, transparent 13%)",
+};
+const LEGAL_CAPTURE_RING: React.CSSProperties = {
+  boxShadow: "inset 0 0 0 3px rgba(248, 113, 113, 0.7)",
+  borderRadius: "50%",
 };
 
-/** Returns true if piece is for the side to move (white = uppercase, black = lowercase). */
-function isOwnPiece(pieceType: string, turn: "w" | "b"): boolean {
-  if (turn === "w") return pieceType === pieceType.toUpperCase();
-  return pieceType === pieceType.toLowerCase();
+function ClearSelectionAfterDrag({
+  onDragEnded,
+}: {
+  onDragEnded: () => void;
+}) {
+  const { draggingPiece } = useChessboardContext();
+  const prev = React.useRef(draggingPiece);
+  React.useEffect(() => {
+    if (prev.current != null && draggingPiece === null) {
+      onDragEnded();
+    }
+    prev.current = draggingPiece;
+  }, [draggingPiece, onDragEnded]);
+  return null;
 }
 
 export function TrainingBoardCard({
@@ -74,33 +143,29 @@ export function TrainingBoardCard({
   correctMoveUci,
   className,
 }: TrainingBoardCardProps) {
-  const [selectedSquare, setSelectedSquare] = React.useState<string | null>(null);
+  const [selectedSquare, setSelectedSquare] =
+    React.useState<TrainingSquare | null>(null);
+  const selectedRef = React.useRef<TrainingSquare | null>(null);
+  selectedRef.current = selectedSquare;
 
   React.useEffect(() => {
     setSelectedSquare(null);
   }, [fen, disabled]);
 
-  const { legalDestinationSquares, moveForDestination } = React.useMemo(() => {
-    if (!selectedSquare) return { legalDestinationSquares: [] as string[], moveForDestination: (_: string) => null as { uci: string; newFen: string } | null };
-    try {
-      const chess = new Chess(fen);
-      const verbose = chess.moves({ square: selectedSquare as Parameters<Chess["moves"]>[0]["square"], verbose: true });
-      const dests = verbose.map((m) => m.to);
-      const moveMap = new Map<string, { uci: string; newFen: string }>();
-      for (const m of verbose) {
-        const uci = m.promotion ? `${m.from}${m.to}${m.promotion}` : `${m.from}${m.to}`;
-        const c = new Chess(fen);
-        c.move(m);
-        moveMap.set(m.to, { uci, newFen: c.fen() });
+  const { legalTargetSquares, captureSquares, moveForDestination } =
+    React.useMemo(() => {
+      if (!selectedSquare) {
+        return {
+          legalTargetSquares: [] as TrainingSquare[],
+          captureSquares: new Set<string>(),
+          moveForDestination: (_: TrainingSquare) => null as {
+            uci: string;
+            newFen: string;
+          } | null,
+        };
       }
-      return {
-        legalDestinationSquares: dests,
-        moveForDestination: (to: string) => moveMap.get(to) ?? null,
-      };
-    } catch {
-      return { legalDestinationSquares: [] as string[], moveForDestination: (_: string) => null };
-    }
-  }, [fen, selectedSquare]);
+      return getLegalInfo(fen, selectedSquare);
+    }, [fen, selectedSquare]);
 
   const squareStyles = React.useMemo(() => {
     const out: Record<string, React.CSSProperties> = {};
@@ -114,14 +179,141 @@ export function TrainingBoardCard({
         if (!out[sq]) out[sq] = ATTEMPTED_HIGHLIGHT;
       }
     }
-    if (selectedSquare && !disabled) {
-      out[selectedSquare] = SELECTED_SQUARE;
-      for (const sq of legalDestinationSquares) {
-        if (!out[sq]) out[sq] = LEGAL_TARGET;
+    if (selectedSquare && !disabled && onMove) {
+      out[selectedSquare] = {
+        ...SELECTED_SQUARE,
+        ...(out[selectedSquare] ?? {}),
+      };
+      for (const sq of legalTargetSquares) {
+        if (out[sq] && sq !== selectedSquare) continue;
+        if (sq === selectedSquare) continue;
+        out[sq] = captureSquares.has(sq) ? LEGAL_CAPTURE_RING : LEGAL_DOT;
       }
     }
     return Object.keys(out).length > 0 ? out : undefined;
-  }, [correctMoveSquares, attemptedMoveSquares, selectedSquare, legalDestinationSquares, disabled]);
+  }, [
+    correctMoveSquares,
+    attemptedMoveSquares,
+    selectedSquare,
+    legalTargetSquares,
+    captureSquares,
+    disabled,
+    onMove,
+  ]);
+
+  const clearAfterDrag = React.useCallback(() => {
+    setSelectedSquare(null);
+  }, []);
+
+  const handleSquareInteraction = React.useCallback(
+    (piece: { pieceType: string } | null, square: TrainingSquare) => {
+      if (disabled || !onMove) return;
+      let chess: Chess;
+      try {
+        chess = new Chess(fen);
+      } catch {
+        return;
+      }
+      const turn = chess.turn();
+      const own = piece ? isOwnPiece(piece.pieceType, turn) : false;
+      const sel = selectedRef.current;
+
+      if (sel) {
+        if (square === sel) {
+          setSelectedSquare(null);
+          return;
+        }
+        const { legalTargetSquares: targets, moveForDestination: moveFn } =
+          getLegalInfo(fen, sel);
+        if (targets.includes(square)) {
+          const data = moveFn(square);
+          if (data) {
+            onMove(data.uci, data.newFen);
+            setSelectedSquare(null);
+          }
+          return;
+        }
+        if (own) {
+          setSelectedSquare(square);
+          return;
+        }
+        setSelectedSquare(null);
+        return;
+      }
+      if (own) setSelectedSquare(square);
+    },
+    [fen, disabled, onMove]
+  );
+
+  const onPieceClick = React.useCallback(
+    ({
+      isSparePiece,
+      piece,
+      square,
+    }: {
+      isSparePiece: boolean;
+      piece: { pieceType: string };
+      square: string | null;
+    }) => {
+      if (isSparePiece || !square) return;
+      handleSquareInteraction(piece, square);
+    },
+    [handleSquareInteraction]
+  );
+
+  const onSquareClick = React.useCallback(
+    ({
+      piece,
+      square,
+    }: {
+      piece: { pieceType: string } | null;
+      square: string;
+    }) => {
+      handleSquareInteraction(piece, square);
+    },
+    [handleSquareInteraction]
+  );
+
+  const onPieceDrag = React.useCallback(
+    ({
+      isSparePiece,
+      piece,
+      square,
+    }: {
+      isSparePiece: boolean;
+      piece: { pieceType: string };
+      square: string | null;
+    }) => {
+      if (disabled || !onMove || isSparePiece || !square) return;
+      try {
+        const chess = new Chess(fen);
+        if (!isOwnPiece(piece.pieceType, chess.turn())) return;
+        setSelectedSquare(square);
+      } catch {
+        /* invalid FEN */
+      }
+    },
+    [fen, disabled, onMove]
+  );
+
+  const canDragPiece = React.useCallback(
+    ({
+      isSparePiece,
+      piece,
+    }: {
+      isSparePiece: boolean;
+      piece: { pieceType: string };
+      square: string | null;
+    }) => {
+      if (disabled || !onMove || isSparePiece) return false;
+      try {
+        return isOwnPiece(piece.pieceType, new Chess(fen).turn());
+      } catch {
+        return false;
+      }
+    },
+    [fen, disabled, onMove]
+  );
 
   const arrows = React.useMemo(() => {
     if (!correctMoveUci) return undefined;
@@ -163,55 +355,34 @@ export function TrainingBoardCard({
     [fen, disabled, onMove]
   );
 
-  const onSquareClick = React.useCallback(
-    ({ piece, square }: { piece: { pieceType: string } | null; square: string }) => {
-      if (disabled || !onMove) return;
-      let chess: Chess;
-      try {
-        chess = new Chess(fen);
-      } catch {
-        return;
-      }
-      const turn = chess.turn();
-      const own = piece ? isOwnPiece(piece.pieceType, turn) : false;
-
-      if (selectedSquare) {
-        if (square === selectedSquare) {
-          setSelectedSquare(null);
-          return;
-        }
-        if (legalDestinationSquares.includes(square)) {
-          const moveData = moveForDestination(square);
-          if (moveData) {
-            onMove(moveData.uci, moveData.newFen);
-            setSelectedSquare(null);
-          }
-          return;
-        }
-        if (own) {
-          setSelectedSquare(square);
-          return;
-        }
-        setSelectedSquare(null);
-        return;
-      }
-      if (own) setSelectedSquare(square);
-    },
-    [fen, disabled, onMove, selectedSquare, legalDestinationSquares, moveForDestination]
-  );
-
   const options = React.useMemo(
     () => ({
       position: fen,
       boardOrientation,
       allowDragging: !disabled,
+      /** Default 1px makes almost every pointer move a drag; clicks never register. */
+      dragActivationDistance: 8,
       allowDrawingArrows: false,
+      canDragPiece,
+      onPieceClick,
+      onPieceDrag,
       onPieceDrop,
       onSquareClick,
       ...(squareStyles && { squareStyles }),
       ...(arrows?.length && { arrows }),
     }),
-    [fen, boardOrientation, disabled, onPieceDrop, onSquareClick, squareStyles, arrows]
+    [
+      fen,
+      boardOrientation,
+      disabled,
+      canDragPiece,
+      onPieceClick,
+      onPieceDrag,
+      onPieceDrop,
+      onSquareClick,
+      squareStyles,
+      arrows,
+    ]
   );
 
   return (
@@ -222,8 +393,9 @@ export function TrainingBoardCard({
       )}
     >
       <CardContent className="flex flex-col items-center p-4 md:p-6">
-        <div className="w-full max-w-[min(100%,28rem)] aspect-square rounded-md overflow-hidden border border-border bg-muted/30">
+        <div className="w-full max-w-[min(100%,42rem)] aspect-square rounded-md overflow-hidden border border-border bg-muted/30">
           <ChessboardProvider options={options}>
+            <ClearSelectionAfterDrag onDragEnded={clearAfterDrag} />
             <Chessboard />
           </ChessboardProvider>
         </div>

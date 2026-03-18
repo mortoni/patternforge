@@ -17,7 +17,7 @@ describe("RecentSessionsList", () => {
       {
         id: "s1",
         trainingSetId: "set-1",
-        trainingSetName: "Woodpecker Easy",
+        trainingSetName: "Sample Set",
         endedAt: "2025-03-12T10:00:00Z",
         puzzlesAttempted: 10,
         correctCount: 8,
@@ -27,7 +27,7 @@ describe("RecentSessionsList", () => {
       },
     ];
     render(<RecentSessionsList sessions={sessions} />);
-    expect(screen.getByText("Woodpecker Easy")).toBeInTheDocument();
+    expect(screen.getByText("Sample Set")).toBeInTheDocument();
     expect(screen.getByText(/10 attempted/)).toBeInTheDocument();
     expect(screen.getByText(/80% correct/)).toBeInTheDocument();
     expect(screen.getByText("5m")).toBeInTheDocument();

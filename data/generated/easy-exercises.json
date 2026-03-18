@@ -3,48 +3,3814 @@
     "id": "easy-0001",
     "trainingSetId": "easy",
     "puzzleNumber": 1,
-    "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 4",
-    "sideToMove": "w",
+    "fen": "r6r/1pp3k1/1b6/p2P1p2/P1N1pn2/2P2PP1/BP5P/4RR1K b - - 0 1",
+    "sideToMove": "b",
     "solutionMoves": [
-      "Nf7+"
+      "Rxh2+",
+      "Kxh2",
+      "Rh8#"
     ],
-    "motifTags": [
-      "fork"
-    ],
-    "gameSource": "Sample game 1",
+    "firstMove": "Rxh2+",
+    "motifTags": [],
+    "gameSource": "Carl Hamppe – Wilhelm Steinitz, Vienna 1860",
     "difficulty": "easy",
-    "createdAt": "2026-03-12T09:56:50.921Z"
+    "comment": "Black would have been lost without this resource.",
+    "createdAt": "2026-03-18T12:19:02.740Z"
   },
   {
     "id": "easy-0002",
     "trainingSetId": "easy",
     "puzzleNumber": 2,
-    "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4",
+    "fen": "rnb3kr/ppp4p/3b3B/3Pp2n/2BP4/3K1Rp1/PPP3q1/RN1Q4 w - - 0 1",
     "sideToMove": "w",
     "solutionMoves": [
-      "Qxf7#"
+      "Rf8+",
+      "Bxf8",
+      "d6+",
+      "Be6",
+      "Bxe6#"
     ],
-    "motifTags": [
-      "checkmate"
-    ],
-    "gameSource": "Sample game 2",
+    "firstMove": "Rf8+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – J. Wilson, London 1862",
     "difficulty": "easy",
-    "createdAt": "2026-03-12T09:56:50.921Z"
+    "createdAt": "2026-03-18T12:19:02.741Z"
   },
   {
     "id": "easy-0003",
     "trainingSetId": "easy",
     "puzzleNumber": 3,
-    "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
-    "sideToMove": "b",
+    "fen": "r2q1rk1/pppb1ppp/3b4/4p1P1/4Pn2/2N1B2P/PPPQBP2/2KR3R w - - 0 1",
+    "sideToMove": "w",
     "solutionMoves": [
+      "Bxf4",
+      "exf4",
       "e5"
     ],
-    "motifTags": [
-      "opening"
-    ],
-    "gameSource": "Sample game 3",
+    "firstMove": "Bxf4",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Serafino Dubois, London (6) 1862",
     "difficulty": "easy",
-    "createdAt": "2026-03-12T09:56:50.921Z"
+    "comment": "The bishop on d6 is pinned and Steinitz took advantage of that with which won a piece.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0004",
+    "trainingSetId": "easy",
+    "puzzleNumber": 4,
+    "fen": "2kr4/1pp4p/1p1r4/5Pp1/1P2q3/2P1R2P/P3KP2/1Q1R4 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rd2+"
+    ],
+    "firstMove": "Rd2+",
+    "motifTags": [],
+    "gameSource": "Valentine Green – Wilhelm Steinitz, London 1864",
+    "difficulty": "easy",
+    "comment": "The queen loses its defender.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0005",
+    "trainingSetId": "easy",
+    "puzzleNumber": 5,
+    "fen": "rn1qk2r/ppp2ppp/5n2/2b1p3/2B1P1b1/3P1N2/PPP3PP/RNBQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf7+",
+      "Kxf7",
+      "Nxe5+"
+    ],
+    "firstMove": "Bxf7+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – George Barry, Dublin (simul) 1865",
+    "difficulty": "easy",
+    "comment": "White has won two pawns after 9.¤xg4.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0006",
+    "trainingSetId": "easy",
+    "puzzleNumber": 6,
+    "fen": "r2k3r/pp1b3p/1qn1p1p1/1B1pPn2/Q7/P4N2/1P1BNPPP/2R3K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxc6",
+      "bxc6",
+      "Ba5"
+    ],
+    "firstMove": "Rxc6",
+    "motifTags": [],
+    "gameSource": "George Fraser – Wilhelm Steinitz, Dundee 1867",
+    "difficulty": "easy",
+    "comment": "White emerges with a queen and a knight for two rooks.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0007",
+    "trainingSetId": "easy",
+    "puzzleNumber": 7,
+    "fen": "2r1k2r/1b1p2q1/p4p2/4p3/PpB1Pp1p/7P/1PPRQPP1/4R1K1 b k - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "f3"
+    ],
+    "firstMove": "f3",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Jonathan Baker, London (simul) 1868",
+    "difficulty": "easy",
+    "comment": "The queen is overloaded and White loses the bishop on c4: 28.£xf3 ¦xc4–+ ✓ 27...¦xc4?! 28.£xc4 f3 29.£f1² is of course not the way to go.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0008",
+    "trainingSetId": "easy",
+    "puzzleNumber": 8,
+    "fen": "r3k2r/p1ppbppp/1pn1q3/4P3/2BP2n1/5NB1/1PP1Q1PP/R4K1R b kq - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxc4"
+    ],
+    "firstMove": "Qxc4",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Johannes Minckwitz, Baden-Baden 1870",
+    "difficulty": "easy",
+    "comment": "There is a fork on e3 coming up: 19.£xc4 ¤e3† 20.¢e2 ¤xc4–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0009",
+    "trainingSetId": "easy",
+    "puzzleNumber": 9,
+    "fen": "1b6/3n1p2/r1k1p1pp/Pr2P3/1PK2P2/3R4/3B2PP/R7 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd7"
+    ],
+    "firstMove": "Rxd7",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Maximilian Fleissig, Vienna 1873",
+    "difficulty": "easy",
+    "comment": "White wins back the piece with a winning advantage. 39...¢xd7 39...¦xb4† captures a pawn, but the a-pawn still decides after: 40.¥xb4 ¢xd7 41.¢b5+– ✓ 40.¢xb5+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0010",
+    "trainingSetId": "easy",
+    "puzzleNumber": 10,
+    "fen": "2b5/4Q1pp/pp3n1k/3p3q/P2P1P2/BP1B2P1/7P/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxf6+"
+    ],
+    "firstMove": "Qxf6+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Oscar Gelbfuhs, Vienna 1873",
+    "difficulty": "easy",
+    "comment": "Black resigned due to: 34...gxf6 35.¥f8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0011",
+    "trainingSetId": "easy",
+    "puzzleNumber": 11,
+    "fen": "rn1qk1nr/ppp2ppp/8/2b1p3/2B1P1b1/5N2/PPPP2PP/RNBQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Be4"
+    ],
+    "firstMove": "Be4",
+    "motifTags": [],
+    "gameSource": "George Mackenzie – Wilhelm Steinitz, Vienna 1882",
+    "difficulty": "easy",
+    "comment": "The only drawing move, and easy to find, as Black’s mate threat means White has no other sensible try. 34.¦g1?? loses to everything, but is mated most swiftly by 34...£xg2†!. 34...£xe4 Obviously not 34...¦xe4?? 35.£f8 mate. 35.¥f6† ¥xf6 36.£xf6† ✓ ½–½ White has a perpetual on f6 and f7. A win by an unsound combination, however showy, fills me with artistic horror.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0012",
+    "trainingSetId": "easy",
+    "puzzleNumber": 12,
+    "fen": "r1n5/pp2q1kp/2ppr1p1/4p1Q1/8/2N4R/PPP3PP/5RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qh6+",
+      "Kg8",
+      "Rf8+",
+      "Qxf8",
+      "Qxh7#"
+    ],
+    "firstMove": "Qh6+",
+    "motifTags": [],
+    "gameSource": "Joseph Blackburne – Wilhelm Steinitz, London 1883",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0013",
+    "trainingSetId": "easy",
+    "puzzleNumber": 13,
+    "fen": "4rrk1/ppp3pp/3p2n1/3Ppqb1/nPP5/6P1/P1NBQP1P/2R1NRK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nc3"
+    ],
+    "firstMove": "Nc3",
+    "motifTags": [],
+    "gameSource": "Isidor Gunsberg – Wilhelm Steinitz, New York (2) 1890",
+    "difficulty": "easy",
+    "comment": "The queen can’t move and keep the bishop on d2 defended, and 19.¥xc3 ¥xc1–+ ✓ lost an exchange (0–1, 39 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0014",
+    "trainingSetId": "easy",
+    "puzzleNumber": 14,
+    "fen": "2kr3r/p4pp1/2p4p/4p3/2n4q/1NPPnP1P/PP2Q2P/R1K2B1R b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxd3"
+    ],
+    "firstMove": "Rxd3",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Mikhail Chigorin, Havana (8) 1892",
+    "difficulty": "easy",
+    "comment": "Breaking open the king’s position to close out the game. 21.¥g2 Or 21.£xd3 £e1† ✓ with mate on the next move. 21...¦hd8 There is nothing White can do against the threats to penetrate on d1 or d2. The game ended after: 22.a4 ¦d1† 23.¦xd1 ¦xd1† 24.£xd1 ¤xd1 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0015",
+    "trainingSetId": "easy",
+    "puzzleNumber": 15,
+    "fen": "6k1/5pp1/p1n1r2p/2NQ4/1P1p4/P6P/1B1bqPP1/5RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxf1+"
+    ],
+    "firstMove": "Qxf1+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Dirk van Foreest, Haarlem (simul) 1896",
+    "difficulty": "easy",
+    "comment": "Steinitz’s previous move, 38.£c4-d5, was a grave blunder. 39.¢xf1 ¦e1 mate",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0016",
+    "trainingSetId": "easy",
+    "puzzleNumber": 16,
+    "fen": "r1bqk1nr/pppp3p/2n2p2/b5p1/2BPPp1P/2P2N2/P5P1/RNBQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxg5"
+    ],
+    "firstMove": "Nxg5",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Reyne, Haarlem (simul) 1896",
+    "difficulty": "easy",
+    "comment": "Not recapturing would be equivalent to resignation, but Black is mated if he takes the knight: 9...fxg5 9...£e7+– and White won after 26 moves. 10.£h5† ✓ ¢e7 There are several ways to mate or pick up material. The quickest mate is: 11.£f7† ¢d6 12.e5† ¤xe5 13.dxe5† ¢xe5 14.£d5† ¢f6 15.£xg5 mate",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0017",
+    "trainingSetId": "easy",
+    "puzzleNumber": 17,
+    "fen": "2kr1bnr/p1ppqp1p/bpn5/1N4p1/P2PPp2/5N2/1PP2KPP/R1BQ1B1R w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxa7+"
+    ],
+    "firstMove": "Nxa7+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Falk, Moscow 1896",
+    "difficulty": "easy",
+    "comment": "White wins an important pawn after: 10...¤xa7 11.¥xa6† ✓ (1–0, 25 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0018",
+    "trainingSetId": "easy",
+    "puzzleNumber": 18,
+    "fen": "rn1qk1nr/ppp2ppp/8/2b1p3/2B1P1b1/5N2/PPPP2PP/RNBQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf7+"
+    ],
+    "firstMove": "Bxf7+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – T.J.D. Enderle, Haarlem (simul) 1896",
+    "difficulty": "easy",
+    "comment": "Not the only time Steinitz executed this combination. White wins two pawns after: 6...¢xf7 7.¤xe5†+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0019",
+    "trainingSetId": "easy",
+    "puzzleNumber": 19,
+    "fen": "1k2r3/2p3p1/p4p2/1p3q1p/1n6/PQ2P3/1P2B2P/2KR4 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe3",
+      "Qxb4",
+      "Qxe3",
+      "Qc2#"
+    ],
+    "firstMove": "Rxe3",
+    "motifTags": [],
+    "gameSource": "Jackson Showalter – Wilhelm Steinitz, Vienna 1898",
+    "difficulty": "easy",
+    "comment": "Black is two pawns up, but that doesn’t stop him from being precise: 28...¦xe2–+ ✓ White resigned five moves later.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0020",
+    "trainingSetId": "easy",
+    "puzzleNumber": 20,
+    "fen": "r1bqkbnr/pppp3p/2n2p2/6p1/2BPPp2/5N2/PPP3PP/RNBQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxg5"
+    ],
+    "firstMove": "Nxg5",
+    "motifTags": [],
+    "gameSource": "Emanuel Lasker – C.R. McBride, USA (simul) 1902",
+    "difficulty": "easy",
+    "comment": "Black cannot take back: 6...fxg5 Black instead allowed a forced mate after 6...h6. 7.£h5† ✓ ¢e7 8.£f7† ¢d6 And for instance: 9.e5† ¤xe5 10.£d5† ¢e7 11.£xe5 mate The combination player thinks forward; he starts from the given position, and tries the forceful moves in his mind. Lasker’s Manual of Chess (1927)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0021",
+    "trainingSetId": "easy",
+    "puzzleNumber": 21,
+    "fen": "rnbqkbnr/pppp3p/5p2/6p1/4Pp1P/5N2/PPPP2P1/RNBQKB1R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxg5",
+      "fxg5",
+      "Qh5+",
+      "Ke7",
+      "Qxg5+"
+    ],
+    "firstMove": "Nxg5",
+    "motifTags": [],
+    "gameSource": "Emanuel Lasker – E.W. Witchard, Gloucester (simul) 1908",
+    "difficulty": "easy",
+    "comment": "¢e8 8.£h5†! Imprecise is 8.£e5†?! £e7 9.£xh8 £xe4†+– with some slight counterplay. 8...¢e7 9.£e5†+– White picks up the rook on h8.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0022",
+    "trainingSetId": "easy",
+    "puzzleNumber": 22,
+    "fen": "rnbqkb1r/pp1p2pp/2p2p2/4p3/2B5/2P2N2/PPP2PPP/R1BQ1RK1 w kq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxe5"
+    ],
+    "firstMove": "Nxe5",
+    "motifTags": [],
+    "gameSource": "Carl Hartlaub – Emanuel Lasker, Germany 1908",
+    "difficulty": "easy",
+    "comment": "A surprisingly common theme in Lasker’s games. 7...d5 7...fxe5 8.£h5† g6 (8...¢e7 9.£xe5 mate) 9.£xe5† £e7 10.£xh8+– ✓ 8.£h5† Or just as good is: 8.¦e1 fxe5 9.¦xe5† ¢d7 10.¥g5!+– 8...g6 One source gives this game as played in New York 1911, with 8...¢e7 9.¤f7? £e8? 0–1 (??) as the final moves, none of which makes any sense. 9.¤xg6 hxg6 10.£xh8 ✓ Or 10.¦e1† first. 10...dxc4 There are many ways to win and you don’t have to decide in advance. Easiest is: 11.¦e1† ¢f7 12.¥h6+–",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0023",
+    "trainingSetId": "easy",
+    "puzzleNumber": 23,
+    "fen": "2r3k1/p3qppp/2pr4/Q2b4/1P2p3/4P3/P3BPPP/2RR2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd5",
+      "Rxd5",
+      "Qxd5"
+    ],
+    "firstMove": "Rxd5",
+    "motifTags": [],
+    "gameSource": "Emanuel Lasker – Dawid Janowski, Berlin (1) 1910",
+    "difficulty": "easy",
+    "comment": "White has won a piece, since Black cannot recapture.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0024",
+    "trainingSetId": "easy",
+    "puzzleNumber": 24,
+    "fen": "6k1/2p3pp/q3pn2/1pp1p3/4P3/1P1P1P2/rNP2P1P/1Q3RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Na4"
+    ],
+    "firstMove": "Na4",
+    "motifTags": [],
+    "gameSource": "Emanuel Lasker – Efim Bogoljubov, Atlantic Ocean 1924",
+    "difficulty": "easy",
+    "comment": "The rook is trapped and the c5-pawn is threatened. 19...¦a3 20.£b2 Lasker played 20.¤xc5± and won after 22 moves, but the text is better. 20...b4 21.£xe5± Black loses a second pawn.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0025",
+    "trainingSetId": "easy",
+    "puzzleNumber": 25,
+    "fen": "8/1p3q1k/2p3pp/4P1r1/8/4Q3/PP5P/3R3K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe5",
+      "Qxe5",
+      "Qf3+",
+      "Kg1",
+      "Qxd1+"
+    ],
+    "firstMove": "Rxe5",
+    "motifTags": [],
+    "gameSource": "George Thomas – Emanuel Lasker, Nottingham 1936",
+    "difficulty": "easy",
+    "comment": "41.¢f2 £d7µ It is probably a theoretical draw, but that does not change the verdict during a game between humans (0–1, 55 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0026",
+    "trainingSetId": "easy",
+    "puzzleNumber": 26,
+    "fen": "r5k1/1b1n2r1/p3n2q/1p1pPRN1/2pP3P/2P3P1/PPBQ4/5R1K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rf6",
+      "Nxf6",
+      "Rxf6"
+    ],
+    "firstMove": "Rf6",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – C.E. Watson, Schenectady 1909",
+    "difficulty": "easy",
+    "comment": "White has a minor piece less, but can more than make up for it with the following double threat: £h5 32.¥d1 Not necessary, but a luxury White can afford. 32.¤xe6 and 32.¦xe6 are also winning. 32...£e8 33.¦xe6+– Black is an exchange up, but since he has no chance against all the pawns and an invasion on the kingside, he resigned now.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0027",
+    "trainingSetId": "easy",
+    "puzzleNumber": 27,
+    "fen": "r1b2rk1/p2p1p2/2p5/1p2PPqn/1b1p2N1/1B1P3Q/PPP3PP/R4RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxh5"
+    ],
+    "firstMove": "Qxh5",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – E.B. Schrader, Saint Louis (simul) 1909",
+    "difficulty": "easy",
+    "comment": "The fork on f6 gains a piece. 23...£xh5 24.¤f6† ¢h8 25.¤xh5+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0028",
+    "trainingSetId": "easy",
+    "puzzleNumber": 28,
+    "fen": "r5r1/p1p1k3/3q3B/5p2/4p3/1P6/P1P1QPP1/R4RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxg2+"
+    ],
+    "firstMove": "Rxg2+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – D.W. Pomeroy, Saint Louis (simul) 1909",
+    "difficulty": "easy",
+    "comment": "White resigned, since he is mated after: 22.¢xg2 ¦g8† Or 22...£g6†. 23.¢h1 £xh6† 24.£h5 £xh5 mate Chess is a very logical game and it is the man who can reason most logically and profoundly in it that ought to win.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0029",
+    "trainingSetId": "easy",
+    "puzzleNumber": 29,
+    "fen": "6rk/p1q2p2/2p1rb1P/1p2pN2/4P1Q1/2PP4/PPB5/2K4R w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qg7+",
+      "Rxg7",
+      "hxg7+",
+      "Kg8",
+      "Rh8#"
+    ],
+    "firstMove": "Qg7+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – T.A. Carter, Saint Louis (simul) 1909",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0030",
+    "trainingSetId": "easy",
+    "puzzleNumber": 30,
+    "fen": "4q1k1/2r3pp/1p6/8/1b2N3/4R1P1/PP3P1P/R5K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nf6+"
+    ],
+    "firstMove": "Nf6+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Frank Marshall, New York 1910",
+    "difficulty": "easy",
+    "comment": "Black could have resigned here, but continued until move 43. 28...gxf6 29.¦xe8†+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0031",
+    "trainingSetId": "easy",
+    "puzzleNumber": 31,
+    "fen": "4k3/1bp4r/p7/1p1P4/2P3pN/1P2r1P1/1BP2RPK/8 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxh4+"
+    ],
+    "firstMove": "Rxh4+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Luis Piazzini, Buenos Aires 1911",
+    "difficulty": "easy",
+    "comment": "Black can also start by exchanging on c4. 35.gxh4 g3† 36.¢g1 gxf2† ✓ 37.¢xf2–+ Instead of being an exchange up, Black is a rook up.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0032",
+    "trainingSetId": "easy",
+    "puzzleNumber": 32,
+    "fen": "2q4k/5Qp1/4B2p/p1p5/1P6/6PK/r4P1P/8 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxf2"
+    ],
+    "firstMove": "Rxf2",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Rasmussen, Copenhagen (simul) 1911",
+    "difficulty": "easy",
+    "comment": "Defending against the double threat and getting a queen ending with two healthy pawns and a safe king. 36.£xf2 £xe6†–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0033",
+    "trainingSetId": "easy",
+    "puzzleNumber": 33,
+    "fen": "5Rnk/pp1q4/7p/3p2rN/3Pp1Q1/2P5/PP5P/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxg5",
+      "Rxg8+",
+      "Rxg8",
+      "Qxg8+"
+    ],
+    "firstMove": "Qxg5",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Will Randolph, New York 1912",
+    "difficulty": "easy",
+    "comment": "is another way to do the same thing. 31...hxg5 32.¦xg8† Black resigned since he will be a piece down: 32...¢xg8 33.¤f6† ¢f7 34.¤xd7+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0034",
+    "trainingSetId": "easy",
+    "puzzleNumber": 34,
+    "fen": "r1bq2k1/pp3rpp/2n2b2/3p1p2/3P4/BQPB1N2/P4PPP/R3R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxd5"
+    ],
+    "firstMove": "Qxd5",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – F.S. Dunkelsbuhler, London (simul) 1913",
+    "difficulty": "easy",
+    "comment": "Black resigned, as he is mated after: 15...£xd5 16.¦e8† ¦f8 17.¦xf8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0035",
+    "trainingSetId": "easy",
+    "puzzleNumber": 35,
+    "fen": "2r3k1/pb2bp1p/1p2p1p1/8/q1NPP3/3B4/P3QPPP/3R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxe4"
+    ],
+    "firstMove": "Bxe4",
+    "motifTags": [],
+    "gameSource": "Albert Beauregard Hodges – Jose Raul Capablanca, New York 1915",
+    "difficulty": "easy",
+    "comment": "White’s pieces are overloaded and Black won a pawn after: 25.¥xe4 ¦xc4–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0036",
+    "trainingSetId": "easy",
+    "puzzleNumber": 36,
+    "fen": "6r1/2r1k3/R3p3/p4pPp/1pPK1P2/1P3B1P/P7/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxe6+",
+      "Kxe6",
+      "Bd5+",
+      "Kd6",
+      "Bxg8"
+    ],
+    "firstMove": "Rxe6+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Einar Michelsen, New York (simul) 1915",
+    "difficulty": "easy",
+    "comment": "Black’s rook is unable to fight against the two passed pawns. The final moves were: 37...¦e7 38.c5† ¢c6 39.¥d5† ¢b5 40.g6 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0037",
+    "trainingSetId": "easy",
+    "puzzleNumber": 37,
+    "fen": "r4r1k/pppqNppp/3p1B2/4p3/3nP3/3P1b2/PPPQ1PPP/R4RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg7+",
+      "Kxg7",
+      "Qg5+",
+      "Kh8",
+      "Qf6#"
+    ],
+    "firstMove": "Bxg7+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – N.N., New York 1918",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0038",
+    "trainingSetId": "easy",
+    "puzzleNumber": 38,
+    "fen": "3r2k1/2p2pp1/p1Q2n1p/7q/8/1P1N2P1/P1P2P2/R3K3 b Q - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxd3",
+      "Qh1+",
+      "Qxh1"
+    ],
+    "firstMove": "Rxd3",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – J. Birch, Glasgow 1919",
+    "difficulty": "easy",
+    "comment": "would be a terrible blunder. The game move wins a piece after: 32.cxd3 £e5† 33.¢d2 £xa1–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0039",
+    "trainingSetId": "easy",
+    "puzzleNumber": 39,
+    "fen": "r1b2rk1/pp3qpp/2p1p3/2Ppb1PP/5B2/3BP3/PP3Q2/2R1K2R w K - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxh7+",
+      "Kh8"
+    ],
+    "firstMove": "Bxh7+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – G.H. Hadland, Thornton Heath 1919",
+    "difficulty": "easy",
+    "comment": "Or 21...¢xh7 22.g6†+– ✓ with a fork. 22.¥g6 And White won.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0040",
+    "trainingSetId": "easy",
+    "puzzleNumber": 40,
+    "fen": "2r2rk1/pQ1n1pp1/1p2p2p/3p4/P2P4/4P2P/1qB2PP1/2R2RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bh7+",
+      "Qxd7",
+      "Rxc2"
+    ],
+    "firstMove": "Bh7+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Milan Vidmar, London 1922",
+    "difficulty": "easy",
+    "comment": "is equal. 22...¢xh7 23.¦xc8 ¦xc8 24.£xc8+– ✓ White is an exchange up.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0041",
+    "trainingSetId": "easy",
+    "puzzleNumber": 41,
+    "fen": "3k4/p1p2prr/1p5N/3PRPP1/b1P5/4B3/P4K2/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxf7+"
+    ],
+    "firstMove": "Nxf7+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – W. Malowan, New York (simul) 1922",
+    "difficulty": "easy",
+    "comment": "looks like a combination and was played in the game, but Black had 36...¦xf7 37.g6 ¦xf5†! 38.¦xf5 ¦g7 when he collects the g-pawn with a draw. Instead normal moves give two points. A good choice is 36.f6 ¦g6 37.¥f4!+– when Black’s rooks are trapped and he can’t sacrifice the exchange in a good way.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0042",
+    "trainingSetId": "easy",
+    "puzzleNumber": 42,
+    "fen": "r3k2r/pbp2qb1/1pn1p2p/3nP1pQ/3PNp2/2PB4/PP1N1BPP/R4RK1 w kq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nd6+"
+    ],
+    "firstMove": "Nd6+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – N.N., Moscow (simul) 1925",
+    "difficulty": "easy",
+    "comment": "Black resigned due to: 17...cxd6 18.¥g6+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0043",
+    "trainingSetId": "easy",
+    "puzzleNumber": 43,
+    "fen": "4k3/1r2r1pp/1nR2p2/pp1p4/1N1P2P1/1R2PP2/PP3K1P/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxb6"
+    ],
+    "firstMove": "Rxb6",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Jacques Mieses, Bad Kissingen 1928",
+    "difficulty": "easy",
+    "comment": "Winning a second pawn. 31...axb4 Or 31...¦xb6 32.¤xd5+– ✓ with a fork. 32.¦xb7 ¦xb7 33.¦xb4 1–0 The endgame is hopeless for Black.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0044",
+    "trainingSetId": "easy",
+    "puzzleNumber": 44,
+    "fen": "7r/1p3pp1/pn1kb2p/3p4/3N1P1P/PP1BP3/3K2P1/2R5 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxa6"
+    ],
+    "firstMove": "Bxa6",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Arpad Vajda, Budapest 1929",
+    "difficulty": "easy",
+    "comment": "White wins a pawn due to: 22...bxa6 23.¦c6† ¢e7 24.¦xb6+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0045",
+    "trainingSetId": "easy",
+    "puzzleNumber": 45,
+    "fen": "r3nrk1/1bp2ppp/pp2p3/3q2N1/1b1PNP2/3B2P1/PP2QP1P/2RR2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxh7",
+      "f5"
+    ],
+    "firstMove": "Nxh7",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Albert Becker, Karlsbad 1929",
+    "difficulty": "easy",
+    "comment": "Instead 17...¢xh7 can be met by 18.¤f6†+– ✓ with a discovered check, or 18.¤c3†+–. 18.¤hg5 18.¤xf8 fxe4 19.¥c4 is also winning. In the game, Black resigned due to: 18...fxe4 19.¥xe4 The bishop on b7 is doomed. (White could also go for the king with 19.¥c4+–, forcing Black to give up his queen.)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0046",
+    "trainingSetId": "easy",
+    "puzzleNumber": 46,
+    "fen": "r1b1k2r/2qp1ppp/ppnbpn2/8/2PNP3/P1N1BP2/1P4PP/2RQKB1R w Kkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ndb5",
+      "Ncb5"
+    ],
+    "firstMove": "Ndb5",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Manuel Larrea, Mexico (simul) 1933",
+    "difficulty": "easy",
+    "comment": "is the same. 11...axb5 12.¤xb5 ¥g3† Regaining the pawn does little to alleviate the real problems of the black position – his weaknesses on the dark squares (and the b6-pawn) and lack of development. 13.hxg3 £xg3† 14.¥f2+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0047",
+    "trainingSetId": "easy",
+    "puzzleNumber": 47,
+    "fen": "4r1k1/6qp/pp4p1/2pP4/4Pp2/1P6/P1R3PP/4Q2K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe4",
+      "Qxe4",
+      "Qa1+"
+    ],
+    "firstMove": "Rxe4",
+    "motifTags": [],
+    "gameSource": "Vera Menchik – Jose Raul Capablanca, Margate 1935",
+    "difficulty": "easy",
+    "comment": "With back-rank mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0048",
+    "trainingSetId": "easy",
+    "puzzleNumber": 48,
+    "fen": "2bq1r2/4bpk1/4pp1N/7Q/1p1p4/3B4/PP3PPP/R5K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxf7",
+      "Rxf7",
+      "Qh7+",
+      "Kf8",
+      "Qh8#"
+    ],
+    "firstMove": "Nxf7",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Grigory Levenfish, Moscow 1935",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0049",
+    "trainingSetId": "easy",
+    "puzzleNumber": 49,
+    "fen": "r3r1k1/3b2pp/2p5/p1RpPp2/3Q1P2/1q2P1P1/6BP/R5K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd5"
+    ],
+    "firstMove": "Rxd5",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Mikhail Botvinnik, Moscow 1936",
+    "difficulty": "easy",
+    "comment": "White wins a pawn, since 34...cxd5 35.¥xd5†+– ✓ is a fork.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0050",
+    "trainingSetId": "easy",
+    "puzzleNumber": 50,
+    "fen": "r3br1k/pp5p/4B1p1/4NpP1/P2Pn3/q1PQ3R/7P/3R2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxh7+",
+      "Kxh7",
+      "Qh3+",
+      "Kg7",
+      "Qh6#"
+    ],
+    "firstMove": "Rxh7+",
+    "motifTags": [],
+    "gameSource": "Jose Raul Capablanca – Guillermo Vassaux, Buenos Aires (ol) 1939",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0051",
+    "trainingSetId": "easy",
+    "puzzleNumber": 51,
+    "fen": "r3k2r/1pqbbpp1/p1npp2p/8/4PP1P/1NN4R/PPP2QP1/2KR1B2 b kq - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxg2"
+    ],
+    "firstMove": "Bxg2",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Sergey Petrov, corr. 1902",
+    "difficulty": "easy",
+    "comment": "Highlighting the usefulness of the active d4-rook. 17.£g3 17.£xg2 ¦g4–+ ✓ pins the queen. 17...¦g4 ✓ 18.¥xc5 ¦xg3 19.fxg3 ¦e8–+",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0052",
+    "trainingSetId": "easy",
+    "puzzleNumber": 52,
+    "fen": "2rq1rk1/pp1bppb1/3p2p1/4n2n/3NP2P/2N1BP2/PPPQ4/1K1R1BR1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qg2+",
+      "Rxg2",
+      "fxg2#"
+    ],
+    "firstMove": "Qg2+",
+    "motifTags": [],
+    "gameSource": "Apollon Viakhirev – Alexander Alekhine, corr. 1906",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0053",
+    "trainingSetId": "easy",
+    "puzzleNumber": 53,
+    "fen": "rn1q1rk1/pbp1bppp/1p3n2/3p4/3P4/P1N1P1N1/1P2BPPP/R1BQK2R w KQ - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "f3+",
+      "Kg1",
+      "Qxf1+",
+      "Kxf1",
+      "Rd1#"
+    ],
+    "firstMove": "f3+",
+    "motifTags": [],
+    "gameSource": "Benjamin Blumenfeld – Alexander Alekhine, Moscow (2) 1908",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0054",
+    "trainingSetId": "easy",
+    "puzzleNumber": 54,
+    "fen": "r1b2rk1/ppq2ppp/2n1pn2/2p5/3P4/P1PBPN2/5PPP/R1BQ1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxh2+",
+      "Kxh2",
+      "Qh4+",
+      "Rh3",
+      "Qxe1"
+    ],
+    "firstMove": "Bxh2+",
+    "motifTags": [],
+    "gameSource": "J. Goldfarb – Alexander Alekhine, St Petersburg 1909",
+    "difficulty": "easy",
+    "comment": "Undefended pieces...",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0055",
+    "trainingSetId": "easy",
+    "puzzleNumber": 55,
+    "fen": "rnb2rk1/ppp1qppp/8/3p4/3P4/3BP3/PP3PPP/R2QK1NR b KQ - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxf5",
+      "gxf5",
+      "Qxg7"
+    ],
+    "firstMove": "Rxf5",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – B. Lyubimov, Moscow 1909",
+    "difficulty": "easy",
+    "comment": "White reduces the material deficit from a piece to an exchange with: Considering the weak dark squares and exposed king, his position is clearly superior.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0056",
+    "trainingSetId": "easy",
+    "puzzleNumber": 56,
+    "fen": "r3r1k1/2qbbppp/pn1p1n2/1pp1p3/3PP3/1PP2N1P/P1B1QPP1/R1B1RNK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxh7+"
+    ],
+    "firstMove": "Bxh7+",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Stefan Izbinsky, St Petersburg 1909",
+    "difficulty": "easy",
+    "comment": "Forcing the king to leave the defence of the rook. 19...¢xh7 20.£xf8+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0057",
+    "trainingSetId": "easy",
+    "puzzleNumber": 57,
+    "fen": "3rr1k1/2qb1pbp/p2p1np1/np2p3/3PP3/1P2NQ1P/PBBN1PP1/R3R1K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxe1+",
+      "Rxf3",
+      "Rf1",
+      "Qxf1+"
+    ],
+    "firstMove": "Qxe1+",
+    "motifTags": [],
+    "gameSource": "V. Rozanov/N. Tselikov – Alexander Alekhine, Moscow 1915",
+    "difficulty": "easy",
+    "comment": "(28...£xe2?? 29.£c8† ¦f8 30.£xf8 mate) 29.¥xf1 ¤f2† 30.¢g2 ¤xh3 31.¢xf3 ¤g5† is also winning for Black, although it doesn’t look so simple with White’s king active after 32.¢f4 ¤f7 33.¢f5 (one point). 28.¤xe1 ¤f2† 29.¢g2 ¤xh3 30.¤f3 30.¢xh3 ¦e8!–+ ✓ 30...¦xf3 Black could also have achieved a winning position by going for the a-pawn, but this is simple. 31.¥xf3 31.¢xf3 ¤g1†–+ ✓ 31...¤g5–+ ✓ 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0058",
+    "trainingSetId": "easy",
+    "puzzleNumber": 58,
+    "fen": "r4rk1/pp2bppp/1q2p1b1/4B3/2BP4/1P6/P3QPPP/3RR1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxe4",
+      "Bxe4",
+      "c5"
+    ],
+    "firstMove": "Nxe4",
+    "motifTags": [],
+    "gameSource": "Leifchild Leif-Jones – Alexander Alekhine, London (simul) 1923",
+    "difficulty": "easy",
+    "comment": "A discovered attack, winning the bishop. 16...¥xc5 17.£xe4+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0059",
+    "trainingSetId": "easy",
+    "puzzleNumber": 59,
+    "fen": "r1b1rnk1/1pp1qppp/p1p5/4P3/3N4/P1Q3B1/1PP2PPP/3R1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxf5+"
+    ],
+    "firstMove": "Nxf5+",
+    "motifTags": [],
+    "gameSource": "O. Friedmann – Alexander Alekhine, Czechoslovakia 1925",
+    "difficulty": "easy",
+    "comment": "Not 18.¥xf5? ¦h4 (18...¦xg3µ) 19.¤h5 £h8 and Black wins a piece. 18...exf5 Instead Alekhine tried 18...¢f8, but White has several ways to win, for instance 19.¤xd6 ¦h4 trapping the queen, but to no avail. 20.£xf7† £xf7 21.¤xf7+– White has won three pawns (1–0, 42 moves). 19.¤xd5†+– ✓ It’s a fork.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0060",
+    "trainingSetId": "easy",
+    "puzzleNumber": 60,
+    "fen": "2rr2k1/pn2qp1p/4b1p1/2pp4/8/6P1/PPNQPPBP/2RR2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxd5",
+      "cxd5"
+    ],
+    "firstMove": "Nxd5",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Frederick Yates, Baden-Baden 1925",
+    "difficulty": "easy",
+    "comment": "Yates avoided this with 15...¥d6, but after 16.¥xd6 ✓ cxd5+– he had no compensation whatsoever for the lost pawn. 16.¥c7+– ✓ The queen is trapped.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0061",
+    "trainingSetId": "easy",
+    "puzzleNumber": 61,
+    "fen": "rnbqkbnr/pp4pp/2p1p3/3p1p2/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf2"
+    ],
+    "firstMove": "Bxf2",
+    "motifTags": [],
+    "gameSource": "Arpad Vajda – Alexander Alekhine, Semmering 1926",
+    "difficulty": "easy",
+    "comment": "White can’t take back due to: 26.£xf2? £xf2† 27.¢xf2 ¦d2† 28.¢e3 ¦xc2–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0062",
+    "trainingSetId": "easy",
+    "puzzleNumber": 62,
+    "fen": "2r2rk1/p2qn1pp/1p2p3/n2pPp1P/3P1N2/P2PB1Q1/5PP1/R3K2R w KQ - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxf3",
+      "gxf3",
+      "Rxf3",
+      "Qd1+",
+      "Rf1",
+      "Qxf1#"
+    ],
+    "firstMove": "Rxf3",
+    "motifTags": [],
+    "gameSource": "Roberto Grau – Alexander Alekhine, San Remo 1930",
+    "difficulty": "easy",
+    "comment": "38...£c2 ✓ 0–1 There is no defence against the mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0063",
+    "trainingSetId": "easy",
+    "puzzleNumber": 63,
+    "fen": "r1b1qrk1/2p3bp/p2p1n2/3Ppp1n/2B5/2N1BP1P/PPQ1N1P1/2K1R2R b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxe6+",
+      "fxe6",
+      "Bg6#"
+    ],
+    "firstMove": "Qxe6+",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Vasic, Banja Luka (simul) 1931",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0064",
+    "trainingSetId": "easy",
+    "puzzleNumber": 64,
+    "fen": "r3qrk1/2nn1pbp/p2p2p1/1ppPp1B1/2P1PP2/1PNQ4/P2N2PP/4RRK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bg6",
+      "fxg6",
+      "Qa5"
+    ],
+    "firstMove": "Bg6",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Rumjancev, Sarajevo (simul) 1931",
+    "difficulty": "easy",
+    "comment": "avoids mate, but Black is completely lost after 20.¥xf7† ¢d8 followed by any decent queen move. 20.£xg6 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0065",
+    "trainingSetId": "easy",
+    "puzzleNumber": 65,
+    "fen": "rnbq1rk1/1p3pbp/p2p1np1/2pP4/P3P3/2NB1N2/1P3PPP/R1BQ1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bb5",
+      "axb5",
+      "Qxe2#"
+    ],
+    "firstMove": "Bb5",
+    "motifTags": [],
+    "gameSource": "Adolf Fink – Alexander Alekhine, Pasadena 1932",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0066",
+    "trainingSetId": "easy",
+    "puzzleNumber": 66,
+    "fen": "r1bqnrk1/pp1n2bp/2pp2p1/4pp2/2PPP3/2N1BN2/PP3PPP/R2QRBK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rd8+",
+      "Qxb7",
+      "Rxb7",
+      "Bxe5"
+    ],
+    "firstMove": "Rd8+",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Jobbahazai, Vienna (simul) 1936",
+    "difficulty": "easy",
+    "comment": "is also good (White will soon be two pawns up) but only the game move forces resignation. Note that after 20.£xb7 ¦xb7 White should avoid pinning the bishop with 21.¦d8† ¥f8 22.¥a3 since Black can struggle on with: 22...¤d7! Nevertheless, White gets a rook ending a pawn up that looks winning. 20...¥f8 20...¦xd8 21.£xb7+– ✓ 21.£xf6+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0067",
+    "trainingSetId": "easy",
+    "puzzleNumber": 67,
+    "fen": "r3r1k1/1pqn1pb1/p2p1npp/2pP4/P3PB2/2N2B1P/1PQ2PP1/R3R1K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxf7"
+    ],
+    "firstMove": "Nxf7",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Rowena Bruce, Plymouth 1938",
+    "difficulty": "easy",
+    "comment": "Classical destruction of the f7-e6 formation. 11...¢xf7 12.£xe6† 1–0 Black foresaw 12...¢g7 13.£f7 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0068",
+    "trainingSetId": "easy",
+    "puzzleNumber": 68,
+    "fen": "r2qr1k1/ppn2pb1/3p1n1p/2pP2p1/4P1b1/P1N2NB1/1PQ1BPPP/R2R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxf6"
+    ],
+    "firstMove": "Bxf6",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – S. Lopo, Estoril (simul) 1940",
+    "difficulty": "easy",
+    "comment": "White wins a pawn since Black cannot take back on f6.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0069",
+    "trainingSetId": "easy",
+    "puzzleNumber": 69,
+    "fen": "r1bq1rk1/pppnn1bp/3p2p1/3Ppp2/1PP1P3/2N2NP1/P4PBP/R1BQ1RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxe4"
+    ],
+    "firstMove": "Rxe4",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – A. Aragao, Estoril (simul) 1940",
+    "difficulty": "easy",
+    "comment": "Finishing off a winning position. 37.¦xe4 ¢f5† 38.¢f2 ¢xe4–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0070",
+    "trainingSetId": "easy",
+    "puzzleNumber": 70,
+    "fen": "r1b2rk1/pp2qpbp/2p3p1/2n1p2n/2P1P3/2N1BP2/PP1QN1PP/1B1R1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxh7+",
+      "Nxh7",
+      "Bxe7"
+    ],
+    "firstMove": "Bxh7+",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Salvatierra, Madrid (simul) 1941",
+    "difficulty": "easy",
+    "comment": "¦e8 11.¥h4 dxc4± Alekhine was not worried about giving back the pawn, since he gets a strong centre. If he was worried, he could have started with 9.cxd5±, which is equally strong. (1–0, 40 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0071",
+    "trainingSetId": "easy",
+    "puzzleNumber": 71,
+    "fen": "r4rk1/pppqppbp/1n4p1/3P4/4P3/1QN1BP2/PP3P1P/2KR3R w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nf6+",
+      "gxf6",
+      "Bxf6"
+    ],
+    "firstMove": "Nf6+",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – J.M. De Cossio, San Sebastian (simul) 1944",
+    "difficulty": "easy",
+    "comment": "1–0 There is no defence against the mate on g7.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0072",
+    "trainingSetId": "easy",
+    "puzzleNumber": 72,
+    "fen": "r1bqn1k1/ppp2rb1/3p2np/PPPPp1p1/2N1Pp2/B1N2P2/4B1PP/R2Q1RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nh6+",
+      "gxh6",
+      "Bxf6"
+    ],
+    "firstMove": "Nh6+",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – M. Ricondo, Santander (simul) 1945",
+    "difficulty": "easy",
+    "comment": "White checkmates or wins the queen.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0073",
+    "trainingSetId": "easy",
+    "puzzleNumber": 73,
+    "fen": "r1bqk2r/pp2bppp/2n1pn2/3p4/2PP4/P1N2N2/1P3PPP/R1BQKB1R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ng6+",
+      "hxg6",
+      "Rh4#"
+    ],
+    "firstMove": "Ng6+",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Eelke Wiersma, Amsterdam 1920",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0074",
+    "trainingSetId": "easy",
+    "puzzleNumber": 74,
+    "fen": "r1bqk2r/pp2ppbp/1nnp2p1/6B1/2PP4/2N5/PP3PPP/2RQKBNR w Kkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxh2+"
+    ],
+    "firstMove": "Qxh2+",
+    "motifTags": [],
+    "gameSource": "Horace Bigelow – Max Euwe, Bromley 1920",
+    "difficulty": "easy",
+    "comment": "Exchanging queens and consolidating the material advantage. 19.¢xh2 ¤g4† 20.¢g3 ¤xh6–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0075",
+    "trainingSetId": "easy",
+    "puzzleNumber": 75,
+    "fen": "r2q1r2/pp2ppkp/3p2p1/3b1P2/2P1P3/3Q4/PP4PP/2R2RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg2",
+      "Kxg2",
+      "Rg6+"
+    ],
+    "firstMove": "Bxg2",
+    "motifTags": [],
+    "gameSource": "Theodor Gruber – Max Euwe, Vienna 1921",
+    "difficulty": "easy",
+    "comment": "Black wins the queen or the rook on f1.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0076",
+    "trainingSetId": "easy",
+    "puzzleNumber": 76,
+    "fen": "r2q1r2/1ppb1pbk/p1np1npp/4p3/1P2P3/1BPP1N2/PB1N1PPP/R2QR1K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxc3",
+      "Qxc3",
+      "Ne4+"
+    ],
+    "firstMove": "Qxc3",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Efim Bogoljubov, Maehrisch Ostrau 1923",
+    "difficulty": "easy",
+    "comment": "Black wins back his sacrificed piece, leaving him a pawn up. 15.¢f1 ¤xc3³ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0077",
+    "trainingSetId": "easy",
+    "puzzleNumber": 77,
+    "fen": "r2qr1k1/ppn1ppbp/2bp2p1/3N4/2P1PP2/4B3/PP1QB1PP/3R1RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxf6+",
+      "Kxf6",
+      "Nxe4+",
+      "Ke5",
+      "Nxc5",
+      "bxc5"
+    ],
+    "firstMove": "Qxf6+",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Jacques Davidson, Amsterdam (1) 1924",
+    "difficulty": "easy",
+    "comment": "The pawn ending is winning, unless Black gets time to collect the queenside pawns. And he doesn’t after: 30.¢f1 (or 30.f3)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0078",
+    "trainingSetId": "easy",
+    "puzzleNumber": 78,
+    "fen": "r1bqk2r/pp1pppbp/2n2np1/8/2PP4/2N2N2/PP3PPP/R1BQKB1R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxe4",
+      "Qxe4",
+      "Bd5"
+    ],
+    "firstMove": "Nxe4",
+    "motifTags": [],
+    "gameSource": "Willem Schelfhout – Max Euwe, Utrecht 1926",
+    "difficulty": "easy",
+    "comment": "If White steps out of the pin with 26.¢h2, there are many moves that keep the pawn: 26...f5, 26...¥d5 or even 26...¤f6 27.¤xe5 ¤xe5 28.£xe5 ¥xb3.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0079",
+    "trainingSetId": "easy",
+    "puzzleNumber": 79,
+    "fen": "r4rk1/2qnbpp1/ppbp1n1p/4pP2/P3P1PP/1NN1B3/1PP3B1/R2Q1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxd3",
+      "Rexd3",
+      "Rxd3"
+    ],
+    "firstMove": "Rxd3",
+    "motifTags": [],
+    "gameSource": "Birger Rasmusson – Max Euwe, London (ol) 1927",
+    "difficulty": "easy",
+    "comment": "Or 21...¥xc4 first makes no difference. 22.¦xd3 ¥xc4 23.¢e2–+ ✓ An extra pawn in a pawn ending wins, unless there are some special circumstances.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0080",
+    "trainingSetId": "easy",
+    "puzzleNumber": 80,
+    "fen": "r2nk1nr/pppq1pbp/3pb1p1/1P2p3/2P5/2NP1NP1/P3PPBP/R1BQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxg2",
+      "Rxg2",
+      "Qh3+",
+      "Kg1",
+      "Qxg2#"
+    ],
+    "firstMove": "Rxg2",
+    "motifTags": [],
+    "gameSource": "Albert Becker – Max Euwe, Hague 1928",
+    "difficulty": "easy",
+    "comment": "Or 33...¦xg2 mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0081",
+    "trainingSetId": "easy",
+    "puzzleNumber": 81,
+    "fen": "r1b2rk1/pp1n1pbp/3p1np1/q2Pp3/4P3/2N2NPP/PP3PB1/R1BQ1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxg2+",
+      "Rf2",
+      "Qxf2+",
+      "Kxf2",
+      "Rh2+"
+    ],
+    "firstMove": "Qxg2+",
+    "motifTags": [],
+    "gameSource": "B. Colin – Max Euwe, Bern 1932",
+    "difficulty": "easy",
+    "comment": "And Black takes the queen: 35.¢f3 ¦xc2–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0082",
+    "trainingSetId": "easy",
+    "puzzleNumber": 82,
+    "fen": "3rr1k1/pp3pp1/2n1qn1p/3p4/8/1QN1P1P1/PP3PBP/2R2RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxb2",
+      "Rxb2",
+      "Qxd1+"
+    ],
+    "firstMove": "Rxb2",
+    "motifTags": [],
+    "gameSource": "Dirk van Foreest – Max Euwe, Netherlands 1932",
+    "difficulty": "easy",
+    "comment": "Black has won a pawn.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0083",
+    "trainingSetId": "easy",
+    "puzzleNumber": 83,
+    "fen": "rnbq1rk1/ppp1ppbp/6p1/8/3P4/2n2N2/PP1BPPPP/2RQKB1R w K - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd2",
+      "Rxd2",
+      "Nxb3"
+    ],
+    "firstMove": "Rxd2",
+    "motifTags": [],
+    "gameSource": "Alexander Alekhine – Max Euwe, Netherlands (23) 1935",
+    "difficulty": "easy",
+    "comment": "The extra pawn is decisive. Strategy requires thought, tactics require observation.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0084",
+    "trainingSetId": "easy",
+    "puzzleNumber": 84,
+    "fen": "2r2rk1/p4ppp/1p6/n2P4/5Q2/5N2/q4PPP/3RR1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxd4",
+      "Bxd4"
+    ],
+    "firstMove": "Nxd4",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Efim Bogoljubov, Bad Nauheim/Stuttgart/Garmisch 1937",
+    "difficulty": "easy",
+    "comment": "picks up the pawn, but not the exchange. Black is not clearly winning yet (zero points). 27.¦xd4 ¥xd4 White cannot take in any way due to mate on e1: 28.¦xd4 £e1 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0085",
+    "trainingSetId": "easy",
+    "puzzleNumber": 85,
+    "fen": "1r1q1rk1/p3ppbp/2bp1np1/2p5/1nP5/1PN1N1PP/PB1QPPB1/R4RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxe5",
+      "Ne6",
+      "fxe5",
+      "Bg5+"
+    ],
+    "firstMove": "Nxe5",
+    "motifTags": [],
+    "gameSource": "Nicolaas Cortlever – Max Euwe, Beverwijk 1941",
+    "difficulty": "easy",
+    "comment": "14.¤d3!+– ✓ White is not only a pawn up, Black is also far behind in development.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0086",
+    "trainingSetId": "easy",
+    "puzzleNumber": 86,
+    "fen": "1r1q1rk1/p3ppbp/2bp1np1/2p5/1nP5/1PN1N1PP/PB1QPPB1/R4RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nf3+"
+    ],
+    "firstMove": "Nf3+",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Henry Grob, Zurich 1947",
+    "difficulty": "easy",
+    "comment": "Black wins an exchange after: 22.£xf3 £xd2–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0087",
+    "trainingSetId": "easy",
+    "puzzleNumber": 87,
+    "fen": "r2q1rk1/pp1nppbp/2p1b1p1/4N1B1/3P4/2PB3P/PP3PP1/R2QR1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxe6",
+      "Nxe6"
+    ],
+    "firstMove": "Bxe6",
+    "motifTags": [],
+    "gameSource": "Theo van Scheltinga – Max Euwe, Amsterdam 1948",
+    "difficulty": "easy",
+    "comment": "Keeping the knight and setting up a blockade on the e-file was not realistic, since White has an f-pawn as well. 39.£f5† Or 39.£e4†. 39...¢h8 40.£xe6± ✓ White’s winning chances should be bigger than Black’s drawing chances, although the game ended in a draw.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0088",
+    "trainingSetId": "easy",
+    "puzzleNumber": 88,
+    "fen": "r3nr1k/pb1nqppp/1pp5/3p4/3P4/1QNBPN2/PP3PPP/2RR2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxa5",
+      "Rxa5",
+      "b3"
+    ],
+    "firstMove": "Rxa5",
+    "motifTags": [],
+    "gameSource": "Jan Visser – Max Euwe, Baarn 1949",
+    "difficulty": "easy",
+    "comment": "White loses the rook.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0089",
+    "trainingSetId": "easy",
+    "puzzleNumber": 89,
+    "fen": "1rr3k1/1p1np2p/p2pb3/5p2/2P5/1PR1BP2/P3B1PP/3RK3 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxe5"
+    ],
+    "firstMove": "Qxe5",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Nicolaas Cortlever, Amsterdam 1954",
+    "difficulty": "easy",
+    "comment": "Removing the defender of the e2-square. 26.dxe5 ¤e2† 27.¢h2 ¤xg3–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0090",
+    "trainingSetId": "easy",
+    "puzzleNumber": 90,
+    "fen": "r1bq1rk1/p5p1/1p3npp/2pPp3/P1P1P3/2PBB3/6PP/R2Q1RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxf6",
+      "Bxf6",
+      "e7+",
+      "Kg7"
+    ],
+    "firstMove": "Bxf6",
+    "motifTags": [],
+    "gameSource": "Max Euwe – Rafael Cintron, Munich (ol) 1958",
+    "difficulty": "easy",
+    "comment": "37.exd8=£+– ✓ Opposite-coloured bishops normally improve the drawing chances of the player who has sacrificed material, but Black did not sacrifice the exchange here – he lost it. And without active pieces, he cannot create anything on the dark squares. Instead White’s active pieces and advantage in terrain give him an even greater advantage.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0091",
+    "trainingSetId": "easy",
+    "puzzleNumber": 91,
+    "fen": "rnbqk2r/pp2ppbp/3p1np1/2P5/4PP2/2N2N2/PPP3PP/R1BQKB1R b KQkq - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxb2",
+      "Qxb2",
+      "Rd1+",
+      "Bf1",
+      "Rxf1+",
+      "Kg2",
+      "Rd1"
+    ],
+    "firstMove": "Bxb2",
+    "motifTags": [],
+    "gameSource": "C.H.O’D. Alexander – Mikhail Botvinnik, Nottingham 1936",
+    "difficulty": "easy",
+    "comment": "Black has won a pawn (0–1, 35 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0092",
+    "trainingSetId": "easy",
+    "puzzleNumber": 92,
+    "fen": "rnbqkb1r/pp1ppp1p/5np1/2p5/2P5/1P6/PB1PPPPP/RN1QKBNR w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxc3",
+      "Qxa3",
+      "Rxc3",
+      "Qxa2#"
+    ],
+    "firstMove": "Nxc3",
+    "motifTags": [],
+    "gameSource": "Andor Lilienthal – Mikhail Botvinnik, Moscow 1945",
+    "difficulty": "easy",
+    "comment": "30...¦xa3–+ ✓ (0–1, 37 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0093",
+    "trainingSetId": "easy",
+    "puzzleNumber": 93,
+    "fen": "r3r1k1/pp1nppbp/2p5/5bp1/2NP4/BPP1P3/4BPPP/R4RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxe3",
+      "Qxe3"
+    ],
+    "firstMove": "Rxe3",
+    "motifTags": [],
+    "gameSource": "Mikhail Botvinnik – Ludek Pachman, Moscow 1947",
+    "difficulty": "easy",
+    "comment": "Botvinnik played 18.¦xg7†–+ and resigned after 45 moves. 18...¥f4–+ ✓ Chess mastery essentially consists of analysing chess positions accurately.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0094",
+    "trainingSetId": "easy",
+    "puzzleNumber": 94,
+    "fen": "r1bqk1nr/1p3pbp/2np2p1/p1p1p3/2P5/P1N2NP1/1P1PPPBP/1RBQ1RK1 b kq - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Be4"
+    ],
+    "firstMove": "Be4",
+    "motifTags": [],
+    "gameSource": "Mikhail Botvinnik – Tigran Petrosian, Moscow 1966",
+    "difficulty": "easy",
+    "comment": "White resigned. 35.¥xe4 35.¦xd2 exd2–+ ✓ and the pawn queens, or 35.¦cxe3 ¥xe3 36.¦xd2 ¥xf3† 37.¢xf3 ¥xd2 ✓ and Black is winning. 35...¦xe2†–+ ✓ The bishop will have to sacrifice itself for the e-pawn.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0095",
+    "trainingSetId": "easy",
+    "puzzleNumber": 95,
+    "fen": "r2qkb1r/ppp3pp/2b1pp1n/3pP3/3P4/1N3N2/PPP2PPP/R1BQK2R b KQkq - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxc7"
+    ],
+    "firstMove": "Qxc7",
+    "motifTags": [],
+    "gameSource": "Bent Larsen – Mikhail Botvinnik, Leiden 1970",
+    "difficulty": "easy",
+    "comment": "White wins two pawns due to the back-rank mate (1–0, 47 moves). 37.e5 also looks promising, as it opens up for an attack against h7, but 37...¦d2! 38.£f5 g6 39.£xf6† £xf6 40.exf6+– limits White’s advantage to only a winning endgame.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0096",
+    "trainingSetId": "easy",
+    "puzzleNumber": 96,
+    "fen": "r2q1rk1/pbp2pbp/1p2p1pB/n7/3PP3/2PB4/P2QNPPP/R4RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxd5"
+    ],
+    "firstMove": "Nxd5",
+    "motifTags": [],
+    "gameSource": "Vassily Smyslov – Mikhail Govbinder, Moscow 1967",
+    "difficulty": "easy",
+    "comment": "Threatening the queen with check. 16...cxd5 17.£xe5 £xe5 18.¥xe5+– ✓ White has won a pawn with a dominant position (1–0, 24 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0097",
+    "trainingSetId": "easy",
+    "puzzleNumber": 97,
+    "fen": "rn1qk1nr/1b2ppbp/p2p2p1/1pp5/3PPP2/2NB1N2/PPP1Q1PP/R1B1K2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxh3+",
+      "Kxh3",
+      "Nxf2+",
+      "Kg2",
+      "Nxd1",
+      "Rxd1"
+    ],
+    "firstMove": "Qxh3+",
+    "motifTags": [],
+    "gameSource": "Shenreder – Mikhail Tal, Riga 1951",
+    "difficulty": "easy",
+    "comment": "It’s an exchange and a pawn.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0098",
+    "trainingSetId": "easy",
+    "puzzleNumber": 98,
+    "fen": "r2q1rk1/1p1bbppp/2nppn2/p7/4PP2/1NN1B3/PPP1B1PP/R2Q1RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxd7+",
+      "Kxd7",
+      "Nc5+",
+      "Ke7",
+      "Nxe4"
+    ],
+    "firstMove": "Qxd7+",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – Georgi Tringov, Munich (ol) 1958",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0099",
+    "trainingSetId": "easy",
+    "puzzleNumber": 99,
+    "fen": "r1b1rnk1/pp2q1pp/2p5/5p2/3Pp3/2N1P3/PPQN1PPP/4RRK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxe3",
+      "fxe3",
+      "Qg2+",
+      "Ke1",
+      "Nf3#"
+    ],
+    "firstMove": "Rxe3",
+    "motifTags": [],
+    "gameSource": "Hector Rossetto – Mikhail Tal, Portoroz 1958",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0100",
+    "trainingSetId": "easy",
+    "puzzleNumber": 100,
+    "fen": "r2q1rk1/pb2bppp/1p3n2/2ppN3/3P4/6P1/PPQ1PPBP/R1BR2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rd8+",
+      "Ke7"
+    ],
+    "firstMove": "Rd8+",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – Pal Benko, Amsterdam 1964",
+    "difficulty": "easy",
+    "comment": "The point is 19...¢xd8 20.¤xf7† ¢e7 21.¤xe5+– ✓ . 20.¦xh8+– ✓ The game finished with: 20...£xg5 21.£d2 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0101",
+    "trainingSetId": "easy",
+    "puzzleNumber": 101,
+    "fen": "6k1/1pqrnp2/3p2p1/2pn2b1/P1Q3Pp/2B4P/1PP1RP2/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxd5",
+      "Nxd5"
+    ],
+    "firstMove": "Qxd5",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – Naum Levin, Poti 1970",
+    "difficulty": "easy",
+    "comment": "The game move 35...¥f4 is of course hopeless as well (1–0, 41 moves). 36.¦e8† ¢h7 37.¦h8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0102",
+    "trainingSetId": "easy",
+    "puzzleNumber": 102,
+    "fen": "6k1/1p3pp1/p7/P2n1PQ1/8/8/1r3r1P/3R3K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxh2+",
+      "Kg1",
+      "Rbg2+"
+    ],
+    "firstMove": "Rxh2+",
+    "motifTags": [],
+    "gameSource": "Anatoly Shmit – Mikhail Tal, Riga 1971",
+    "difficulty": "easy",
+    "comment": "Or 34...¦hg2†. 35.£xg2 The game went 35.¢f1 ¦xg5 0–1. 35...¦xg2† 36.¢xg2 ¤e3† 37.¢f3 ¤xd1–+ ✓ In my games I have sometimes found a combination intuitively, simply feeling that it must be there. Yet I was not able to translate my thought processes into normal human language. flaws are less important details. Shakhmatnaya Nedelia (2003)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0103",
+    "trainingSetId": "easy",
+    "puzzleNumber": 103,
+    "fen": "1r4k1/2qpn1pp/p1p1pr2/2b5/2P2P2/3B4/PP4PP/R1BQ1R1K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxh7+",
+      "Qh5",
+      "Nf5",
+      "g4"
+    ],
+    "firstMove": "Bxh7+",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – Nino Kirov, Novi Sad 1974",
+    "difficulty": "easy",
+    "comment": "does not win a piece, and even loses after 21...¦h6. 20...¢xh7 21.£h5† ¦h6 22.£xc5± ✓ White has won a pawn, but it is only a flank pawn.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0104",
+    "trainingSetId": "easy",
+    "puzzleNumber": 104,
+    "fen": "1rq1r2k/5Rbp/p2p1p1B/2p1p3/2P1P2Q/1P6/P5PP/3b2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg7+",
+      "Kg8",
+      "Bh8",
+      "Kxf7",
+      "Qxf6+",
+      "Kg8",
+      "Qg7#"
+    ],
+    "firstMove": "Bxg7+",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – Yrjo Rantanen, Tallinn 1979",
+    "difficulty": "easy",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0105",
+    "trainingSetId": "easy",
+    "puzzleNumber": 105,
+    "fen": "5bk1/p2Q1p2/q4p2/4r2p/3pr3/8/PPRRNPPP/5K2 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe2",
+      "Rxe2",
+      "d3",
+      "Rxe5"
+    ],
+    "firstMove": "Rxe2",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – Karen Grigorian, Yerevan 1980",
+    "difficulty": "easy",
+    "comment": "White resigned after 33.¦c3 dxe2† 34.¢e1 ¥b4. 33...dxc2†–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0106",
+    "trainingSetId": "easy",
+    "puzzleNumber": 106,
+    "fen": "6k1/q4pp1/4p2p/1p1r4/1PpPQ3/r1P1R1P1/4RP1P/6K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxc3",
+      "Rxc3",
+      "Qa1+",
+      "Kg2",
+      "Qxc3"
+    ],
+    "firstMove": "Rxc3",
+    "motifTags": [],
+    "gameSource": "Eduard Meduna – Mikhail Tal, Sochi 1986",
+    "difficulty": "easy",
+    "comment": "(0–1, 38 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0107",
+    "trainingSetId": "easy",
+    "puzzleNumber": 107,
+    "fen": "r2qk2r/pp1n1ppb/2pbpn1p/4N3/2BP1P1P/6N1/PPP1Q1P1/R1B1K2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxf7",
+      "Kxf7",
+      "Qe7"
+    ],
+    "firstMove": "Nxf7",
+    "motifTags": [],
+    "gameSource": "Mikhail Tal – M. Conway, Boston (simul) 1988",
+    "difficulty": "easy",
+    "comment": "and White won after 30 moves. 13.£xe6† ¢f8 14.£f7 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0108",
+    "trainingSetId": "easy",
+    "puzzleNumber": 108,
+    "fen": "1r4k1/5n1p/5qp1/1p6/3Q4/1P4PP/P3rPB1/R2R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Re1+"
+    ],
+    "firstMove": "Re1+",
+    "motifTags": [],
+    "gameSource": "Soenke Maus – Mikhail Tal, Germany 1990",
+    "difficulty": "easy",
+    "comment": "0–1 White resigned due to: 29.¢h2 29.¦xe1 £xd4–+ ✓ 29...£xd4 30.¦xd4 ¦xa1–+ ✓ The game will appear again later in the book.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0109",
+    "trainingSetId": "easy",
+    "puzzleNumber": 109,
+    "fen": "r3r1k1/1p5p/p1pqn1p1/3p1p2/PP1P1P2/1Q1RP3/4B1PP/1R4K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxf4",
+      "exf4",
+      "Rxe2"
+    ],
+    "firstMove": "Nxf4",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Alexander Konstantinopolsky, Moscow 1947",
+    "difficulty": "easy",
+    "comment": "Black is clearly better, but White managed to hold (41 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0110",
+    "trainingSetId": "easy",
+    "puzzleNumber": 110,
+    "fen": "3r2k1/p2r1p2/4b1p1/qPp1R2p/P1p4P/8/5PP1/Q3RBK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxc4",
+      "Rxe6",
+      "fxe6",
+      "Bxc4"
+    ],
+    "firstMove": "Bxc4",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Genrikh Kasparian, Tbilisi 1949",
+    "difficulty": "easy",
+    "comment": "(39.¦xe6 ¢h7=) 39...£xe1†–+ Black cannot take the bishop due to: 38...¥xc4 38...¦d6 39.¥xe6 was just hopeless (1–0, 41 moves). 39.¦e8† ¦xe8 40.¦xe8† ¢h7 41.¦h8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0111",
+    "trainingSetId": "easy",
+    "puzzleNumber": 111,
+    "fen": "3r2k1/5qpp/pp2r3/2p2b2/nPPp1PP1/P4Q2/3N3P/R3RBK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxg4",
+      "Qxg4"
+    ],
+    "firstMove": "Bxg4",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Efim Geller, Moscow 1950",
+    "difficulty": "easy",
+    "comment": "Petrosian fought on with 29.£g3–+ but he regretted 28.g4? for sure (0–1, 38 moves). 29...¦g6–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0112",
+    "trainingSetId": "easy",
+    "puzzleNumber": 112,
+    "fen": "6k1/1q1rbpp1/7p/1p1p1P2/1P2p1P1/P1Q5/4B2P/3R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "d4",
+      "Rxd4",
+      "Qe1",
+      "d3"
+    ],
+    "firstMove": "d4",
+    "motifTags": [],
+    "gameSource": "Abram Poliak – Tigran Petrosian, Moscow 1951",
+    "difficulty": "easy",
+    "comment": "and the pawn supported by pieces is too strong. 33...£b6 ✓ 0–1 Or 33...£a7–+, but not 33...¥f6? 34.¦xd7!µ. If you chose a slower way to advance the pawn on the 32nd move, such as 32...¥f6 or 32...£a7†, you also get full points. In general I consider that in chess everything rests on tactics. If one thinks of strategy as a block of marble, then tactics are the chisel with which a master operates, in creating works of chess art.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0113",
+    "trainingSetId": "easy",
+    "puzzleNumber": 113,
+    "fen": "2r1b1k1/r1N2p1p/1p2p1pn/p2pP3/1b1P2P1/1P3N1P/P1R2P2/2R2BK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxd5",
+      "Ba6",
+      "Rd8",
+      "Rxc2",
+      "Nf6+"
+    ],
+    "firstMove": "Nxd5",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – A. Koliakov, Moscow 1951",
+    "difficulty": "easy",
+    "comment": "Getting out of Dodge before recapturing the rook. 30...¢f8 31.¦xc2+– ✓ In addition to an extra pawn, White’s pieces are much stronger, for instance the bishop on e8 is dominated (1–0, 33 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0114",
+    "trainingSetId": "easy",
+    "puzzleNumber": 114,
+    "fen": "r4rk1/2n1q2p/b1n1p1p1/pp1pPpN1/P1pP1N1P/2P3P1/1P3PB1/R2QR1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nfxe6"
+    ],
+    "firstMove": "Nfxe6",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Gedeon Barcza, Saltsjobaden 1952",
+    "difficulty": "easy",
+    "comment": "There are a few alternatives with the same idea: 24.¤gxe6+– or 24.axb5 ¥xb5 25.¤gxe6+–. 24...¤xe6 25.¥xd5+– ✓ Since the c6-knight cannot retreat on account of the a8-rook, White is regaining at least the piece, with a winning position (1–0, 30 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0115",
+    "trainingSetId": "easy",
+    "puzzleNumber": 115,
+    "fen": "3r1n1k/3P3p/pp3q2/2pQp3/P1P3B1/3b2R1/1P5P/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qg8+"
+    ],
+    "firstMove": "Qg8+",
+    "motifTags": [],
+    "gameSource": "Iivo Nei – Tigran Petrosian, Moscow 1960",
+    "difficulty": "easy",
+    "comment": "A magnet sacrifice leading to a quick mate. Black resigned, rather than face: 33...¢xg8 34.¥e6† ¢h8 35.¦g8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0116",
+    "trainingSetId": "easy",
+    "puzzleNumber": 116,
+    "fen": "6k1/5r1p/p2N4/nppP2q1/2P5/1P2N3/PQ5P/7K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qh8+",
+      "Nxf7",
+      "Qxe3"
+    ],
+    "firstMove": "Qh8+",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Boris Spassky, Moscow (10) 1966",
+    "difficulty": "easy",
+    "comment": "In the game, Black resigned. He is a piece down after: 30...¢xh8 31.¤xf7† ¢g7 32.¤xg5+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0117",
+    "trainingSetId": "easy",
+    "puzzleNumber": 117,
+    "fen": "Q7/2r2rpk/2p4p/7N/3PpN2/1p2P3/1K4R1/5q2 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxg7+",
+      "Qe8"
+    ],
+    "firstMove": "Rxg7+",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Dragoslav Tomic, Vinkovci 1970",
+    "difficulty": "easy",
+    "comment": "eyes the pawn on e4, but wins only because White has the same rook sacrifice later. But not: 39.¤f6†?? ¦xf6–+ 39...¦xg7 40.¤f6 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0118",
+    "trainingSetId": "easy",
+    "puzzleNumber": 118,
+    "fen": "6rk/p3p2p/1p2Pp2/2p2P2/2P1nBr1/1P6/P6P/3R1R1K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rg1+"
+    ],
+    "firstMove": "Rg1+",
+    "motifTags": [],
+    "gameSource": "Dragoljub Janosevic – Tigran Petrosian, Lone Pine 1978",
+    "difficulty": "easy",
+    "comment": "White resigned due to: 34.¦xg1 ¤f2 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0119",
+    "trainingSetId": "easy",
+    "puzzleNumber": 119,
+    "fen": "8/pr1r3p/6p1/2p1pk2/3b2N1/1P4P1/P2R1PKP/4R3 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd4"
+    ],
+    "firstMove": "Rxd4",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Borislav Ivkov, Teslic 1979",
+    "difficulty": "easy",
+    "comment": "Black resigned as it’s mate: 35...¦xd4 36.¦xe5† ¢xg4 37.f3 mate ✓ Or 37.h3 mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0120",
+    "trainingSetId": "easy",
+    "puzzleNumber": 120,
+    "fen": "r5k1/pp1b2pp/4q3/n7/3Rp3/P7/5QPP/2B2RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxe4",
+      "Qxe4",
+      "Qg6"
+    ],
+    "firstMove": "Rxe4",
+    "motifTags": [],
+    "gameSource": "Tigran Petrosian – Ljubomir Ljubojevic, Niksic 1983",
+    "difficulty": "easy",
+    "comment": "is hopeless for Black when he has lost his only trump, the passed e-pawn (1–0, 28 moves). 27.£f7† ¢h8 28.£f8† ¦xf8 29.¦xf8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0121",
+    "trainingSetId": "easy",
+    "puzzleNumber": 121,
+    "fen": "r1bq1rk1/pp2ppbp/2n3p1/2pn4/3p1P2/NP2PN2/PBPPB1PP/3RQRK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "d3"
+    ],
+    "firstMove": "d3",
+    "motifTags": [],
+    "gameSource": "John Spencer Purdy – Boris Spassky, Antwerp 1955",
+    "difficulty": "easy",
+    "comment": "The bishop on b2 is en prise and 11.¥xg7 dxe2–+ ✓ is an intermediate move that wins a piece.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0122",
+    "trainingSetId": "easy",
+    "puzzleNumber": 122,
+    "fen": "8/4r1k1/4qp2/1p6/3R4/P1N2QPp/1PP2K1P/4r3 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rf1+"
+    ],
+    "firstMove": "Rf1+",
+    "motifTags": [],
+    "gameSource": "Yuri Averbakh – Boris Spassky, Moscow 1961",
+    "difficulty": "easy",
+    "comment": "Other moves are obviously also winning, but mate-in-two should be seen and played here. 39.¢xf1 £e1 mate ✓ I had a good feeling for the critical moments of the play. This undoubtedly compensated for my lack of opening preparation and, possibly, not altogether perfect play in the endgame.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0123",
+    "trainingSetId": "easy",
+    "puzzleNumber": 123,
+    "fen": "2kr3r/pbpq4/1p5p/4PpP1/P2p4/2P2Q2/2P2P2/R1B1KB1R w KQ - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ba6",
+      "Bxa6"
+    ],
+    "firstMove": "Ba6",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Mikhail Shofman, Leningrad 1962",
+    "difficulty": "easy",
+    "comment": "Shofman played 20...c6 but was simply a piece down after 21.¥xb7†. 21.£a8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0124",
+    "trainingSetId": "easy",
+    "puzzleNumber": 124,
+    "fen": "8/4r1p1/p2k1p1p/1bNp3P/3P1K2/2P2P2/6P1/1R6 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxa6"
+    ],
+    "firstMove": "Nxa6",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Alexander Korelov, Yerevan 1962",
+    "difficulty": "easy",
+    "comment": "Neatly picking up a pawn due to: 38...¥xa6 39.¦b6† ¢d7 40.¦xa6+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0125",
+    "trainingSetId": "easy",
+    "puzzleNumber": 125,
+    "fen": "4kb1r/1br4p/p3p1p1/1p3R2/1n2p3/PNN1B3/1PP3PP/2R3K1 w k - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxf8+",
+      "Rxf8",
+      "axb4"
+    ],
+    "firstMove": "Rxf8+",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Zvonko Vranesic, Amsterdam 1964",
+    "difficulty": "easy",
+    "comment": "The two pieces easily outshine the rook.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0126",
+    "trainingSetId": "easy",
+    "puzzleNumber": 126,
+    "fen": "8/4k1p1/1p2pp1p/p6P/2n1PN2/4qPP1/1P4K1/3Q4 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxf4"
+    ],
+    "firstMove": "Qxf4",
+    "motifTags": [],
+    "gameSource": "Borislav Ivkov – Boris Spassky, Santa Monica 1966",
+    "difficulty": "easy",
+    "comment": "There is a fork on e3 coming up. 37.gxf4 ¤e3† 38.¢g3 ¤xd1–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0127",
+    "trainingSetId": "easy",
+    "puzzleNumber": 127,
+    "fen": "8/5r1k/p3Npp1/4p3/3nP3/4QP2/PP2q1P1/1KR5 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qh6+"
+    ],
+    "firstMove": "Qh6+",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Viktor Korchnoi, Kiev 1968",
+    "difficulty": "easy",
+    "comment": "Korchnoi did not let his opponent execute the mate: 35...¢xh6 36.¦h1 mate ✓ Or 35...¢g8 36.¦c8† ¦f8 37.¦xf8 mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0128",
+    "trainingSetId": "easy",
+    "puzzleNumber": 128,
+    "fen": "3Rb3/6kp/6p1/3P1p2/3q4/Q5PP/P1r1r1B1/6RK b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxg1+",
+      "Kxg1",
+      "Rxg2+",
+      "Kh1",
+      "Rh2+",
+      "Kg1",
+      "Rcg2+",
+      "Kf1",
+      "Bb5+",
+      "Ke1",
+      "Rh1#"
+    ],
+    "firstMove": "Qxg1+",
+    "motifTags": [],
+    "gameSource": "Robert Hartoch – Boris Spassky, Amsterdam 1970",
+    "difficulty": "easy",
+    "comment": "Black is winning with many moves, but only one is a forced mate: Or 37...¦g1 mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0129",
+    "trainingSetId": "easy",
+    "puzzleNumber": 129,
+    "fen": "2r2nk1/p2q1pp1/1p2b2p/3p4/3P1P2/4R1P1/PP1Q3P/1B2R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "f5",
+      "Bxf5",
+      "Re7"
+    ],
+    "firstMove": "f5",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Lajos Portisch, Geneva 1977",
+    "difficulty": "easy",
+    "comment": "The queen can no longer defend the bishop.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0130",
+    "trainingSetId": "easy",
+    "puzzleNumber": 130,
+    "fen": "b2r4/p4Brk/1pqp1Qp1/2p2pPp/5P2/3P4/PP5P/2B1RRK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg6+",
+      "Re2"
+    ],
+    "firstMove": "Bxg6+",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – A. Hoffmann, Lugano 1982",
+    "difficulty": "easy",
+    "comment": "It’s mate in five moves: is winning as well thanks to the continued threat of ¥xg6†. 30...¦xg6 31.¦e7† ¢g8 32.£xg6† Or 32.£f7† ¢h8 33.£h7 mate. 32...¢f8 33.£g7 mate ✓ Or 33.£f7 mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0131",
+    "trainingSetId": "easy",
+    "puzzleNumber": 131,
+    "fen": "2kn3r/pp1b4/2n1p1p1/q2pP1P1/2pN1P2/P1P3K1/2PB4/R2Q3B b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxh1"
+    ],
+    "firstMove": "Rxh1",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Andreas Dueckstein, Zurich 1984",
+    "difficulty": "easy",
+    "comment": "Black gets two pieces for the rook after: 30.£xh1 ¤xd4 31.cxd4 £xd2–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0132",
+    "trainingSetId": "easy",
+    "puzzleNumber": 132,
+    "fen": "7k/8/7P/6K1/6Q1/6P1/7q/8 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxh6+",
+      "Qd2+"
+    ],
+    "firstMove": "Qxh6+",
+    "motifTags": [],
+    "gameSource": "Zoltan Ribli – Boris Spassky, Montpellier 1985",
+    "difficulty": "easy",
+    "comment": "is the complicated way to draw (zero points). The queen endgame with g- and h-pawns is generally drawn with the defending king in front of the pawns. It surprised the whole Swedish team when we learned this at the 2016 Olympiad in Baku. However, 85...£d2† should lose in a practical game. First, Black has to find 86.£f4 £d8† 87.£f6† ¢h7! 88.£xd8 with stalemate. 86.¢xh6 ✓ ½–½ Stalemate! 86.¢f5 keeps the game going, but it’s an easy draw anyway.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0133",
+    "trainingSetId": "easy",
+    "puzzleNumber": 133,
+    "fen": "r4rk1/pp5p/2pp4/2n3q1/2b2p1R/2N3P1/PP1QPPB1/2KR4 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxa2"
+    ],
+    "firstMove": "Bxa2",
+    "motifTags": [],
+    "gameSource": "Boris Spassky – Marc Santo-Roman, Montpellier 1991",
+    "difficulty": "easy",
+    "comment": "White is lost due to: 19.¤xa2 ¤b3† ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0134",
+    "trainingSetId": "easy",
+    "puzzleNumber": 134,
+    "fen": "2q4k/p6p/6p1/5p2/5P1P/1Bb2QP1/Pr6/3R2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rd8+"
+    ],
+    "firstMove": "Rd8+",
+    "motifTags": [],
+    "gameSource": "Robert Fischer – J.S. Bennett, USA 1957",
+    "difficulty": "easy",
+    "comment": "Deflection. But not 38.¦c1?? ¥d4†–+. 38...£xd8 39.£xc3† £f6 40.£xf6 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0135",
+    "trainingSetId": "easy",
+    "puzzleNumber": 135,
+    "fen": "3r2k1/5rbp/pp3np1/3P4/1B1N1R2/8/P5PP/5RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxd5",
+      "Ne6",
+      "Rxf7",
+      "Bxd4+",
+      "Kh1",
+      "Nxb4"
+    ],
+    "firstMove": "Nxd5",
+    "motifTags": [],
+    "gameSource": "E. Buerger – Robert Fischer, Milwaukee 1957",
+    "difficulty": "easy",
+    "comment": "27...¤xf4–+ White resigned after: 28.¦xf4 ¦xf4 ✓ 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0136",
+    "trainingSetId": "easy",
+    "puzzleNumber": 136,
+    "fen": "r1bqr1k1/p1p2ppp/3b1n2/2P3B1/8/2NQ1N2/PP3PPP/R4RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxh2+"
+    ],
+    "firstMove": "Bxh2+",
+    "motifTags": [],
+    "gameSource": "Theodor Ghitescu – Robert Fischer, Leipzig (ol) 1960",
+    "difficulty": "easy",
+    "comment": "0–1 Discovered attack.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0137",
+    "trainingSetId": "easy",
+    "puzzleNumber": 137,
+    "fen": "r4rk1/2p3b1/3p2qp/p1PPp3/4Rn2/P5Q1/3B1NPP/2R3K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxe4",
+      "Nxe4",
+      "Ne2+",
+      "Kh1",
+      "Nxg3+"
+    ],
+    "firstMove": "Qxe4",
+    "motifTags": [],
+    "gameSource": "Samuel Reshevsky – Robert Fischer, Los Angeles 1961",
+    "difficulty": "easy",
+    "comment": "Black should be winning with the extra exchange, but failed to convert (½–½, 57 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0138",
+    "trainingSetId": "easy",
+    "puzzleNumber": 138,
+    "fen": "2rq1rk1/pp3pb1/3p2pB/n4P2/4pP2/1BNQ4/PKP3P1/3R3R w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg7",
+      "exd3"
+    ],
+    "firstMove": "Bxg7",
+    "motifTags": [],
+    "gameSource": "Robert Fischer – S. Purevzhav, Varna (ol) 1962",
+    "difficulty": "easy",
+    "comment": "The game ended after 21...¢xg7 22.¤xe4 when either White’s attack or his extra piece would have been enough on their own. 22.f6 Or 22.¥d4+–. 22...dxc2 23.¦h8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0139",
+    "trainingSetId": "easy",
+    "puzzleNumber": 139,
+    "fen": "rr4k1/1q3p2/4b2p/p2n2p1/2B5/Q3P3/PP1R1PPP/3R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxe3"
+    ],
+    "firstMove": "Nxe3",
+    "motifTags": [],
+    "gameSource": "Mario Bertok – Robert Fischer, Stockholm 1962",
+    "difficulty": "easy",
+    "comment": "Black is a piece up, but there is still work to be done. Fischer decided the game on the spot. 25.£xe3 25.¥xe6 £xg2 mate ✓ 25...¥xc4–+ ✓ (0–1, 31 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0140",
+    "trainingSetId": "easy",
+    "puzzleNumber": 140,
+    "fen": "3r1rk1/ppp1qpp1/2p1b2p/4P3/3nNQ1P/5N2/PPP2PP1/R4RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nd4"
+    ],
+    "firstMove": "Nd4",
+    "motifTags": [],
+    "gameSource": "Robert Fischer – John Fuller, Bay City 1963",
+    "difficulty": "easy",
+    "comment": "White exploits Black’s last move ( with a simple discovered attack. 15.¤xd4 15.¤f6†? £xf6! and White has to play 16.£xd4³. 15...¦xd4 16.¤f6†! £xf6 17.£xd4 ✓ White has a clear advantage and the game ended abruptly after a further blunder by Black: 17...¦d8 18.£e4 ¥d5? 19.£xd5 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0141",
+    "trainingSetId": "easy",
+    "puzzleNumber": 141,
+    "fen": "2brrbk1/2q2p1p/p4np1/1ppPp3/4P3/BP2N1P1/P3QPBP/2RR2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxc5",
+      "Bxc5"
+    ],
+    "firstMove": "Bxc5",
+    "motifTags": [],
+    "gameSource": "Robert Fischer – J. Richburg, Detroit (simul) 1964",
+    "difficulty": "easy",
+    "comment": "The game saw 22...£b8+–. 23.b4+– ✓ ¤d7? The only critical move, but it is simply bad: 24.bxc5 ¤xc5? 25.£c2+–",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0142",
+    "trainingSetId": "easy",
+    "puzzleNumber": 142,
+    "fen": "r4rk1/ppp1bppp/2N2n2/7q/6b1/2P5/PP1NBPPP/R1B1QRK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bd6"
+    ],
+    "firstMove": "Bd6",
+    "motifTags": [],
+    "gameSource": "Robert Fischer – Robert Byrne, New York 1965",
+    "difficulty": "easy",
+    "comment": "Moving the threatened piece out of danger with a dangerous threat. Not 12...bxc6 13.¥xg4= or 12...¥xe2? 13.¤xe7†±. 13.h3 ¥xe2 14.¤d4 ¥xf1–+ ✓ (0–1, 36 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0143",
+    "trainingSetId": "easy",
+    "puzzleNumber": 143,
+    "fen": "r1nq1n2/3b2k1/p2p1p1R/Pp1Pp1p1/1Pp1P1P1/2P1BPN1/2BQ2K1/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxf6"
+    ],
+    "firstMove": "Rxf6",
+    "motifTags": [],
+    "gameSource": "Robert Fischer – Svetozar Gligoric, Zagreb 1970",
+    "difficulty": "easy",
+    "comment": "Taking the rook loses the queen, so Black resigned. Instead if White had retreated the rook with, for example, 35.¦h3 then he would still have some work to do, although 1–0 does seem the most probable result (no points). 35...£xf6 35...¢xf6 36.¥xg5†+– ✓ 36.¤h5†+– ✓ My 60 Memorable Games (1969)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0144",
+    "trainingSetId": "easy",
+    "puzzleNumber": 144,
+    "fen": "4rbk1/3Q1ppp/3p4/3P4/5q2/B7/P5PP/5RK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qd4+",
+      "Qe3+",
+      "Rf2"
+    ],
+    "firstMove": "Qd4+",
+    "motifTags": [],
+    "gameSource": "Samuel Reshevsky – Robert Fischer, Palma de Mallorca 1970",
+    "difficulty": "easy",
+    "comment": "(30.¢h1 £f2–+) 30...¦e7! 31.£a4 ¦a7! will also win. 30.¢h1 30.¦f2 ¦e1 mate ✓ 30...£f2!–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0145",
+    "trainingSetId": "easy",
+    "puzzleNumber": 145,
+    "fen": "r1b5/5pk1/1p1p3p/3Pq1p1/PQ2Pn2/5P2/5RPP/3R3K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nd3"
+    ],
+    "firstMove": "Nd3",
+    "motifTags": [],
+    "gameSource": "Svetozar Gligoric – Robert Fischer, Palma de Mallorca 1970",
+    "difficulty": "easy",
+    "comment": "An unexpected fork after White’s last move 29.¦f1-f2?. 30.£xb6 30.¦xd3 £a1† ✓ mating. 30...¤xf2†–+ ✓ Black is a piece up and has the more active heavy pieces. White resigned a few moves later.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0146",
+    "trainingSetId": "easy",
+    "puzzleNumber": 146,
+    "fen": "6rk/7p/p2Q4/1p2r3/8/4NP1q/PPP4P/5R1K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxh2+"
+    ],
+    "firstMove": "Qxh2+",
+    "motifTags": [],
+    "gameSource": "Vladimir Peresipkin – Anatoly Karpov, Rostov on Don 1971",
+    "difficulty": "easy",
+    "comment": "The only winning move. 0–1 37.¢xh2 ¦h5 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0147",
+    "trainingSetId": "easy",
+    "puzzleNumber": 147,
+    "fen": "1r2b1k1/R4nqp/4p3/1pR5/1P1P1r2/5N2/1Q2B1P1/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rg5"
+    ],
+    "firstMove": "Rg5",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Michael Franklin, Hastings 1972",
+    "difficulty": "easy",
+    "comment": "Using the fact that the knight on f7 is pinned. 35...£xg5 35...¤xg5 36.¦xg7† ¢xg7 37.¤xg5+– ✓ and White is up too much material. 36.¤xg5 ✓ ¤xg5 37.d5 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0148",
+    "trainingSetId": "easy",
+    "puzzleNumber": 148,
+    "fen": "2rb1qk1/1b4pp/3p4/1P2pr2/2n2PB1/2NQ2P1/P1N4P/R2R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bb6+"
+    ],
+    "firstMove": "Bb6+",
+    "motifTags": [],
+    "gameSource": "Ilkka Saren – Anatoly Karpov, Skopje (ol) 1972",
+    "difficulty": "easy",
+    "comment": "The move order 28...¦xf4 doesn’t work as well: 29.¥e6†! ¢h8 30.¤d5µ Even worse is: 28...¤b2? 29.£xf5± 29.¢f1 ¦xf4†! 30.gxf4 £xf4† ✓ 0–1 Black has a mating attack.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0149",
+    "trainingSetId": "easy",
+    "puzzleNumber": 149,
+    "fen": "8/2b2k1p/pp1P3r/2p3p1/6P1/1P2R2P/5P2/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Re7+"
+    ],
+    "firstMove": "Re7+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Viktor Kupreichik, Moscow 1976",
+    "difficulty": "easy",
+    "comment": "The only way to promote the pawn. And not: 38.dxc7? ¦c6µ 38...¢f8 38...¢f6 39.dxc7+– ✓ 39.dxc7+– ¦c6 40.¦d7 Karpov chose a slower way: 40.¦xh7 ¢e8 41.h4+– 40...¢e8 41.¦d8† ¢e7 42.c8=£ ¦xc8 43.¦xc8+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0150",
+    "trainingSetId": "easy",
+    "puzzleNumber": 150,
+    "fen": "r3rnk1/1N3ppp/1p6/p1Pp2q1/8/6P1/PP2PPBP/2R1Q1K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe2",
+      "Qxe2",
+      "Qxc1+"
+    ],
+    "firstMove": "Rxe2",
+    "motifTags": [],
+    "gameSource": "Lajos Portisch – Anatoly Karpov, Moscow 1977",
+    "difficulty": "easy",
+    "comment": "Black has opened White’s first rank and won a pawn, leaving him up a full exchange, and winning. The game had a quick finish: 22.£f1 £d2 23.cxb6? ¦c8 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0151",
+    "trainingSetId": "easy",
+    "puzzleNumber": 151,
+    "fen": "8/6k1/1P1p2p1/3Ppn2/3q4/8/6PP/rR2QB1K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Ng3+"
+    ],
+    "firstMove": "Ng3+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Mark Taimanov, Leningrad 1977",
+    "difficulty": "easy",
+    "comment": "White resigned in view of 39.hxg3 ¦a8! ✓ with mate.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0152",
+    "trainingSetId": "easy",
+    "puzzleNumber": 152,
+    "fen": "8/7R/2r5/8/P3n3/8/3nk1PP/R5K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nf3+"
+    ],
+    "firstMove": "Nf3+",
+    "motifTags": [],
+    "gameSource": "Viktor Korchnoi – Anatoly Karpov, Baguio City (17) 1978",
+    "difficulty": "easy",
+    "comment": "0–1 Mate is coming up: 40.gxf3 ¦g6† 41.¢h1 ¤f2 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0153",
+    "trainingSetId": "easy",
+    "puzzleNumber": 153,
+    "fen": "3rrk2/R4ppB/7p/1p2N1q1/nPbP1p2/2PQ1P2/6PP/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxc4"
+    ],
+    "firstMove": "Qxc4",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Efim Geller, Moscow 1983",
+    "difficulty": "easy",
+    "comment": "Black resigned instead of permitting: 31...bxc4 32.¦xf7 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0154",
+    "trainingSetId": "easy",
+    "puzzleNumber": 154,
+    "fen": "5kr1/5p2/8/1Q1bPp2/8/P5P1/q1rBBK1P/3R4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxd5"
+    ],
+    "firstMove": "Qxd5",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Simen Agdestein, Oslo 1984",
+    "difficulty": "easy",
+    "comment": "Move order is important here. 32.¥h6† ¢e7± 33.¦xd5? (33.£b4† ¢d7 34.¦d2 ¦xd2 35.¥xd2 ¦g6±) 33...¦xe2†!=, or 32.£b4†!? ¢g7 33.£h4 ¦e8!± still with great chances against Black’s exposed king. 32...£xd5 33.¥h6† 33.¥b4†? £c5†= 33...¢e7 34.¦xd5+– ✓ (1–0, 38 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0155",
+    "trainingSetId": "easy",
+    "puzzleNumber": 155,
+    "fen": "3rrnk1/1bq2pp1/ppnppb1p/8/2P1PPQ1/1PN2N2/PB4PP/1B1R1R1K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nd5",
+      "Nb5"
+    ],
+    "firstMove": "Nd5",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Anthony Miles, Brussels 1986",
+    "difficulty": "easy",
+    "comment": "is a worse variant since the queen can escape to e7, but it still gives a winning advantage: 26...£e7 27.¥xf6 £xf6 28.¤xd6+– (full points) 26...¥xb2 26...exd5 27.¥xf6 ¤g6 28.¥xd8+– ✓ 27.¤xc7+– ✓ (1–0, 40 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0156",
+    "trainingSetId": "easy",
+    "puzzleNumber": 156,
+    "fen": "4R3/p4pk1/5qpp/1PnP4/3Q3P/6P1/r1r1BPK1/3R4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bh7+"
+    ],
+    "firstMove": "Bh7+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Viktor Gavrikov, Moscow 1988",
+    "difficulty": "easy",
+    "comment": "Deflection. 27...¢xh7 28.£xf8+– ✓ (1–0, 40 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0157",
+    "trainingSetId": "easy",
+    "puzzleNumber": 157,
+    "fen": "4rrk1/1p1n1pb1/2ppq1p1/p3p1Bp/P1P1P2P/2NP2P1/1P2QPK1/3R1R2 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rg8+"
+    ],
+    "firstMove": "Rg8+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Nigel Short, Linares (7) 1992",
+    "difficulty": "easy",
+    "comment": "Deflection. 39...¢xg8 40.£xf6 ✓ (1–0, 45 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0158",
+    "trainingSetId": "easy",
+    "puzzleNumber": 158,
+    "fen": "r3rbk1/1b3Npp/1q1p2n1/2pP4/5R2/1PN3Q1/4P1BP/5R1K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nd5"
+    ],
+    "firstMove": "Nd5",
+    "motifTags": [],
+    "gameSource": "Alexander Chernin – Anatoly Karpov, Tilburg 1992",
+    "difficulty": "easy",
+    "comment": "Exploiting the claustrophobic queen on e6. 21...¤c5 Black’s alternatives are no better: 21...cxd5 22.cxd5+– ✓ , 21...¦b8 22.¤c7+– ✓ or 21...¦c8 22.¤e7†± ✓ . 22.¤c7 £d7 23.¤xe8± ✓ Karpov saved a draw (42 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0159",
+    "trainingSetId": "easy",
+    "puzzleNumber": 159,
+    "fen": "5nk1/1b1qQpp1/p3p3/3pP1N1/3P3P/1p1B4/1P3PP1/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxg6"
+    ],
+    "firstMove": "Qxg6",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Valery Salov, Linares 1993",
+    "difficulty": "easy",
+    "comment": "1–0 White was winning anyway, but this is too nice to pass up. 33...hxg6 34.¦h4 And 35.¦h8 mate ✓ is unavoidable.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0160",
+    "trainingSetId": "easy",
+    "puzzleNumber": 160,
+    "fen": "4r2k/3n2bB/2p1NqQ1/2Pp4/5B2/r6P/5PP1/4R1K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bh7+"
+    ],
+    "firstMove": "Bh7+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Loek van Wely, Monte Carlo 1997",
+    "difficulty": "easy",
+    "comment": "Deflecting the knight or king. 30...¤xh7 30...¢h8 31.£xf8 mate ✓ 31.£xd7+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0161",
+    "trainingSetId": "easy",
+    "puzzleNumber": 161,
+    "fen": "2b4k/p3q2p/2p1p3/2PpPpr1/3P3Q/4P2B/3b1B1P/R6K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe6"
+    ],
+    "firstMove": "Rxe6",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Eric Lobron, Frankfurt 1997",
+    "difficulty": "easy",
+    "comment": "Clearing the back rank in order to force the king to h2, so the bishop falls with check. 35.¦xe6 ¦a1† 35...£xf4?! 36.¦e8† ¤f8 37.£h5³ 36.¢h2 £xf4†–+ ✓ (0–1, 46 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0162",
+    "trainingSetId": "easy",
+    "puzzleNumber": 162,
+    "fen": "7r/3b1pk1/2p2qp1/8/1P1bNP2/r2B4/3Q2PP/2R2R1K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxe3"
+    ],
+    "firstMove": "Bxe3",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Mikhail Gurevich, Cap d’Agde 2000",
+    "difficulty": "easy",
+    "comment": "Using the fact that pins can sometimes become discovered attacks instead. 38.¥xe3?! 38.¥g2 ¥xf2 39.£xf2µ 38...¦g1† 39.¦xg1 £xh4 40.¥g5 £e4†! 41.¥g2 £xd4 ✓ White has no time to move the bishop from g2, since the e5-pawn is hanging. After 42.¥f6† ¢g8–+ there is no good discovered check (0–1, 50 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0163",
+    "trainingSetId": "easy",
+    "puzzleNumber": 163,
+    "fen": "1r1r4/5ppk/1p5p/2b1Pp1Q/8/q7/3B1PPP/2RR2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxh2+"
+    ],
+    "firstMove": "Rxh2+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Alexei Shirov, Bastia (rapid) 2003",
+    "difficulty": "easy",
+    "comment": "White resigned due to: 30.¢xh2 £h4 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0164",
+    "trainingSetId": "easy",
+    "puzzleNumber": 164,
+    "fen": "4kr2/p1Bbpp2/1p4p1/n6p/2B1P2P/2K2P2/P2R2P1/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd2",
+      "Rxd2"
+    ],
+    "firstMove": "Rxd2",
+    "motifTags": [],
+    "gameSource": "Andrei Istratescu – Anatoly Karpov, Bucharest (rapid) 2005",
+    "difficulty": "easy",
+    "comment": "After the game move 26.£h4–+ Black has simply won a piece, so White resigned in a couple of moves. 26...£xc1†–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0165",
+    "trainingSetId": "easy",
+    "puzzleNumber": 165,
+    "fen": "2n2k2/2b2pp1/2p1pnp1/2Pp2N1/3P1PP1/3BP2P/3BK3/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bb5"
+    ],
+    "firstMove": "Bb5",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Alexei Shirov, Tallinn (rapid) 2006",
+    "difficulty": "easy",
+    "comment": "The X-ray mate threat wins the bishop. Black resigned instead of allowing: 30...¥xb5 31.¦d8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0166",
+    "trainingSetId": "easy",
+    "puzzleNumber": 166,
+    "fen": "r5k1/pb1p1Rpq/2n1p1Q1/1p2P3/3P2P1/P7/1P1K4/5R2 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg6",
+      "Bxf4",
+      "fxg6",
+      "Nxe6+",
+      "Ke7",
+      "Nxc7"
+    ],
+    "firstMove": "Bxg6",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Evgenij Agrest, Tallinn (rapid) 2006",
+    "difficulty": "easy",
+    "comment": "41.exf4 Or 41.¤xf7+–, or 41.¤xe6† fxe6 42.exf4+–. 41...fxg6 42.¤xe6†+– (1–0, 69 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0167",
+    "trainingSetId": "easy",
+    "puzzleNumber": 167,
+    "fen": "1k1r1q1r/2p2ppp/Qp6/3b1N2/8/P5P1/1P3P1P/2R2RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rf8+"
+    ],
+    "firstMove": "Rf8+",
+    "motifTags": [],
+    "gameSource": "Anatoly Karpov – Ehsan Ghaem Maghami, Teheran 2009",
+    "difficulty": "easy",
+    "comment": "Deflection. Worse is 26.£xh7† ¢xh7 27.¦xd7±. 26...¦xf8 27.¦xf8† ¢xf8 28.£xh7+– ✓ (1–0, 42 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0168",
+    "trainingSetId": "easy",
+    "puzzleNumber": 168,
+    "fen": "6k1/4qp2/1B4pp/2R1b3/P2Nb3/1P2Q3/r4PPP/6K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxc7",
+      "Nd4"
+    ],
+    "firstMove": "Rxc7",
+    "motifTags": [],
+    "gameSource": "Garry Kasparov – Vladimir Antoshin, Baku 1980",
+    "difficulty": "easy",
+    "comment": "threatens 23.¤b5 with mate, but Black can defend after 22...£e7 23.¤b5 c6±. 22...¢xc7 23.£a7† ✓ 1–0 With the rook coming to c1, the attack will be deadly.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0169",
+    "trainingSetId": "easy",
+    "puzzleNumber": 169,
+    "fen": "R3n1k1/7p/3prppB/1p2p3/1P2P2Q/7P/5PPK/1q6 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxc5"
+    ],
+    "firstMove": "Qxc5",
+    "motifTags": [],
+    "gameSource": "Vladimir Tukmakov – Garry Kasparov, Frunze 1981",
+    "difficulty": "easy",
+    "comment": "The back-rank mate threat means Black has simply won a rook, leaving him easily winning.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0170",
+    "trainingSetId": "easy",
+    "puzzleNumber": 170,
+    "fen": "2rr4/pp4kp/6p1/3nNp2/2B5/2n3P1/P2R1PKP/R7 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe8+",
+      "Rxe8"
+    ],
+    "firstMove": "Rxe8+",
+    "motifTags": [],
+    "gameSource": "Garry Kasparov – Comp Mephisto 68000, Hamburg (simul) 1985",
+    "difficulty": "easy",
+    "comment": "Instead Black soon lost after 36...¢f7+–. 37.£xf6 ✓ White is mating.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0171",
+    "trainingSetId": "easy",
+    "puzzleNumber": 171,
+    "fen": "5rk1/ppr2Npp/2q1Pp2/3n4/8/6Q1/P5PP/3R1R1K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ne3+"
+    ],
+    "firstMove": "Ne3+",
+    "motifTags": [],
+    "gameSource": "Lajos Portisch – Garry Kasparov, Linares 1990",
+    "difficulty": "easy",
+    "comment": "0–1 A discovered attack, which could also be executed with 27...¤f4†–+.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0172",
+    "trainingSetId": "easy",
+    "puzzleNumber": 172,
+    "fen": "r7/5kpp/2p1pq2/1bP2p2/p4Q2/5BP1/PP3P1P/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd5",
+      "Qxd5",
+      "Qxc7"
+    ],
+    "firstMove": "Rxd5",
+    "motifTags": [],
+    "gameSource": "Garry Kasparov – Matthias Wahls, Baden-Baden 1992",
+    "difficulty": "easy",
+    "comment": "1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0173",
+    "trainingSetId": "easy",
+    "puzzleNumber": 173,
+    "fen": "8/1p3pkp/pb2p1p1/8/4P2P/1N4P1/P1R1KP2/7r b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxc6",
+      "Bxc6",
+      "Qc7+",
+      "Qe7",
+      "Qxc6"
+    ],
+    "firstMove": "Bxc6",
+    "motifTags": [],
+    "gameSource": "Garry Kasparov – Jacek Dubiel, Katowice (simul) 1993",
+    "difficulty": "easy",
+    "comment": "White is a pawn up with good winning chances.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0174",
+    "trainingSetId": "easy",
+    "puzzleNumber": 174,
+    "fen": "2r5/pp1b4/4p3/3pPk2/5P2/8/1K6/3R2R1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf2"
+    ],
+    "firstMove": "Bxf2",
+    "motifTags": [],
+    "gameSource": "Yannick Pelletier – Garry Kasparov, Zurich 2001",
+    "difficulty": "easy",
+    "comment": "Winning a second pawn due to: 32.¢xf2 ¦h2†–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0175",
+    "trainingSetId": "easy",
+    "puzzleNumber": 175,
+    "fen": "r2r2k1/1p1n1bpp/1pp1pp2/8/Pb1PP1P1/1BNRBP1P/1P3K2/2R5 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rd4"
+    ],
+    "firstMove": "Rd4",
+    "motifTags": [],
+    "gameSource": "Garry Kasparov – Alexei Shirov, Astana 2001",
+    "difficulty": "easy",
+    "comment": "1–0 Mating. 35.¦g7 is a useless intermediate move that allows Black to defend with 35...¥e8 36.¦d4 ¥g6±. Tactics involve calculations that can tax the human brain, but when you boil them down, they are actually the simplest part of chess and are almost trivial compared to strategy. How Life Imitates Chess (2007)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0176",
+    "trainingSetId": "easy",
+    "puzzleNumber": 176,
+    "fen": "8/1R3pbp/4p1k1/5p2/8/2N2P2/1P1r1P1P/4K3 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nc5"
+    ],
+    "firstMove": "Nc5",
+    "motifTags": [],
+    "gameSource": "Ashot Anastasian – Alexander Khalifman, Minsk 1986",
+    "difficulty": "easy",
+    "comment": "The pin allows this fork. 23.dxc5 ¦xd3µ ✓ (0–1, 36 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0177",
+    "trainingSetId": "easy",
+    "puzzleNumber": 177,
+    "fen": "5k1r/ppq3b1/8/3Pp2p/3n4/7Q/PP3PPP/3RR1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxb2"
+    ],
+    "firstMove": "Rxb2",
+    "motifTags": [],
+    "gameSource": "Jaan Ehlvest – Alexander Khalifman, Rakvere 1993",
+    "difficulty": "easy",
+    "comment": "Picking up a pawn with a small tactic gives Black a winning endgame. 33.¦xb2 Instead, White tried to fight with 33.¤b5–+ but in the end it proved fruitless (0–1, 53 moves). 33...¥xc3†–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0178",
+    "trainingSetId": "easy",
+    "puzzleNumber": 178,
+    "fen": "r3qn1k/pp3pp1/2b1p2p/4P1BP/2B3Q1/8/PPP3P1/2K1R3 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd4"
+    ],
+    "firstMove": "Rxd4",
+    "motifTags": [],
+    "gameSource": "Alexander Khalifman – Nukhim Rashkovsky, Moscow 1995",
+    "difficulty": "easy",
+    "comment": "White is obviously much better, but cleanest is: Black resigned in view of: 27...exd4 28.£f5† £f7 29.£c8† £e8 30.£xe8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0179",
+    "trainingSetId": "easy",
+    "puzzleNumber": 179,
+    "fen": "3r2k1/1b3p1p/pp4p1/4PqP1/3NpP2/1P2Q2P/P6K/2R5 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bf6"
+    ],
+    "firstMove": "Bf6",
+    "motifTags": [],
+    "gameSource": "Alexander Khalifman – Gennadi Sosonko, St Petersburg 1997",
+    "difficulty": "easy",
+    "comment": "The king is too exposed after: 26...gxf6 27.exf6 ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0180",
+    "trainingSetId": "easy",
+    "puzzleNumber": 180,
+    "fen": "4r1rk/p3q2p/3p1n1Q/3P4/Pp1n1P2/3BN2R/1PPK1P2/R7 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd4"
+    ],
+    "firstMove": "Rxd4",
+    "motifTags": [],
+    "gameSource": "Lenka Ptacnikova – Alexander Khalifman, Stockholm 1997",
+    "difficulty": "easy",
+    "comment": "Black wins back the rook on c1, so he has just won a piece, and will break through easily.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0181",
+    "trainingSetId": "easy",
+    "puzzleNumber": 181,
+    "fen": "2kr3r/1pq3p1/p1p3Qp/P1n1p3/8/RbN1P1P1/1P2P1BP/5RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxf6+"
+    ],
+    "firstMove": "Qxf6+",
+    "motifTags": [],
+    "gameSource": "Alexander Khalifman – Viktor Kupreichik, Stockholm 1997",
+    "difficulty": "easy",
+    "comment": "Other moves take longer to win. 26...£xf6 27.¦xh7 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0182",
+    "trainingSetId": "easy",
+    "puzzleNumber": 182,
+    "fen": "2rq1rk1/1p4bp/4p1p1/p2p1bP1/P2N4/2PnB3/QP4BP/R5RK b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxb3"
+    ],
+    "firstMove": "Rxb3",
+    "motifTags": [],
+    "gameSource": "Alexander Khalifman – Christian Gabriel, Bad Wiessee 1998",
+    "difficulty": "easy",
+    "comment": "Black resigned since 21...¤xb3 22.£e6† ¢b8 23.£xb3+– ✓ is winning, although it wouldn’t have hurt to fight on.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0183",
+    "trainingSetId": "easy",
+    "puzzleNumber": 183,
+    "fen": "2k4r/pp3p2/1np3q1/2Q3p1/3R4/1P2P1P1/P4PB1/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxg5"
+    ],
+    "firstMove": "Qxg5",
+    "motifTags": [],
+    "gameSource": "Roman Slobodjan – Alexander Khalifman, Germany 1999",
+    "difficulty": "easy",
+    "comment": "Picking up this pawn increases the advantage considerably. 27.¥xg5 White tried to fight on with 27.¦ge1, but resigned a few moves later. 27...¤f2 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0184",
+    "trainingSetId": "easy",
+    "puzzleNumber": 184,
+    "fen": "r1b2rk1/p1q2n1p/6p1/2Ppp3/8/2Q2NPP/P4PB1/1R3RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bh3+"
+    ],
+    "firstMove": "Bh3+",
+    "motifTags": [],
+    "gameSource": "Alexander Khalifman – Ivan Bukavshin, Moscow 2011",
+    "difficulty": "easy",
+    "comment": "1–0 If the king moves, 25.£e5† picks up the rook on h8 (and mates). If the bishop is taken then 25.£f8† mates. And finally, anything put in the way will just be taken. Not 24.¦d6? £b1† 25.¥f1 £h7 26.¥g2 £b1†=. Never play for the win, never play for the draw, just play chess!",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0185",
+    "trainingSetId": "easy",
+    "puzzleNumber": 185,
+    "fen": "1r6/RP5p/P1kp4/2n2p2/8/4PKP1/5P1P/8 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxe5",
+      "Nxe5",
+      "Bxd5+"
+    ],
+    "firstMove": "Nxe5",
+    "motifTags": [],
+    "gameSource": "Vladimir Kramnik – Dmitry Reinderman, Wijk aan Zee (blitz) 1999",
+    "difficulty": "easy",
+    "comment": "Winning the rook on a8.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0186",
+    "trainingSetId": "easy",
+    "puzzleNumber": 186,
+    "fen": "r2qk2r/3bb1pp/5p2/1p1Q4/1pNP4/4P3/PB4PP/R4RK1 w kq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ra8",
+      "Kc7",
+      "Nxa6",
+      "Rxa6+"
+    ],
+    "firstMove": "Ra8",
+    "motifTags": [],
+    "gameSource": "Vladimir Kramnik – Etienne Bacrot, Moscow (blitz) 2007",
+    "difficulty": "easy",
+    "comment": "leaves White with an easily winning endgame. 39.a7 ¦xb7 40.¦c8†! ✓ 1–0 The pawn promotes.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0187",
+    "trainingSetId": "easy",
+    "puzzleNumber": 187,
+    "fen": "r3k1r1/p4p1p/3bpBp1/3p1b2/5P2/3BP2P/PP4P1/1K1R3R w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ne5",
+      "Rf8"
+    ],
+    "firstMove": "Ne5",
+    "motifTags": [],
+    "gameSource": "Vladimir Kramnik – Levon Aronian, Moscow (blitz) 2009",
+    "difficulty": "easy",
+    "comment": "The knight seems to be forced back, but can instead go forward to seemingly protected squares. (20...fxe5? 21.£f7 mate) 21.¤xd7!+– ✓ Black can’t take back since it would leave the rook on a8 unprotected (1–0, 23 moves).",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0188",
+    "trainingSetId": "easy",
+    "puzzleNumber": 188,
+    "fen": "4r2k/6b1/8/p2R3p/1pP1p1Nq/8/PP3P1P/3Q3K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "e4"
+    ],
+    "firstMove": "e4",
+    "motifTags": [],
+    "gameSource": "Vladimir Kramnik – Anish Giri, Leuven (blitz) 2016",
+    "difficulty": "easy",
+    "comment": "The bishop on d6 becomes exposed. 20...¥xe4 20...dxe4 21.¥b5† ¢f8 22.¦xd6+– ✓ 21.¥xe4+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0189",
+    "trainingSetId": "easy",
+    "puzzleNumber": 189,
+    "fen": "2r4k/2q4p/p2bPp2/1p6/6QP/3B4/PPP5/1K4R1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nf6"
+    ],
+    "firstMove": "Nf6",
+    "motifTags": [],
+    "gameSource": "Viswanathan Anand – Eric Lobron, Dortmund 1996",
+    "difficulty": "easy",
+    "comment": "1–0 With winning threats on h5. But not 36.¤e3?! ¥e5±. 36...£xf6 36...¥xf6 37.¦xh5†+– 37.£xh5† ¢g8 38.£xe8†+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0190",
+    "trainingSetId": "easy",
+    "puzzleNumber": 190,
+    "fen": "3n4/2p2pk1/3r2p1/6Np/1P1q3P/4QR2/5PP1/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "e7"
+    ],
+    "firstMove": "e7",
+    "motifTags": [],
+    "gameSource": "Viswanathan Anand – Ruslan Ponomariov, Mainz 2002",
+    "difficulty": "easy",
+    "comment": "1–0 The only defence against 39.£g7 mate leaves the rook on c8 undefended.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0191",
+    "trainingSetId": "easy",
+    "puzzleNumber": 191,
+    "fen": "r1q2rk1/3bpp1p/3p2p1/3P4/Pnn1P3/2N2NP1/1R1Q1PB1/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxf7+"
+    ],
+    "firstMove": "Rxf7+",
+    "motifTags": [],
+    "gameSource": "Viswanathan Anand – Pascal Charbonneau, Calvia (ol) 2004",
+    "difficulty": "easy",
+    "comment": "1–0 The variation goes: 34...¤xf7 35.¤e6† ¦xe6 36.£xd4†+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0192",
+    "trainingSetId": "easy",
+    "puzzleNumber": 192,
+    "fen": "2r2rk1/p4ppp/1p6/2b5/5Pn1/1Q2PR1P/P5P1/R1B1qBK1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qh6"
+    ],
+    "firstMove": "Qh6",
+    "motifTags": [],
+    "gameSource": "Magnus Carlsen – Viswanathan Anand, Reykjavik (blitz) 2006",
+    "difficulty": "easy",
+    "comment": "White removes the queen from danger with a mating threat, leaving the knight on b4 to face the gallows. 25...f6 25...¤xb2 26.¤g5+– ✓ with mate. 26.¦xb4+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0193",
+    "trainingSetId": "easy",
+    "puzzleNumber": 193,
+    "fen": "2r2rk1/p4ppp/1p6/2b5/5Pn1/1Q2PR1P/P5P1/R1B1qBK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxe3"
+    ],
+    "firstMove": "Nxe3",
+    "motifTags": [],
+    "gameSource": "Roman Skomorokhin – Viswanathan Anand, Bastia 2014",
+    "difficulty": "easy",
+    "comment": "22...¥xe3†? 23.¥xe3 wins for White. 23.¦xe3 Other moves are no better: 23.¥xe3 £xa1–+ or 23...¥xe3† 24.£xe3 £xa1–+. White is so tied up that basically any move wins by eventually bringing one rook into the action. 23...¦fe8 0–1 Chess is like body-building. If you train every day, you stay in top shape. It is the same with your brain – chess is a matter of daily training. In any match, there are few critical moments where there’s no second- best decision. The rest of the moves are intuitive.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0194",
+    "trainingSetId": "easy",
+    "puzzleNumber": 194,
+    "fen": "5r1k/2p5/5qp1/1Pb1p2p/4B2P/3P2P1/4QPK1/5R2 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxg6"
+    ],
+    "firstMove": "Bxg6",
+    "motifTags": [],
+    "gameSource": "Viswanathan Anand – Jon Ludvig Hammer, Stavanger 2015",
+    "difficulty": "easy",
+    "comment": "Winning two more pawns, bringing the total to an overwhelming three. 34...£xg6 35.£xe5† ¢g8 36.£xc5 ✓ 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0195",
+    "trainingSetId": "easy",
+    "puzzleNumber": 195,
+    "fen": "2kB2r1/p3R3/q1p3r1/bp2Qp2/2PP3p/1P4P1/P4P2/5K2 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rc7+",
+      "Qxf5+",
+      "Kb8",
+      "Bxa5",
+      "Ka8",
+      "Kb8",
+      "Kxd8",
+      "Qe7#"
+    ],
+    "firstMove": "Rc7+",
+    "motifTags": [],
+    "gameSource": "Ruslan Ponomariov – Stuart Conquest, Torshavn 2000",
+    "difficulty": "easy",
+    "comment": "or 37...¥xc7 38.£xc7 mate ✓ . 38.¦xc6† ✓ 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0196",
+    "trainingSetId": "easy",
+    "puzzleNumber": 196,
+    "fen": "1r3k2/2p3Rp/2b5/p1Pp2p1/P2B1pq1/2PB2P1/7P/5RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxf4+"
+    ],
+    "firstMove": "Rxf4+",
+    "motifTags": [],
+    "gameSource": "Ruslan Ponomariov – Evgeny Bareev, Moscow (4) 2001",
+    "difficulty": "easy",
+    "comment": "1–0 Winning the queen. 34.¥xh7 keeps the threat of ¦xf4†, but Black can fight on with 34...£h3±. 34.¦xh7 allows 34...¦b2!=.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0197",
+    "trainingSetId": "easy",
+    "puzzleNumber": 197,
+    "fen": "6k1/5rpp/4Qn2/3p4/1q1P4/1p2P2P/6P1/3B1RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bh5"
+    ],
+    "firstMove": "Bh5",
+    "motifTags": [],
+    "gameSource": "Boris Grachev – Ruslan Ponomariov, Moscow (blitz) 2010",
+    "difficulty": "easy",
+    "comment": "Exploiting all the pins! 37.¦xf6!? gxf6 38.¥h5 £b7 39.¥xf7† £xf7 40.£b6± gives Black good drawing chances in a queen ending a pawn down. 37...g6 37...¤xh5 38.£xf7† ✓ ¢h8 39.£e8† £f8 40.¦xf8 mate or 37...£f8 38.¥xf7†+–. 38.¦xf6 ✓ Or 38.¥xg6 hxg6 39.¦xf6+–. In the game, Black resigned in a few moves: 38...£b7 39.¥d1 b2 40.£e8† ¢g7 41.£xf7† 1–0",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0198",
+    "trainingSetId": "easy",
+    "puzzleNumber": 198,
+    "fen": "6rk/7p/8/1p3R2/pN6/P1n2B1P/4brPK/4R3 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxf3"
+    ],
+    "firstMove": "Bxf3",
+    "motifTags": [],
+    "gameSource": "Ruslan Ponomariov – Vassily Ivanchuk, Khanty-Mansiysk (2) 2011",
+    "difficulty": "easy",
+    "comment": "Winning the g2-pawn and an exchange. 37...¦gxg2† 38.¥xg2 ¦xf5 is too kind: 39.¦c1³ 38.¦xf3 ¦gxg2† 39.¢h1 ¦h2† 40.¢g1 ¤e2† ✓ 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0199",
+    "trainingSetId": "easy",
+    "puzzleNumber": 199,
+    "fen": "2r3k1/p2b2pp/1pqr4/2p1R3/4P3/P1Q3PP/1P4BK/3R4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Re7"
+    ],
+    "firstMove": "Re7",
+    "motifTags": [],
+    "gameSource": "Ruslan Ponomariov – Sergei Rublevsky, Khanty-Mansiysk (blitz) 2013",
+    "difficulty": "easy",
+    "comment": "Threatening mate, and both defences end up losing the bishop. 31...¦d4 31...¦g6 32.¦dxd7+– 32.¦xd4 cxd4 33.£xd4 1–0 Double attack.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0200",
+    "trainingSetId": "easy",
+    "puzzleNumber": 200,
+    "fen": "r3r1k1/p2q1pbp/6p1/3Q2B1/8/5P2/PP4PP/R2R2K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Re1+"
+    ],
+    "firstMove": "Re1+",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Dmitry Kaiumov, Tashkent 1993",
+    "difficulty": "easy",
+    "comment": "Deflection. 20.¦xe1 20.¢f2 £xd5 21.¦xd5 ¦xa1–+ ✓ 20...£xd5–+ ✓ 0–1 In general, I grew up as a chess player on books. My first computer appeared when I’d already become a grandmaster. Chess in Translation (2011) Sometimes tactics are born out of need. The strategic character of this position is such that if you do not find something, then strategically you are lost. The Path to Tactical Strength (2011)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0201",
+    "trainingSetId": "easy",
+    "puzzleNumber": 201,
+    "fen": "3r2k1/pp4qn/3p1ppQ/2pPp3/4P1N1/1P2P2R/1PP3PP/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qxh7+",
+      "Qxh7",
+      "Nxf6+"
+    ],
+    "firstMove": "Qxh7+",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Eduard Grinshpun, Tashkent 1993",
+    "difficulty": "easy",
+    "comment": "1–0 White wins a piece.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0202",
+    "trainingSetId": "easy",
+    "puzzleNumber": 202,
+    "fen": "4r2k/p4rp1/1pb3qp/3NB3/2P1Q2n/1P1R4/1P4PP/4R1K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxe5"
+    ],
+    "firstMove": "Rxe5",
+    "motifTags": [],
+    "gameSource": "Andranik Matikozian – Rustam Kasimdzhanov, Szeged 1994",
+    "difficulty": "easy",
+    "comment": "The white queen is doubly pinned and is needed to protect g2. 30.£xh4 30.£xe5 £xg2 mate ✓ (or 30...£xd3–+), and 30.£xg6 ¦xe1 mate ✓ (or 30...¤xg6–+). 30...¦xe1† Or 30...£xd3–+. 31.£xe1 £xd3 ✓ 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0203",
+    "trainingSetId": "easy",
+    "puzzleNumber": 203,
+    "fen": "2b3k1/r2r1pp1/p3p2p/1pq1P3/4B2Q/2P5/P4PPP/3RR1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qd8+"
+    ],
+    "firstMove": "Qd8+",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Y.M.A. Kalandar Khaled, Macau 1996",
+    "difficulty": "easy",
+    "comment": "An X-ray/reloader theme supported by the strongly-placed bishop on e4. 23...¦xd8 23...£f8 24.¥h7†+– ✓ 24.¦xd8† £f8 25.¥h7†! Or 25.¦ed1 ¦c7 26.¥h7†±. 25...¢xh7 26.¦xf8± ✓ (1–0, 30 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0204",
+    "trainingSetId": "easy",
+    "puzzleNumber": 204,
+    "fen": "2r5/R2b1pk1/3q1bpp/1p1Pp3/4P3/3P3P/1Q1NBPP1/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rxd7"
+    ],
+    "firstMove": "Rxd7",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Mohamad Al Modiahki, Teheran 1998",
+    "difficulty": "easy",
+    "comment": "1–0 Winning another pawn and exchanging some pieces. Too kind is 25.¥g4 ¥xg4 26.hxg4±. 25...£xd7 26.¥g4 £d8 27.¥xc8 £xc8 28.£xb5+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0205",
+    "trainingSetId": "easy",
+    "puzzleNumber": 205,
+    "fen": "r6k/7p/1Qp2rpq/p3p3/2B1P3/2B2P1n/P5PK/1R6 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qb8+"
+    ],
+    "firstMove": "Qb8+",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Mikhail Golubev, Germany 2002",
+    "difficulty": "easy",
+    "comment": "The breathing hole on g7 is not enough, neither is either of the two possible blocks on f8. 37.¥xe5? ¤g5† 38.¢g1 (38.¢g3 ¤xe4† 39.fxe4 £g5†–+) 38...¤xf3†–+ 37...¦xb8 38.¦xb8† ¢g7 38...¦f8 39.¥xe5† (39.¦xf8† £xf8 40.¥xe5†+–) 39...£g7 40.¦xf8 mate ✓ 38...£f8 39.¦xf8† ¦xf8 40.¥xe5† ¦f6 41.¥xf6 mate ✓ 39.¦g8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0206",
+    "trainingSetId": "easy",
+    "puzzleNumber": 206,
+    "fen": "6rk/p6n/3p4/2pPb2q/4N3/P2BQPp1/6K1/7R b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Qxh1+"
+    ],
+    "firstMove": "Qxh1+",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Andrei Volokitin, Germany 2003",
+    "difficulty": "easy",
+    "comment": "Forcing a winning endgame. Not 33...£h2† 34.¦xh2 gxh2† 35.¢h1 ¦g1† 36.£xg1 hxg1=£† 37.¢xg1³. 34.¢xh1 g2† 35.¢g1 ¥d4 ✓ With his material advantage and dangerous passed pawn, Black is winning. The game ended swiftly: 36.£xd4† cxd4 37.¤xd6 ¤g5 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0207",
+    "trainingSetId": "easy",
+    "puzzleNumber": 207,
+    "fen": "5rk1/p4qp1/2p4p/1p2Pn2/2pP2Q1/2P4P/P2B3K/5R2 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Ne3",
+      "b4",
+      "Bxe3",
+      "Rxf7",
+      "Nxg4+"
+    ],
+    "firstMove": "Ne3",
+    "motifTags": [],
+    "gameSource": "Rustam Kasimdzhanov – Shakhriyar Mamedyarov, Baku 2005",
+    "difficulty": "easy",
+    "comment": "29...£xf1–+ ✓ (0–1, 34 moves)",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0208",
+    "trainingSetId": "easy",
+    "puzzleNumber": 208,
+    "fen": "1r3qbk/1p2rpp1/p1p2n1p/PnN1NP2/1P2PQ2/3P1B1P/7K/1R4R1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ne6"
+    ],
+    "firstMove": "Ne6",
+    "motifTags": [],
+    "gameSource": "Sergey Karjakin – Rustam Kasimdzhanov, Tashkent 2014",
+    "difficulty": "easy",
+    "comment": "White is clearly better after other moves, but this finishes the game. 38...fxe6 The game try 38...g5 is plain hopeless; the game continued 39.¤xf8 (39.fxg6 and other moves are winning as well) 39...gxf4 40.¤fg6†! fxg6 41.¤xg6† and Black resigned. No better is 38...£c8 39.¦xg7 ✓ with mate. 39.¤g6† ¢h7 40.¤xf8†+– ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0209",
+    "trainingSetId": "easy",
+    "puzzleNumber": 209,
+    "fen": "4r1k1/2BR3p/8/5Rp1/4n1K1/4P1P1/1P2P2P/5r2 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "h5+"
+    ],
+    "firstMove": "h5+",
+    "motifTags": [],
+    "gameSource": "Jan Timman – Veselin Topalov, Sarajevo 1999",
+    "difficulty": "easy",
+    "comment": "Deflecting the king from the defence of the rook. 36...¤f6†? 37.¦xf6 ¦xf6 and all the pawns make up for the exchange. 37.¢xh5 ¦xf5 ✓ 0–1",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0210",
+    "trainingSetId": "easy",
+    "puzzleNumber": 210,
+    "fen": "4rrk1/p2pB1pp/2p5/2P1R3/3QN3/Pq2n3/1P4PP/2KR4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nf6+"
+    ],
+    "firstMove": "Nf6+",
+    "motifTags": [],
+    "gameSource": "Veselin Topalov – Miguel Illescas Cordoba, Cala Galdana 1999",
+    "difficulty": "easy",
+    "comment": "1–0 Getting rid of the pesky knight on e3 with tempo, leaving White totally winning.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0211",
+    "trainingSetId": "easy",
+    "puzzleNumber": 211,
+    "fen": "1n3q1k/r2r3p/p3Q3/1p6/8/2P3R1/P4PPP/4R1K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qf6+"
+    ],
+    "firstMove": "Qf6+",
+    "motifTags": [],
+    "gameSource": "Veselin Topalov – Arkadij Naiditsch, Dortmund 2005",
+    "difficulty": "easy",
+    "comment": "Black resigned. 27...£xf6 28.¦e8† £f8 29.¦xf8 mate ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0212",
+    "trainingSetId": "easy",
+    "puzzleNumber": 212,
+    "fen": "1qr1r1k1/2b2ppp/Bpb1p3/4n3/P7/2N1BP2/1PP3PP/3RR1QK b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Nxf3",
+      "gxf3",
+      "Bxf3+"
+    ],
+    "firstMove": "Nxf3",
+    "motifTags": [],
+    "gameSource": "Gata Kamsky – Veselin Topalov, Nice (blindfold) 2009",
+    "difficulty": "easy",
+    "comment": "0–1 Winning the queen.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0213",
+    "trainingSetId": "easy",
+    "puzzleNumber": 213,
+    "fen": "2rb2k1/5pp1/2p1pn1p/2P5/1N1Pp3/4P1BP/5PP1/1R4K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxc6",
+      "Rxc6",
+      "Rb8",
+      "Kh7",
+      "Rxd8"
+    ],
+    "firstMove": "Nxc6",
+    "motifTags": [],
+    "gameSource": "Ivan Sokolov – Magnus Carlsen, Hoogeveen 2004",
+    "difficulty": "easy",
+    "comment": "White wins a pawn by exploiting the potential pin on the eighth rank, either by: 1–0 Or the almost equally good 33.¦a1, threatening ¦a1-a6, so 33...¤d5 34.¤xc6 with the same theme but having given away ...¤f6-d5.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0214",
+    "trainingSetId": "easy",
+    "puzzleNumber": 214,
+    "fen": "5r1k/q3bQpp/2B5/1P2p3/4P3/p1P5/5PPP/5RK1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "b6"
+    ],
+    "firstMove": "b6",
+    "motifTags": [],
+    "gameSource": "Gata Kamsky – Magnus Carlsen, Khanty-Mansiysk (2) 2005",
+    "difficulty": "easy",
+    "comment": "1–0 The pawn queens after 31...¦xf7 32.bxa7+– ✓ and the threat on the rook leaves White a piece up after 31...£xb6 32.£xe7 ✓ .",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0215",
+    "trainingSetId": "easy",
+    "puzzleNumber": 215,
+    "fen": "2r3k1/4bpp1/4pn1p/1p6/q1r5/2BR1BP1/PQ2PPKP/3R4 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxc3"
+    ],
+    "firstMove": "Rxc3",
+    "motifTags": [],
+    "gameSource": "Hannes Stefansson – Magnus Carlsen, Reykjavik (blitz) 2006",
+    "difficulty": "easy",
+    "comment": "0–1 The rook on d3 is overloaded: 25.¦xc3 ¦xc3 26.£xc3 £xd1–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0216",
+    "trainingSetId": "easy",
+    "puzzleNumber": 216,
+    "fen": "4r1k1/5p2/p5pp/P1p2q2/3Nr3/3Q4/5PPP/1RR3K1 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Re1+"
+    ],
+    "firstMove": "Re1+",
+    "motifTags": [],
+    "gameSource": "Sergey Erenburg – Magnus Carlsen, Reykjavik (blitz) 2006",
+    "difficulty": "easy",
+    "comment": "A discovered attack. 35.¦xe1 ¦xe1† 36.¦xe1 £xd3–+ ✓",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0217",
+    "trainingSetId": "easy",
+    "puzzleNumber": 217,
+    "fen": "2r3k1/5p2/p3bBp1/1p5p/4P3/1P4qP/P5P1/1B1RR2K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Bxh3"
+    ],
+    "firstMove": "Bxh3",
+    "motifTags": [],
+    "gameSource": "Goran Todorovic – Magnus Carlsen, Internet 2006",
+    "difficulty": "easy",
+    "comment": "0–1 Black is up too much material after 36.gxh3 £xh3† 37.¢g1 £g3† 38.¢h1 £f3† 39.¢g1 £xf6 ✓ .",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0218",
+    "trainingSetId": "easy",
+    "puzzleNumber": 218,
+    "fen": "1r5k/6pp/2p1r3/1R1p4/pn1P1q2/3Q1P2/PP3BPP/3R2K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qf5"
+    ],
+    "firstMove": "Qf5",
+    "motifTags": [],
+    "gameSource": "Magnus Carlsen – Laurent Fressinet, Cap d’Agde 2006",
+    "difficulty": "easy",
+    "comment": "1–0 Black is back-rank mated or loses the rook on e6. London Chess Classic (2016) Contrary to many young colleagues, I do believe that it makes sense to study the classics.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0219",
+    "trainingSetId": "easy",
+    "puzzleNumber": 219,
+    "fen": "r2r2k1/1bqp1ppp/ppnbpn2/8/2PNP3/P1N1BP2/1P2B1PP/2RQ1R1K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Ndb5"
+    ],
+    "firstMove": "Ndb5",
+    "motifTags": [],
+    "gameSource": "Vassily Ivanchuk – Magnus Carlsen, Monte Carlo (blindfold) 2011",
+    "difficulty": "easy",
+    "comment": "1–0 Winning a pawn, with the bishop pair and d6-square, gives a decisive advantage. Somewhat weaker is winning the b6-pawn with: 14.¤cb5 £b8 15.¤xd6 £xd6 16.¤xc6 £xc6 17.£d4+–",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0220",
+    "trainingSetId": "easy",
+    "puzzleNumber": 220,
+    "fen": "2k1r3/p1pbbpp1/1p5p/2pNP3/2P3P1/1P3PBP/P5K1/3R4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Nxc7",
+      "Kxc7"
+    ],
+    "firstMove": "Nxc7",
+    "motifTags": [],
+    "gameSource": "Fabiano Caruana – Magnus Carlsen, Shamkir 2014",
+    "difficulty": "easy",
+    "comment": "Instead the game saw 25...¦d8 26.¤d5± when White had simply won a pawn, also stabilizing the knight on d5. 26.e6†+– ✓ White’s rook will penetrate to the seventh rank with devastating effect.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0221",
+    "trainingSetId": "easy",
+    "puzzleNumber": 221,
+    "fen": "4r1qk/2p4n/1b3pQB/p1p5/2P1P3/1P1R3P/P5P1/6K1 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bg7+",
+      "Qxg7",
+      "Qxe8+"
+    ],
+    "firstMove": "Bg7+",
+    "motifTags": [],
+    "gameSource": "Magnus Carlsen – Teimour Radjabov, Wijk aan Zee 2015",
+    "difficulty": "easy",
+    "comment": "With a winning advantage due to the two pawns, Black’s exposed king and the pawn-like bishop on b6. You don’t have to see any further.",
+    "createdAt": "2026-03-18T12:19:02.741Z"
+  },
+  {
+    "id": "easy-0222",
+    "trainingSetId": "easy",
+    "puzzleNumber": 222,
+    "fen": "2R5/4bppk/1p1p4/5R1P/4PQ2/5P2/r4q1P/7K w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Qh6+"
+    ],
+    "firstMove": "Qh6+",
+    "motifTags": [],
+    "gameSource": "Magnus Carlsen – Sergey Karjakin, New York (rapid 4) 2016",
+    "difficulty": "easy",
+    "comment": "1–0 What a way to finish a World Championship! It’s mate in one however Black takes back. There are some aspects of work you need to keep working on and no matter what environment you are in. Continuous learning is very important. It’s what I call ‘competitive tension’, which is about having a competition around. – Viswanathan Anand",
+    "createdAt": "2026-03-18T12:19:02.741Z"
   }
 ]

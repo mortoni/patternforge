@@ -25,7 +25,7 @@ export interface TrainingSetOverview {
 }
 
 /** Source label for display. TODO: model source explicitly in DB when we have multiple import sources. */
-export type TrainingSetSourceLabel = "Woodpecker" | "Lichess" | "Custom" | "Unknown";
+export type TrainingSetSourceLabel = "Lichess" | "Custom" | "Unknown";
 
 /** Status for table display. */
 export type TrainingSetStatusLabel = "Not started" | "Active" | "Completed";

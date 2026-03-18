@@ -6,7 +6,7 @@ describe("TrainingSidePanel", () => {
   const defaultProps = {
     exerciseIndex: 0,
     totalExercises: 5,
-    trainingSetName: "Woodpecker Easy",
+    trainingSetName: "Sample Set",
     cycleNumber: 1,
     solvedCount: 0,
     sideToMove: "w" as const,
@@ -45,5 +45,13 @@ describe("TrainingSidePanel", () => {
       <TrainingSidePanel {...defaultProps} puzzleState="incorrect" onNextPuzzle={vi.fn()} />
     );
     expect(screen.getByRole("button", { name: /next puzzle/i })).toBeInTheDocument();
+  });
+
+  it("shows Finish the combination and does not show Next when correct_so_far", () => {
+    render(
+      <TrainingSidePanel {...defaultProps} puzzleState="correct_so_far" />
+    );
+    expect(screen.getByText(/finish the combination/i)).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /next puzzle/i })).not.toBeInTheDocument();
   });
 });

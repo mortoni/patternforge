@@ -7,6 +7,7 @@ import { EmptyState } from "@/components/shared/EmptyState";
 import { TrainingSetsTable } from "./training-sets-table";
 import { TrainingSetsMobileList } from "./training-sets-mobile-list";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -15,13 +16,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   ensureSeededForDevelopment,
   getTrainingSetsOverview,
   continueTraining,
   startNextCycle,
+  resetAllAndLoadGenerated,
 } from "../services/training-sets.service";
 import { mapOverviewToTableRow, dedupeTableRows } from "../lib/map-training-set-row";
 import type { TrainingSetOverview } from "../types";
+
+const isDev = typeof process !== "undefined" && process.env.NODE_ENV === "development";
 
 export function TrainingSetsPage() {
   const router = useRouter();
@@ -29,6 +44,12 @@ export function TrainingSetsPage() {
   const [loading, setLoading] = React.useState(true);
   const [sourceFilter, setSourceFilter] = React.useState<string>("all");
   const [difficultyFilter, setDifficultyFilter] = React.useState<string>("all");
+  const [loadingGenerated, setLoadingGenerated] = React.useState(false);
+
+  const loadOverviews = React.useCallback(async () => {
+    const list = await getTrainingSetsOverview();
+    setOverviews(list);
+  }, []);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -38,9 +59,7 @@ export function TrainingSetsPage() {
       try {
         await ensureSeededForDevelopment();
         if (cancelled) return;
-        const list = await getTrainingSetsOverview();
-        if (cancelled) return;
-        setOverviews(list);
+        await loadOverviews();
       } catch {
         if (!cancelled) setOverviews([]);
       } finally {
@@ -51,7 +70,7 @@ export function TrainingSetsPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [loadOverviews]);
 
   const handleContinue = React.useCallback(
     async (trainingSetId: string) => {
@@ -68,6 +87,24 @@ export function TrainingSetsPage() {
     },
     [router]
   );
+
+  const handleResetAllAndLoadGenerated = React.useCallback(async () => {
+    if (!isDev) return;
+    setLoadingGenerated(true);
+    try {
+      const result = await resetAllAndLoadGenerated();
+      await loadOverviews();
+      console.log(
+        `[reset] Loaded ${result.trainingSets} sets, ${result.exercises} exercises — reloading`
+      );
+      window.location.reload();
+    } catch (e) {
+      console.error("Reset & load generated failed:", e);
+      window.alert(`Failed: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setLoadingGenerated(false);
+    }
+  }, [loadOverviews]);
 
   const tableRows = React.useMemo(() => {
     if (!overviews?.length) return [];
@@ -139,7 +176,6 @@ export function TrainingSetsPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All sources</SelectItem>
-            <SelectItem value="Woodpecker">Woodpecker</SelectItem>
             <SelectItem value="Lichess">Lichess</SelectItem>
             <SelectItem value="Custom">Custom</SelectItem>
             <SelectItem value="Unknown">Unknown</SelectItem>
@@ -157,6 +193,40 @@ export function TrainingSetsPage() {
             <SelectItem value="custom">Custom</SelectItem>
           </SelectContent>
         </Select>
+        {isDev && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={loadingGenerated}
+                className="ml-auto border-amber-500/50 text-amber-600 dark:text-amber-400"
+              >
+                {loadingGenerated ? "Resetting…" : "Reset everything & load generated"}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Reset everything & load generated?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will reset ALL user data (progress, cycles, sessions) and replace
+                  training sets with the 3 sets from data/generated. Run{" "}
+                  <code className="rounded bg-[var(--muted)] px-1 py-0.5 text-xs">pnpm run refresh-data</code>{" "}
+                  first if you changed puzzle.csv.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => void handleResetAllAndLoadGenerated()}
+                  className="border-amber-500/50 bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 dark:text-amber-400"
+                >
+                  Reset & load generated
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </div>
 
       <div className="hidden md:block rounded-md border border-[var(--border)]">
