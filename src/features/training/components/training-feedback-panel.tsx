@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { normalizeChessNotation } from "@/lib/chess/normalize-chess-notation";
 import { cn } from "@/lib/utils";
 
 export type FeedbackState = "correct" | "incorrect";
@@ -38,7 +39,9 @@ export function TrainingFeedbackPanel({
       >
         <p className="font-medium text-green-700 dark:text-green-400">Correct!</p>
         {(comment != null && comment.trim() !== "" ? (
-          <p className="text-green-700/80 dark:text-green-400/80 mt-0.5">{comment.trim()}</p>
+          <p className="text-green-700/80 dark:text-green-400/80 mt-0.5">
+            {normalizeChessNotation(comment.trim())}
+          </p>
         ) : (
           <p className="text-green-700/80 dark:text-green-400/80 mt-0.5">Good move.</p>
         ))}

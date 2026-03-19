@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { normalizeChessNotation } from "@/lib/chess/normalize-chess-notation";
 import { cn } from "@/lib/utils";
 
 export type TrainingPuzzleStatusVariant = "turn" | "correct" | "incorrect";
@@ -30,7 +31,9 @@ export function TrainingPuzzleStatusPanel({
   className,
 }: TrainingPuzzleStatusPanelProps) {
   const commentTrimmed =
-    comment != null && comment.trim() !== "" ? comment.trim() : undefined;
+    comment != null && comment.trim() !== ""
+      ? normalizeChessNotation(comment.trim())
+      : undefined;
 
   if (variant === "turn") {
     return (
