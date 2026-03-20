@@ -62,6 +62,15 @@ The app can import a large dataset of chess puzzles from a CSV file and seed the
 - **Expected columns:** `trainingSetId`, `puzzleNumber`, `fen`, `sideToMove`, `solutionMoves`, `motifTags`, `gameSource`, `difficulty`
 - **Validation:** Rows are validated with Zod. `trainingSetId` and `difficulty` must be one of `easy` | `intermediate` | `advanced` and must match each other.
 
+## First step
+
+The project uses **pnpm** as the package manager.
+Let's first ensure we have all packages installed.
+
+```bash
+pnpm install
+```
+
 ### How to validate
 
 ```bash
@@ -111,10 +120,7 @@ The pipeline is designed so you can drop a large real `puzzle.csv` into `data/im
 
 ## How to run
 
-The project uses **pnpm** as the package manager.
-
 ```bash
-pnpm install
 pnpm run dev
 ```
 
