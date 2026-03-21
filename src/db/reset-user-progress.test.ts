@@ -73,7 +73,6 @@ describe("reset-user-progress", () => {
     await resetUserProgressPreserveLibrary();
 
     const tablesArg = mockTransaction.mock.calls[0][1] as unknown[];
-    const tableNames = tablesArg.map((t: { _name?: string }) => t?.constructor?.name ?? t);
     expect(tablesArg.length).toBe(6);
     expect(mockClear).toHaveBeenCalledTimes(5);
     expect(mockPut).toHaveBeenCalledTimes(1);

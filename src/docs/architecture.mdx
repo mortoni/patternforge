@@ -36,6 +36,11 @@ The Dexie database (`PatternForgeDB`) defines these tables, aligned with `src/db
 - **exerciseAttempts** — Individual puzzle attempts (result, duration, `userMoves`)
 - **mistakeEntries** — Mistake review queue and mastery progression
 
+## Domain models vs. persistence schema
+
+- **`src/db/schema.ts`** (Zod) is the **canonical shape** for rows stored in IndexedDB. Repositories and services read/write these types.
+- **`src/domain/**`** holds conceptual entities and rules that predate or complement the DB layer. Prefer **`schema.ts` types** when implementing new features that touch Dexie; use **`domain`** when you need pure naming or documentation separation without duplicating fields. If both exist for the same concept, treat the **Zod-inferred type** as the source of truth for persisted data.
+
 ## Component Structure
 
 - **`src/features/*`** — Domain UI and flows (training, training-sets, mistakes, analytics/progress UI, settings)

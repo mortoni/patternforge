@@ -17,9 +17,9 @@ export function DevResetProgressCard() {
   useEffect(() => {
     if (!isDev || typeof window === "undefined") return;
     const w = window as unknown as {
-      resetUserProgress?: () => Promise<ReturnType<typeof resetUserProgressPreserveLibrary>>;
+      resetUserProgress?: typeof resetUserProgressPreserveLibrary;
     };
-    w.resetUserProgress = () => resetUserProgressPreserveLibrary();
+    w.resetUserProgress = resetUserProgressPreserveLibrary;
     return () => {
       delete w.resetUserProgress;
     };

@@ -5,7 +5,7 @@ Local-first chess tactics training web app. Built for desktop and mobile, with f
 ## Architecture
 
 - **Next.js (App Router)** – React framework with file-based routing.
-- **Feature-first structure** – Code is organized by feature under `src/features/` (dashboard, training, session, training-sets, mistakes, analytics, settings). Each feature can have `components/`, `hooks/`, and `services/`.
+- **Feature-first structure** – Code is organized by feature under `src/features/` (dashboard, training, session, training-sets, mistakes, analytics/progress UI, settings). Each feature can have `components/`, `hooks/`, and `services/`.
 - **Domain layer** – Entities and types live under `src/domain/` (training, session, mistakes, settings). No framework or DB details here.
 - **Data layer** – IndexedDB via **Dexie** in `src/db/`. Repositories in `src/repositories/` encapsulate all Dexie access. Pages and UI do not touch Dexie directly; they use repositories and services.
 - **Client-only Dexie** – Any code that imports or uses Dexie must run only on the client (e.g. components that use DB are `"use client"` or data is loaded in client components/hooks).
@@ -111,6 +111,10 @@ This reset is **not** exposed in production UI. There is no Node script for it (
 
 The pipeline is designed so you can drop a large real `puzzle.csv` into `data/imports/`, run `pnpm run import:puzzles`, then load it in the app via the dev seed. A small sample CSV is included for local testing only.
 
+## Continuous integration
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on pushes and pull requests to `main` / `master`: **lint**, **Vitest**, **typecheck**, **Next build**, and a separate **Playwright** job (Chromium).
+
 ## How to run
 
 The project uses **pnpm** as the package manager.
@@ -128,9 +132,11 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `pnpm run build` – Production build
 - `pnpm run start` – Start production server
 - `pnpm run lint` – ESLint
+- `pnpm run typecheck` – `tsc --noEmit` (app `src/`; `scripts/` excluded). If you delete routes and see stale `.next` type errors, run `rm -rf .next` then `pnpm run typecheck` again.
 - `pnpm run test` – Vitest (unit/integration)
 - `pnpm run test:watch` – Vitest watch mode
-- `pnpm run test:e2e` – Playwright E2E (starts dev server if needed). On first run, install browsers: `pnpm exec playwright install`
+- `pnpm run ci` – `lint` → `test` → `typecheck` → `build` (same sequence as GitHub Actions)
+- `pnpm run test:e2e` – Playwright E2E (starts dev server if needed). **Browsers are not installed by `pnpm install`.** Before the first run (or after upgrading `@playwright/test`), run **`pnpm run test:e2e:install`** (Chromium only) or `pnpm exec playwright install`.
 - `pnpm run validate:puzzles` – Validate `data/imports/puzzle.csv`
 - `pnpm run generate:puzzles` – Convert CSV to JSON in `data/generated/` and `public/data/generated/`
 - `pnpm run import:puzzles` – Validate + generate JSON (then seed in browser via dev button)
@@ -141,7 +147,7 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `/privacy`, `/terms` – Placeholder pages
 - `/app` – **Dashboard (Phase 5)** – Shows real active training state when `lastTrainingSetId` has an active cycle: set name, cycle number, solved/total, progress bar, "Continue Training" and "View set" (links to set detail). **Quick stats** and **Recent sessions** list come from Dexie. If there are mistakes to review, a "Mistakes Remaining" card with "Review Mistakes" link is shown.
 - `/app/training` – **Training page (Phase 3+5)** – **Execution mode** for the current set in settings. When an **active** cycle exists: loads the current exercise and gets/creates an active session; first-move solving; attempt timing and cycle advancement as above; ending a session can go to session summary. When **no active cycle**: empty state (“No active cycle”) with primary action to **Training Sets** and secondary link to **Progress**; optional subtle line for last completed cycle time/sessions. Does **not** redirect to the last cycle summary on entry.
-- `/app/training/session-summary` – **Session summary** after a completed cycle; query `?sessionId=`. Legacy `/app/training-2` and `/app/training-2/session-summary` redirect here.
+- `/app/training/session-summary` – **Session summary** after a completed cycle; query `?sessionId=`. Legacy URLs **`/app/training-2`** and **`/app/training-2/session-summary`** are **301 redirected** in `next.config.mjs` to `/app/training` and `/app/training/session-summary` (query string preserved).
 - `/app/session` – Start session
 - `/app/sets` – **Training sets (Phase 6)** – Library/index of training sets. Each set name links to its detail page. Actions: Continue Training or Start Cycle 1 / Start Next Cycle. Filter by source and difficulty.
 - `/app/sets/[trainingSetId]` – **Training set detail (Phase 6)** – Set metadata (name, description, source, difficulty, tags), summary cards (exercises, status, progress, completed cycles, total time), primary action (Continue / Start Cycle 1 / Start Next Cycle), active cycle panel when applicable, and **cycle history** table (desktop) or list (mobile). Handles not found, no exercises, and no cycles yet. TODO: import pipeline does not yet populate `source`/`tags`; seed data includes example metadata.

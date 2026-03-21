@@ -28,6 +28,7 @@ import { SideToMoveIndicator } from "@/components/shared/SideToMoveIndicator";
 import { parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
 import { cn } from "@/lib/utils";
 import { useActiveTraining } from "../hooks/use-active-training";
+import { useCycleCompleteRedirect } from "../hooks/use-cycle-complete-redirect";
 import { TrainingEmptyState } from "./training-empty-state";
 import { TrainingBoardCard } from "./training-board-card";
 import { submitAttempt, skipPuzzle } from "../services/training-solver.service";
@@ -79,10 +80,7 @@ export function TrainingPageV2() {
    */
   const boardMoveInFlightRef = React.useRef(false);
 
-  React.useEffect(() => {
-    if (state?.status !== "cycle-complete") return;
-    router.replace(cycleSummaryRoute(state.cycleRunId));
-  }, [state, router]);
+  useCycleCompleteRedirect(state);
 
   const readyState = state?.status === "ready" ? state : null;
   const baseFen = readyState?.exercise.fen ?? "";

@@ -75,7 +75,7 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
         setAttemptedMoveUci(null);
       }
     },
-    [state, baseFen]
+    [state, baseFen, positionFen]
   );
 
   const handleSkip = React.useCallback(async () => {

@@ -49,15 +49,9 @@ function AppShellInner({
     closeOverlay,
   } = useSidebar();
 
-  /** `/app/training-2` would falsely match `startsWith("/app/training")` in JS. */
-  const isTrainingFocus = (() => {
-    if (!pathname) return false;
-    if (pathname === ROUTES.training || pathname.startsWith(`${ROUTES.training}/`))
-      return true;
-    if (pathname === "/app/training-2" || pathname.startsWith("/app/training-2/"))
-      return true;
-    return false;
-  })();
+  const isTrainingFocus =
+    pathname != null &&
+    (pathname === ROUTES.training || pathname.startsWith(`${ROUTES.training}/`));
 
   React.useEffect(() => {
     if (isTrainingFocus && mode !== "hidden") {

@@ -33,7 +33,7 @@ export interface SubmitAttemptParams {
   /** Timestamp (ms) when puzzle became active; used to compute durationMs. */
   attemptStartedAt: number;
   /** Full solution line (SAN or UCI). If length > 1, multi-move validation is used. */
-  solutionMoves?: string[];
+  solutionMoves?: string[] | string;
   /** Side to move at puzzle start ("w" | "b"). Required when solutionMoves is used. */
   sideToMove?: "w" | "b";
   /** Index of the next expected move in solutionMoves (0 = first move). Used for in-progress multi-move. */

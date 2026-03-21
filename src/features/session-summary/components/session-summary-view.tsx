@@ -33,7 +33,7 @@ function exerciseWord(count: number): string {
 
 export function SessionSummaryView() {
   const searchParams = useSearchParams();
-  const sessionId = searchParams.get("sessionId");
+  const sessionId = searchParams?.get("sessionId") ?? null;
 
   const [data, setData] = React.useState<SessionSummaryData | null>(null);
   const [loading, setLoading] = React.useState(true);

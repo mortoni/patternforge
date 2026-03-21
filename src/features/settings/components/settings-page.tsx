@@ -7,6 +7,7 @@ import { BoardStyleCard } from "./board-style-card";
 import { TrainingPreferencesCard } from "./training-preferences-card";
 import { DevResetProgressCard } from "./dev-reset-progress-card";
 import { useSettingsContext } from "../context/settings-context";
+import { parseBoardStyleId } from "@/lib/chess/board-styles";
 
 export function SettingsPage() {
   const {
@@ -50,7 +51,7 @@ export function SettingsPage() {
           disabled={loading}
         />
         <BoardStyleCard
-          value={settings?.boardStyle}
+          value={parseBoardStyleId(settings?.boardStyle)}
           onChange={(boardStyle) => setBoardStyle(boardStyle)}
           disabled={loading}
         />

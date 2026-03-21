@@ -28,7 +28,6 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
       className="flex flex-col gap-1 px-2 py-4"
     >
       {navItems.map(({ href, label, icon: Icon }) => {
-        /** `/app/training` must not match `/app/training-2` via naive prefix (substring). */
         const isActive =
           href === ROUTES.training
             ? path === href || path.startsWith(`${href}/`)

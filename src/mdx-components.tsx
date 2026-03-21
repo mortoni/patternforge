@@ -1,5 +1,5 @@
-import type { MDXComponents } from "mdx/types";
 import * as React from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -88,9 +88,11 @@ function MDXPre({
   );
 }
 
-export function useMDXComponents(components: MDXComponents): MDXComponents {
+export function useMDXComponents(
+  components: Record<string, unknown>
+): Record<string, unknown> {
   return {
-    h1: ({ className, ...props }) => (
+    h1: ({ className, ...props }: ComponentPropsWithoutRef<"h1">) => (
       <h1
         className={cn(
           "mb-3 mt-0 text-balance text-3xl font-light tracking-tight text-foreground md:text-[2rem] md:leading-tight",
@@ -99,7 +101,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    h2: ({ className, ...props }) => (
+    h2: ({ className, ...props }: ComponentPropsWithoutRef<"h2">) => (
       <h2
         className={cn(
           "mb-4 mt-12 border-b border-border/70 pb-3 text-2xl font-medium tracking-tight text-foreground first:mt-0",
@@ -108,7 +110,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    h3: ({ className, ...props }) => (
+    h3: ({ className, ...props }: ComponentPropsWithoutRef<"h3">) => (
       <h3
         className={cn(
           "mb-3 mt-10 text-lg font-medium tracking-tight text-foreground",
@@ -117,7 +119,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    h4: ({ className, ...props }) => (
+    h4: ({ className, ...props }: ComponentPropsWithoutRef<"h4">) => (
       <h4
         className={cn(
           "mb-2 mt-8 text-base font-semibold tracking-tight text-foreground",
@@ -126,7 +128,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    p: ({ className, ...props }) => (
+    p: ({ className, ...props }: ComponentPropsWithoutRef<"p">) => (
       <p
         className={cn(
           "mb-5 text-[15px] leading-[1.7] text-muted-foreground last:mb-0",
@@ -135,7 +137,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    ul: ({ className, ...props }) => (
+    ul: ({ className, ...props }: ComponentPropsWithoutRef<"ul">) => (
       <ul
         className={cn(
           "mb-6 list-disc space-y-2.5 pl-6 text-[15px] leading-[1.65] text-muted-foreground marker:text-muted-foreground/45",
@@ -145,7 +147,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    ol: ({ className, ...props }) => (
+    ol: ({ className, ...props }: ComponentPropsWithoutRef<"ol">) => (
       <ol
         className={cn(
           "mb-6 list-decimal space-y-2.5 pl-6 text-[15px] leading-[1.65] text-muted-foreground marker:text-muted-foreground/55",
@@ -155,7 +157,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    li: ({ className, children, ...props }) => (
+    li: ({ className, children, ...props }: ComponentPropsWithoutRef<"li">) => (
       <li
         className={cn(
           "text-[15px] leading-[1.65] text-muted-foreground [&>p]:mb-2 [&>p]:last:mb-0",
@@ -166,13 +168,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </li>
     ),
-    strong: ({ className, ...props }) => (
+    strong: ({ className, ...props }: ComponentPropsWithoutRef<"strong">) => (
       <strong
         className={cn("font-semibold text-foreground", className)}
         {...props}
       />
     ),
-    blockquote: ({ className, ...props }) => (
+    blockquote: ({
+      className,
+      ...props
+    }: ComponentPropsWithoutRef<"blockquote">) => (
       <blockquote
         className={cn(
           "my-8 border-l-2 border-foreground/15 py-1 pl-5 text-[15px] italic leading-relaxed text-muted-foreground dark:border-foreground/25",
@@ -181,10 +186,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    hr: ({ className, ...props }) => (
+    hr: ({ className, ...props }: ComponentPropsWithoutRef<"hr">) => (
       <hr className={cn("my-10 border-border", className)} {...props} />
     ),
-    img: ({ className, alt, ...props }) => (
+    img: ({ className, alt, ...props }: ComponentPropsWithoutRef<"img">) => (
       // MDX diagrams: prefer static assets; Next/Image needs known dimensions/hosts.
       // eslint-disable-next-line @next/next/no-img-element -- docs content may use arbitrary URLs
       <img
@@ -199,7 +204,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     a: DocsAnchor,
     code: MDXCode,
     pre: MDXPre,
-    table: ({ className, ...props }) => (
+    table: ({ className, ...props }: ComponentPropsWithoutRef<"table">) => (
       <div className="my-6 overflow-x-auto rounded-lg border border-border">
         <table
           className={cn("w-full min-w-[20rem] text-left text-sm", className)}
@@ -207,10 +212,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         />
       </div>
     ),
-    thead: ({ className, ...props }) => (
+    thead: ({ className, ...props }: ComponentPropsWithoutRef<"thead">) => (
       <thead className={cn("border-b border-border bg-muted/40", className)} {...props} />
     ),
-    th: ({ className, ...props }) => (
+    th: ({ className, ...props }: ComponentPropsWithoutRef<"th">) => (
       <th
         className={cn(
           "px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground",
@@ -219,7 +224,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    td: ({ className, ...props }) => (
+    td: ({ className, ...props }: ComponentPropsWithoutRef<"td">) => (
       <td
         className={cn(
           "border-b border-border/60 px-4 py-2.5 text-[15px] text-muted-foreground",

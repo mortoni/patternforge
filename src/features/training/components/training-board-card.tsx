@@ -161,7 +161,10 @@ export function TrainingBoardCard({
   const [selectedSquare, setSelectedSquare] =
     React.useState<TrainingSquare | null>(null);
   const selectedRef = React.useRef<TrainingSquare | null>(null);
-  selectedRef.current = selectedSquare;
+
+  React.useEffect(() => {
+    selectedRef.current = selectedSquare;
+  }, [selectedSquare]);
 
   React.useEffect(() => {
     setSelectedSquare(null);
