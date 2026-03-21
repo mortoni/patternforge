@@ -4,7 +4,8 @@ import { getActiveTrainingState } from "./training-loader.service";
 const mockGetSettings = vi.fn();
 const mockGetTrainingSetById = vi.fn();
 const mockGetActiveCycleRunForSet = vi.fn();
-const mockGetLatestCycleRunByTrainingSetId = vi.fn();
+const mockGetLatestCompletedCycleRunByTrainingSetId = vi.fn();
+const mockGetSessionsByCycleRunId = vi.fn();
 const mockGetExercisesByTrainingSetId = vi.fn();
 const mockGetOrCreateActiveSession = vi.fn();
 
@@ -16,8 +17,11 @@ vi.mock("@/repositories/training-set.repository", () => ({
 }));
 vi.mock("@/repositories/cycle-run.repository", () => ({
   getActiveCycleRunForSet: (id: string) => mockGetActiveCycleRunForSet(id),
-  getLatestCycleRunByTrainingSetId: (id: string) =>
-    mockGetLatestCycleRunByTrainingSetId(id),
+  getLatestCompletedCycleRunByTrainingSetId: (id: string) =>
+    mockGetLatestCompletedCycleRunByTrainingSetId(id),
+}));
+vi.mock("@/repositories/session.repository", () => ({
+  getSessionsByCycleRunId: (id: string) => mockGetSessionsByCycleRunId(id),
 }));
 vi.mock("@/repositories/exercise.repository", () => ({
   getExercisesByTrainingSetId: (id: string) =>
@@ -56,12 +60,51 @@ describe("getActiveTrainingState", () => {
       name: "Sample Set",
     });
     mockGetActiveCycleRunForSet.mockResolvedValue(undefined);
-    mockGetLatestCycleRunByTrainingSetId.mockResolvedValue(undefined);
+    mockGetLatestCompletedCycleRunByTrainingSetId.mockResolvedValue(undefined);
     const result = await getActiveTrainingState();
     expect(result).toEqual({
       status: "no-active-cycle",
       trainingSetId: "set-1",
       trainingSetName: "Sample Set",
+    });
+  });
+
+  it('returns "no-active-cycle" with lastCompletedCycle when a completed cycle exists', async () => {
+    mockGetSettings.mockResolvedValue({
+      lastTrainingSetId: "set-1",
+      boardOrientation: "white",
+    });
+    mockGetTrainingSetById.mockResolvedValue({
+      id: "set-1",
+      name: "Sample Set",
+    });
+    mockGetActiveCycleRunForSet.mockResolvedValue(undefined);
+    mockGetLatestCompletedCycleRunByTrainingSetId.mockResolvedValue({
+      id: "cycle-done",
+      trainingSetId: "set-1",
+      cycleNumber: 2,
+      status: "completed",
+      nextExerciseIndex: 5,
+      totalExercises: 5,
+      solvedCount: 5,
+      startedAt: "2025-01-01T00:00:00Z",
+      completedAt: "2025-01-02T00:00:00Z",
+    });
+    mockGetSessionsByCycleRunId.mockResolvedValue([
+      { id: "s1", activeTimeMs: 10_000, cycleRunId: "cycle-done" },
+      { id: "s2", activeTimeMs: 22_000, cycleRunId: "cycle-done" },
+    ]);
+    const result = await getActiveTrainingState();
+    expect(result).toEqual({
+      status: "no-active-cycle",
+      trainingSetId: "set-1",
+      trainingSetName: "Sample Set",
+      lastCompletedCycle: {
+        cycleRunId: "cycle-done",
+        cycleNumber: 2,
+        totalTimeMs: 32_000,
+        sessionCount: 2,
+      },
     });
   });
 
@@ -90,6 +133,7 @@ describe("getActiveTrainingState", () => {
     const result = await getActiveTrainingState();
     expect(result).toEqual({
       status: "cycle-complete",
+      cycleRunId: "cycle-1",
       trainingSetId: "set-1",
       trainingSetName: "Sample Set",
       cycleNumber: 1,

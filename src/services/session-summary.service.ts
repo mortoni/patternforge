@@ -1,6 +1,6 @@
 /**
  * Read-only aggregates for the Session Summary screen (end-of-session flow).
- * Intentionally excludes correct/incorrect/skipped splits — checkpoint only, not a report card.
+ * Volume and time only on the surface; per-session skips are shown separately from processed count.
  */
 
 import {
@@ -13,13 +13,12 @@ import {
 } from "@/repositories/cycle-run.repository";
 import { getTrainingSetById } from "@/repositories/training-set.repository";
 import { getSkippedCountsBySessionIds } from "@/repositories/exercise-attempt.repository";
-import { exercisesCompletedExcludingSkips } from "@/lib/training/exercises-completed";
 import { effectiveSkippedCount } from "@/lib/training/effective-skipped-count";
 import type { SessionSchema } from "@/db/schema";
 
 export interface SessionSummaryCycleSlice {
   cycleNumber: number;
-  /** Sum of exercises completed (attempts minus skips) across sessions in this cycle. */
+  /** Sum of `puzzlesAttempted` across sessions in this cycle (includes skips). */
   totalExercisesCompletedInCycle: number;
   /** Sum of `activeTimeMs` across those sessions (matches training set detail aggregation). */
   totalActiveTimeMsInCycle: number;
@@ -46,7 +45,7 @@ export interface SessionSummaryData {
     /** Attempts including skips (raw session counter). */
     puzzlesAttempted: number;
     skippedCount: number;
-    /** Correct + incorrect only; skips excluded. */
+    /** Same as puzzlesAttempted: every exercise processed (incl. skips). */
     exercisesCompleted: number;
     startedAt: string;
     endedAt: string | undefined;
@@ -55,19 +54,11 @@ export interface SessionSummaryData {
   previousCycle: SessionSummaryPreviousCycle | null;
 }
 
-function sumSessionMetrics(
-  sessions: SessionSchema[],
-  skippedFromAttempts: Map<string, number>
-) {
+function sumSessionMetrics(sessions: SessionSchema[]) {
   return sessions.reduce(
     (acc, s) => ({
       activeTimeMs: acc.activeTimeMs + s.activeTimeMs,
-      exercisesCompleted:
-        acc.exercisesCompleted +
-        exercisesCompletedExcludingSkips(
-          s.puzzlesAttempted,
-          effectiveSkippedCount(s, skippedFromAttempts)
-        ),
+      exercisesCompleted: acc.exercisesCompleted + s.puzzlesAttempted,
     }),
     { activeTimeMs: 0, exercisesCompleted: 0 }
   );
@@ -95,7 +86,7 @@ export async function getSessionSummaryForSession(
     ...new Set([session.id, ...cycleSessions.map((s) => s.id)]),
   ];
   const skippedFromAttempts = await getSkippedCountsBySessionIds(skipIds);
-  const cycleTotals = sumSessionMetrics(cycleSessions, skippedFromAttempts);
+  const cycleTotals = sumSessionMetrics(cycleSessions);
   const sessionsOrdered = [...cycleSessions].sort((a, b) =>
     a.startedAt.localeCompare(b.startedAt)
   );
@@ -113,13 +104,9 @@ export async function getSessionSummaryForSession(
     );
     if (prior) {
       const priorSessions = await getSessionsByCycleRunId(prior.id);
-      const priorSkipMap = await getSkippedCountsBySessionIds(
-        priorSessions.map((s) => s.id)
-      );
       previousCycle = {
         cycleNumber: prevNumber,
-        totalActiveTimeMs: sumSessionMetrics(priorSessions, priorSkipMap)
-          .activeTimeMs,
+        totalActiveTimeMs: sumSessionMetrics(priorSessions).activeTimeMs,
       };
     }
   }
@@ -133,10 +120,7 @@ export async function getSessionSummaryForSession(
       activeTimeMs: session.activeTimeMs,
       puzzlesAttempted: session.puzzlesAttempted,
       skippedCount: sessionSkipped,
-      exercisesCompleted: exercisesCompletedExcludingSkips(
-        session.puzzlesAttempted,
-        sessionSkipped
-      ),
+      exercisesCompleted: session.puzzlesAttempted,
       startedAt: session.startedAt,
       endedAt: session.endedAt,
     },

@@ -43,6 +43,17 @@ Key architectural and design choices in PatternForge.
 - Less variety than random puzzles
 - Requires discipline to repeat sets
 
+## Training vs. reflection (routes)
+
+**Decision**: **`/app/training`** stays in **execution mode**. If there is no active cycle, show an empty state and links to start a new cycle (Training Sets) or review history (**Progress**), instead of auto-opening the last **cycle summary**.
+
+**Rationale**:
+- Avoids surprising redirects when the user meant to train
+- Keeps “do puzzles here” and “look back there” mentally separate
+- Summary remains available after completing a cycle from the solve flow and from **Progress → Reflection**
+
+**Reflection charts**: Progress over time is scoped **per training set** (cycle number vs. total time for that set only), so trends are not mixed across unrelated sets.
+
 ## Mistake Review System
 
 **Decision**: Track failed positions separately and allow focused review.

@@ -2,9 +2,15 @@
  * Types for the puzzle import pipeline (CSV → normalized JSON → Dexie).
  */
 
-export type TrainingSetSlug = "easy" | "intermediate" | "advanced";
+/** CSV column `trainingSetId`: any stable group key (e.g. `easy`, `test`, `magnus`). */
+export type TrainingSetGroupId = string;
 
-export type DifficultySlug = "easy" | "intermediate" | "advanced";
+/** CSV column `difficulty` / DB exercise difficulty. */
+export type ImportDifficulty =
+  | "easy"
+  | "intermediate"
+  | "advanced"
+  | "custom";
 
 /** Raw row from puzzle.csv (string values). */
 export interface PuzzleCsvRow {
@@ -22,7 +28,7 @@ export interface PuzzleCsvRow {
 /** Normalized puzzle ready for JSON output and Dexie. firstMove is derived from solutionMoves[0] when not provided. */
 export interface NormalizedPuzzle {
   id: string;
-  trainingSetId: TrainingSetSlug;
+  trainingSetId: TrainingSetGroupId;
   puzzleNumber: number;
   fen: string;
   sideToMove: "w" | "b";
@@ -31,7 +37,7 @@ export interface NormalizedPuzzle {
   firstMove?: string;
   motifTags: string[];
   gameSource: string;
-  difficulty: DifficultySlug;
+  difficulty: ImportDifficulty;
   /** Optional comment / explanation from source (e.g. woodpecker dataset). */
   comment?: string;
   createdAt: string;
@@ -39,8 +45,8 @@ export interface NormalizedPuzzle {
 
 /** Training set metadata for generated output. */
 export interface GeneratedTrainingSetMeta {
-  id: TrainingSetSlug;
+  id: TrainingSetGroupId;
   name: string;
   description: string;
-  difficulty: DifficultySlug;
+  difficulty: ImportDifficulty;
 }

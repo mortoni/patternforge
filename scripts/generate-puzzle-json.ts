@@ -6,34 +6,16 @@
 import * as fs from "fs";
 import * as path from "path";
 import { parseCsv } from "../src/lib/csv";
-import { validateAndTransformAll } from "../src/lib/puzzle-import";
-import type { NormalizedPuzzle } from "../src/domain/training/types/puzzle-import.types";
-import type { GeneratedTrainingSetMeta } from "../src/domain/training/types/puzzle-import.types";
+import {
+  validateAndTransformAll,
+  buildTrainingSetMetaFromPuzzles,
+  groupPuzzlesByTrainingSet,
+  exercisesJsonBasename,
+} from "../src/lib/puzzle-import";
 
 const CSV_PATH = path.join(process.cwd(), "data", "imports", "puzzle.csv");
 const OUT_DIR = path.join(process.cwd(), "data", "generated");
 const PUBLIC_OUT_DIR = path.join(process.cwd(), "public", "data", "generated");
-
-const TRAINING_SET_META: GeneratedTrainingSetMeta[] = [
-  {
-    id: "easy",
-    name: "Woodpecker Easy",
-    description: "Woodpecker method - easier positions.",
-    difficulty: "easy",
-  },
-  {
-    id: "intermediate",
-    name: "Woodpecker Intermediate",
-    description: "Woodpecker method - intermediate level.",
-    difficulty: "intermediate",
-  },
-  {
-    id: "advanced",
-    name: "Woodpecker Advance",
-    description: "Woodpecker method - advanced positions.",
-    difficulty: "advanced",
-  },
-];
 
 function ensureDir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -62,36 +44,29 @@ function main() {
   ensureDir(OUT_DIR);
   ensureDir(PUBLIC_OUT_DIR);
 
-  const easy = valid.filter((p) => p.trainingSetId === "easy");
-  const intermediate = valid.filter((p) => p.trainingSetId === "intermediate");
-  const advanced = valid.filter((p) => p.trainingSetId === "advanced");
+  const meta = buildTrainingSetMetaFromPuzzles(valid);
+  const bySet = groupPuzzlesByTrainingSet(valid);
 
   const writeJson = (filePath: string, data: unknown) => {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
   };
 
-  writeJson(path.join(OUT_DIR, "easy-exercises.json"), easy);
-  writeJson(path.join(OUT_DIR, "intermediate-exercises.json"), intermediate);
-  writeJson(path.join(OUT_DIR, "advanced-exercises.json"), advanced);
   writeJson(path.join(OUT_DIR, "all-puzzles.json"), valid);
-  writeJson(path.join(OUT_DIR, "training-sets-meta.json"), TRAINING_SET_META);
-
-  writeJson(path.join(PUBLIC_OUT_DIR, "easy-exercises.json"), easy);
-  writeJson(path.join(PUBLIC_OUT_DIR, "intermediate-exercises.json"), intermediate);
-  writeJson(path.join(PUBLIC_OUT_DIR, "advanced-exercises.json"), advanced);
+  writeJson(path.join(OUT_DIR, "training-sets-meta.json"), meta);
   writeJson(path.join(PUBLIC_OUT_DIR, "all-puzzles.json"), valid);
-  writeJson(path.join(PUBLIC_OUT_DIR, "training-sets-meta.json"), TRAINING_SET_META);
+  writeJson(path.join(PUBLIC_OUT_DIR, "training-sets-meta.json"), meta);
+
+  const counts: string[] = [];
+  for (const [setId, puzzles] of bySet) {
+    const base = `${exercisesJsonBasename(setId)}-exercises.json`;
+    writeJson(path.join(OUT_DIR, base), puzzles);
+    writeJson(path.join(PUBLIC_OUT_DIR, base), puzzles);
+    counts.push(`${setId}: ${puzzles.length}`);
+  }
 
   console.log("Generated:", OUT_DIR);
   console.log("Also copied to public for in-browser fetch:", PUBLIC_OUT_DIR);
-  console.log(
-    "easy:",
-    easy.length,
-    "intermediate:",
-    intermediate.length,
-    "advanced:",
-    advanced.length
-  );
+  console.log("Per set —", counts.join("; "));
 }
 
 main();

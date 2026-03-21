@@ -20,6 +20,15 @@ export async function getAttemptsBySessionId(
     .sortBy("startedAt");
 }
 
+export async function getAttemptsByCycleRunId(
+  cycleRunId: string
+): Promise<ExerciseAttemptSchema[]> {
+  return db.exerciseAttempts
+    .where("cycleRunId")
+    .equals(cycleRunId)
+    .sortBy("startedAt");
+}
+
 /** Skipped-attempt counts per session (truthy when sessionId was stored on attempts). */
 export async function getSkippedCountsBySessionIds(
   sessionIds: string[]

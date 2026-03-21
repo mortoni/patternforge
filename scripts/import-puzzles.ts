@@ -7,18 +7,16 @@
 import * as fs from "fs";
 import * as path from "path";
 import { parseCsv } from "../src/lib/csv";
-import { validateAndTransformAll } from "../src/lib/puzzle-import";
-import type { GeneratedTrainingSetMeta } from "../src/domain/training/types/puzzle-import.types";
+import {
+  validateAndTransformAll,
+  buildTrainingSetMetaFromPuzzles,
+  groupPuzzlesByTrainingSet,
+  exercisesJsonBasename,
+} from "../src/lib/puzzle-import";
 
 const CSV_PATH = path.join(process.cwd(), "data", "imports", "puzzle.csv");
 const OUT_DIR = path.join(process.cwd(), "data", "generated");
 const PUBLIC_OUT_DIR = path.join(process.cwd(), "public", "data", "generated");
-
-const TRAINING_SET_META: GeneratedTrainingSetMeta[] = [
-  { id: "easy", name: "Easy Exercises", description: "Introductory tactical exercises.", difficulty: "easy" },
-  { id: "intermediate", name: "Intermediate Exercises", description: "More demanding tactical exercises.", difficulty: "intermediate" },
-  { id: "advanced", name: "Advanced Exercises", description: "Hard tactical exercises for advanced training.", difficulty: "advanced" },
-];
 
 function ensureDir(dir: string) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -49,30 +47,33 @@ function main() {
   ensureDir(OUT_DIR);
   ensureDir(PUBLIC_OUT_DIR);
 
-  const easy = valid.filter((p) => p.trainingSetId === "easy");
-  const intermediate = valid.filter((p) => p.trainingSetId === "intermediate");
-  const advanced = valid.filter((p) => p.trainingSetId === "advanced");
+  const meta = buildTrainingSetMetaFromPuzzles(valid);
+  const bySet = groupPuzzlesByTrainingSet(valid);
 
   const writeJson = (filePath: string, data: unknown) => {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
   };
 
-  writeJson(path.join(OUT_DIR, "easy-exercises.json"), easy);
-  writeJson(path.join(OUT_DIR, "intermediate-exercises.json"), intermediate);
-  writeJson(path.join(OUT_DIR, "advanced-exercises.json"), advanced);
   writeJson(path.join(OUT_DIR, "all-puzzles.json"), valid);
-  writeJson(path.join(OUT_DIR, "training-sets-meta.json"), TRAINING_SET_META);
-
-  writeJson(path.join(PUBLIC_OUT_DIR, "easy-exercises.json"), easy);
-  writeJson(path.join(PUBLIC_OUT_DIR, "intermediate-exercises.json"), intermediate);
-  writeJson(path.join(PUBLIC_OUT_DIR, "advanced-exercises.json"), advanced);
+  writeJson(path.join(OUT_DIR, "training-sets-meta.json"), meta);
   writeJson(path.join(PUBLIC_OUT_DIR, "all-puzzles.json"), valid);
-  writeJson(path.join(PUBLIC_OUT_DIR, "training-sets-meta.json"), TRAINING_SET_META);
+  writeJson(path.join(PUBLIC_OUT_DIR, "training-sets-meta.json"), meta);
+
+  for (const [setId, puzzles] of bySet) {
+    const base = `${exercisesJsonBasename(setId)}-exercises.json`;
+    writeJson(path.join(OUT_DIR, base), puzzles);
+    writeJson(path.join(PUBLIC_OUT_DIR, base), puzzles);
+  }
 
   console.log("Step 2: Generated JSON.");
   console.log("  ", OUT_DIR);
   console.log("  ", PUBLIC_OUT_DIR);
-  console.log("  easy:", easy.length, "intermediate:", intermediate.length, "advanced:", advanced.length);
+  console.log(
+    "  Sets:",
+    [...bySet.entries()]
+      .map(([id, p]) => `${id} (${p.length})`)
+      .join(", ")
+  );
   console.log("\nNext: In the app, run seedPuzzlesFromGeneratedJson() (e.g. from a dev-only button) to load into Dexie.");
 }
 

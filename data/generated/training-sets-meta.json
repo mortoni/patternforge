@@ -1,20 +1,26 @@
 [
   {
+    "id": "advanced",
+    "name": "Woodpecker Advanced",
+    "description": "Woodpecker method — advanced positions.",
+    "difficulty": "advanced"
+  },
+  {
     "id": "easy",
     "name": "Woodpecker Easy",
-    "description": "Woodpecker method - easier positions.",
+    "description": "Woodpecker method — easier positions.",
     "difficulty": "easy"
   },
   {
     "id": "intermediate",
     "name": "Woodpecker Intermediate",
-    "description": "Woodpecker method - intermediate level.",
+    "description": "Woodpecker method — intermediate level.",
     "difficulty": "intermediate"
   },
   {
-    "id": "advanced",
-    "name": "Woodpecker Advance",
-    "description": "Woodpecker method - advanced positions.",
-    "difficulty": "advanced"
+    "id": "test",
+    "name": "Test",
+    "description": "Imported exercises for «test».",
+    "difficulty": "easy"
   }
 ]

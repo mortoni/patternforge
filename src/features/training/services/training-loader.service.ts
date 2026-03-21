@@ -8,8 +8,9 @@ import { getSettings } from "@/repositories/settings.repository";
 import { getTrainingSetById } from "@/repositories/training-set.repository";
 import {
   getActiveCycleRunForSet,
-  getLatestCycleRunByTrainingSetId,
+  getLatestCompletedCycleRunByTrainingSetId,
 } from "@/repositories/cycle-run.repository";
+import { getSessionsByCycleRunId } from "@/repositories/session.repository";
 import { getExercisesByTrainingSetId } from "@/repositories/exercise.repository";
 import { orderExercises } from "@/lib/training/exercise-order";
 import type { ActiveTrainingState } from "../types";
@@ -32,24 +33,32 @@ export async function getActiveTrainingState(): Promise<ActiveTrainingState> {
 
   const activeCycle = await getActiveCycleRunForSet(lastTrainingSetId);
   if (!activeCycle) {
-    const latest = await getLatestCycleRunByTrainingSetId(lastTrainingSetId);
-    if (
-      latest?.status === "completed" &&
-      latest.nextExerciseIndex >= latest.totalExercises
-    ) {
-      return {
-        status: "cycle-complete",
-        trainingSetId: lastTrainingSetId,
-        trainingSetName: trainingSet.name,
-        cycleNumber: latest.cycleNumber,
-        solvedCount: latest.solvedCount,
-        totalExercises: latest.totalExercises,
+    const lastDone = await getLatestCompletedCycleRunByTrainingSetId(
+      lastTrainingSetId
+    );
+    let lastCompletedCycle:
+      | {
+          cycleRunId: string;
+          cycleNumber: number;
+          totalTimeMs: number;
+          sessionCount: number;
+        }
+      | undefined;
+    if (lastDone != null) {
+      const sessions = await getSessionsByCycleRunId(lastDone.id);
+      const totalTimeMs = sessions.reduce((a, s) => a + s.activeTimeMs, 0);
+      lastCompletedCycle = {
+        cycleRunId: lastDone.id,
+        cycleNumber: lastDone.cycleNumber,
+        totalTimeMs,
+        sessionCount: sessions.length,
       };
     }
     return {
       status: "no-active-cycle",
       trainingSetId: lastTrainingSetId,
       trainingSetName: trainingSet.name,
+      ...(lastCompletedCycle != null ? { lastCompletedCycle } : {}),
     };
   }
 
@@ -58,17 +67,18 @@ export async function getActiveTrainingState(): Promise<ActiveTrainingState> {
   const nextIndex = activeCycle.nextExerciseIndex;
   const exercise = orderedExercises[nextIndex];
 
-  if (!exercise) {
-    if (nextIndex >= orderedExercises.length) {
-      return {
-        status: "cycle-complete",
-        trainingSetId: lastTrainingSetId,
-        trainingSetName: trainingSet.name,
-        cycleNumber: activeCycle.cycleNumber,
-        solvedCount: activeCycle.solvedCount,
-        totalExercises: activeCycle.totalExercises,
-      };
-    }
+    if (!exercise) {
+      if (nextIndex >= orderedExercises.length) {
+        return {
+          status: "cycle-complete",
+          cycleRunId: activeCycle.id,
+          trainingSetId: lastTrainingSetId,
+          trainingSetName: trainingSet.name,
+          cycleNumber: activeCycle.cycleNumber,
+          solvedCount: activeCycle.solvedCount,
+          totalExercises: activeCycle.totalExercises,
+        };
+      }
     return {
       status: "exercise-not-found",
       trainingSetId: lastTrainingSetId,

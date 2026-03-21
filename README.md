@@ -34,6 +34,8 @@ Local-first chess tactics training web app. Built for desktop and mobile, with f
 ### Loaders and side effects
 
 - **Training loader** (`getActiveTrainingState`) is read-only: it loads set, cycle, and current exercise but does **not** create or update sessions. Session creation/reuse happens in the **interaction layer** (`useActiveTraining` hook) only when state is ready and the user is entering training.
+- **No active cycle** — If settings point at a training set but there is no **active** cycle run, the loader returns **`no-active-cycle`**. It does **not** treat “last run is completed” as an automatic “cycle complete” navigation target: visiting **`/app/training`** stays on Training and shows an empty state (start a new cycle via Training Sets, optional link to Progress). The loader may attach **`lastCompletedCycle`** (time + session count from the most recently **completed** run for that set) as low-emphasis context only.
+- **Cycle complete during solving** — When you finish the last exercise (or skip through completion), the app still navigates to the **cycle summary** (`/app/cycle/[cycleId]/summary`) from the solve/skip flow. A separate loader edge case (active run with index past exercises) can still surface **`cycle-complete`** and redirect to summary.
 
 ### Empty sets
 
@@ -49,7 +51,7 @@ Local-first chess tactics training web app. Built for desktop and mobile, with f
 
 ### Seed data (development)
 
-- **Training page** (`/app/training`) is a minimal Woodpecker-style surface: first-move solving and **Phase 3 progression** (attempts advance the cycle; correct increments `solvedCount`; incorrect/skip do not). A lightweight **active session** is created or reused per cycle; attempts are associated with it. **Phase 5 timing**: when a puzzle becomes active, an attempt start time is captured; when the user checks or skips, `durationMs` is computed and stored on the attempt and added to `Session.activeTimeMs`. When the cycle ends, the session is marked completed with `endedAt`. Timing is attempt-based (active solving time), not full wall-clock or pause-aware. Full solution-line validation is not yet implemented.
+- **Training page** (`/app/training`) is a minimal Woodpecker-style surface: first-move solving and **Phase 3 progression** (attempts advance the cycle; correct increments `solvedCount`; incorrect/skip do not). A lightweight **active session** is created or reused per cycle; attempts are associated with it. **Phase 5 timing**: when a puzzle becomes active, an attempt start time is captured; when the user checks or skips, `durationMs` is computed and stored on the attempt and added to `Session.activeTimeMs`. When the cycle ends, the session is marked completed with `endedAt`. Timing is attempt-based (active solving time), not full wall-clock or pause-aware. Full solution-line validation is not yet implemented. **Without an active cycle**, the page shows a centered empty state (links to Training Sets and Progress); it does **not** auto-open the last cycle summary.
 - **Training Sets page** (`/app/sets`) is the main library: list sets, start or continue a cycle, choose a set to train. On first load in development, it automatically runs a safe seed **only if no training sets exist**. The seed is **intentionally representative** for local development: **Lichess Mixed 1200–1600** (library: has exercises, no cycle), **Tournament Warmup** (completed cycle), **Rook Tactics** (empty set, no exercises).
 - Seed is implemented in `src/db/seed-training-sets.ts` and invoked from the Training Sets page via `ensureSeededForDevelopment()`. It does **not** run in production.
 - To **reset IndexedDB** during development: open DevTools → Application (Chrome) or Storage (Firefox) → IndexedDB → delete the `PatternForgeDB` database. Refresh the app and revisit `/app/sets` to re-seed.
@@ -60,7 +62,7 @@ The app can import a large dataset of chess puzzles from a CSV file and seed the
 
 - **Canonical source:** `data/imports/puzzle.csv`
 - **Expected columns:** `trainingSetId`, `puzzleNumber`, `fen`, `sideToMove`, `solutionMoves`, `motifTags`, `gameSource`, `difficulty`
-- **Validation:** Rows are validated with Zod. `trainingSetId` and `difficulty` must be one of `easy` | `intermediate` | `advanced` and must match each other.
+- **Validation:** Rows are validated with Zod. `trainingSetId` is any set / group label you choose. `difficulty` must be `easy` | `intermediate` | `advanced` | `custom` (stored on exercises; independent of set id).
 
 ### How to validate
 
@@ -78,7 +80,7 @@ pnpm run generate:puzzles
 
 Converts the CSV to normalized JSON and writes to `data/generated/` and `public/data/generated/`:
 
-- `easy-exercises.json`, `intermediate-exercises.json`, `advanced-exercises.json`
+- One `{trainingSetId}-exercises.json` per set (e.g. `easy-exercises.json`, `test-exercises.json`)
 - `all-puzzles.json`
 - `training-sets-meta.json`
 
@@ -138,13 +140,15 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `/` – Marketing landing
 - `/privacy`, `/terms` – Placeholder pages
 - `/app` – **Dashboard (Phase 5)** – Shows real active training state when `lastTrainingSetId` has an active cycle: set name, cycle number, solved/total, progress bar, "Continue Training" and "View set" (links to set detail). **Quick stats** and **Recent sessions** list come from Dexie. If there are mistakes to review, a "Mistakes Remaining" card with "Review Mistakes" link is shown.
-- `/app/training` – **Training page (Phase 3+5)** – Loads the current active exercise and gets/creates an active session. First-move solving: check persists attempt with real `durationMs` and (on incorrect/skip) records mistake; advancing the cycle happens in the minimal UI without a separate “Next puzzle” control. Cycle completion marks the session completed with `endedAt`. Timing is per-attempt; reload mid-puzzle resets the in-progress attempt timer.
+- `/app/training` – **Training page (Phase 3+5)** – **Execution mode** for the current set in settings. When an **active** cycle exists: loads the current exercise and gets/creates an active session; first-move solving; attempt timing and cycle advancement as above; ending a session can go to session summary. When **no active cycle**: empty state (“No active cycle”) with primary action to **Training Sets** and secondary link to **Progress**; optional subtle line for last completed cycle time/sessions. Does **not** redirect to the last cycle summary on entry.
 - `/app/training/session-summary` – **Session summary** after a completed cycle; query `?sessionId=`. Legacy `/app/training-2` and `/app/training-2/session-summary` redirect here.
 - `/app/session` – Start session
 - `/app/sets` – **Training sets (Phase 6)** – Library/index of training sets. Each set name links to its detail page. Actions: Continue Training or Start Cycle 1 / Start Next Cycle. Filter by source and difficulty.
 - `/app/sets/[trainingSetId]` – **Training set detail (Phase 6)** – Set metadata (name, description, source, difficulty, tags), summary cards (exercises, status, progress, completed cycles, total time), primary action (Continue / Start Cycle 1 / Start Next Cycle), active cycle panel when applicable, and **cycle history** table (desktop) or list (mobile). Handles not found, no exercises, and no cycles yet. TODO: import pipeline does not yet populate `source`/`tags`; seed data includes example metadata.
 - `/app/mistakes` – **Mistakes Review (Phase 4)** – List of active mistakes (status ≠ mastered) with summary cards. Open a mistake to review: first-move solving same as training; correct advances mastery (needs_review → solved_once → solved_twice → mastered); incorrect resets to needs_review; skip keeps needs_review. Mastered items disappear from the list. Route `/app/mistakes/[mistakeId]` for the review flow.
-- `/app/analytics` – **Analytics (Phase 5)** – Real page backed by Dexie: summary cards (total sessions, attempts, overall accuracy, total training time), **Session duration over time** bar chart, **Accuracy over time** bar chart. Data is local and repository-driven. Future phases may add pause-aware timing and deeper reporting.
+- `/app/progress` – **Progress** – Cycle-oriented view. With an **active** cycle: current cycle progress, session stats, and a small **session-activity** chart for this cycle. With **no** active cycle: **Reflection** — completed cycles grouped by **training set**; pick a set, then **table** (cycle, time, sessions, completed date, link to summary) or **chart** (total time vs **cycle number** for that set only, with a per-set **median** line; chart needs at least two completed cycles for that set). Data from `getProgressPageData` / Dexie.
+- `/app/cycle/[cycleId]/summary` – **Cycle summary** for a completed (or just-finished) cycle; linked from Reflection and from the end of a training run.
+- `/app/analytics` – Redirects to **`/app/progress`** (legacy path).
 - `/app/settings` – **Settings (Phase 7)** – Functional preferences page. **Theme**: light, dark, or system (persisted in AppSettings, applied app-wide via class on `html`). **Board orientation**: white or black (persisted; used by the training page and mistake review page). Training preferences section is scaffolded for future options. Dev-only “Reset user progress” card appears at the bottom in development.
 
 ## Key directories
@@ -156,7 +160,7 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `src/domain/` – Entity types and domain types
 - `src/db/` – Dexie setup, schema (Zod), migrations, seed
 - `src/repositories/` – Dexie table access
-- `src/services/` – puzzle-evaluator (first-move compare), mistake-review, cycle-progress, training-session, analytics (dashboard stats, recent sessions, chart series)
+- `src/services/` – puzzle-evaluator (first-move compare), mistake-review, cycle-progress, training-session, training-session summaries, **progress page** data (`getProgressPageData`: active cycle + per-set cycle history for Reflection)
 - `src/lib/` – utils, constants, ids, dates, csv, puzzle-import
 - `data/imports/` – canonical `puzzle.csv` for the import pipeline
 - `data/generated/` – generated JSON (also copied to `public/data/generated/` for in-browser fetch)

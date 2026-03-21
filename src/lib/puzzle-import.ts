@@ -3,7 +3,11 @@
  */
 
 import { puzzleCsvRowSchema } from "@/domain/training/entities/puzzle-import.schema";
-import type { NormalizedPuzzle } from "@/domain/training/types/puzzle-import.types";
+import type {
+  GeneratedTrainingSetMeta,
+  ImportDifficulty,
+  NormalizedPuzzle,
+} from "@/domain/training/types/puzzle-import.types";
 
 export interface ValidationError {
   row: number;
@@ -42,14 +46,14 @@ export function validateAndTransformRow(
  */
 function transformToNormalized(
   row: {
-    trainingSetId: "easy" | "intermediate" | "advanced";
+    trainingSetId: string;
     puzzleNumber: number;
     fen: string;
     sideToMove: "w" | "b";
     solutionMoves: string;
     motifTags: string;
     gameSource: string;
-    difficulty: "easy" | "intermediate" | "advanced";
+    difficulty: ImportDifficulty;
     comment?: string;
   },
   _rowNumber: number
@@ -84,7 +88,7 @@ function transformToNormalized(
 }
 
 /**
- * Format puzzle id: easy-0001, intermediate-0001, advanced-0001.
+ * Format puzzle id: `{trainingSetId}-0001` (e.g. easy-0001, test-0001).
  */
 export function formatPuzzleId(
   trainingSetId: string,
@@ -92,6 +96,89 @@ export function formatPuzzleId(
 ): string {
   const padded = String(puzzleNumber).padStart(4, "0");
   return `${trainingSetId}-${padded}`;
+}
+
+const CANONICAL_SET_META: Record<
+  string,
+  Pick<GeneratedTrainingSetMeta, "name" | "description" | "difficulty">
+> = {
+  easy: {
+    name: "Woodpecker Easy",
+    description: "Woodpecker method — easier positions.",
+    difficulty: "easy",
+  },
+  intermediate: {
+    name: "Woodpecker Intermediate",
+    description: "Woodpecker method — intermediate level.",
+    difficulty: "intermediate",
+  },
+  advanced: {
+    name: "Woodpecker Advanced",
+    description: "Woodpecker method — advanced positions.",
+    difficulty: "advanced",
+  },
+};
+
+function titleCaseSetId(id: string): string {
+  return id
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((w) => w.slice(0, 1).toUpperCase() + w.slice(1).toLowerCase())
+    .join(" ");
+}
+
+/**
+ * Group puzzles by `trainingSetId`; puzzles per group sorted by `puzzleNumber`.
+ */
+export function groupPuzzlesByTrainingSet(
+  puzzles: NormalizedPuzzle[]
+): Map<string, NormalizedPuzzle[]> {
+  const m = new Map<string, NormalizedPuzzle[]>();
+  for (const p of puzzles) {
+    const list = m.get(p.trainingSetId) ?? [];
+    list.push(p);
+    m.set(p.trainingSetId, list);
+  }
+  for (const list of m.values()) {
+    list.sort((a, b) => a.puzzleNumber - b.puzzleNumber);
+  }
+  return m;
+}
+
+/**
+ * Build training set metadata for every group present in validated puzzles.
+ */
+export function buildTrainingSetMetaFromPuzzles(
+  valid: NormalizedPuzzle[]
+): GeneratedTrainingSetMeta[] {
+  const bySet = groupPuzzlesByTrainingSet(valid);
+  const setIds = [...bySet.keys()].sort((a, b) => a.localeCompare(b));
+  return setIds.map((id) => {
+    const canonical = CANONICAL_SET_META[id];
+    if (canonical) {
+      return { id, ...canonical };
+    }
+    const puzzles = bySet.get(id) ?? [];
+    const first = puzzles[0]?.difficulty;
+    const difficulty: ImportDifficulty =
+      first === "easy" ||
+      first === "intermediate" ||
+      first === "advanced" ||
+      first === "custom"
+        ? first
+        : "custom";
+    return {
+      id,
+      name: titleCaseSetId(id) || id,
+      description: `Imported exercises for «${id}».`,
+      difficulty,
+    };
+  });
+}
+
+/** Safe filename segment for `{id}-exercises.json`. */
+export function exercisesJsonBasename(trainingSetId: string): string {
+  return trainingSetId.replace(/[^a-zA-Z0-9_-]/g, "_");
 }
 
 /**

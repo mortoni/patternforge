@@ -78,14 +78,17 @@ export async function seedPuzzlesFromGeneratedJson(
   ]);
 
   const exercises = allPuzzles.map(toExercise);
-  const exerciseIdsBySet: Record<string, string[]> = { easy: [], intermediate: [], advanced: [] };
-  allPuzzles
-    .sort((a, b) => a.puzzleNumber - b.puzzleNumber)
-    .forEach((p) => {
-      if (exerciseIdsBySet[p.trainingSetId]) {
-        exerciseIdsBySet[p.trainingSetId].push(p.id);
-      }
-    });
+  const exerciseIdsBySet: Record<string, string[]> = {};
+  const byGroup = new Map<string, typeof allPuzzles>();
+  for (const p of allPuzzles) {
+    const list = byGroup.get(p.trainingSetId) ?? [];
+    list.push(p);
+    byGroup.set(p.trainingSetId, list);
+  }
+  for (const [setId, list] of byGroup) {
+    list.sort((a, b) => a.puzzleNumber - b.puzzleNumber);
+    exerciseIdsBySet[setId] = list.map((p) => p.id);
+  }
 
   const sets: TrainingSetSchema[] = meta.map((m) =>
     toTrainingSet(m, exerciseIdsBySet[m.id] ?? [])

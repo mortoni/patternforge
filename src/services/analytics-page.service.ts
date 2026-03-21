@@ -1,9 +1,8 @@
 /**
- * Aggregates data for the Analytics page (Woodpecker-aligned: volume, time, repetition).
- * Avoids correctness framing; no puzzle-level drilldown here.
+ * Aggregates data for the Progress / Reflection page (cycle-oriented: volume, time, sessions).
+ * No correctness framing; mistakes are not surfaced here.
  */
 
-import { getRecentCompleted } from "@/repositories/session.repository";
 import {
   getActiveCycleRuns,
   getCompletedCycleRuns,
@@ -18,15 +17,7 @@ import {
   getTrainingSetById,
   getTrainingSetsByIds,
 } from "@/repositories/training-set.repository";
-import { countActive } from "@/repositories/mistake-entry.repository";
 import { exercisesCompletedExcludingSkips } from "@/lib/training/exercises-completed";
-
-export interface AnalyticsLastSession {
-  activeTimeMs: number;
-  /** Correct + incorrect only; skips excluded. */
-  exercisesCompleted: number;
-  endedAt: string;
-}
 
 export interface AnalyticsCurrentCycleSessionPoint {
   index: number;
@@ -45,71 +36,47 @@ export interface AnalyticsCurrentCycle {
   /** Woodpecker line position in the active cycle. */
   nextExerciseIndex: number;
   totalExercises: number;
+  /** Puzzles remaining in the cycle line. */
+  exercisesRemaining: number;
   totalTimeMs: number;
   totalExercisesCompleted: number;
-  /** Sum of skips across completed sessions in this cycle (session row + attempt-derived). */
+  /** Sum of skips across sessions in this cycle. */
   totalSkippedForNowInCycle: number;
+  /** Sessions recorded for this cycle run. */
+  sessionCount: number;
+  /** Mean active time per session (null if no sessions). */
+  averageSessionTimeMs: number | null;
+  longestSessionMs: number;
   sessionBars: AnalyticsCurrentCycleSessionPoint[];
 }
 
 export interface AnalyticsCycleHistoryRow {
   cycleId: string;
+  trainingSetId: string;
   cycleNumber: number;
   trainingSetName: string;
   totalTimeMs: number;
   totalExercisesCompleted: number;
   completedAt: string | null;
+  sessionCount: number;
 }
 
-export interface AnalyticsPageData {
-  lastSession: AnalyticsLastSession | null;
+export interface ProgressPageData {
   currentCycle: AnalyticsCurrentCycle | null;
   cycleHistory: AnalyticsCycleHistoryRow[];
-  /** Active mistakes (not mastered) — appropriate surface for analytics only. */
-  mistakesToReview: number;
-  longestRecentSessionMs: number | null;
-  bestRecentSessionExercises: number | null;
 }
 
+/** @deprecated Use `ProgressPageData` */
+export type AnalyticsPageData = ProgressPageData;
+
 /**
- * Loads all sections for `/app/analytics` in one round-trip friendly bundle.
+ * Loads Progress (active cycle) and Reflection (completed cycles) data for `/app/progress`.
  */
-export async function getAnalyticsPageData(): Promise<AnalyticsPageData> {
-  const [recentSessions, activeCycles, completedCycles, mistakesToReview] =
-    await Promise.all([
-      getRecentCompleted(30),
-      getActiveCycleRuns(),
-      getCompletedCycleRuns(),
-      countActive(),
-    ]);
-
-  let lastSession: AnalyticsLastSession | null = null;
-  if (recentSessions.length >= 1) {
-    const cur = recentSessions[0];
-    lastSession = {
-      activeTimeMs: cur.activeTimeMs,
-      exercisesCompleted: exercisesCompletedExcludingSkips(
-        cur.puzzlesAttempted,
-        cur.skippedCount ?? 0
-      ),
-      endedAt: cur.endedAt ?? cur.startedAt,
-    };
-  }
-
-  const window20 = recentSessions.slice(0, 20);
-  const longestRecentSessionMs = window20.length
-    ? Math.max(...window20.map((s) => s.activeTimeMs))
-    : null;
-  const bestRecentSessionExercises = window20.length
-    ? Math.max(
-        ...window20.map((s) =>
-          exercisesCompletedExcludingSkips(
-            s.puzzlesAttempted,
-            s.skippedCount ?? 0
-          )
-        )
-      )
-    : null;
+export async function getProgressPageData(): Promise<ProgressPageData> {
+  const [activeCycles, completedCycles] = await Promise.all([
+    getActiveCycleRuns(),
+    getCompletedCycleRuns(),
+  ]);
 
   let currentCycle: AnalyticsCurrentCycle | null = null;
   if (activeCycles.length > 0) {
@@ -137,11 +104,9 @@ export async function getAnalyticsPageData(): Promise<AnalyticsPageData> {
       0
     );
     const totalSkippedForNowInCycle = ordered.reduce(
-      (sum, s) =>
-        sum + effectiveSkippedCount(s, skippedFromAttempts),
+      (sum, s) => sum + effectiveSkippedCount(s, skippedFromAttempts),
       0
     );
-    /** Omit completed rows with no work — duplicates from old getOrCreate races looked like extra "sessions". */
     const forChart = ordered.filter(
       (s) =>
         s.status === "active" ||
@@ -163,6 +128,18 @@ export async function getAnalyticsPageData(): Promise<AnalyticsPageData> {
         };
       }
     );
+    const sessionCount = ordered.length;
+    const longestSessionMs =
+      sessionCount > 0
+        ? Math.max(...ordered.map((s) => s.activeTimeMs))
+        : 0;
+    const averageSessionTimeMs =
+      sessionCount > 0 ? Math.round(totalTimeMs / sessionCount) : null;
+    const exercisesRemaining = Math.max(
+      0,
+      cycle.totalExercises - cycle.nextExerciseIndex
+    );
+
     currentCycle = {
       cycleId: cycle.id,
       trainingSetId: cycle.trainingSetId,
@@ -170,9 +147,13 @@ export async function getAnalyticsPageData(): Promise<AnalyticsPageData> {
       cycleNumber: cycle.cycleNumber,
       nextExerciseIndex: cycle.nextExerciseIndex,
       totalExercises: cycle.totalExercises,
+      exercisesRemaining,
       totalTimeMs,
       totalExercisesCompleted: totalCompleted,
       totalSkippedForNowInCycle,
+      sessionCount,
+      averageSessionTimeMs,
+      longestSessionMs,
       sessionBars,
     };
   }
@@ -206,20 +187,23 @@ export async function getAnalyticsPageData(): Promise<AnalyticsPageData> {
     );
     return {
       cycleId: c.id,
+      trainingSetId: c.trainingSetId,
       cycleNumber: c.cycleNumber,
       trainingSetName: setNames.get(c.trainingSetId) ?? "Unknown",
       totalTimeMs,
       totalExercisesCompleted,
       completedAt: c.completedAt ?? null,
+      sessionCount: sess.length,
     };
   });
 
   return {
-    lastSession,
     currentCycle,
     cycleHistory,
-    mistakesToReview,
-    longestRecentSessionMs,
-    bestRecentSessionExercises,
   };
+}
+
+/** @deprecated Use `getProgressPageData` */
+export async function getAnalyticsPageData(): Promise<ProgressPageData> {
+  return getProgressPageData();
 }

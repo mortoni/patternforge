@@ -7,8 +7,7 @@ import { ROUTES } from "@/lib/constants";
 import {
   Dumbbell,
   Library,
-  AlertCircle,
-  BarChart3,
+  TrendingUp,
   Settings,
   BookOpen,
 } from "lucide-react";
@@ -16,13 +15,13 @@ import {
 const navItems = [
   { href: ROUTES.training, label: "Training", icon: Dumbbell },
   { href: ROUTES.sets, label: "Training Sets", icon: Library },
-  { href: ROUTES.mistakes, label: "Mistakes", icon: AlertCircle },
-  { href: ROUTES.analytics, label: "Analytics", icon: BarChart3 },
+  { href: ROUTES.progress, label: "Progress", icon: TrendingUp },
   { href: ROUTES.settings, label: "Settings", icon: Settings },
 ] as const;
 
 export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
+  const path = pathname ?? "";
 
   return (
     <nav
@@ -32,8 +31,12 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
         /** `/app/training` must not match `/app/training-2` via naive prefix (substring). */
         const isActive =
           href === ROUTES.training
-            ? pathname === href || pathname.startsWith(`${href}/`)
-            : pathname.startsWith(href);
+            ? path === href || path.startsWith(`${href}/`)
+            : href === ROUTES.progress
+              ? path === href ||
+                path.startsWith(`${href}/`) ||
+                path.startsWith("/app/cycle/")
+              : path.startsWith(href);
         return (
           <Link
             key={href}

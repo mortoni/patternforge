@@ -132,7 +132,7 @@ describe("getSessionSummaryForSession", () => {
     });
   });
 
-  it("excludes skips from session and cycle completed counts", async () => {
+  it("counts skips in session and cycle processed totals", async () => {
     mockGetSessionById.mockResolvedValue({
       id: "s1",
       trainingSetId: "ts1",
@@ -169,7 +169,7 @@ describe("getSessionSummaryForSession", () => {
     mockGetCycleRunsByTrainingSetId.mockResolvedValue([]);
 
     const result = await getSessionSummaryForSession("s1");
-    expect(result!.session.exercisesCompleted).toBe(2);
-    expect(result!.cycle.totalExercisesCompletedInCycle).toBe(2);
+    expect(result!.session.exercisesCompleted).toBe(4);
+    expect(result!.cycle.totalExercisesCompletedInCycle).toBe(4);
   });
 });

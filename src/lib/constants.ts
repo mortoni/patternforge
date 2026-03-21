@@ -25,6 +25,13 @@ export const ROUTES = {
   session: "/app/session",
   sets: "/app/sets",
   mistakes: "/app/mistakes",
+  progress: "/app/progress",
+  /** Legacy path; redirects to {@link ROUTES.progress}. */
   analytics: "/app/analytics",
   settings: "/app/settings",
 } as const;
+
+/** Completed-cycle reflection report. */
+export function cycleSummaryRoute(cycleId: string): string {
+  return `/app/cycle/${cycleId}/summary`;
+}

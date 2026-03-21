@@ -36,16 +36,20 @@ function main() {
     });
   }
 
-  const bySet = { easy: 0, intermediate: 0, advanced: 0 };
+  const bySet: Record<string, number> = {};
   valid.forEach((p) => {
-    if (p.trainingSetId in bySet) bySet[p.trainingSetId as keyof typeof bySet]++;
+    bySet[p.trainingSetId] = (bySet[p.trainingSetId] ?? 0) + 1;
   });
+  const perSetSummary = Object.entries(bySet)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([id, n]) => `${id}: ${n}`)
+    .join(", ");
 
   console.log("\n--- Summary ---");
   console.log("Total rows:", rows.length);
   console.log("Valid rows:", valid.length);
   console.log("Invalid rows:", errors.length);
-  console.log("Per set - easy:", bySet.easy, "intermediate:", bySet.intermediate, "advanced:", bySet.advanced);
+  console.log("Per training set:", perSetSummary || "(none)");
 
   if (errors.length > 0) {
     process.exit(1);

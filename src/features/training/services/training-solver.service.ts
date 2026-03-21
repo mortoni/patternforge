@@ -48,6 +48,8 @@ export interface SubmitAttemptResult {
   normalizedExpectedMove: string;
   /** Duration of this attempt in ms (for session activeTimeMs). */
   durationMs: number;
+  /** True when this attempt finished the whole Woodpecker cycle. */
+  cycleComplete?: boolean;
   /** True when the full solution line was completed (puzzle solved). */
   puzzleComplete?: boolean;
   /** FEN after user move + auto-played opponent moves. Set when correct and more moves remain. */
@@ -133,6 +135,7 @@ export async function submitAttempt(
         normalizedAttemptedMove: validation.normalizedAttemptedMove,
         normalizedExpectedMove: validation.normalizedExpectedMove,
         durationMs,
+        cycleComplete: advanceResult.status === "cycle-complete",
       };
     }
 
@@ -189,6 +192,7 @@ export async function submitAttempt(
       normalizedExpectedMove: validation.normalizedExpectedMove,
       durationMs,
       puzzleComplete: true,
+      cycleComplete: advanceResult.status === "cycle-complete",
     };
   }
 
@@ -233,7 +237,8 @@ export async function submitAttempt(
     normalizedAttemptedMove: evaluation.normalizedAttemptedMove,
     normalizedExpectedMove: evaluation.normalizedExpectedMove,
     durationMs,
-    puzzleComplete: true,
+    puzzleComplete: evaluation.isCorrect,
+    cycleComplete: advanceResult.status === "cycle-complete",
   };
 }
 
@@ -246,7 +251,7 @@ export async function skipPuzzle(
   trainingSetId: string,
   sessionId: string,
   attemptStartedAt: number
-): Promise<void> {
+): Promise<{ cycleComplete: boolean }> {
   const finishedAtMs = Date.now();
   const startedAtIso = new Date(attemptStartedAt).toISOString();
   const nowIso = new Date(finishedAtMs).toISOString();
@@ -270,6 +275,7 @@ export async function skipPuzzle(
   if (result.status === "cycle-complete") {
     await completeSession(sessionId);
   }
+  return { cycleComplete: result.status === "cycle-complete" };
 }
 
 /**

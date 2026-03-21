@@ -1,5 +1,6 @@
-import { AnalyticsPage } from "@/features/analytics/components/analytics-page";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/lib/constants";
 
-export default function AnalyticsRoute() {
-  return <AnalyticsPage />;
+export default function AnalyticsRedirectRoute() {
+  redirect(ROUTES.progress);
 }

@@ -9,8 +9,10 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/lib/constants";
+import { ROUTES, cycleSummaryRoute } from "@/lib/constants";
+import { EmptyState } from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
+import { formatDurationMs } from "@/lib/format-duration";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -76,6 +78,11 @@ export function TrainingPageV2() {
    * for one gesture (e.g. drop + synthetic click) before React disables interaction.
    */
   const boardMoveInFlightRef = React.useRef(false);
+
+  React.useEffect(() => {
+    if (state?.status !== "cycle-complete") return;
+    router.replace(cycleSummaryRoute(state.cycleRunId));
+  }, [state, router]);
 
   const readyState = state?.status === "ready" ? state : null;
   const baseFen = readyState?.exercise.fen ?? "";
@@ -173,9 +180,14 @@ export function TrainingPageV2() {
           if (exerciseTransitionTimerRef.current) {
             clearTimeout(exerciseTransitionTimerRef.current);
           }
+          const cycleRunId = readyState.cycleRun.id;
           exerciseTransitionTimerRef.current = setTimeout(() => {
             exerciseTransitionTimerRef.current = null;
-            void reload();
+            if (result.cycleComplete) {
+              router.replace(cycleSummaryRoute(cycleRunId));
+            } else {
+              void reload();
+            }
           }, EXERCISE_TRANSITION_MS);
           return;
         }
@@ -186,9 +198,14 @@ export function TrainingPageV2() {
           if (exerciseTransitionTimerRef.current) {
             clearTimeout(exerciseTransitionTimerRef.current);
           }
+          const cycleRunId = readyState.cycleRun.id;
           exerciseTransitionTimerRef.current = setTimeout(() => {
             exerciseTransitionTimerRef.current = null;
-            void reload();
+            if (result.cycleComplete) {
+              router.replace(cycleSummaryRoute(cycleRunId));
+            } else {
+              void reload();
+            }
           }, EXERCISE_TRANSITION_MS);
           return;
         }
@@ -227,7 +244,7 @@ export function TrainingPageV2() {
         boardMoveInFlightRef.current = false;
       }
     },
-    [readyState, baseFen, reload]
+    [readyState, baseFen, reload, router]
   );
 
   const handleSkip = React.useCallback(async () => {
@@ -236,18 +253,22 @@ export function TrainingPageV2() {
     setPuzzleState("checking");
     clearPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id);
     try {
-      await skipPuzzle(
+      const { cycleComplete } = await skipPuzzle(
         readyState.exercise.id,
         readyState.cycleRun.id,
         readyState.trainingSet.id,
         readyState.sessionId,
         attemptStartedAtRef.current
       );
-      await reload();
+      if (cycleComplete) {
+        router.replace(cycleSummaryRoute(readyState.cycleRun.id));
+      } else {
+        await reload();
+      }
     } catch {
       setPuzzleState("idle");
     }
-  }, [readyState, puzzleState, reload]);
+  }, [readyState, puzzleState, reload, router]);
 
   const handleEndSession = React.useCallback(async () => {
     const sid = readyState?.sessionId;
@@ -303,12 +324,39 @@ export function TrainingPageV2() {
   }
 
   if (state.status === "no-active-cycle") {
+    const last = state.lastCompletedCycle;
     return (
-      <div className="mx-auto max-w-lg py-8">
-        <TrainingEmptyState
-          title="No active cycle found"
-          description="Start a cycle from Training Sets to begin solving puzzles."
-        />
+      <div className="flex min-h-[calc(100dvh-6rem)] flex-col md:min-h-[calc(100dvh-4rem)]">
+        <h1 className="sr-only">Training</h1>
+        <div className="flex flex-1 flex-col items-center justify-center px-4 py-10">
+          <div className="w-full max-w-md text-center">
+            <EmptyState
+              title="No active cycle"
+              description="Start a new cycle to begin training."
+              className="border-solid bg-muted/10"
+            >
+              <div className="flex w-full flex-col items-stretch gap-2 sm:items-center">
+                <Button asChild variant="default" className="w-full sm:w-auto">
+                  <Link href={ROUTES.sets}>Start new cycle</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full text-muted-foreground sm:w-auto"
+                >
+                  <Link href={ROUTES.progress}>View previous cycles</Link>
+                </Button>
+              </div>
+            </EmptyState>
+            {last != null ? (
+              <p className="mt-6 text-xs tabular-nums text-muted-foreground/70">
+                Last cycle: {formatDurationMs(last.totalTimeMs)} ·{" "}
+                {last.sessionCount}{" "}
+                {last.sessionCount === 1 ? "session" : "sessions"}
+              </p>
+            ) : null}
+          </div>
+        </div>
       </div>
     );
   }
@@ -326,16 +374,13 @@ export function TrainingPageV2() {
 
   if (state.status === "cycle-complete") {
     return (
-      <div className="mx-auto max-w-md space-y-6 py-16 text-center">
+      <div className="flex min-h-[45vh] flex-col items-center justify-center gap-2 px-4">
         <p className="text-sm font-medium text-[var(--foreground)]">
           Cycle complete
         </p>
-        <p className="text-sm leading-relaxed text-[var(--muted-foreground)]">
-          {state.trainingSetName} · Cycle {state.cycleNumber}
+        <p className="text-center text-sm text-[var(--muted-foreground)]">
+          Opening your cycle summary…
         </p>
-        <Button asChild variant="outline" size="sm">
-          <Link href={ROUTES.app}>Back to dashboard</Link>
-        </Button>
       </div>
     );
   }

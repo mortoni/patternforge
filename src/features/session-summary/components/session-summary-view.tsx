@@ -170,7 +170,9 @@ export function SessionSummaryView() {
                     {exerciseWord(data.session.exercisesCompleted)}
                   </span>
                 </p>
-                <p className="text-sm text-muted-foreground">Completed</p>
+                <p className="text-sm text-muted-foreground">
+                  Exercises processed
+                </p>
               </div>
               <div className="space-y-2">
                 <p className="text-xl font-semibold tabular-nums tracking-tight text-foreground sm:text-2xl">
@@ -220,7 +222,7 @@ export function SessionSummaryView() {
                   </span>
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Exercises completed so far
+                  Exercises processed so far
                 </p>
               </div>
             )}
@@ -254,7 +256,7 @@ export function SessionSummaryView() {
           variant="ghost"
           className="w-full self-start text-muted-foreground hover:text-foreground sm:w-auto"
         >
-          <Link href={ROUTES.analytics}>View analytics</Link>
+          <Link href={ROUTES.progress}>View progress</Link>
         </Button>
       </div>
     </div>

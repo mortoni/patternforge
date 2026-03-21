@@ -1,0 +1,91 @@
+[
+  {
+    "id": "test-0001",
+    "trainingSetId": "test",
+    "puzzleNumber": 1,
+    "fen": "r6r/1pp3k1/1b6/p2P1p2/P1N1pn2/2P2PP1/BP5P/4RR1K b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rxh2+",
+      "Kxh2",
+      "Rh8#"
+    ],
+    "firstMove": "Rxh2+",
+    "motifTags": [],
+    "gameSource": "Carl Hamppe – Wilhelm Steinitz, Vienna 1860",
+    "difficulty": "easy",
+    "comment": "Black would have been lost without this resource.",
+    "createdAt": "2026-03-21T07:10:29.863Z"
+  },
+  {
+    "id": "test-0002",
+    "trainingSetId": "test",
+    "puzzleNumber": 2,
+    "fen": "rnb3kr/ppp4p/3b3B/3Pp2n/2BP4/3K1Rp1/PPP3q1/RN1Q4 w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Rf8+",
+      "Bxf8",
+      "d6+",
+      "Be6",
+      "Bxe6#"
+    ],
+    "firstMove": "Rf8+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – J. Wilson, London 1862",
+    "difficulty": "easy",
+    "createdAt": "2026-03-21T07:10:29.863Z"
+  },
+  {
+    "id": "test-0003",
+    "trainingSetId": "test",
+    "puzzleNumber": 3,
+    "fen": "r2q1rk1/pppb1ppp/3b4/4p1P1/4Pn2/2N1B2P/PPPQBP2/2KR3R w - - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf4",
+      "exf4",
+      "e5"
+    ],
+    "firstMove": "Bxf4",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – Serafino Dubois, London (6) 1862",
+    "difficulty": "easy",
+    "comment": "The bishop on d6 is pinned and Steinitz took advantage of that with which won a piece.",
+    "createdAt": "2026-03-21T07:10:29.863Z"
+  },
+  {
+    "id": "test-0004",
+    "trainingSetId": "test",
+    "puzzleNumber": 4,
+    "fen": "2kr4/1pp4p/1p1r4/5Pp1/1P2q3/2P1R2P/P3KP2/1Q1R4 b - - 0 1",
+    "sideToMove": "b",
+    "solutionMoves": [
+      "Rd2+"
+    ],
+    "firstMove": "Rd2+",
+    "motifTags": [],
+    "gameSource": "Valentine Green – Wilhelm Steinitz, London 1864",
+    "difficulty": "easy",
+    "comment": "The queen loses its defender.",
+    "createdAt": "2026-03-21T07:10:29.863Z"
+  },
+  {
+    "id": "test-0005",
+    "trainingSetId": "test",
+    "puzzleNumber": 5,
+    "fen": "rn1qk2r/ppp2ppp/5n2/2b1p3/2B1P1b1/3P1N2/PPP3PP/RNBQK2R w KQkq - 0 1",
+    "sideToMove": "w",
+    "solutionMoves": [
+      "Bxf7+",
+      "Kxf7",
+      "Nxe5+"
+    ],
+    "firstMove": "Bxf7+",
+    "motifTags": [],
+    "gameSource": "Wilhelm Steinitz – George Barry, Dublin (simul) 1865",
+    "difficulty": "easy",
+    "comment": "White has won two pawns after 9.¤xg4.",
+    "createdAt": "2026-03-21T07:10:29.863Z"
+  }
+]

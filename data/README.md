@@ -1,34 +1,32 @@
 # Creating training sets in data
 
-The app has **3 training sets** (Woodpecker Easy, Woodpecker Intermediate, Woodpecker Advance). They are driven by:
+Training sets are driven by:
 
-1. **`imports/puzzle.csv`** – each row’s **`trainingSetId`** column says which set that puzzle belongs to.
-2. **`scripts/generate-puzzle-json.ts`** – the `TRAINING_SET_META` array defines each set’s display name and description.
+1. **`imports/puzzle.csv`** – each row’s **`trainingSetId`** column is the **set / group id** (any stable string, e.g. `easy`, `test`, `openings`).
+2. **Generated metadata** – built automatically from the CSV. The built-in ids `easy`, `intermediate`, and `advanced` get Woodpecker-style titles; other ids get a simple title from the id.
 
 ---
 
 ## How puzzles are assigned to sets
 
-**In `puzzle.csv`, the first column is `trainingSetId`.** That value is what sends each puzzle to a set:
+**`trainingSetId`** (first column) decides which set a row belongs to. You can use **any** group id (letters, numbers, `_`, `-`; max 64 chars).
 
-| Put this in `trainingSetId` | Puzzle goes into this set           |
-|-----------------------------|-------------------------------------|
-| `easy`                      | **Woodpecker Easy**                 |
-| `intermediate`              | **Woodpecker Intermediate**         |
-| `advanced`                  | **Woodpecker Advance**              |
+**`difficulty`** is separate: it must be one of **`easy` \| `intermediate` \| `advanced` \| `custom`** (matches the app DB). It does **not** have to match `trainingSetId`.
 
-So:
-- Rows with `trainingSetId,easy` and `difficulty,easy` → Woodpecker Easy  
-- Rows with `trainingSetId,intermediate` and `difficulty,intermediate` → Woodpecker Intermediate  
-- Rows with `trainingSetId,advanced` and `difficulty,advanced` → Woodpecker Advance  
+Built-in ids still map to friendly names:
 
-The **`difficulty`** column must match **`trainingSetId`** (validation requires it).
+| `trainingSetId` | Generated set name (default)   |
+|-----------------|--------------------------------|
+| `easy`          | Woodpecker Easy                |
+| `intermediate`  | Woodpecker Intermediate        |
+| `advanced`      | Woodpecker Advanced            |
+| anything else   | Title-cased id + short blurb   |
 
 ---
 
-## Step 1: Set names and descriptions (optional)
+## Step 1: Custom set names
 
-Edit **`scripts/generate-puzzle-json.ts`** and change the `TRAINING_SET_META` array if you want different names or descriptions. The ids (`easy`, `intermediate`, `advanced`) must stay as they are.
+For non-built-in ids, display names are derived from the id (e.g. `my-drills` → “My Drills”). To change that, edit **`src/lib/puzzle-import.ts`** (`buildTrainingSetMetaFromPuzzles` / `CANONICAL_SET_META`) or adjust the generated `training-sets-meta.json` after generate.
 
 ---
 
@@ -38,14 +36,14 @@ Edit **`data/imports/puzzle.csv`**. Columns:
 
 | Column          | Required | Description |
 |-----------------|----------|-------------|
-| trainingSetId   | Yes      | `easy`, `intermediate`, or `advanced` – **this decides which set the puzzle goes in** |
+| trainingSetId   | Yes      | Set / group id (any label; **which set** the puzzle belongs to) |
 | puzzleNumber    | Yes      | Positive integer, unique within that set |
 | fen             | Yes      | Starting position (FEN) |
 | sideToMove      | Yes      | `w` or `b` |
 | solutionMoves   | Yes      | Space-separated moves (SAN), e.g. `Nf7+` or `Re8 Rxe8 Qf8#` |
 | motifTags       | No       | Comma-separated tags, e.g. `fork,checkmate` |
 | gameSource      | No       | Label, e.g. `Lichess` |
-| difficulty      | Yes      | Must equal `trainingSetId`: `easy`, `intermediate`, or `advanced` |
+| difficulty      | Yes      | `easy`, `intermediate`, `advanced`, or `custom` (tactical level for the exercise) |
 
 Example: 2 puzzles in Easy, 1 in Intermediate, 1 in Advance
 
@@ -89,6 +87,7 @@ Generated JSON is **not** written to IndexedDB by the scripts (Node has no Index
 
 | Goal                         | Where to edit |
 |-----------------------------|----------------|
-| Set display names/descriptions | `scripts/generate-puzzle-json.ts` → `TRAINING_SET_META` |
-| Which puzzles go in which set | `data/imports/puzzle.csv` → `trainingSetId` and `difficulty` |
+| Set display names/descriptions | `src/lib/puzzle-import.ts` → `CANONICAL_SET_META` / `buildTrainingSetMetaFromPuzzles` |
+| Which puzzles go in which set | `data/imports/puzzle.csv` → `trainingSetId` |
+| Exercise difficulty label   | `data/imports/puzzle.csv` → `difficulty` |
 | Add/remove puzzles           | `data/imports/puzzle.csv` (then validate + generate) |

@@ -3,6 +3,21 @@
  */
 
 /**
+ * Australian-style date for reflection surfaces: "21 Mar 2026".
+ */
+export function formatDateAu(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-AU", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
+
+/**
  * Short date for lists/cards (e.g. "Mar 12, 2025").
  */
 export function formatDateShort(iso: string): string {

@@ -58,3 +58,18 @@ Attempts let analytics and review reflect performance over time and across cycle
 5. **Track progress** — Cycle time, attempts, and session stats in the app
 
 The training philosophy is to improve speed and consistency across repeated cycles while keeping quality high.
+
+## Training entry (`/app/training`)
+
+The **Training** route is for **doing** puzzles, not for browsing history.
+
+- If there is an **active** cycle for the set in settings, Training loads the current exercise and session flow as usual.
+- If there is **no active** cycle, you stay on Training and see an **empty state**: start a new cycle from **Training Sets**, or open **Progress** to review completed cycles. The app does **not** send you straight to the last cycle summary just because a previous cycle finished.
+- After you **complete** the last exercise of a cycle (or finish via skip), the solve flow can still take you to the **cycle summary** page for that run.
+
+## Progress and Reflection (`/app/progress`)
+
+**Progress** shows either your **current** cycle (when one is active) or **Reflection** (when none is active).
+
+- **Reflection** lists completed cycles **per training set**. You choose a set, then view a **table** or a simple **line chart** of total time vs **cycle number** for **that set only** (not a single mixed timeline across sets). A **median** line is computed from the same set’s data. Charts are available when that set has at least two completed cycles.
+- Links open the **cycle summary** for a specific completed run when you want detail; summary and history are opt-in from here, not forced when opening Training.

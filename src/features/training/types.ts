@@ -8,6 +8,13 @@ export type ActiveTrainingState =
       status: "no-active-cycle";
       trainingSetId: string;
       trainingSetName: string;
+      /** Most recently completed cycle for this set (for low-emphasis context). */
+      lastCompletedCycle?: {
+        cycleRunId: string;
+        cycleNumber: number;
+        totalTimeMs: number;
+        sessionCount: number;
+      };
     }
   | {
       status: "exercise-not-found";
@@ -16,6 +23,7 @@ export type ActiveTrainingState =
     }
   | {
       status: "cycle-complete";
+      cycleRunId: string;
       trainingSetId: string;
       trainingSetName: string;
       cycleNumber: number;

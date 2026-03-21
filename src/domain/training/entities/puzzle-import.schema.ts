@@ -4,26 +4,38 @@
 
 import { z } from "zod";
 
-const trainingSetIdSchema = z.enum(["easy", "intermediate", "advanced"]);
+/** Matches DB `difficulty` on exercises / training sets. */
+const importDifficultySchema = z.enum([
+  "easy",
+  "intermediate",
+  "advanced",
+  "custom",
+]);
+
+/**
+ * Arbitrary training group id (which set the puzzle belongs to).
+ * Not the same as tactical difficulty — use `difficulty` for that.
+ */
+const trainingSetGroupIdSchema = z
+  .string()
+  .trim()
+  .min(1, "trainingSetId is required")
+  .max(64);
+
 const sideToMoveSchema = z.enum(["w", "b"]);
 
 /** Schema for raw CSV row (all fields strings). Validates and coerces. */
-export const puzzleCsvRowSchema = z
-  .object({
-    trainingSetId: z.enum(["easy", "intermediate", "advanced"]),
-    puzzleNumber: z.coerce.number().int().positive(),
-    fen: z.string().trim().min(1, "fen must be non-empty"),
-    sideToMove: sideToMoveSchema,
-    solutionMoves: z.string().trim().min(1, "solutionMoves must be non-empty"),
-    motifTags: z.string().trim(),
-    gameSource: z.string().trim(),
-    difficulty: z.enum(["easy", "intermediate", "advanced"]),
-    comment: z.string().trim().optional(),
-  })
-  .refine(
-    (row) => row.trainingSetId === row.difficulty,
-    { message: "trainingSetId and difficulty must match", path: ["difficulty"] }
-  );
+export const puzzleCsvRowSchema = z.object({
+  trainingSetId: trainingSetGroupIdSchema,
+  puzzleNumber: z.coerce.number().int().positive(),
+  fen: z.string().trim().min(1, "fen must be non-empty"),
+  sideToMove: sideToMoveSchema,
+  solutionMoves: z.string().trim().min(1, "solutionMoves must be non-empty"),
+  motifTags: z.string().trim(),
+  gameSource: z.string().trim(),
+  difficulty: importDifficultySchema,
+  comment: z.string().trim().optional(),
+});
 
 export type PuzzleCsvRowParsed = z.infer<typeof puzzleCsvRowSchema>;
 
@@ -43,7 +55,7 @@ export const puzzleCsvRowInputSchema = z.object({
 /** Normalized puzzle schema (after transform). */
 export const normalizedPuzzleSchema = z.object({
   id: z.string(),
-  trainingSetId: trainingSetIdSchema,
+  trainingSetId: trainingSetGroupIdSchema,
   puzzleNumber: z.number().int().positive(),
   fen: z.string(),
   sideToMove: sideToMoveSchema,
@@ -51,7 +63,7 @@ export const normalizedPuzzleSchema = z.object({
   firstMove: z.string().optional(),
   motifTags: z.array(z.string()),
   gameSource: z.string(),
-  difficulty: trainingSetIdSchema,
+  difficulty: importDifficultySchema,
   comment: z.string().optional(),
   createdAt: z.string(),
 });

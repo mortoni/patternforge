@@ -281,7 +281,14 @@ describe("training-solver.service", () => {
       });
       const startedAt = 1000000000000;
       vi.setSystemTime(startedAt + 3000);
-      await skipPuzzle("ex-1", "c1", "set-1", "s1", startedAt);
+      const skipResult = await skipPuzzle(
+        "ex-1",
+        "c1",
+        "set-1",
+        "s1",
+        startedAt
+      );
+      expect(skipResult.cycleComplete).toBe(false);
       vi.useRealTimers();
       expect(mockAddExerciseAttempt).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -305,7 +312,14 @@ describe("training-solver.service", () => {
         solvedCount: 0,
         totalExercises: 5,
       });
-      await skipPuzzle("ex-1", "c1", "set-1", "s1", Date.now());
+      const skipResult = await skipPuzzle(
+        "ex-1",
+        "c1",
+        "set-1",
+        "s1",
+        Date.now()
+      );
+      expect(skipResult.cycleComplete).toBe(true);
       expect(mockCompleteSession).toHaveBeenCalledWith("s1");
     });
   });
