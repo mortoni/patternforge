@@ -20,6 +20,26 @@ export async function getAttemptsBySessionId(
     .sortBy("startedAt");
 }
 
+/** Skipped-attempt counts per session (truthy when sessionId was stored on attempts). */
+export async function getSkippedCountsBySessionIds(
+  sessionIds: string[]
+): Promise<Map<string, number>> {
+  if (sessionIds.length === 0) return new Map();
+  const map = new Map<string, number>();
+  for (const id of sessionIds) {
+    map.set(id, 0);
+  }
+  const attempts = await db.exerciseAttempts
+    .where("sessionId")
+    .anyOf(sessionIds)
+    .toArray();
+  for (const a of attempts) {
+    if (a.sessionId == null || a.result !== "skipped") continue;
+    map.set(a.sessionId, (map.get(a.sessionId) ?? 0) + 1);
+  }
+  return map;
+}
+
 export async function getAllAttempts(): Promise<ExerciseAttemptSchema[]> {
   return db.exerciseAttempts.orderBy("startedAt").toArray();
 }

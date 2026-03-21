@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { PageHeader } from "@/components/shared/PageHeader";
 import Link from "next/link";
 import { useMistakeReview } from "../hooks/use-mistake-review";
 import { TrainingBoardCard } from "@/features/training/components/training-board-card";
@@ -10,6 +9,10 @@ import { TrainingFeedbackPanel } from "@/features/training/components/training-f
 import { MistakeReviewSidePanel } from "./mistake-review-side-panel";
 import type { ReviewInteractionState } from "./mistake-review-side-panel";
 import { getHighlightedSquaresFromMove } from "@/lib/chess/move-highlights";
+import {
+  parseSideToMoveFromFen,
+  type ChessSideToMove,
+} from "@/lib/chess/side-to-move";
 import {
   submitReviewAttempt,
   skipReviewAttempt,
@@ -31,6 +34,9 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   const [attemptedMoveUci, setAttemptedMoveUci] = React.useState<string | null>(null);
   const [puzzleState, setPuzzleState] = React.useState<ReviewInteractionState>("idle");
   const [feedbackExpectedMove, setFeedbackExpectedMove] = React.useState<string | undefined>();
+  const solvingSideRef = React.useRef<ChessSideToMove>(
+    parseSideToMoveFromFen("")
+  );
 
   const baseFen = state?.exercise.fen ?? "";
   const displayFen = positionFen ?? baseFen;
@@ -41,6 +47,7 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
       setAttemptedMoveUci(null);
       setPuzzleState("idle");
       setFeedbackExpectedMove(undefined);
+      solvingSideRef.current = parseSideToMoveFromFen(state.exercise.fen);
     }
   }, [state?.mistake.id]);
 
@@ -48,6 +55,8 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   const handleBoardMove = React.useCallback(
     async (uci: string, newFen: string) => {
       if (!state) return;
+      const fenBefore = positionFen ?? baseFen;
+      solvingSideRef.current = parseSideToMoveFromFen(fenBefore);
       setPositionFen(newFen);
       setAttemptedMoveUci(uci);
       setPuzzleState("checking");
@@ -94,7 +103,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   if (loading) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-5 md:px-5">
-        <PageHeader title="Review Mistake" />
         <div className="flex items-center justify-center rounded-lg border border-border bg-muted/20 p-12">
           <p className="text-sm text-muted-foreground">Loading…</p>
         </div>
@@ -105,7 +113,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   if (error || !state) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-5 md:px-5">
-        <PageHeader title="Review Mistake" />
         <EmptyState
           title="Mistake not found"
           description="This review may have been removed or already mastered."
@@ -128,27 +135,33 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
       ? getHighlightedSquaresFromMove(attemptedMoveUci)
       : undefined;
 
+  const sideToMoveFromFen = parseSideToMoveFromFen(displayFen);
+  const boardTurnSide =
+    puzzleState === "checking" ? solvingSideRef.current : sideToMoveFromFen;
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-5 md:px-5">
-      <PageHeader
-        title="Review Mistake"
-        description={state.trainingSet.name}
-      />
       <div className="grid gap-5 lg:grid-cols-[1fr_minmax(260px,300px)]">
         <div className="min-w-0 space-y-3">
-          <TrainingBoardCard
-            fen={displayFen}
-            boardOrientation={state.boardOrientation}
-            onMove={handleBoardMove}
-            disabled={
-              puzzleState === "checking" ||
-              puzzleState === "correct" ||
-              puzzleState === "incorrect"
-            }
-            correctMoveSquares={correctMoveSquares}
-            attemptedMoveSquares={attemptedMoveSquares}
-            correctMoveUci={puzzleState === "incorrect" ? feedbackExpectedMove : undefined}
-          />
+          <div>
+            <TrainingBoardCard
+              fen={displayFen}
+              boardOrientation={state.boardOrientation}
+              onMove={handleBoardMove}
+              disabled={
+                puzzleState === "checking" ||
+                puzzleState === "correct" ||
+                puzzleState === "incorrect"
+              }
+              correctMoveSquares={correctMoveSquares}
+              attemptedMoveSquares={attemptedMoveSquares}
+              correctMoveUci={
+                puzzleState === "incorrect" ? feedbackExpectedMove : undefined
+              }
+              minimal
+              boardContainerClassName="w-full border-border/40 bg-[var(--muted)]/10"
+            />
+          </div>
           {resolved && (
             <TrainingFeedbackPanel
               state={puzzleState === "correct" ? "correct" : "incorrect"}
@@ -163,9 +176,8 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
             status={state.mistake.status}
             failedAttempts={state.mistake.failedAttempts}
             solvedReviewCount={state.mistake.solvedReviewCount}
-            sideToMove={state.exercise.sideToMove}
             gameSource={state.exercise.source}
-            difficulty={state.exercise.difficulty}
+            gameContextNote={state.exercise.comment}
             puzzleState={puzzleState}
             onSkip={handleSkip}
             onNextMistake={handleNextMistake}

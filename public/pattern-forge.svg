@@ -1,0 +1,73 @@
+<svg width="681" height="1235" viewBox="0 0 681 1235" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="rookMetalLight" x1="0" y1="617.5" x2="681" y2="617.5" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#A9A9A9"/>
+    <stop offset="0.12" stop-color="#B5B5B5"/>
+    <stop offset="0.42" stop-color="#F5F5F5"/>
+    <stop offset="0.5" stop-color="#FFFFFF"/>
+    <stop offset="0.58" stop-color="#F5F5F5"/>
+    <stop offset="0.88" stop-color="#B5B5B5"/>
+    <stop offset="1" stop-color="#A9A9A9"/>
+  </linearGradient>
+</defs>
+<path d="M350.153 103.743L522.961 209.07" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M151.502 214.743L348.002 104.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M344.153 377.743L527.955 489.749" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M140.002 497.499L341.054 376.107" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M122.599 480.053L140.95 466.998" stroke="url(#rookMetalLight)" stroke-width="15" stroke-linecap="round"/>
+<path d="M132.002 179.418L173.002 156.418L213.002 136.163" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M486.502 138.743L536.002 167.743L551.502 179.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M542.744 470.738L523.684 458.743" stroke="url(#rookMetalLight)" stroke-width="15" stroke-linecap="round"/>
+<path d="M349.653 146.173L509.002 245.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M168.502 250.743L347.502 147.173" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M168.502 250.743L347.502 147.173" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M349.153 192.743L495.002 281.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M178.002 292.743L347.002 193.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M349.346 237.743L483.002 324.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M186.502 335.743L347.194 238.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M349.276 281.743L476.002 364.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M195.002 370.243L347.124 282.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M344.276 325.743L459.502 403.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M210.002 408.743L342.124 326.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M340.429 465.743L447.502 534.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M225.002 539.243L338.278 466.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M343.232 514.743L450.304 583.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M227.804 588.243L341.08 515.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M345.232 561.743L461.002 636.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M217.002 636.243L343.08 562.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M344.232 607.743L460.002 682.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M208.002 691.743L342.08 608.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M345.324 655.743L479.002 737.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M196.502 742.243L343.172 656.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M344.824 699.743L497.002 795.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M173.502 801.743L342.672 700.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M343.343 743.743L524.502 856.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M143.502 866.243L341.191 744.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M342.546 790.743L560.502 925.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M102.502 937.243L340.394 791.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M342.99 838.743L595.002 992.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M70.5018 1004.24L340.838 839.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M343.468 885.743L658.002 1077.24" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M12.502 1080.74L341.316 886.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M342.943 926.743L653.002 1117.74" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M16.5017 1131.24L340.791 927.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M339.701 975.743L668.502 1179.74" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M13.2593 1180.24L337.549 976.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M341.701 1021.74L653.502 1212.74" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M29.5019 1212.74L339.549 1022.74" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M343.198 1071.74L595.502 1221.74" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M99.0018 1217.74L341.045 1072.74" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M345.871 1120.14L520.002 1221.24" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M172.002 1221.24L343.718 1121.14" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M344.871 1162.17L442.502 1221.24" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M247.002 1217.24L342.718 1163.17" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M341.124 423.847L492.502 508.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M191.002 510.743L340.36 422.864" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M342.727 1197.04C343.783 1196.27 345.22 1196.27 346.276 1197.04L373.921 1217.32C376.259 1219.04 375.046 1222.74 372.146 1222.74H316.857C313.958 1222.74 312.745 1219.04 315.083 1217.32L342.727 1197.04Z" fill="url(#rookMetalLight)"/>
+<path d="M121.467 140.224L150.502 124.243" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M526.002 116.243L556.002 133.743" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M355.002 50.4709L385.002 67.9709" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M270.502 106.243C270.502 106.243 345.502 56.2432 353.502 50.7432" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M297.454 37.6354L336.502 13.7432" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+<path d="M338.38 12.5034L372.502 24.2432" stroke="url(#rookMetalLight)" stroke-width="25" stroke-linecap="round"/>
+</svg>

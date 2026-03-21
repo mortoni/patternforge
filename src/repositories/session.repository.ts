@@ -46,7 +46,21 @@ export async function getActiveByCycleRunId(
     .equals(cycleRunId)
     .filter((s) => s.status === "active")
     .toArray();
-  return sessions[0];
+  if (sessions.length === 0) return undefined;
+  if (sessions.length === 1) return sessions[0];
+
+  sessions.sort((a, b) => b.startedAt.localeCompare(a.startedAt));
+  const [primary, ...older] = sessions;
+  const staleEmpties = older.filter(
+    (s) => s.puzzlesAttempted === 0 && s.activeTimeMs === 0
+  );
+  const now = new Date().toISOString();
+  await Promise.all(
+    staleEmpties.map((s) =>
+      db.sessions.update(s.id, { status: "completed", endedAt: now })
+    )
+  );
+  return primary;
 }
 
 export async function getRecentSessions(limit: number): Promise<SessionSchema[]> {

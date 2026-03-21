@@ -1,5 +1,5 @@
-import { TrainingPage } from "@/features/training/components/training-page";
+import { TrainingPageV2 } from "@/features/training/components/training-page-v2";
 
 export default function TrainingRoute() {
-  return <TrainingPage />;
+  return <TrainingPageV2 />;
 }

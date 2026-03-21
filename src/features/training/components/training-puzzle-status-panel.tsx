@@ -39,34 +39,17 @@ export function TrainingPuzzleStatusPanel({
     return (
       <div
         className={cn(
-          "rounded-lg border px-3 py-2.5 text-sm flex items-center gap-3",
+          "rounded-lg border border-border bg-muted/30 px-3 py-2.5 text-sm",
           PANEL_MIN_H,
-          sideToMove === "w"
-            ? "border-slate-300 bg-slate-50 dark:border-slate-600 dark:bg-slate-800/50"
-            : "border-slate-600 bg-slate-800/30 dark:border-slate-500 dark:bg-slate-800/70",
           className
         )}
+        data-active-side={sideToMove}
         aria-label="Your turn"
       >
-        <span
-          className={cn(
-            "w-8 shrink-0 flex justify-center text-2xl leading-none",
-            sideToMove === "w"
-              ? "text-slate-700 dark:text-slate-200"
-              : "text-slate-200 dark:text-slate-100"
-          )}
-          aria-hidden
-        >
-          {sideToMove === "w" ? "\u2654" : "\u265A"}
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="font-medium text-foreground">Your turn</p>
-          <p className="text-muted-foreground text-xs mt-0.5">
-            {sideToMove === "w"
-              ? "Find the best move for white."
-              : "Find the best move for black."}
-          </p>
-        </div>
+        <p className="font-medium text-foreground">Your turn</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">
+          Find the best continuation.
+        </p>
       </div>
     );
   }

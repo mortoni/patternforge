@@ -1,0 +1,55 @@
+# Architecture
+
+PatternForge is built as a local-first application using modern web technologies.
+
+## Technology Stack
+
+- **Next.js 16** — React framework with the App Router
+- **React 19** — UI library
+- **Dexie** — IndexedDB wrapper for browser storage
+- **Zod** — Runtime validation and schema types for persisted entities
+- **TypeScript** — Type safety
+- **Tailwind CSS** — Styling
+- **chess.js** — Chess logic where needed in tooling and validation
+
+## Local-First Design
+
+PatternForge stores training data in the browser using IndexedDB. This means:
+
+- **No backend required** for core training flows
+- **Fast access** — No network round-trips for reads/writes
+- **Privacy** — Data stays on your device
+- **Persistence** — Data survives browser restarts (same origin)
+
+Static assets (e.g. generated puzzle JSON) may still be fetched over the network when the app loads.
+
+## Data Storage
+
+The Dexie database (`PatternForgeDB`) defines these tables, aligned with `src/db/schema.ts`:
+
+- **appInstance** — One row per install (installation id, timestamps)
+- **settings** — App preferences (theme, board orientation/style, last training set)
+- **trainingSets** — Set metadata and `exerciseIds` ordering
+- **exercises** — Positions, solution moves, first-move hint, tags, etc.
+- **cycleRuns** — Cycle state and progress for a set
+- **sessions** — Training sessions within a cycle (counts, active time, status)
+- **exerciseAttempts** — Individual puzzle attempts (result, duration, `userMoves`)
+- **mistakeEntries** — Mistake review queue and mastery progression
+
+## Component Structure
+
+- **`src/features/*`** — Domain UI and flows (training, sets, mistakes, analytics, settings)
+- **`src/components/*`** — Shared UI (including `ui/` primitives)
+- **`src/repositories/*`** — Dexie table access
+- **`src/services/*`** — Orchestration and cross-cutting logic
+- **`src/app/*`** — Next.js App Router routes and layouts
+
+## State Management
+
+PatternForge uses React hooks and context:
+
+- **Local state** — `useState` / `useReducer` in components
+- **Shared UI state** — Context (e.g. settings, sidebar)
+- **Data** — Repositories and hooks that read/write Dexie on the client
+
+There is no separate global store (e.g. Redux) for the current scope.

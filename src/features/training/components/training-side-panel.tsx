@@ -4,6 +4,7 @@ import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { sideToMoveColorWord } from "@/lib/chess/side-to-move";
 import { cn } from "@/lib/utils";
 
 export type PuzzleInteractionState =
@@ -73,7 +74,7 @@ export function TrainingSidePanel({
         <dl className="space-y-2 text-sm">
           <div>
             <dt className="text-xs text-muted-foreground">Side to move</dt>
-            <dd className="font-medium">{sideToMove === "w" ? "White" : "Black"}</dd>
+            <dd className="font-medium">{sideToMoveColorWord(sideToMove)}</dd>
           </div>
           {gameSource != null && gameSource !== "" && (
             <div>

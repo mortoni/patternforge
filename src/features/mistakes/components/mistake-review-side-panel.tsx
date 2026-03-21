@@ -8,6 +8,7 @@ import { MistakeStatusBadge } from "./mistake-status-badge";
 import { cn } from "@/lib/utils";
 import type { MistakeStatus } from "../types";
 import { ROUTES } from "@/lib/constants";
+import { MistakeReviewGameContext } from "./mistake-review-game-context";
 
 export type ReviewInteractionState =
   | "idle"
@@ -21,9 +22,8 @@ export interface MistakeReviewSidePanelProps {
   status: MistakeStatus;
   failedAttempts: number;
   solvedReviewCount: number;
-  sideToMove: "w" | "b";
   gameSource?: string;
-  difficulty?: string;
+  gameContextNote?: string;
   puzzleState: ReviewInteractionState;
   onSkip?: () => void;
   onNextMistake?: () => void;
@@ -35,9 +35,8 @@ export function MistakeReviewSidePanel({
   status,
   failedAttempts,
   solvedReviewCount,
-  sideToMove,
   gameSource,
-  difficulty,
+  gameContextNote,
   puzzleState,
   onSkip,
   onNextMistake,
@@ -63,23 +62,9 @@ export function MistakeReviewSidePanel({
             <dt className="text-muted-foreground">Solved in review</dt>
             <dd className="font-medium">{solvedReviewCount}</dd>
           </div>
-          <div>
-            <dt className="text-muted-foreground">Side to move</dt>
-            <dd className="font-medium">{sideToMove === "w" ? "White" : "Black"}</dd>
-          </div>
-          {gameSource != null && gameSource !== "" && (
-            <div>
-              <dt className="text-muted-foreground">Source</dt>
-              <dd className="font-medium">{gameSource}</dd>
-            </div>
-          )}
-          {difficulty != null && difficulty !== "" && (
-            <div>
-              <dt className="text-muted-foreground">Difficulty</dt>
-              <dd className="font-medium capitalize">{difficulty}</dd>
-            </div>
-          )}
         </dl>
+
+        <MistakeReviewGameContext gameSource={gameSource} note={gameContextNote} />
 
         <div className="space-y-2 pt-2">
           {!resolved && (

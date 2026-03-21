@@ -130,7 +130,7 @@ export function TrainingSetsPage() {
       <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
         <PageHeader
           title="Training Sets"
-          description="Browse and manage your training sets."
+          description="Start a new training cycle or continue your active one."
         />
         <div className="flex items-center justify-center py-12">
           <p className="text-sm text-[var(--muted-foreground)]">
@@ -146,11 +146,11 @@ export function TrainingSetsPage() {
       <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
         <PageHeader
           title="Training Sets"
-          description="Browse and manage your training sets."
+          description="Start a new training cycle or continue your active one."
         />
         <EmptyState
           title="No training sets"
-          description="Create or import a set to get started."
+          description="Import or create a set to start a new training cycle."
         />
       </div>
     );
@@ -160,7 +160,7 @@ export function TrainingSetsPage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
       <PageHeader
         title="Training Sets"
-        description="Browse and manage your training sets."
+        description="Start a new training cycle or continue your active one."
       />
 
       <div className="mb-6 flex flex-wrap items-center gap-3 border-b border-[var(--border)] pb-4">

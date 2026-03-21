@@ -83,6 +83,7 @@ export async function getMistakeReviewState(
       solutionMoves: exercise.solutionMoves,
       puzzleNumber: exercise.puzzleNumber,
       source: exercise.source,
+      comment: exercise.comment,
       difficulty: exercise.difficulty,
     },
     trainingSet: { id: trainingSet.id, name: trainingSet.name },

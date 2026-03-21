@@ -10,6 +10,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { getArrowFromUci } from "@/lib/chess/move-highlights";
+import { useBoardStyle } from "@/features/settings/hooks/use-board-style";
 
 type TrainingSquare = string;
 
@@ -28,6 +29,16 @@ export interface TrainingBoardCardProps {
   /** UCI of the correct move when showing incorrect feedback; used to draw arrow. */
   correctMoveUci?: string;
   className?: string;
+  /**
+   * When true, omit the Card wrapper for a quieter layout (e.g. Training page).
+   * Board interaction logic is unchanged.
+   */
+  minimal?: boolean;
+  /**
+   * Classes for the square board container (aspect-square). Use for responsive sizing, e.g.
+   * `w-[min(92vw,calc(100dvh-14rem))]` so the board fits the viewport with header/footer.
+   */
+  boardContainerClassName?: string;
 }
 
 function isPawnPromotion(pieceType: string | undefined, targetSquare: string): boolean {
@@ -142,7 +153,11 @@ export function TrainingBoardCard({
   attemptedMoveSquares,
   correctMoveUci,
   className,
+  minimal = false,
+  boardContainerClassName,
 }: TrainingBoardCardProps) {
+  const surface = useBoardStyle();
+
   const [selectedSquare, setSelectedSquare] =
     React.useState<TrainingSquare | null>(null);
   const selectedRef = React.useRef<TrainingSquare | null>(null);
@@ -168,6 +183,10 @@ export function TrainingBoardCard({
     }, [fen, selectedSquare]);
 
   const squareStyles = React.useMemo(() => {
+    const sel = surface.interaction?.selectedSquare ?? SELECTED_SQUARE;
+    const dot = surface.interaction?.legalDot ?? LEGAL_DOT;
+    const cap = surface.interaction?.legalCapture ?? LEGAL_CAPTURE_RING;
+
     const out: Record<string, React.CSSProperties> = {};
     if (correctMoveSquares?.length) {
       for (const sq of correctMoveSquares) {
@@ -181,17 +200,18 @@ export function TrainingBoardCard({
     }
     if (selectedSquare && !disabled && onMove) {
       out[selectedSquare] = {
-        ...SELECTED_SQUARE,
+        ...sel,
         ...(out[selectedSquare] ?? {}),
       };
       for (const sq of legalTargetSquares) {
         if (out[sq] && sq !== selectedSquare) continue;
         if (sq === selectedSquare) continue;
-        out[sq] = captureSquares.has(sq) ? LEGAL_CAPTURE_RING : LEGAL_DOT;
+        out[sq] = captureSquares.has(sq) ? cap : dot;
       }
     }
     return Object.keys(out).length > 0 ? out : undefined;
   }, [
+    surface.interaction,
     correctMoveSquares,
     attemptedMoveSquares,
     selectedSquare,
@@ -359,6 +379,14 @@ export function TrainingBoardCard({
     () => ({
       position: fen,
       boardOrientation,
+      lightSquareStyle: surface.lightSquareStyle,
+      darkSquareStyle: surface.darkSquareStyle,
+      ...(surface.boardStyle != null && { boardStyle: surface.boardStyle }),
+      ...(surface.notation && {
+        darkSquareNotationStyle: surface.notation.darkSquareNotationStyle,
+        lightSquareNotationStyle: surface.notation.lightSquareNotationStyle,
+      }),
+      ...(surface.pieces && { pieces: surface.pieces }),
       allowDragging: !disabled,
       /** Default 1px makes almost every pointer move a drag; clicks never register. */
       dragActivationDistance: 8,
@@ -374,6 +402,11 @@ export function TrainingBoardCard({
     [
       fen,
       boardOrientation,
+      surface.lightSquareStyle,
+      surface.darkSquareStyle,
+      surface.boardStyle,
+      surface.notation,
+      surface.pieces,
       disabled,
       canDragPiece,
       onPieceClick,
@@ -385,6 +418,47 @@ export function TrainingBoardCard({
     ]
   );
 
+  const frame = surface.frame;
+  const boardShell = (
+    <div
+      className={cn(
+        "aspect-square overflow-hidden rounded-md border",
+        boardContainerClassName ??
+          "w-full max-w-[min(100%,42rem)]",
+        !frame && "border-border bg-muted/30",
+        minimal && !frame && "rounded-sm border-border/50 bg-muted/20",
+        minimal && frame && "rounded-sm",
+        !minimal && frame && "rounded-md"
+      )}
+      style={
+        frame
+          ? {
+              backgroundColor: frame.backgroundColor,
+              borderColor: frame.borderColor,
+            }
+          : undefined
+      }
+    >
+      <ChessboardProvider options={options}>
+        <ClearSelectionAfterDrag onDragEnded={clearAfterDrag} />
+        <Chessboard />
+      </ChessboardProvider>
+    </div>
+  );
+
+  if (minimal) {
+    return (
+      <div
+        className={cn(
+          "flex w-full flex-col items-center justify-center",
+          className
+        )}
+      >
+        {boardShell}
+      </div>
+    );
+  }
+
   return (
     <Card
       className={cn(
@@ -393,12 +467,7 @@ export function TrainingBoardCard({
       )}
     >
       <CardContent className="flex flex-col items-center p-4 md:p-6">
-        <div className="w-full max-w-[min(100%,42rem)] aspect-square rounded-md overflow-hidden border border-border bg-muted/30">
-          <ChessboardProvider options={options}>
-            <ClearSelectionAfterDrag onDragEnded={clearAfterDrag} />
-            <Chessboard />
-          </ChessboardProvider>
-        </div>
+        {boardShell}
       </CardContent>
     </Card>
   );

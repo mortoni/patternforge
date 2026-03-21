@@ -9,25 +9,41 @@ import {
   putSettings,
 } from "@/repositories/settings.repository";
 import type { AppSettingsSchema } from "@/db/schema";
+import { parseBoardStyleId, type BoardStyleId } from "@/lib/chess/board-styles";
 
 const DEFAULTS: Pick<
   AppSettingsSchema,
-  "theme" | "boardOrientation" | "lastTrainingSetId"
+  "theme" | "boardOrientation" | "boardStyle" | "lastTrainingSetId"
 > = {
   theme: "system",
   boardOrientation: "white",
+  boardStyle: "classic",
   lastTrainingSetId: undefined,
 };
 
+function normalizeSettings(row: AppSettingsSchema | undefined): AppSettingsSchema {
+  if (!row) {
+    return { id: "default", ...DEFAULTS };
+  }
+  return {
+    ...row,
+    theme: row.theme ?? DEFAULTS.theme,
+    boardOrientation: row.boardOrientation ?? DEFAULTS.boardOrientation,
+    boardStyle: parseBoardStyleId(row.boardStyle),
+    lastTrainingSetId: row.lastTrainingSetId,
+  };
+}
+
 export type ThemeValue = AppSettingsSchema["theme"];
 export type BoardOrientationValue = AppSettingsSchema["boardOrientation"];
+export type BoardStyleValue = BoardStyleId;
 
 /**
  * Returns current settings, creating defaults if none exist.
  */
 export async function getSettingsWithDefaults(): Promise<AppSettingsSchema> {
   const existing = await getSettings();
-  if (existing) return existing;
+  if (existing) return normalizeSettings(existing);
   await putSettings({
     id: "default",
     ...DEFAULTS,
@@ -43,7 +59,7 @@ export async function updateTheme(
 ): Promise<AppSettingsSchema> {
   await updateSettings({ theme });
   const next = await getSettings();
-  return next ?? { id: "default", ...DEFAULTS, theme };
+  return normalizeSettings(next ?? { id: "default", ...DEFAULTS, theme });
 }
 
 /**
@@ -54,7 +70,20 @@ export async function updateBoardOrientation(
 ): Promise<AppSettingsSchema> {
   await updateSettings({ boardOrientation });
   const next = await getSettings();
-  return next ?? { id: "default", ...DEFAULTS, boardOrientation };
+  return normalizeSettings(
+    next ?? { id: "default", ...DEFAULTS, boardOrientation }
+  );
+}
+
+/**
+ * Updates global board palette and persists.
+ */
+export async function updateBoardStyle(
+  boardStyle: BoardStyleValue
+): Promise<AppSettingsSchema> {
+  await updateSettings({ boardStyle });
+  const next = await getSettings();
+  return normalizeSettings(next ?? { id: "default", ...DEFAULTS, boardStyle });
 }
 
 export { DEFAULTS as SETTINGS_DEFAULTS };

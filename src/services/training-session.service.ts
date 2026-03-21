@@ -10,6 +10,30 @@ import {
   getSessionById,
 } from "@/repositories/session.repository";
 
+/** Serialize creation per cycle so concurrent getOrCreate cannot insert two actives. */
+const creatingSessionByCycleRunId = new Map<string, Promise<ActiveSession>>();
+
+function sessionRowToActive(s: {
+  id: string;
+  trainingSetId: string;
+  cycleRunId: string;
+  startedAt: string;
+  puzzlesAttempted: number;
+  correctCount: number;
+  skippedCount: number;
+}): ActiveSession {
+  return {
+    id: s.id,
+    trainingSetId: s.trainingSetId,
+    cycleRunId: s.cycleRunId,
+    status: "active",
+    startedAt: s.startedAt,
+    puzzlesAttempted: s.puzzlesAttempted,
+    correctCount: s.correctCount,
+    skippedCount: s.skippedCount,
+  };
+}
+
 export interface ActiveSession {
   id: string;
   trainingSetId: string;
@@ -31,39 +55,49 @@ export async function getOrCreateActiveSession(
 ): Promise<ActiveSession> {
   const existing = await getActiveByCycleRunId(cycleRunId);
   if (existing) {
-    return {
-      id: existing.id,
-      trainingSetId: existing.trainingSetId,
-      cycleRunId: existing.cycleRunId,
-      status: "active",
-      startedAt: existing.startedAt,
-      puzzlesAttempted: existing.puzzlesAttempted,
-      correctCount: existing.correctCount,
-      skippedCount: existing.skippedCount,
-    };
+    return sessionRowToActive(existing);
   }
-  const now = new Date().toISOString();
-  const id = await addSession({
-    id: crypto.randomUUID(),
-    trainingSetId,
-    cycleRunId,
-    startedAt: now,
-    activeTimeMs: 0,
-    puzzlesAttempted: 0,
-    correctCount: 0,
-    skippedCount: 0,
-    status: "active",
-  });
-  return {
-    id,
-    trainingSetId,
-    cycleRunId,
-    status: "active",
-    startedAt: now,
-    puzzlesAttempted: 0,
-    correctCount: 0,
-    skippedCount: 0,
-  };
+
+  const pending = creatingSessionByCycleRunId.get(cycleRunId);
+  if (pending) {
+    return pending;
+  }
+
+  const work = (async (): Promise<ActiveSession> => {
+    try {
+      const again = await getActiveByCycleRunId(cycleRunId);
+      if (again) {
+        return sessionRowToActive(again);
+      }
+      const now = new Date().toISOString();
+      const id = await addSession({
+        id: crypto.randomUUID(),
+        trainingSetId,
+        cycleRunId,
+        startedAt: now,
+        activeTimeMs: 0,
+        puzzlesAttempted: 0,
+        correctCount: 0,
+        skippedCount: 0,
+        status: "active",
+      });
+      return {
+        id,
+        trainingSetId,
+        cycleRunId,
+        status: "active",
+        startedAt: now,
+        puzzlesAttempted: 0,
+        correctCount: 0,
+        skippedCount: 0,
+      };
+    } finally {
+      creatingSessionByCycleRunId.delete(cycleRunId);
+    }
+  })();
+
+  creatingSessionByCycleRunId.set(cycleRunId, work);
+  return work;
 }
 
 /**
@@ -77,15 +111,19 @@ export async function recordAttemptOnSession(
 ): Promise<void> {
   const session = await getSessionById(sessionId);
   if (!session) return;
+  const prevAttempted = session.puzzlesAttempted ?? 0;
+  const prevSkipped = session.skippedCount ?? 0;
+  const prevCorrect = session.correctCount ?? 0;
+  const prevActive = session.activeTimeMs ?? 0;
   const updates: Partial<typeof session> = {
-    puzzlesAttempted: session.puzzlesAttempted + 1,
-    activeTimeMs: session.activeTimeMs + (Number.isFinite(durationMs) ? durationMs : 0),
+    puzzlesAttempted: prevAttempted + 1,
+    activeTimeMs: prevActive + (Number.isFinite(durationMs) ? durationMs : 0),
   };
   if (result === "correct") {
-    updates.correctCount = session.correctCount + 1;
+    updates.correctCount = prevCorrect + 1;
   }
   if (result === "skipped") {
-    updates.skippedCount = session.skippedCount + 1;
+    updates.skippedCount = prevSkipped + 1;
   }
   await updateSession(sessionId, updates);
 }

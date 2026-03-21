@@ -3,6 +3,7 @@ import {
   getSettingsWithDefaults,
   updateTheme,
   updateBoardOrientation,
+  updateBoardStyle,
   SETTINGS_DEFAULTS,
 } from "./settings.service";
 
@@ -22,7 +23,7 @@ beforeEach(() => {
 
 describe("settings.service", () => {
   describe("getSettingsWithDefaults", () => {
-    it("returns existing settings when present", async () => {
+    it("returns normalized settings when present (backfills boardStyle)", async () => {
       const existing = {
         id: "default",
         theme: "dark" as const,
@@ -33,7 +34,10 @@ describe("settings.service", () => {
 
       const result = await getSettingsWithDefaults();
 
-      expect(result).toEqual(existing);
+      expect(result).toEqual({
+        ...existing,
+        boardStyle: "classic",
+      });
       expect(mockPutSettings).not.toHaveBeenCalled();
     });
 
@@ -48,11 +52,13 @@ describe("settings.service", () => {
           id: "default",
           theme: SETTINGS_DEFAULTS.theme,
           boardOrientation: SETTINGS_DEFAULTS.boardOrientation,
+          boardStyle: SETTINGS_DEFAULTS.boardStyle,
           lastTrainingSetId: undefined,
         })
       );
       expect(result.theme).toBe("system");
       expect(result.boardOrientation).toBe("white");
+      expect(result.boardStyle).toBe("classic");
     });
   });
 
@@ -63,6 +69,7 @@ describe("settings.service", () => {
         id: "default",
         theme: "dark",
         boardOrientation: "white",
+        boardStyle: "classic",
       });
 
       const result = await updateTheme("dark");
@@ -79,6 +86,7 @@ describe("settings.service", () => {
         id: "default",
         theme: "system",
         boardOrientation: "black",
+        boardStyle: "slate",
       });
 
       const result = await updateBoardOrientation("black");
@@ -87,6 +95,25 @@ describe("settings.service", () => {
         boardOrientation: "black",
       });
       expect(result.boardOrientation).toBe("black");
+    });
+  });
+
+  describe("updateBoardStyle", () => {
+    it("updates board style and returns new settings", async () => {
+      mockUpdateSettings.mockResolvedValue(undefined);
+      mockGetSettings.mockResolvedValue({
+        id: "default",
+        theme: "system",
+        boardOrientation: "white",
+        boardStyle: "forest",
+      });
+
+      const result = await updateBoardStyle("forest");
+
+      expect(mockUpdateSettings).toHaveBeenCalledWith({
+        boardStyle: "forest",
+      });
+      expect(result.boardStyle).toBe("forest");
     });
   });
 });

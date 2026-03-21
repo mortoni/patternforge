@@ -1,5 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, within, fireEvent, act } from "@testing-library/react";
+import {
+  render,
+  screen,
+  within,
+  fireEvent,
+  act,
+  waitFor,
+} from "@testing-library/react";
 import { SettingsPage } from "./settings-page";
 import { SettingsProvider } from "../context/settings-context";
 
@@ -18,6 +25,7 @@ const defaultSettings = {
   id: "default" as const,
   theme: "system" as const,
   boardOrientation: "white" as const,
+  boardStyle: "classic" as const,
   lastTrainingSetId: undefined as string | undefined,
 };
 
@@ -40,6 +48,7 @@ describe("SettingsPage", () => {
     expect(screen.getByText(/manage your training preferences/i)).toBeInTheDocument();
     expect(screen.getByRole("radiogroup", { name: /theme/i })).toBeInTheDocument();
     expect(screen.getByRole("radiogroup", { name: /board orientation/i })).toBeInTheDocument();
+    expect(screen.getByRole("radiogroup", { name: /board style/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /training preferences/i })).toBeInTheDocument();
   });
 
@@ -71,11 +80,11 @@ describe("SettingsPage", () => {
       </SettingsProvider>
     );
 
-    await screen.findByRole("radiogroup", { name: /theme/i });
+    const themeGroup = await screen.findByRole("radiogroup", { name: /theme/i });
     mockGetSettings.mockResolvedValue({ ...defaultSettings, theme: "dark" });
 
     await act(async () => {
-      fireEvent.click(screen.getByRole("radio", { name: /dark/i }));
+      fireEvent.click(within(themeGroup).getByRole("radio", { name: /^dark$/i }));
     });
 
     expect(mockUpdateSettings).toHaveBeenCalledWith({ theme: "dark" });
@@ -88,19 +97,59 @@ describe("SettingsPage", () => {
       </SettingsProvider>
     );
 
-    await screen.findByRole("radiogroup", { name: /board orientation/i });
+    const boardGroup = await screen.findByRole("radiogroup", {
+      name: /board orientation/i,
+    });
+    const blackRadio = within(boardGroup).getByRole("radio", {
+      name: /^black$/i,
+    });
+    await waitFor(() => {
+      expect(blackRadio).not.toBeDisabled();
+    });
     mockGetSettings.mockResolvedValue({
       ...defaultSettings,
       boardOrientation: "black",
     });
 
     await act(async () => {
-      fireEvent.click(screen.getByRole("radio", { name: /black/i }));
+      fireEvent.click(blackRadio);
     });
 
     await vi.waitFor(() => {
       expect(mockUpdateSettings).toHaveBeenCalledWith({
         boardOrientation: "black",
+      });
+    });
+  });
+
+  it("updates board style when option clicked", async () => {
+    render(
+      <SettingsProvider>
+        <SettingsPage />
+      </SettingsProvider>
+    );
+
+    const styleGroup = await screen.findByRole("radiogroup", {
+      name: /board style/i,
+    });
+    const slateRadio = within(styleGroup).getByRole("radio", {
+      name: /^slate$/i,
+    });
+    await waitFor(() => {
+      expect(slateRadio).not.toBeDisabled();
+    });
+    mockGetSettings.mockResolvedValue({
+      ...defaultSettings,
+      boardStyle: "slate",
+    });
+
+    await act(async () => {
+      fireEvent.click(slateRadio);
+    });
+
+    await vi.waitFor(() => {
+      expect(mockUpdateSettings).toHaveBeenCalledWith({
+        boardStyle: "slate",
       });
     });
   });

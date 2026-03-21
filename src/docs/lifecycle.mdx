@@ -1,0 +1,60 @@
+# Lifecycle
+
+Understanding how cycles, sessions, and exercises work together in PatternForge.
+
+## Training Sets
+
+A **training set** is a curated collection of exercises. Persisted metadata includes:
+
+- **Difficulty** — `easy`, `intermediate`, `advanced`, or `custom`
+- **Optional source and tags** — For display and filtering
+- **Exercise order** — Via the `exerciseIds` array on the set record
+
+The number of puzzles in a set is the length of `exerciseIds`.
+
+## Cycles
+
+A **cycle** is a pass through a training set, tracked as a **cycle run**. Each run includes:
+
+- **Status** — `active` or `completed` (as stored in IndexedDB)
+- **Cycle number** — Which pass through the set (1, 2, 3, …)
+- **Progress** — `nextExerciseIndex`, `totalExercises`, `solvedCount`
+- **Timing** — `startedAt`, optional `completedAt`, and **`totalTimeMs`** for the cycle
+- **Started at / completed at** — ISO strings
+
+In practice you typically have at most one **active** cycle per set; completing it moves the run to **`completed`** before starting the next cycle.
+
+## Sessions
+
+A **session** is a training period within a cycle. It records:
+
+- **Status** — `active`, `completed`, or `abandoned`
+- **Counts** — `puzzlesAttempted`, `correctCount`, `skippedCount`
+- **Active time** — **`activeTimeMs`** (not a single “total duration” field)
+- **Optional target** — `targetPuzzleCount`
+- **Start / end** — `startedAt`, optional `endedAt`
+
+Sessions are created when you enter training for a cycle; they are updated as you solve (or skip) puzzles and closed when you leave or finish the flow.
+
+## Exercises and attempts
+
+An **exercise** is one puzzle (FEN, side to move, solution line, optional first-move hint).
+
+An **exercise attempt** (table **`exerciseAttempts`**) records:
+
+- **Result** — `correct`, `incorrect`, or `skipped`
+- **Duration** — `durationMs`
+- **Moves** — **`userMoves`** (UCI); in first-move mode this is typically a single move
+- **Links** — `exerciseId`, `cycleRunId`, optional `sessionId`
+
+Attempts let analytics and review reflect performance over time and across cycles.
+
+## Flow
+
+1. **Start a cycle** — Create or resume an **active** cycle run for a set
+2. **Train** — Open or continue a **session** and work through exercises
+3. **Complete the cycle** — When the run is finished, status becomes **`completed`**
+4. **Start the next cycle** — New run with an incremented **cycle number**
+5. **Track progress** — Cycle time, attempts, and session stats in the app
+
+The training philosophy is to improve speed and consistency across repeated cycles while keeping quality high.

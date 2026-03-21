@@ -1,5 +1,5 @@
-import { DashboardShell } from "@/features/dashboard/components/DashboardShell";
+import { EntryRouteRedirect } from "@/components/shared/EntryRouteRedirect";
 
 export default function AppPage() {
-  return <DashboardShell />;
+  return <EntryRouteRedirect />;
 }

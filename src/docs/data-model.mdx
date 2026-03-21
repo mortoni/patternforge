@@ -1,0 +1,130 @@
+# Data Model
+
+Core entities match the Zod schemas in `src/db/schema.ts` (types are inferred with `z.infer`). Below is a concise reference; the source file is authoritative.
+
+## Training set (`TrainingSetSchema`)
+
+```typescript
+// difficulty: "easy" | "intermediate" | "advanced" | "custom"
+interface TrainingSet {
+  id: string;
+  name: string;
+  description?: string;
+  difficulty: Difficulty;
+  exerciseIds: string[];
+  createdAt: string;
+  source?: string;
+  tags?: string[];
+}
+```
+
+Set size is `exerciseIds.length` (there is no separate `exerciseCount` field).
+
+## Exercise (`ExerciseSchema`)
+
+```typescript
+interface Exercise {
+  id: string;
+  trainingSetId: string;
+  fen: string;
+  sideToMove: "w" | "b";
+  solutionMoves: string[]; // typically UCI after import/normalization
+  firstMove?: string; // expected first move (UCI); often derived from solutionMoves[0]
+  source?: string;
+  motifTags?: string[];
+  createdAt: string;
+  puzzleNumber?: number;
+  difficulty?: Difficulty;
+  comment?: string;
+}
+```
+
+First-move checking in training compares your move to `firstMove` / the first solution move — not the entire variation.
+
+## Cycle run (`CycleRunSchema`)
+
+```typescript
+// status in DB: "active" | "completed" only
+interface CycleRun {
+  id: string;
+  trainingSetId: string;
+  cycleNumber: number;
+  status: "active" | "completed";
+  startedAt: string;
+  completedAt?: string;
+  totalTimeMs: number;
+  solvedCount: number;
+  totalExercises: number;
+  nextExerciseIndex: number;
+}
+```
+
+## Session (`SessionSchema`)
+
+```typescript
+// status: "active" | "completed" | "abandoned"
+interface Session {
+  id: string;
+  trainingSetId: string;
+  cycleRunId: string;
+  targetPuzzleCount?: number;
+  startedAt: string;
+  endedAt?: string;
+  activeTimeMs: number;
+  puzzlesAttempted: number;
+  correctCount: number;
+  skippedCount: number;
+  status: SessionStatus;
+}
+```
+
+Active training time is tracked as **`activeTimeMs`**, not a single optional `totalDurationMs`.
+
+## Exercise attempt (`ExerciseAttemptSchema`)
+
+Stored in the **`exerciseAttempts`** table.
+
+```typescript
+interface ExerciseAttempt {
+  id: string;
+  exerciseId: string;
+  cycleRunId: string;
+  sessionId?: string;
+  startedAt: string;
+  finishedAt?: string;
+  durationMs: number;
+  result: "correct" | "incorrect" | "skipped";
+  userMoves: string[]; // UCI; first-move mode stores one move
+}
+```
+
+## Mistake entry (`MistakeEntrySchema`)
+
+Stored in the **`mistakeEntries`** table.
+
+```typescript
+interface MistakeEntry {
+  id: string;
+  exerciseId: string;
+  trainingSetId: string;
+  createdAt: string;
+  lastReviewedAt?: string;
+  failedAttempts: number;
+  solvedReviewCount: number;
+  status: "needs_review" | "solved_once" | "solved_twice" | "mastered";
+}
+```
+
+## Relationships
+
+- **Training set** → ordered **exercises** via `exerciseIds`
+- **Training set** → many **cycle runs**
+- **Cycle run** → many **sessions**
+- **Session** → many **exercise attempts** (when `sessionId` is set)
+- **Exercise attempt** → one **exercise**, one **cycle run**
+- **Mistake entry** → one **exercise** and one **training set** (compound index for uniqueness)
+
+## App metadata
+
+- **`AppInstanceSchema`** — installation id and open timestamps
+- **`AppSettingsSchema`** — theme, board orientation, optional `boardStyle`, optional `lastTrainingSetId`

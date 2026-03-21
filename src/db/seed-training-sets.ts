@@ -198,6 +198,7 @@ export async function seedDefaultSettingsIfMissing(): Promise<void> {
     id: "default",
     theme: "system",
     boardOrientation: "white",
+    boardStyle: "classic",
     lastTrainingSetId: undefined,
   });
 }

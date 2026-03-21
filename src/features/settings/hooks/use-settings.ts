@@ -5,8 +5,10 @@ import {
   getSettingsWithDefaults,
   updateTheme as serviceUpdateTheme,
   updateBoardOrientation as serviceUpdateBoardOrientation,
+  updateBoardStyle as serviceUpdateBoardStyle,
 } from "../services/settings.service";
 import type { AppSettingsSchema } from "@/db/schema";
+import type { BoardStyleId } from "@/lib/chess/board-styles";
 
 export interface UseSettingsResult {
   settings: AppSettingsSchema | null;
@@ -16,6 +18,7 @@ export interface UseSettingsResult {
   setBoardOrientation: (
     boardOrientation: AppSettingsSchema["boardOrientation"]
   ) => Promise<void>;
+  setBoardStyle: (boardStyle: BoardStyleId) => Promise<void>;
   reload: () => Promise<void>;
 }
 
@@ -63,12 +66,20 @@ export function useSettings(): UseSettingsResult {
     []
   );
 
+  const setBoardStyle = useCallback(async (boardStyle: BoardStyleId) => {
+    const next = await serviceUpdateBoardStyle(boardStyle);
+    setSettings((prev) =>
+      prev ? { ...prev, boardStyle: next.boardStyle } : next
+    );
+  }, []);
+
   return {
     settings,
     loading,
     error,
     setTheme,
     setBoardOrientation,
+    setBoardStyle,
     reload: load,
   };
 }

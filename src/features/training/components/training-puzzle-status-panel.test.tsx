@@ -3,14 +3,16 @@ import { render, screen } from "@testing-library/react";
 import { TrainingPuzzleStatusPanel } from "./training-puzzle-status-panel";
 
 describe("TrainingPuzzleStatusPanel", () => {
-  it("turn variant shows side-specific copy", () => {
+  it("turn variant shows generic continuation hint", () => {
     const { rerender } = render(
       <TrainingPuzzleStatusPanel variant="turn" sideToMove="w" />
     );
     expect(screen.getByText("Your turn")).toBeInTheDocument();
-    expect(screen.getByText("Find the best move for white.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Find the best continuation.")
+    ).toBeInTheDocument();
     rerender(<TrainingPuzzleStatusPanel variant="turn" sideToMove="b" />);
-    expect(screen.getByText("Find the best move for black.")).toBeInTheDocument();
+    expect(screen.getByText("Find the best continuation.")).toBeInTheDocument();
   });
 
   it("correct shows title only when no comment", () => {

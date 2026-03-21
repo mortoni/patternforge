@@ -4,6 +4,7 @@
  */
 
 import { z } from "zod";
+import { BOARD_STYLE_IDS } from "@/lib/chess/board-styles";
 
 export const appInstanceSchema = z.object({
   installationId: z.string(),
@@ -15,10 +16,16 @@ export type AppInstanceSchema = z.infer<typeof appInstanceSchema>;
 export const themeSchema = z.enum(["light", "dark", "system"]);
 export const boardOrientationSchema = z.enum(["white", "black"]);
 
+export const boardStyleSchema = z.enum(
+  BOARD_STYLE_IDS as unknown as [string, ...string[]]
+);
+
 export const appSettingsSchema = z.object({
   id: z.string(),
   theme: themeSchema,
   boardOrientation: boardOrientationSchema,
+  /** Global chessboard palette; persisted in IndexedDB settings row. */
+  boardStyle: boardStyleSchema.optional(),
   lastTrainingSetId: z.string().optional(),
 });
 export type AppSettingsSchema = z.infer<typeof appSettingsSchema>;

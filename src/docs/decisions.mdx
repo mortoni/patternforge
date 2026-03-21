@@ -1,0 +1,84 @@
+# Design Decisions
+
+Key architectural and design choices in PatternForge.
+
+## Local-First Architecture
+
+**Decision**: Store all data locally in IndexedDB, no backend required.
+
+**Rationale**: 
+- Faster access, no network latency
+- Works offline
+- Privacy by default
+- Simpler deployment
+
+**Trade-offs**:
+- No cloud sync (future consideration)
+- Data tied to browser/device
+- No multi-device access
+
+## First-Move Verification
+
+**Decision**: Training and mistake review compare your move to the expected **first move** (UCI), using `Exercise.firstMove` or the first entry in `solutionMoves`. The full solution line is not verified interactively in the UI.
+
+**Rationale**:
+- Focuses on pattern recognition and the critical idea, not deep calculation in-app
+- Faster feedback loop
+- Aligns with Woodpecker-style emphasis on recognition
+
+**Trade-offs**:
+- Does not prove you would find the entire continuation
+- May miss nuance that appears only later in the line
+
+## Cycle-Based Organization
+
+**Decision**: Structure training around cycles (repeated passes) rather than linear progression.
+
+**Rationale**:
+- Core to Woodpecker Method
+- Enables time reduction tracking
+- Builds pattern memory through repetition
+
+**Trade-offs**:
+- Less variety than random puzzles
+- Requires discipline to repeat sets
+
+## Mistake Review System
+
+**Decision**: Track failed positions separately and allow focused review.
+
+**Rationale**:
+- Converts failures into learning opportunities
+- Enables targeted improvement
+- Prevents repeated mistakes
+
+**Trade-offs**:
+- Additional complexity
+- Requires maintenance of mistake state
+
+## No Authentication
+
+**Decision**: No user accounts or authentication system.
+
+**Rationale**:
+- Simpler architecture
+- Privacy-focused (local data)
+- Faster development
+
+**Trade-offs**:
+- No multi-device sync
+- No data backup/restore
+- No sharing or collaboration
+
+## TypeScript Throughout
+
+**Decision**: Use TypeScript for all code, strict mode enabled.
+
+**Rationale**:
+- Type safety catches errors early
+- Better IDE support
+- Self-documenting code
+
+**Trade-offs**:
+- Slightly more verbose
+- Learning curve for contributors

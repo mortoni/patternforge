@@ -63,6 +63,7 @@ describe("reset-user-progress", () => {
         id: "default",
         theme: "system",
         boardOrientation: "white",
+        boardStyle: "classic",
         lastTrainingSetId: undefined,
       })
     );

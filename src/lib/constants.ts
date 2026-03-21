@@ -17,8 +17,11 @@ export const ROUTES = {
   home: "/",
   privacy: "/privacy",
   terms: "/terms",
+  docs: "/docs",
   app: "/app",
   training: "/app/training",
+  /** Post–end-session checkpoint; query: `?sessionId=` */
+  trainingSessionSummary: "/app/training/session-summary",
   session: "/app/session",
   sets: "/app/sets",
   mistakes: "/app/mistakes",

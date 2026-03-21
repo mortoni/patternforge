@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Match `dark:` utilities to `html.dark` (app theme), not OS prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #f8fafc;
@@ -42,5 +46,5 @@ html.dark {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
 }

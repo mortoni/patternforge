@@ -19,6 +19,7 @@ export async function putSettings(
     id,
     theme: data.theme ?? "system",
     boardOrientation: data.boardOrientation ?? "white",
+    boardStyle: data.boardStyle ?? "classic",
     lastTrainingSetId: data.lastTrainingSetId,
   });
 }

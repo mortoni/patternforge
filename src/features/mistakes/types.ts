@@ -36,6 +36,7 @@ export interface MistakeReviewState {
     solutionMoves: string[];
     puzzleNumber?: number;
     source?: string;
+    comment?: string;
     difficulty?: string;
   };
   trainingSet: { id: string; name: string };

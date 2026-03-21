@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useSettings } from "../hooks/use-settings";
 import type { AppSettingsSchema } from "@/db/schema";
+import type { BoardStyleId } from "@/lib/chess/board-styles";
 
 type ThemeValue = AppSettingsSchema["theme"];
 type BoardOrientationValue = AppSettingsSchema["boardOrientation"];
@@ -13,6 +14,7 @@ interface SettingsContextValue {
   error: Error | null;
   setTheme: (theme: ThemeValue) => Promise<void>;
   setBoardOrientation: (boardOrientation: BoardOrientationValue) => Promise<void>;
+  setBoardStyle: (boardStyle: BoardStyleId) => Promise<void>;
   reload: () => Promise<void>;
 }
 

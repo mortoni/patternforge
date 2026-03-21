@@ -4,7 +4,7 @@
  *
  * Preserves: trainingSets, exercises
  * Clears: cycleRuns, sessions, exerciseAttempts, mistakeEntries, appInstance
- * Resets: settings to default (theme: system, boardOrientation: white, no lastTrainingSetId)
+ * Resets: settings to default (theme: system, boardOrientation: white, boardStyle: classic, no lastTrainingSetId)
  */
 
 import { db } from "./dexie";
@@ -16,6 +16,7 @@ const DEFAULT_SETTINGS = {
   id: DEFAULT_SETTINGS_ID,
   theme: "system" as const,
   boardOrientation: "white" as const,
+  boardStyle: "classic" as const,
   lastTrainingSetId: undefined as string | undefined,
 };
 

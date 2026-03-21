@@ -3,6 +3,7 @@
 import { PageHeader } from "@/components/shared/PageHeader";
 import { ThemeSettingCard } from "./theme-setting-card";
 import { BoardOrientationCard } from "./board-orientation-card";
+import { BoardStyleCard } from "./board-style-card";
 import { TrainingPreferencesCard } from "./training-preferences-card";
 import { DevResetProgressCard } from "./dev-reset-progress-card";
 import { useSettingsContext } from "../context/settings-context";
@@ -14,6 +15,7 @@ export function SettingsPage() {
     error,
     setTheme,
     setBoardOrientation,
+    setBoardStyle,
   } = useSettingsContext();
 
   if (error) {
@@ -45,6 +47,11 @@ export function SettingsPage() {
         <BoardOrientationCard
           value={settings?.boardOrientation ?? "white"}
           onChange={(boardOrientation) => setBoardOrientation(boardOrientation)}
+          disabled={loading}
+        />
+        <BoardStyleCard
+          value={settings?.boardStyle}
+          onChange={(boardStyle) => setBoardStyle(boardStyle)}
           disabled={loading}
         />
         <TrainingPreferencesCard />

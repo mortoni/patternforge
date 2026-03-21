@@ -4,6 +4,18 @@ import { TrainingBoardCard } from "./training-board-card";
 
 const capturedOptions: { current: Record<string, unknown> | null } = { current: null };
 
+vi.mock("@/features/settings/hooks/use-board-style", () => ({
+  useBoardStyle: () => ({
+    lightSquareStyle: { backgroundColor: "#F0D9B5" },
+    darkSquareStyle: { backgroundColor: "#B58863" },
+    boardStyle: undefined,
+    frame: null,
+    interaction: undefined,
+    notation: undefined,
+    pieces: undefined,
+  }),
+}));
+
 vi.mock("react-chessboard", () => ({
   ChessboardProvider: ({
     options,
@@ -36,6 +48,12 @@ describe("TrainingBoardCard", () => {
     expect(capturedOptions.current).not.toBeNull();
     expect(capturedOptions.current!.position).toBe(defaultFen);
     expect(capturedOptions.current!.boardOrientation).toBe("white");
+    expect(capturedOptions.current!.lightSquareStyle).toEqual({
+      backgroundColor: "#F0D9B5",
+    });
+    expect(capturedOptions.current!.darkSquareStyle).toEqual({
+      backgroundColor: "#B58863",
+    });
   });
 
   it("passes click/drag handlers and drag activation when not disabled", () => {

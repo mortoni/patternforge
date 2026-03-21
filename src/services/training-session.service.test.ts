@@ -62,6 +62,17 @@ describe("training-session.service", () => {
         })
       );
     });
+
+    it("dedupes concurrent creators into one addSession", async () => {
+      mockGetActiveByCycleRunId.mockResolvedValue(undefined);
+      mockAddSession.mockResolvedValue("new-session-id");
+      const [a, b] = await Promise.all([
+        getOrCreateActiveSession("set-1", "cycle-1"),
+        getOrCreateActiveSession("set-1", "cycle-1"),
+      ]);
+      expect(a.id).toBe(b.id);
+      expect(mockAddSession).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe("recordAttemptOnSession", () => {
@@ -97,6 +108,21 @@ describe("training-session.service", () => {
         expect.objectContaining({
           puzzlesAttempted: 4,
           skippedCount: 2,
+        })
+      );
+    });
+
+    it("treats missing skippedCount as zero when recording a skip", async () => {
+      mockGetSessionById.mockResolvedValue({
+        ...existingSession,
+        skippedCount: undefined as unknown as number,
+      });
+      await recordAttemptOnSession("existing-1", "skipped");
+      expect(mockUpdateSession).toHaveBeenCalledWith(
+        "existing-1",
+        expect.objectContaining({
+          puzzlesAttempted: 4,
+          skippedCount: 1,
         })
       );
     });
