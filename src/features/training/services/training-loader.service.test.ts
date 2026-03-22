@@ -28,8 +28,7 @@ vi.mock("@/repositories/exercise.repository", () => ({
     mockGetExercisesByTrainingSetId(id),
 }));
 vi.mock("@/services/training-session.service", () => ({
-  getOrCreateActiveSession: (_tid: string, _cid: string) =>
-    mockGetOrCreateActiveSession(),
+  getOrCreateActiveSession: () => mockGetOrCreateActiveSession(),
 }));
 
 describe("getActiveTrainingState", () => {

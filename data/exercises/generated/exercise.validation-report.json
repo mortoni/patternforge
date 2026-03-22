@@ -1,0 +1,5627 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-03-22T07:58:17.126Z",
+  "sourceContractPath": "data/exercises/generated/exercise.contract.json",
+  "limitations": [
+    "Contract `schemaVersion` 3: `solution.rawMoves` = editorial/import tokens; `solution.moves` + `format: \"uci\"` = machine UCI from normalize. Validation replays `solution.moves` when `normalizationStatus` allows.",
+    "When `solution_normalization_failed` is set, the validator does not replay raw SAN (avoids treating notation ambiguity as illegal_line).",
+    "When `solution_normalization_partial` is set, the stored UCI prefix replayed cleanly; remaining raw tokens need manual review or import fixes.",
+    "Legacy rows: nested `solution.normalization.status` (v2) or SAN-only `solution.moves` without `rawMoves` are still accepted at runtime.",
+    "Move-line checks are skipped when FEN is invalid, missing, or when sideToMove does not match the FEN active color (avoids noisy false illegal_* flags)."
+  ],
+  "totalExercises": 1133,
+  "passedCount": 594,
+  "flaggedCount": 539,
+  "exercises": [
+    {
+      "id": "exercise-0001",
+      "flags": []
+    },
+    {
+      "id": "exercise-0002",
+      "flags": []
+    },
+    {
+      "id": "exercise-0003",
+      "flags": []
+    },
+    {
+      "id": "exercise-0004",
+      "flags": []
+    },
+    {
+      "id": "exercise-0005",
+      "flags": []
+    },
+    {
+      "id": "exercise-0006",
+      "flags": []
+    },
+    {
+      "id": "exercise-0007",
+      "flags": []
+    },
+    {
+      "id": "exercise-0008",
+      "flags": []
+    },
+    {
+      "id": "exercise-0009",
+      "flags": []
+    },
+    {
+      "id": "exercise-0010",
+      "flags": []
+    },
+    {
+      "id": "exercise-0011",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0012",
+      "flags": []
+    },
+    {
+      "id": "exercise-0013",
+      "flags": []
+    },
+    {
+      "id": "exercise-0014",
+      "flags": []
+    },
+    {
+      "id": "exercise-0015",
+      "flags": []
+    },
+    {
+      "id": "exercise-0016",
+      "flags": []
+    },
+    {
+      "id": "exercise-0017",
+      "flags": []
+    },
+    {
+      "id": "exercise-0018",
+      "flags": []
+    },
+    {
+      "id": "exercise-0019",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0020",
+      "flags": []
+    },
+    {
+      "id": "exercise-0021",
+      "flags": []
+    },
+    {
+      "id": "exercise-0022",
+      "flags": []
+    },
+    {
+      "id": "exercise-0023",
+      "flags": []
+    },
+    {
+      "id": "exercise-0024",
+      "flags": []
+    },
+    {
+      "id": "exercise-0025",
+      "flags": []
+    },
+    {
+      "id": "exercise-0026",
+      "flags": []
+    },
+    {
+      "id": "exercise-0027",
+      "flags": []
+    },
+    {
+      "id": "exercise-0028",
+      "flags": []
+    },
+    {
+      "id": "exercise-0029",
+      "flags": []
+    },
+    {
+      "id": "exercise-0030",
+      "flags": []
+    },
+    {
+      "id": "exercise-0031",
+      "flags": []
+    },
+    {
+      "id": "exercise-0032",
+      "flags": []
+    },
+    {
+      "id": "exercise-0033",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0034",
+      "flags": []
+    },
+    {
+      "id": "exercise-0035",
+      "flags": []
+    },
+    {
+      "id": "exercise-0036",
+      "flags": []
+    },
+    {
+      "id": "exercise-0037",
+      "flags": []
+    },
+    {
+      "id": "exercise-0038",
+      "flags": []
+    },
+    {
+      "id": "exercise-0039",
+      "flags": []
+    },
+    {
+      "id": "exercise-0040",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0041",
+      "flags": []
+    },
+    {
+      "id": "exercise-0042",
+      "flags": []
+    },
+    {
+      "id": "exercise-0043",
+      "flags": []
+    },
+    {
+      "id": "exercise-0044",
+      "flags": []
+    },
+    {
+      "id": "exercise-0045",
+      "flags": []
+    },
+    {
+      "id": "exercise-0046",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0047",
+      "flags": []
+    },
+    {
+      "id": "exercise-0048",
+      "flags": []
+    },
+    {
+      "id": "exercise-0049",
+      "flags": []
+    },
+    {
+      "id": "exercise-0050",
+      "flags": []
+    },
+    {
+      "id": "exercise-0051",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0052",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0053",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0054",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0055",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0056",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0057",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0058",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0059",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0060",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0061",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0062",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0063",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0064",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0065",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0066",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0067",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0068",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0069",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0070",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0071",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0072",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0073",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0074",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0075",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0076",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0077",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0078",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0079",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0080",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0081",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0082",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0083",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0084",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0085",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0086",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0087",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0088",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0089",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0090",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0091",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0092",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0093",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0094",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0095",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0096",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0097",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0098",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0099",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0100",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0101",
+      "flags": []
+    },
+    {
+      "id": "exercise-0102",
+      "flags": []
+    },
+    {
+      "id": "exercise-0103",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0104",
+      "flags": []
+    },
+    {
+      "id": "exercise-0105",
+      "flags": []
+    },
+    {
+      "id": "exercise-0106",
+      "flags": []
+    },
+    {
+      "id": "exercise-0107",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0108",
+      "flags": []
+    },
+    {
+      "id": "exercise-0109",
+      "flags": []
+    },
+    {
+      "id": "exercise-0110",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0111",
+      "flags": []
+    },
+    {
+      "id": "exercise-0112",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0113",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0114",
+      "flags": []
+    },
+    {
+      "id": "exercise-0115",
+      "flags": []
+    },
+    {
+      "id": "exercise-0116",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0117",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0118",
+      "flags": []
+    },
+    {
+      "id": "exercise-0119",
+      "flags": []
+    },
+    {
+      "id": "exercise-0120",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0121",
+      "flags": []
+    },
+    {
+      "id": "exercise-0122",
+      "flags": []
+    },
+    {
+      "id": "exercise-0123",
+      "flags": []
+    },
+    {
+      "id": "exercise-0124",
+      "flags": []
+    },
+    {
+      "id": "exercise-0125",
+      "flags": []
+    },
+    {
+      "id": "exercise-0126",
+      "flags": []
+    },
+    {
+      "id": "exercise-0127",
+      "flags": []
+    },
+    {
+      "id": "exercise-0128",
+      "flags": []
+    },
+    {
+      "id": "exercise-0129",
+      "flags": []
+    },
+    {
+      "id": "exercise-0130",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0131",
+      "flags": []
+    },
+    {
+      "id": "exercise-0132",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0133",
+      "flags": []
+    },
+    {
+      "id": "exercise-0134",
+      "flags": []
+    },
+    {
+      "id": "exercise-0135",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0136",
+      "flags": []
+    },
+    {
+      "id": "exercise-0137",
+      "flags": []
+    },
+    {
+      "id": "exercise-0138",
+      "flags": []
+    },
+    {
+      "id": "exercise-0139",
+      "flags": []
+    },
+    {
+      "id": "exercise-0140",
+      "flags": []
+    },
+    {
+      "id": "exercise-0141",
+      "flags": []
+    },
+    {
+      "id": "exercise-0142",
+      "flags": []
+    },
+    {
+      "id": "exercise-0143",
+      "flags": []
+    },
+    {
+      "id": "exercise-0144",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0145",
+      "flags": []
+    },
+    {
+      "id": "exercise-0146",
+      "flags": []
+    },
+    {
+      "id": "exercise-0147",
+      "flags": []
+    },
+    {
+      "id": "exercise-0148",
+      "flags": []
+    },
+    {
+      "id": "exercise-0149",
+      "flags": []
+    },
+    {
+      "id": "exercise-0150",
+      "flags": []
+    },
+    {
+      "id": "exercise-0151",
+      "flags": []
+    },
+    {
+      "id": "exercise-0152",
+      "flags": []
+    },
+    {
+      "id": "exercise-0153",
+      "flags": []
+    },
+    {
+      "id": "exercise-0154",
+      "flags": []
+    },
+    {
+      "id": "exercise-0155",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0156",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0157",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0158",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0159",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0160",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0161",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0162",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0163",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0164",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0165",
+      "flags": []
+    },
+    {
+      "id": "exercise-0166",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0167",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0168",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0169",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0170",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0171",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0172",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0173",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0174",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0175",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0176",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0177",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0178",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0179",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0180",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0181",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0182",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0183",
+      "flags": []
+    },
+    {
+      "id": "exercise-0184",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0185",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0186",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0187",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0188",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0189",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0190",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0191",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0192",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0193",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0194",
+      "flags": []
+    },
+    {
+      "id": "exercise-0195",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0196",
+      "flags": []
+    },
+    {
+      "id": "exercise-0197",
+      "flags": []
+    },
+    {
+      "id": "exercise-0198",
+      "flags": []
+    },
+    {
+      "id": "exercise-0199",
+      "flags": []
+    },
+    {
+      "id": "exercise-0200",
+      "flags": []
+    },
+    {
+      "id": "exercise-0201",
+      "flags": []
+    },
+    {
+      "id": "exercise-0202",
+      "flags": []
+    },
+    {
+      "id": "exercise-0203",
+      "flags": []
+    },
+    {
+      "id": "exercise-0204",
+      "flags": []
+    },
+    {
+      "id": "exercise-0205",
+      "flags": []
+    },
+    {
+      "id": "exercise-0206",
+      "flags": []
+    },
+    {
+      "id": "exercise-0207",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0208",
+      "flags": []
+    },
+    {
+      "id": "exercise-0209",
+      "flags": []
+    },
+    {
+      "id": "exercise-0210",
+      "flags": []
+    },
+    {
+      "id": "exercise-0211",
+      "flags": []
+    },
+    {
+      "id": "exercise-0212",
+      "flags": []
+    },
+    {
+      "id": "exercise-0213",
+      "flags": []
+    },
+    {
+      "id": "exercise-0214",
+      "flags": []
+    },
+    {
+      "id": "exercise-0215",
+      "flags": []
+    },
+    {
+      "id": "exercise-0216",
+      "flags": []
+    },
+    {
+      "id": "exercise-0217",
+      "flags": []
+    },
+    {
+      "id": "exercise-0218",
+      "flags": []
+    },
+    {
+      "id": "exercise-0219",
+      "flags": []
+    },
+    {
+      "id": "exercise-0220",
+      "flags": []
+    },
+    {
+      "id": "exercise-0221",
+      "flags": []
+    },
+    {
+      "id": "exercise-0222",
+      "flags": []
+    },
+    {
+      "id": "exercise-0223",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0224",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0225",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0226",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0227",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0228",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0229",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0230",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0231",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0232",
+      "flags": []
+    },
+    {
+      "id": "exercise-0233",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0234",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0235",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0236",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0237",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0238",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0239",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0240",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0241",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0242",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0243",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0244",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0245",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0246",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0247",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0248",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0249",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0250",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0251",
+      "flags": []
+    },
+    {
+      "id": "exercise-0252",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0253",
+      "flags": []
+    },
+    {
+      "id": "exercise-0254",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0255",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0256",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0257",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0258",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0259",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0260",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0261",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0262",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0263",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0264",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0265",
+      "flags": []
+    },
+    {
+      "id": "exercise-0266",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0267",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0268",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0269",
+      "flags": []
+    },
+    {
+      "id": "exercise-0270",
+      "flags": []
+    },
+    {
+      "id": "exercise-0271",
+      "flags": []
+    },
+    {
+      "id": "exercise-0272",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0273",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0274",
+      "flags": []
+    },
+    {
+      "id": "exercise-0275",
+      "flags": []
+    },
+    {
+      "id": "exercise-0276",
+      "flags": []
+    },
+    {
+      "id": "exercise-0277",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0278",
+      "flags": []
+    },
+    {
+      "id": "exercise-0279",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0280",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0281",
+      "flags": []
+    },
+    {
+      "id": "exercise-0282",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0283",
+      "flags": []
+    },
+    {
+      "id": "exercise-0284",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0285",
+      "flags": []
+    },
+    {
+      "id": "exercise-0286",
+      "flags": []
+    },
+    {
+      "id": "exercise-0287",
+      "flags": []
+    },
+    {
+      "id": "exercise-0288",
+      "flags": []
+    },
+    {
+      "id": "exercise-0289",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0290",
+      "flags": []
+    },
+    {
+      "id": "exercise-0291",
+      "flags": []
+    },
+    {
+      "id": "exercise-0292",
+      "flags": []
+    },
+    {
+      "id": "exercise-0293",
+      "flags": []
+    },
+    {
+      "id": "exercise-0294",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0295",
+      "flags": []
+    },
+    {
+      "id": "exercise-0296",
+      "flags": []
+    },
+    {
+      "id": "exercise-0297",
+      "flags": []
+    },
+    {
+      "id": "exercise-0298",
+      "flags": []
+    },
+    {
+      "id": "exercise-0299",
+      "flags": []
+    },
+    {
+      "id": "exercise-0300",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0301",
+      "flags": []
+    },
+    {
+      "id": "exercise-0302",
+      "flags": []
+    },
+    {
+      "id": "exercise-0303",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0304",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0305",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0306",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0307",
+      "flags": []
+    },
+    {
+      "id": "exercise-0308",
+      "flags": []
+    },
+    {
+      "id": "exercise-0309",
+      "flags": []
+    },
+    {
+      "id": "exercise-0310",
+      "flags": []
+    },
+    {
+      "id": "exercise-0311",
+      "flags": []
+    },
+    {
+      "id": "exercise-0312",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0313",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0314",
+      "flags": []
+    },
+    {
+      "id": "exercise-0315",
+      "flags": []
+    },
+    {
+      "id": "exercise-0316",
+      "flags": []
+    },
+    {
+      "id": "exercise-0317",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0318",
+      "flags": []
+    },
+    {
+      "id": "exercise-0319",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0320",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0321",
+      "flags": []
+    },
+    {
+      "id": "exercise-0322",
+      "flags": []
+    },
+    {
+      "id": "exercise-0323",
+      "flags": []
+    },
+    {
+      "id": "exercise-0324",
+      "flags": []
+    },
+    {
+      "id": "exercise-0325",
+      "flags": []
+    },
+    {
+      "id": "exercise-0326",
+      "flags": []
+    },
+    {
+      "id": "exercise-0327",
+      "flags": []
+    },
+    {
+      "id": "exercise-0328",
+      "flags": []
+    },
+    {
+      "id": "exercise-0329",
+      "flags": []
+    },
+    {
+      "id": "exercise-0330",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0331",
+      "flags": []
+    },
+    {
+      "id": "exercise-0332",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0333",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0334",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0335",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0336",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0337",
+      "flags": []
+    },
+    {
+      "id": "exercise-0338",
+      "flags": []
+    },
+    {
+      "id": "exercise-0339",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0340",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0341",
+      "flags": []
+    },
+    {
+      "id": "exercise-0342",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0343",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0344",
+      "flags": []
+    },
+    {
+      "id": "exercise-0345",
+      "flags": []
+    },
+    {
+      "id": "exercise-0346",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0347",
+      "flags": []
+    },
+    {
+      "id": "exercise-0348",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0349",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0350",
+      "flags": []
+    },
+    {
+      "id": "exercise-0351",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0352",
+      "flags": []
+    },
+    {
+      "id": "exercise-0353",
+      "flags": []
+    },
+    {
+      "id": "exercise-0354",
+      "flags": []
+    },
+    {
+      "id": "exercise-0355",
+      "flags": []
+    },
+    {
+      "id": "exercise-0356",
+      "flags": []
+    },
+    {
+      "id": "exercise-0357",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0358",
+      "flags": []
+    },
+    {
+      "id": "exercise-0359",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0360",
+      "flags": []
+    },
+    {
+      "id": "exercise-0361",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0362",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0363",
+      "flags": []
+    },
+    {
+      "id": "exercise-0364",
+      "flags": []
+    },
+    {
+      "id": "exercise-0365",
+      "flags": []
+    },
+    {
+      "id": "exercise-0366",
+      "flags": []
+    },
+    {
+      "id": "exercise-0367",
+      "flags": []
+    },
+    {
+      "id": "exercise-0368",
+      "flags": []
+    },
+    {
+      "id": "exercise-0369",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0370",
+      "flags": []
+    },
+    {
+      "id": "exercise-0371",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0372",
+      "flags": []
+    },
+    {
+      "id": "exercise-0373",
+      "flags": []
+    },
+    {
+      "id": "exercise-0374",
+      "flags": []
+    },
+    {
+      "id": "exercise-0375",
+      "flags": []
+    },
+    {
+      "id": "exercise-0376",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0377",
+      "flags": []
+    },
+    {
+      "id": "exercise-0378",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0379",
+      "flags": []
+    },
+    {
+      "id": "exercise-0380",
+      "flags": []
+    },
+    {
+      "id": "exercise-0381",
+      "flags": []
+    },
+    {
+      "id": "exercise-0382",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0383",
+      "flags": []
+    },
+    {
+      "id": "exercise-0384",
+      "flags": []
+    },
+    {
+      "id": "exercise-0385",
+      "flags": []
+    },
+    {
+      "id": "exercise-0386",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0387",
+      "flags": []
+    },
+    {
+      "id": "exercise-0388",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0389",
+      "flags": []
+    },
+    {
+      "id": "exercise-0390",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0391",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0392",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0393",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0394",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0395",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0396",
+      "flags": []
+    },
+    {
+      "id": "exercise-0397",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0398",
+      "flags": []
+    },
+    {
+      "id": "exercise-0399",
+      "flags": []
+    },
+    {
+      "id": "exercise-0400",
+      "flags": []
+    },
+    {
+      "id": "exercise-0401",
+      "flags": []
+    },
+    {
+      "id": "exercise-0402",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0403",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0404",
+      "flags": []
+    },
+    {
+      "id": "exercise-0405",
+      "flags": []
+    },
+    {
+      "id": "exercise-0406",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0407",
+      "flags": []
+    },
+    {
+      "id": "exercise-0408",
+      "flags": []
+    },
+    {
+      "id": "exercise-0409",
+      "flags": []
+    },
+    {
+      "id": "exercise-0410",
+      "flags": []
+    },
+    {
+      "id": "exercise-0411",
+      "flags": []
+    },
+    {
+      "id": "exercise-0412",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0413",
+      "flags": []
+    },
+    {
+      "id": "exercise-0414",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0415",
+      "flags": []
+    },
+    {
+      "id": "exercise-0416",
+      "flags": []
+    },
+    {
+      "id": "exercise-0417",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0418",
+      "flags": []
+    },
+    {
+      "id": "exercise-0419",
+      "flags": []
+    },
+    {
+      "id": "exercise-0420",
+      "flags": []
+    },
+    {
+      "id": "exercise-0421",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0422",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0423",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0424",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0425",
+      "flags": []
+    },
+    {
+      "id": "exercise-0426",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0427",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0428",
+      "flags": []
+    },
+    {
+      "id": "exercise-0429",
+      "flags": []
+    },
+    {
+      "id": "exercise-0430",
+      "flags": []
+    },
+    {
+      "id": "exercise-0431",
+      "flags": []
+    },
+    {
+      "id": "exercise-0432",
+      "flags": []
+    },
+    {
+      "id": "exercise-0433",
+      "flags": []
+    },
+    {
+      "id": "exercise-0434",
+      "flags": []
+    },
+    {
+      "id": "exercise-0435",
+      "flags": []
+    },
+    {
+      "id": "exercise-0436",
+      "flags": []
+    },
+    {
+      "id": "exercise-0437",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0438",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0439",
+      "flags": []
+    },
+    {
+      "id": "exercise-0440",
+      "flags": []
+    },
+    {
+      "id": "exercise-0441",
+      "flags": []
+    },
+    {
+      "id": "exercise-0442",
+      "flags": []
+    },
+    {
+      "id": "exercise-0443",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0444",
+      "flags": []
+    },
+    {
+      "id": "exercise-0445",
+      "flags": []
+    },
+    {
+      "id": "exercise-0446",
+      "flags": []
+    },
+    {
+      "id": "exercise-0447",
+      "flags": []
+    },
+    {
+      "id": "exercise-0448",
+      "flags": []
+    },
+    {
+      "id": "exercise-0449",
+      "flags": []
+    },
+    {
+      "id": "exercise-0450",
+      "flags": []
+    },
+    {
+      "id": "exercise-0451",
+      "flags": []
+    },
+    {
+      "id": "exercise-0452",
+      "flags": []
+    },
+    {
+      "id": "exercise-0453",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0454",
+      "flags": []
+    },
+    {
+      "id": "exercise-0455",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0456",
+      "flags": []
+    },
+    {
+      "id": "exercise-0457",
+      "flags": []
+    },
+    {
+      "id": "exercise-0458",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0459",
+      "flags": []
+    },
+    {
+      "id": "exercise-0460",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0461",
+      "flags": []
+    },
+    {
+      "id": "exercise-0462",
+      "flags": []
+    },
+    {
+      "id": "exercise-0463",
+      "flags": []
+    },
+    {
+      "id": "exercise-0464",
+      "flags": []
+    },
+    {
+      "id": "exercise-0465",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0466",
+      "flags": []
+    },
+    {
+      "id": "exercise-0467",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0468",
+      "flags": []
+    },
+    {
+      "id": "exercise-0469",
+      "flags": []
+    },
+    {
+      "id": "exercise-0470",
+      "flags": []
+    },
+    {
+      "id": "exercise-0471",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0472",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0473",
+      "flags": []
+    },
+    {
+      "id": "exercise-0474",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0475",
+      "flags": []
+    },
+    {
+      "id": "exercise-0476",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0477",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0478",
+      "flags": []
+    },
+    {
+      "id": "exercise-0479",
+      "flags": []
+    },
+    {
+      "id": "exercise-0480",
+      "flags": []
+    },
+    {
+      "id": "exercise-0481",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0482",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0483",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0484",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0485",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0486",
+      "flags": []
+    },
+    {
+      "id": "exercise-0487",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0488",
+      "flags": []
+    },
+    {
+      "id": "exercise-0489",
+      "flags": []
+    },
+    {
+      "id": "exercise-0490",
+      "flags": []
+    },
+    {
+      "id": "exercise-0491",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0492",
+      "flags": []
+    },
+    {
+      "id": "exercise-0493",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0494",
+      "flags": []
+    },
+    {
+      "id": "exercise-0495",
+      "flags": []
+    },
+    {
+      "id": "exercise-0496",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0497",
+      "flags": []
+    },
+    {
+      "id": "exercise-0498",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0499",
+      "flags": []
+    },
+    {
+      "id": "exercise-0500",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0501",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0502",
+      "flags": []
+    },
+    {
+      "id": "exercise-0503",
+      "flags": []
+    },
+    {
+      "id": "exercise-0504",
+      "flags": []
+    },
+    {
+      "id": "exercise-0505",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0506",
+      "flags": []
+    },
+    {
+      "id": "exercise-0507",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0508",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0509",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0510",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0511",
+      "flags": []
+    },
+    {
+      "id": "exercise-0512",
+      "flags": []
+    },
+    {
+      "id": "exercise-0513",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0514",
+      "flags": []
+    },
+    {
+      "id": "exercise-0515",
+      "flags": []
+    },
+    {
+      "id": "exercise-0516",
+      "flags": []
+    },
+    {
+      "id": "exercise-0517",
+      "flags": []
+    },
+    {
+      "id": "exercise-0518",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0519",
+      "flags": []
+    },
+    {
+      "id": "exercise-0520",
+      "flags": []
+    },
+    {
+      "id": "exercise-0521",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0522",
+      "flags": []
+    },
+    {
+      "id": "exercise-0523",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0524",
+      "flags": []
+    },
+    {
+      "id": "exercise-0525",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0526",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0527",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0528",
+      "flags": []
+    },
+    {
+      "id": "exercise-0529",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0530",
+      "flags": []
+    },
+    {
+      "id": "exercise-0531",
+      "flags": []
+    },
+    {
+      "id": "exercise-0532",
+      "flags": []
+    },
+    {
+      "id": "exercise-0533",
+      "flags": []
+    },
+    {
+      "id": "exercise-0534",
+      "flags": []
+    },
+    {
+      "id": "exercise-0535",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0536",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0537",
+      "flags": []
+    },
+    {
+      "id": "exercise-0538",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0539",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0540",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0541",
+      "flags": []
+    },
+    {
+      "id": "exercise-0542",
+      "flags": []
+    },
+    {
+      "id": "exercise-0543",
+      "flags": []
+    },
+    {
+      "id": "exercise-0544",
+      "flags": []
+    },
+    {
+      "id": "exercise-0545",
+      "flags": []
+    },
+    {
+      "id": "exercise-0546",
+      "flags": []
+    },
+    {
+      "id": "exercise-0547",
+      "flags": []
+    },
+    {
+      "id": "exercise-0548",
+      "flags": []
+    },
+    {
+      "id": "exercise-0549",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0550",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0551",
+      "flags": []
+    },
+    {
+      "id": "exercise-0552",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0553",
+      "flags": []
+    },
+    {
+      "id": "exercise-0554",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0555",
+      "flags": []
+    },
+    {
+      "id": "exercise-0556",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0557",
+      "flags": []
+    },
+    {
+      "id": "exercise-0558",
+      "flags": []
+    },
+    {
+      "id": "exercise-0559",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0560",
+      "flags": []
+    },
+    {
+      "id": "exercise-0561",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0562",
+      "flags": []
+    },
+    {
+      "id": "exercise-0563",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0564",
+      "flags": []
+    },
+    {
+      "id": "exercise-0565",
+      "flags": []
+    },
+    {
+      "id": "exercise-0566",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0567",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0568",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0569",
+      "flags": []
+    },
+    {
+      "id": "exercise-0570",
+      "flags": []
+    },
+    {
+      "id": "exercise-0571",
+      "flags": []
+    },
+    {
+      "id": "exercise-0572",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0573",
+      "flags": []
+    },
+    {
+      "id": "exercise-0574",
+      "flags": []
+    },
+    {
+      "id": "exercise-0575",
+      "flags": []
+    },
+    {
+      "id": "exercise-0576",
+      "flags": []
+    },
+    {
+      "id": "exercise-0577",
+      "flags": []
+    },
+    {
+      "id": "exercise-0578",
+      "flags": []
+    },
+    {
+      "id": "exercise-0579",
+      "flags": []
+    },
+    {
+      "id": "exercise-0580",
+      "flags": []
+    },
+    {
+      "id": "exercise-0581",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0582",
+      "flags": []
+    },
+    {
+      "id": "exercise-0583",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0584",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0585",
+      "flags": []
+    },
+    {
+      "id": "exercise-0586",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0587",
+      "flags": []
+    },
+    {
+      "id": "exercise-0588",
+      "flags": []
+    },
+    {
+      "id": "exercise-0589",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0590",
+      "flags": []
+    },
+    {
+      "id": "exercise-0591",
+      "flags": []
+    },
+    {
+      "id": "exercise-0592",
+      "flags": []
+    },
+    {
+      "id": "exercise-0593",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0594",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0595",
+      "flags": []
+    },
+    {
+      "id": "exercise-0596",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0597",
+      "flags": []
+    },
+    {
+      "id": "exercise-0598",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0599",
+      "flags": []
+    },
+    {
+      "id": "exercise-0600",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0601",
+      "flags": []
+    },
+    {
+      "id": "exercise-0602",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0603",
+      "flags": []
+    },
+    {
+      "id": "exercise-0604",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0605",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0606",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0607",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0608",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0609",
+      "flags": []
+    },
+    {
+      "id": "exercise-0610",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0611",
+      "flags": []
+    },
+    {
+      "id": "exercise-0612",
+      "flags": []
+    },
+    {
+      "id": "exercise-0613",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0614",
+      "flags": []
+    },
+    {
+      "id": "exercise-0615",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0616",
+      "flags": []
+    },
+    {
+      "id": "exercise-0617",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0618",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0619",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0620",
+      "flags": []
+    },
+    {
+      "id": "exercise-0621",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0622",
+      "flags": []
+    },
+    {
+      "id": "exercise-0623",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0624",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0625",
+      "flags": []
+    },
+    {
+      "id": "exercise-0626",
+      "flags": []
+    },
+    {
+      "id": "exercise-0627",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0628",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0629",
+      "flags": []
+    },
+    {
+      "id": "exercise-0630",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0631",
+      "flags": []
+    },
+    {
+      "id": "exercise-0632",
+      "flags": []
+    },
+    {
+      "id": "exercise-0633",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0634",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0635",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0636",
+      "flags": []
+    },
+    {
+      "id": "exercise-0637",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0638",
+      "flags": []
+    },
+    {
+      "id": "exercise-0639",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0640",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0641",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0642",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0643",
+      "flags": []
+    },
+    {
+      "id": "exercise-0644",
+      "flags": []
+    },
+    {
+      "id": "exercise-0645",
+      "flags": []
+    },
+    {
+      "id": "exercise-0646",
+      "flags": []
+    },
+    {
+      "id": "exercise-0647",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0648",
+      "flags": []
+    },
+    {
+      "id": "exercise-0649",
+      "flags": []
+    },
+    {
+      "id": "exercise-0650",
+      "flags": []
+    },
+    {
+      "id": "exercise-0651",
+      "flags": []
+    },
+    {
+      "id": "exercise-0652",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0653",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0654",
+      "flags": []
+    },
+    {
+      "id": "exercise-0655",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0656",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0657",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0658",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0659",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0660",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0661",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0662",
+      "flags": []
+    },
+    {
+      "id": "exercise-0663",
+      "flags": []
+    },
+    {
+      "id": "exercise-0664",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0665",
+      "flags": []
+    },
+    {
+      "id": "exercise-0666",
+      "flags": []
+    },
+    {
+      "id": "exercise-0667",
+      "flags": []
+    },
+    {
+      "id": "exercise-0668",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0669",
+      "flags": []
+    },
+    {
+      "id": "exercise-0670",
+      "flags": []
+    },
+    {
+      "id": "exercise-0671",
+      "flags": []
+    },
+    {
+      "id": "exercise-0672",
+      "flags": []
+    },
+    {
+      "id": "exercise-0673",
+      "flags": []
+    },
+    {
+      "id": "exercise-0674",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0675",
+      "flags": []
+    },
+    {
+      "id": "exercise-0676",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0677",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0678",
+      "flags": []
+    },
+    {
+      "id": "exercise-0679",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0680",
+      "flags": []
+    },
+    {
+      "id": "exercise-0681",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0682",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0683",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0684",
+      "flags": []
+    },
+    {
+      "id": "exercise-0685",
+      "flags": []
+    },
+    {
+      "id": "exercise-0686",
+      "flags": []
+    },
+    {
+      "id": "exercise-0687",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0688",
+      "flags": []
+    },
+    {
+      "id": "exercise-0689",
+      "flags": []
+    },
+    {
+      "id": "exercise-0690",
+      "flags": []
+    },
+    {
+      "id": "exercise-0691",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0692",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0693",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0694",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0695",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0696",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0697",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0698",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0699",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0700",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0701",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0702",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0703",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0704",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0705",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0706",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0707",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0708",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0709",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0710",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0711",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0712",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0713",
+      "flags": []
+    },
+    {
+      "id": "exercise-0714",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0715",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0716",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0717",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0718",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0719",
+      "flags": []
+    },
+    {
+      "id": "exercise-0720",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0721",
+      "flags": []
+    },
+    {
+      "id": "exercise-0722",
+      "flags": []
+    },
+    {
+      "id": "exercise-0723",
+      "flags": []
+    },
+    {
+      "id": "exercise-0724",
+      "flags": []
+    },
+    {
+      "id": "exercise-0725",
+      "flags": []
+    },
+    {
+      "id": "exercise-0726",
+      "flags": []
+    },
+    {
+      "id": "exercise-0727",
+      "flags": []
+    },
+    {
+      "id": "exercise-0728",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0729",
+      "flags": []
+    },
+    {
+      "id": "exercise-0730",
+      "flags": []
+    },
+    {
+      "id": "exercise-0731",
+      "flags": []
+    },
+    {
+      "id": "exercise-0732",
+      "flags": []
+    },
+    {
+      "id": "exercise-0733",
+      "flags": []
+    },
+    {
+      "id": "exercise-0734",
+      "flags": []
+    },
+    {
+      "id": "exercise-0735",
+      "flags": []
+    },
+    {
+      "id": "exercise-0736",
+      "flags": []
+    },
+    {
+      "id": "exercise-0737",
+      "flags": []
+    },
+    {
+      "id": "exercise-0738",
+      "flags": []
+    },
+    {
+      "id": "exercise-0739",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0740",
+      "flags": []
+    },
+    {
+      "id": "exercise-0741",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0742",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0743",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0744",
+      "flags": []
+    },
+    {
+      "id": "exercise-0745",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0746",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0747",
+      "flags": []
+    },
+    {
+      "id": "exercise-0748",
+      "flags": []
+    },
+    {
+      "id": "exercise-0749",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-0750",
+      "flags": []
+    },
+    {
+      "id": "exercise-0751",
+      "flags": []
+    },
+    {
+      "id": "exercise-0752",
+      "flags": []
+    },
+    {
+      "id": "exercise-0753",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0754",
+      "flags": []
+    },
+    {
+      "id": "exercise-0755",
+      "flags": []
+    },
+    {
+      "id": "exercise-0756",
+      "flags": []
+    },
+    {
+      "id": "exercise-0757",
+      "flags": []
+    },
+    {
+      "id": "exercise-0758",
+      "flags": []
+    },
+    {
+      "id": "exercise-0759",
+      "flags": []
+    },
+    {
+      "id": "exercise-0760",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0761",
+      "flags": []
+    },
+    {
+      "id": "exercise-0762",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0763",
+      "flags": []
+    },
+    {
+      "id": "exercise-0764",
+      "flags": []
+    },
+    {
+      "id": "exercise-0765",
+      "flags": []
+    },
+    {
+      "id": "exercise-0766",
+      "flags": []
+    },
+    {
+      "id": "exercise-0767",
+      "flags": []
+    },
+    {
+      "id": "exercise-0768",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0769",
+      "flags": []
+    },
+    {
+      "id": "exercise-0770",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0771",
+      "flags": []
+    },
+    {
+      "id": "exercise-0772",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0773",
+      "flags": []
+    },
+    {
+      "id": "exercise-0774",
+      "flags": []
+    },
+    {
+      "id": "exercise-0775",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0776",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0777",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0778",
+      "flags": []
+    },
+    {
+      "id": "exercise-0779",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0780",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0781",
+      "flags": []
+    },
+    {
+      "id": "exercise-0782",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0783",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0784",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0785",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0786",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0787",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0788",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0789",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0790",
+      "flags": []
+    },
+    {
+      "id": "exercise-0791",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0792",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0793",
+      "flags": []
+    },
+    {
+      "id": "exercise-0794",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0795",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0796",
+      "flags": []
+    },
+    {
+      "id": "exercise-0797",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0798",
+      "flags": []
+    },
+    {
+      "id": "exercise-0799",
+      "flags": []
+    },
+    {
+      "id": "exercise-0800",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0801",
+      "flags": []
+    },
+    {
+      "id": "exercise-0802",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0803",
+      "flags": []
+    },
+    {
+      "id": "exercise-0804",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0805",
+      "flags": []
+    },
+    {
+      "id": "exercise-0806",
+      "flags": []
+    },
+    {
+      "id": "exercise-0807",
+      "flags": []
+    },
+    {
+      "id": "exercise-0808",
+      "flags": []
+    },
+    {
+      "id": "exercise-0809",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0810",
+      "flags": []
+    },
+    {
+      "id": "exercise-0811",
+      "flags": []
+    },
+    {
+      "id": "exercise-0812",
+      "flags": []
+    },
+    {
+      "id": "exercise-0813",
+      "flags": []
+    },
+    {
+      "id": "exercise-0814",
+      "flags": []
+    },
+    {
+      "id": "exercise-0815",
+      "flags": []
+    },
+    {
+      "id": "exercise-0816",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0817",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0818",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0819",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0820",
+      "flags": []
+    },
+    {
+      "id": "exercise-0821",
+      "flags": []
+    },
+    {
+      "id": "exercise-0822",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0823",
+      "flags": []
+    },
+    {
+      "id": "exercise-0824",
+      "flags": []
+    },
+    {
+      "id": "exercise-0825",
+      "flags": []
+    },
+    {
+      "id": "exercise-0826",
+      "flags": []
+    },
+    {
+      "id": "exercise-0827",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0828",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0829",
+      "flags": []
+    },
+    {
+      "id": "exercise-0830",
+      "flags": []
+    },
+    {
+      "id": "exercise-0831",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0832",
+      "flags": []
+    },
+    {
+      "id": "exercise-0833",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0834",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0835",
+      "flags": []
+    },
+    {
+      "id": "exercise-0836",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0837",
+      "flags": []
+    },
+    {
+      "id": "exercise-0838",
+      "flags": []
+    },
+    {
+      "id": "exercise-0839",
+      "flags": []
+    },
+    {
+      "id": "exercise-0840",
+      "flags": []
+    },
+    {
+      "id": "exercise-0841",
+      "flags": []
+    },
+    {
+      "id": "exercise-0842",
+      "flags": []
+    },
+    {
+      "id": "exercise-0843",
+      "flags": []
+    },
+    {
+      "id": "exercise-0844",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0845",
+      "flags": []
+    },
+    {
+      "id": "exercise-0846",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0847",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0848",
+      "flags": []
+    },
+    {
+      "id": "exercise-0849",
+      "flags": []
+    },
+    {
+      "id": "exercise-0850",
+      "flags": []
+    },
+    {
+      "id": "exercise-0851",
+      "flags": []
+    },
+    {
+      "id": "exercise-0852",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0853",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0854",
+      "flags": []
+    },
+    {
+      "id": "exercise-0855",
+      "flags": []
+    },
+    {
+      "id": "exercise-0856",
+      "flags": []
+    },
+    {
+      "id": "exercise-0857",
+      "flags": []
+    },
+    {
+      "id": "exercise-0858",
+      "flags": []
+    },
+    {
+      "id": "exercise-0859",
+      "flags": []
+    },
+    {
+      "id": "exercise-0860",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0861",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0862",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0863",
+      "flags": []
+    },
+    {
+      "id": "exercise-0864",
+      "flags": []
+    },
+    {
+      "id": "exercise-0865",
+      "flags": []
+    },
+    {
+      "id": "exercise-0866",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0867",
+      "flags": []
+    },
+    {
+      "id": "exercise-0868",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0869",
+      "flags": []
+    },
+    {
+      "id": "exercise-0870",
+      "flags": []
+    },
+    {
+      "id": "exercise-0871",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0872",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0873",
+      "flags": []
+    },
+    {
+      "id": "exercise-0874",
+      "flags": []
+    },
+    {
+      "id": "exercise-0875",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0876",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0877",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0878",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0879",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0880",
+      "flags": []
+    },
+    {
+      "id": "exercise-0881",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0882",
+      "flags": []
+    },
+    {
+      "id": "exercise-0883",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0884",
+      "flags": []
+    },
+    {
+      "id": "exercise-0885",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0886",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0887",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0888",
+      "flags": []
+    },
+    {
+      "id": "exercise-0889",
+      "flags": []
+    },
+    {
+      "id": "exercise-0890",
+      "flags": []
+    },
+    {
+      "id": "exercise-0891",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0892",
+      "flags": []
+    },
+    {
+      "id": "exercise-0893",
+      "flags": []
+    },
+    {
+      "id": "exercise-0894",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0895",
+      "flags": []
+    },
+    {
+      "id": "exercise-0896",
+      "flags": []
+    },
+    {
+      "id": "exercise-0897",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0898",
+      "flags": []
+    },
+    {
+      "id": "exercise-0899",
+      "flags": []
+    },
+    {
+      "id": "exercise-0900",
+      "flags": []
+    },
+    {
+      "id": "exercise-0901",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0902",
+      "flags": []
+    },
+    {
+      "id": "exercise-0903",
+      "flags": []
+    },
+    {
+      "id": "exercise-0904",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0905",
+      "flags": []
+    },
+    {
+      "id": "exercise-0906",
+      "flags": []
+    },
+    {
+      "id": "exercise-0907",
+      "flags": []
+    },
+    {
+      "id": "exercise-0908",
+      "flags": []
+    },
+    {
+      "id": "exercise-0909",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0910",
+      "flags": []
+    },
+    {
+      "id": "exercise-0911",
+      "flags": []
+    },
+    {
+      "id": "exercise-0912",
+      "flags": []
+    },
+    {
+      "id": "exercise-0913",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0914",
+      "flags": []
+    },
+    {
+      "id": "exercise-0915",
+      "flags": []
+    },
+    {
+      "id": "exercise-0916",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0917",
+      "flags": []
+    },
+    {
+      "id": "exercise-0918",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0919",
+      "flags": []
+    },
+    {
+      "id": "exercise-0920",
+      "flags": []
+    },
+    {
+      "id": "exercise-0921",
+      "flags": []
+    },
+    {
+      "id": "exercise-0922",
+      "flags": []
+    },
+    {
+      "id": "exercise-0923",
+      "flags": []
+    },
+    {
+      "id": "exercise-0924",
+      "flags": []
+    },
+    {
+      "id": "exercise-0925",
+      "flags": []
+    },
+    {
+      "id": "exercise-0926",
+      "flags": []
+    },
+    {
+      "id": "exercise-0927",
+      "flags": []
+    },
+    {
+      "id": "exercise-0928",
+      "flags": []
+    },
+    {
+      "id": "exercise-0929",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0930",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0931",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0932",
+      "flags": []
+    },
+    {
+      "id": "exercise-0933",
+      "flags": []
+    },
+    {
+      "id": "exercise-0934",
+      "flags": []
+    },
+    {
+      "id": "exercise-0935",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0936",
+      "flags": []
+    },
+    {
+      "id": "exercise-0937",
+      "flags": []
+    },
+    {
+      "id": "exercise-0938",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0939",
+      "flags": []
+    },
+    {
+      "id": "exercise-0940",
+      "flags": []
+    },
+    {
+      "id": "exercise-0941",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0942",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0943",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0944",
+      "flags": []
+    },
+    {
+      "id": "exercise-0945",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0946",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0947",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0948",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0949",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0950",
+      "flags": []
+    },
+    {
+      "id": "exercise-0951",
+      "flags": []
+    },
+    {
+      "id": "exercise-0952",
+      "flags": []
+    },
+    {
+      "id": "exercise-0953",
+      "flags": []
+    },
+    {
+      "id": "exercise-0954",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0955",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0956",
+      "flags": []
+    },
+    {
+      "id": "exercise-0957",
+      "flags": []
+    },
+    {
+      "id": "exercise-0958",
+      "flags": []
+    },
+    {
+      "id": "exercise-0959",
+      "flags": []
+    },
+    {
+      "id": "exercise-0960",
+      "flags": []
+    },
+    {
+      "id": "exercise-0961",
+      "flags": []
+    },
+    {
+      "id": "exercise-0962",
+      "flags": []
+    },
+    {
+      "id": "exercise-0963",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0964",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0965",
+      "flags": []
+    },
+    {
+      "id": "exercise-0966",
+      "flags": []
+    },
+    {
+      "id": "exercise-0967",
+      "flags": []
+    },
+    {
+      "id": "exercise-0968",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0969",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0970",
+      "flags": []
+    },
+    {
+      "id": "exercise-0971",
+      "flags": []
+    },
+    {
+      "id": "exercise-0972",
+      "flags": []
+    },
+    {
+      "id": "exercise-0973",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0974",
+      "flags": []
+    },
+    {
+      "id": "exercise-0975",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0976",
+      "flags": []
+    },
+    {
+      "id": "exercise-0977",
+      "flags": []
+    },
+    {
+      "id": "exercise-0978",
+      "flags": []
+    },
+    {
+      "id": "exercise-0979",
+      "flags": []
+    },
+    {
+      "id": "exercise-0980",
+      "flags": []
+    },
+    {
+      "id": "exercise-0981",
+      "flags": []
+    },
+    {
+      "id": "exercise-0982",
+      "flags": []
+    },
+    {
+      "id": "exercise-0983",
+      "flags": []
+    },
+    {
+      "id": "exercise-0984",
+      "flags": []
+    },
+    {
+      "id": "exercise-0985",
+      "flags": []
+    },
+    {
+      "id": "exercise-0986",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0987",
+      "flags": []
+    },
+    {
+      "id": "exercise-0988",
+      "flags": []
+    },
+    {
+      "id": "exercise-0989",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0990",
+      "flags": []
+    },
+    {
+      "id": "exercise-0991",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0992",
+      "flags": []
+    },
+    {
+      "id": "exercise-0993",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0994",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0995",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0996",
+      "flags": []
+    },
+    {
+      "id": "exercise-0997",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-0998",
+      "flags": []
+    },
+    {
+      "id": "exercise-0999",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1000",
+      "flags": []
+    },
+    {
+      "id": "exercise-1001",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1002",
+      "flags": []
+    },
+    {
+      "id": "exercise-1003",
+      "flags": []
+    },
+    {
+      "id": "exercise-1004",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1005",
+      "flags": []
+    },
+    {
+      "id": "exercise-1006",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1007",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1008",
+      "flags": []
+    },
+    {
+      "id": "exercise-1009",
+      "flags": []
+    },
+    {
+      "id": "exercise-1010",
+      "flags": []
+    },
+    {
+      "id": "exercise-1011",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1012",
+      "flags": []
+    },
+    {
+      "id": "exercise-1013",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1014",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1015",
+      "flags": []
+    },
+    {
+      "id": "exercise-1016",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1017",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1018",
+      "flags": []
+    },
+    {
+      "id": "exercise-1019",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1020",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1021",
+      "flags": []
+    },
+    {
+      "id": "exercise-1022",
+      "flags": []
+    },
+    {
+      "id": "exercise-1023",
+      "flags": []
+    },
+    {
+      "id": "exercise-1024",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1025",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1026",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1027",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1028",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1029",
+      "flags": []
+    },
+    {
+      "id": "exercise-1030",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1031",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1032",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1033",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1034",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1035",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1036",
+      "flags": []
+    },
+    {
+      "id": "exercise-1037",
+      "flags": []
+    },
+    {
+      "id": "exercise-1038",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1039",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1040",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1041",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1042",
+      "flags": []
+    },
+    {
+      "id": "exercise-1043",
+      "flags": []
+    },
+    {
+      "id": "exercise-1044",
+      "flags": []
+    },
+    {
+      "id": "exercise-1045",
+      "flags": []
+    },
+    {
+      "id": "exercise-1046",
+      "flags": []
+    },
+    {
+      "id": "exercise-1047",
+      "flags": []
+    },
+    {
+      "id": "exercise-1048",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1049",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1050",
+      "flags": []
+    },
+    {
+      "id": "exercise-1051",
+      "flags": []
+    },
+    {
+      "id": "exercise-1052",
+      "flags": []
+    },
+    {
+      "id": "exercise-1053",
+      "flags": []
+    },
+    {
+      "id": "exercise-1054",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1055",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1056",
+      "flags": []
+    },
+    {
+      "id": "exercise-1057",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1058",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1059",
+      "flags": []
+    },
+    {
+      "id": "exercise-1060",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1061",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1062",
+      "flags": []
+    },
+    {
+      "id": "exercise-1063",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1064",
+      "flags": []
+    },
+    {
+      "id": "exercise-1065",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1066",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1067",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1068",
+      "flags": []
+    },
+    {
+      "id": "exercise-1069",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1070",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1071",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1072",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1073",
+      "flags": []
+    },
+    {
+      "id": "exercise-1074",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1075",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1076",
+      "flags": []
+    },
+    {
+      "id": "exercise-1077",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1078",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1079",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1080",
+      "flags": []
+    },
+    {
+      "id": "exercise-1081",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1082",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1083",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1084",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1085",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1086",
+      "flags": []
+    },
+    {
+      "id": "exercise-1087",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1088",
+      "flags": []
+    },
+    {
+      "id": "exercise-1089",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1090",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1091",
+      "flags": []
+    },
+    {
+      "id": "exercise-1092",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1093",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1094",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1095",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1096",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1097",
+      "flags": []
+    },
+    {
+      "id": "exercise-1098",
+      "flags": []
+    },
+    {
+      "id": "exercise-1099",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1100",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1101",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1102",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1103",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1104",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1105",
+      "flags": []
+    },
+    {
+      "id": "exercise-1106",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1107",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1108",
+      "flags": []
+    },
+    {
+      "id": "exercise-1109",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1110",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1111",
+      "flags": []
+    },
+    {
+      "id": "exercise-1112",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1113",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1114",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1115",
+      "flags": []
+    },
+    {
+      "id": "exercise-1116",
+      "flags": []
+    },
+    {
+      "id": "exercise-1117",
+      "flags": []
+    },
+    {
+      "id": "exercise-1118",
+      "flags": []
+    },
+    {
+      "id": "exercise-1119",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1120",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1121",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1122",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1123",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1124",
+      "flags": []
+    },
+    {
+      "id": "exercise-1125",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1126",
+      "flags": [
+        "solution_normalization_partial"
+      ]
+    },
+    {
+      "id": "exercise-1127",
+      "flags": [
+        "solution_normalization_failed"
+      ]
+    },
+    {
+      "id": "exercise-1128",
+      "flags": []
+    },
+    {
+      "id": "exercise-1129",
+      "flags": []
+    },
+    {
+      "id": "exercise-1130",
+      "flags": []
+    },
+    {
+      "id": "exercise-1131",
+      "flags": []
+    },
+    {
+      "id": "exercise-1132",
+      "flags": []
+    },
+    {
+      "id": "exercise-1133",
+      "flags": []
+    }
+  ]
+}

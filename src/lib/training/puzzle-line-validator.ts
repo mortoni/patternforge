@@ -69,7 +69,7 @@ export interface ValidatePuzzleMoveResult {
 export function validatePuzzleMove(
   params: ValidatePuzzleMoveParams
 ): ValidatePuzzleMoveResult {
-  const { fen, solutionMoves, currentSolutionIndex, sideToMove, attemptedMoveUci } = params;
+  const { fen, solutionMoves, currentSolutionIndex, attemptedMoveUci } = params;
 
   const expectedSan = getExpectedMoveAtIndex(solutionMoves, currentSolutionIndex);
   if (expectedSan == null) {

@@ -1,0 +1,5961 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-03-22T12:48:51.263Z",
+  "sourcePath": "data/exercises/generated/exercise.verified.json",
+  "stockfishSettings": {
+    "skillLevel": 20,
+    "uciLimitStrength": false,
+    "hashMb": 128,
+    "threads": 8,
+    "depth": 20,
+    "timeoutMsPerPosition": 120000
+  },
+  "stockfishDepth": 20,
+  "summary": {
+    "totalChecked": 594,
+    "matches": 563,
+    "suspicious": 31,
+    "skipped": 0,
+    "stockfishRuns": 31
+  },
+  "exercises": [
+    {
+      "exerciseId": "exercise-0001",
+      "expectedMove": "h8h2",
+      "bestMove": "h8h2",
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0002",
+      "expectedMove": "f3f8",
+      "bestMove": "f3f8",
+      "evaluation": {
+        "type": "mate",
+        "value": 4
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0003",
+      "expectedMove": "e3f4",
+      "bestMove": "e3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 255
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0004",
+      "expectedMove": "d6d2",
+      "bestMove": "d6d2",
+      "evaluation": {
+        "type": "cp",
+        "value": 462
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0005",
+      "expectedMove": "c4f7",
+      "bestMove": "c4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 144
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0006",
+      "expectedMove": "c1c6",
+      "bestMove": "c1c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 387
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0007",
+      "expectedMove": "f4f3",
+      "bestMove": "f4f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 273
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0008",
+      "expectedMove": "e6c4",
+      "bestMove": "e6c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 337
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0009",
+      "expectedMove": "d3d7",
+      "bestMove": "d3d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 414
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0010",
+      "expectedMove": "e7f6",
+      "bestMove": "e7f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 590
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0012",
+      "expectedMove": "g5h6",
+      "bestMove": "g5h6",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0013",
+      "expectedMove": "a4c3",
+      "bestMove": "a4c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 290
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0014",
+      "expectedMove": "d8d3",
+      "bestMove": "d8d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 446
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0015",
+      "expectedMove": "e2f1",
+      "bestMove": "e2f1",
+      "evaluation": {
+        "type": "mate",
+        "value": 6
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0016",
+      "expectedMove": "f3g5",
+      "bestMove": "f3g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 297
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0017",
+      "expectedMove": "b5a7",
+      "bestMove": "b5a7",
+      "evaluation": {
+        "type": "cp",
+        "value": 127
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0018",
+      "expectedMove": "c4f7",
+      "bestMove": "c4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 169
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0020",
+      "expectedMove": "f3g5",
+      "bestMove": "f3g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 365
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0021",
+      "expectedMove": "f3g5",
+      "bestMove": "f3g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 158
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0022",
+      "expectedMove": "f3e5",
+      "bestMove": "f3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 287
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0023",
+      "expectedMove": "d1d5",
+      "bestMove": "d1d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 519
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0024",
+      "expectedMove": "b2a4",
+      "bestMove": "b2a4",
+      "evaluation": {
+        "type": "cp",
+        "value": 126
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0025",
+      "expectedMove": "g5e5",
+      "bestMove": "g5e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 108
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0026",
+      "expectedMove": "f5f6",
+      "bestMove": "f5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 566
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0027",
+      "expectedMove": "h3h5",
+      "bestMove": "h3h5",
+      "evaluation": {
+        "type": "cp",
+        "value": 304
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0028",
+      "expectedMove": "g8g2",
+      "bestMove": "g8g2",
+      "evaluation": {
+        "type": "mate",
+        "value": 5
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0029",
+      "expectedMove": "g4g7",
+      "bestMove": "g4g7",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0030",
+      "expectedMove": "e4f6",
+      "bestMove": "e4f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 484
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0031",
+      "expectedMove": "h7h4",
+      "bestMove": "h7h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 396
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0032",
+      "expectedMove": "a2f2",
+      "bestMove": "a2f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 339
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0034",
+      "expectedMove": "b3d5",
+      "bestMove": "b3d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 430
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0035",
+      "expectedMove": "b7e4",
+      "bestMove": "b7e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 263
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0036",
+      "expectedMove": "a6e6",
+      "bestMove": "a6e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 217
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0037",
+      "expectedMove": "f6g7",
+      "bestMove": "f6g7",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0038",
+      "expectedMove": "d8d3",
+      "bestMove": "d8d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 449
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0039",
+      "expectedMove": "d3h7",
+      "bestMove": "d3h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 369
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0041",
+      "expectedMove": "h6f7",
+      "bestMove": "f5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 445
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0042",
+      "expectedMove": "e4d6",
+      "bestMove": "e4d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 261
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0043",
+      "expectedMove": "c6b6",
+      "bestMove": "c6b6",
+      "evaluation": {
+        "type": "cp",
+        "value": 364
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0044",
+      "expectedMove": "d3a6",
+      "bestMove": "d3a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 273
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0045",
+      "expectedMove": "g5h7",
+      "bestMove": "g5h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 235
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0047",
+      "expectedMove": "e8e4",
+      "bestMove": "e8e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 287
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0048",
+      "expectedMove": "h6f7",
+      "bestMove": "h6f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 571
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0049",
+      "expectedMove": "c5d5",
+      "bestMove": "c5d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 210
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0050",
+      "expectedMove": "h3h7",
+      "bestMove": "h3h7",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0101",
+      "expectedMove": "c4d5",
+      "bestMove": "c4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 446
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0102",
+      "expectedMove": "f2h2",
+      "bestMove": "f2h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 489
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0104",
+      "expectedMove": "h6g7",
+      "bestMove": "h6g7",
+      "evaluation": {
+        "type": "cp",
+        "value": -236
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0105",
+      "expectedMove": "e4e2",
+      "bestMove": "e4e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 484
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0106",
+      "expectedMove": "a3c3",
+      "bestMove": "a3c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 321
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0108",
+      "expectedMove": "e2e1",
+      "bestMove": "e2e1",
+      "evaluation": {
+        "type": "cp",
+        "value": 273
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0109",
+      "expectedMove": "e6f4",
+      "bestMove": "e6f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 151
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0111",
+      "expectedMove": "f5g4",
+      "bestMove": "f5g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 271
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0114",
+      "expectedMove": "f4e6",
+      "bestMove": "g5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 460
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0115",
+      "expectedMove": "d5g8",
+      "bestMove": "d5g8",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0118",
+      "expectedMove": "g4g1",
+      "bestMove": "g4g1",
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0119",
+      "expectedMove": "d2d4",
+      "bestMove": "d2d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 551
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0121",
+      "expectedMove": "d4d3",
+      "bestMove": "d4d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 309
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0122",
+      "expectedMove": "e1f1",
+      "bestMove": "e1f1",
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0123",
+      "expectedMove": "f1a6",
+      "bestMove": "f1a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 324
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0124",
+      "expectedMove": "c5a6",
+      "bestMove": "c5a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 255
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0125",
+      "expectedMove": "f5f8",
+      "bestMove": "f5f8",
+      "evaluation": {
+        "type": "cp",
+        "value": 377
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0126",
+      "expectedMove": "e3f4",
+      "bestMove": "e3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 438
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0127",
+      "expectedMove": "e3h6",
+      "bestMove": "e3h6",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0128",
+      "expectedMove": "d4g1",
+      "bestMove": "d4g1",
+      "evaluation": {
+        "type": "mate",
+        "value": 7
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0129",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 422
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0131",
+      "expectedMove": "h8h1",
+      "bestMove": "h8h1",
+      "evaluation": {
+        "type": "cp",
+        "value": 365
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0133",
+      "expectedMove": "c4a2",
+      "bestMove": "c4a2",
+      "evaluation": {
+        "type": "cp",
+        "value": 295
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0134",
+      "expectedMove": "d1d8",
+      "bestMove": "d1d8",
+      "evaluation": {
+        "type": "cp",
+        "value": 530
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0136",
+      "expectedMove": "d6h2",
+      "bestMove": "d6h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 502
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0137",
+      "expectedMove": "g6e4",
+      "bestMove": "g6e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 189
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0138",
+      "expectedMove": "h6g7",
+      "bestMove": "h6g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 511
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0139",
+      "expectedMove": "d5e3",
+      "bestMove": "d5e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 360
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0140",
+      "expectedMove": "f3d4",
+      "bestMove": "f3d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 258
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0141",
+      "expectedMove": "a3c5",
+      "bestMove": "a3c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 264
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0142",
+      "expectedMove": "e7d6",
+      "bestMove": "e7d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 365
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0143",
+      "expectedMove": "h6f6",
+      "bestMove": "h6f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 455
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0145",
+      "expectedMove": "f4d3",
+      "bestMove": "f4d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 372
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0146",
+      "expectedMove": "h3h2",
+      "bestMove": "h3h2",
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0147",
+      "expectedMove": "c5g5",
+      "bestMove": "c5g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 497
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0148",
+      "expectedMove": "d8b6",
+      "bestMove": "d8b6",
+      "evaluation": {
+        "type": "cp",
+        "value": 506
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0149",
+      "expectedMove": "e3e7",
+      "bestMove": "e3e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 459
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0150",
+      "expectedMove": "e8e2",
+      "bestMove": "e8e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 222
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0151",
+      "expectedMove": "f5g3",
+      "bestMove": "f5g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 1004
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0152",
+      "expectedMove": "d2f3",
+      "bestMove": "d2f3",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0153",
+      "expectedMove": "d3c4",
+      "bestMove": "d3c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 784
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0154",
+      "expectedMove": "b5d5",
+      "bestMove": "b5d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 356
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0165",
+      "expectedMove": "d3b5",
+      "bestMove": "d3g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 397
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0183",
+      "expectedMove": "c5g5",
+      "bestMove": "g2h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 812
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0194",
+      "expectedMove": "e4g6",
+      "bestMove": "e4g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 486
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0196",
+      "expectedMove": "f1f4",
+      "bestMove": "f1f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 445
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0197",
+      "expectedMove": "d1h5",
+      "bestMove": "d1h5",
+      "evaluation": {
+        "type": "cp",
+        "value": 343
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0198",
+      "expectedMove": "e2f3",
+      "bestMove": "e2f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 502
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0199",
+      "expectedMove": "e5e7",
+      "bestMove": "e5e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 520
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0200",
+      "expectedMove": "e8e1",
+      "bestMove": "e8e1",
+      "evaluation": {
+        "type": "cp",
+        "value": 414
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0201",
+      "expectedMove": "h6h7",
+      "bestMove": "h6h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 427
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0202",
+      "expectedMove": "e8e5",
+      "bestMove": "e8e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 494
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0203",
+      "expectedMove": "h4d8",
+      "bestMove": "h4d8",
+      "evaluation": {
+        "type": "cp",
+        "value": 271
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0204",
+      "expectedMove": "a7d7",
+      "bestMove": "a7d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 241
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0205",
+      "expectedMove": "b6b8",
+      "bestMove": "b6b8",
+      "evaluation": {
+        "type": "cp",
+        "value": 655
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0206",
+      "expectedMove": "h5h1",
+      "bestMove": "h5h1",
+      "evaluation": {
+        "type": "cp",
+        "value": 705
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0208",
+      "expectedMove": "c5e6",
+      "bestMove": "c5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 335
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0209",
+      "expectedMove": "h7h5",
+      "bestMove": "h7h5",
+      "evaluation": {
+        "type": "cp",
+        "value": 364
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0210",
+      "expectedMove": "e4f6",
+      "bestMove": "e4f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 488
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0211",
+      "expectedMove": "e6f6",
+      "bestMove": "e6f6",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0212",
+      "expectedMove": "e5f3",
+      "bestMove": "e5f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 236
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0213",
+      "expectedMove": "b4c6",
+      "bestMove": "b4c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 205
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0214",
+      "expectedMove": "b5b6",
+      "bestMove": "b5b6",
+      "evaluation": {
+        "type": "cp",
+        "value": 384
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0215",
+      "expectedMove": "c4c3",
+      "bestMove": "c4c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 402
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0216",
+      "expectedMove": "e4e1",
+      "bestMove": "e4e1",
+      "evaluation": {
+        "type": "cp",
+        "value": 468
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0217",
+      "expectedMove": "e6h3",
+      "bestMove": "e6h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 458
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0218",
+      "expectedMove": "d3f5",
+      "bestMove": "d3f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 401
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0219",
+      "expectedMove": "d4b5",
+      "bestMove": "d4b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 284
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0220",
+      "expectedMove": "d5c7",
+      "bestMove": "d5c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 178
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0221",
+      "expectedMove": "h6g7",
+      "bestMove": "h6g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 335
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0222",
+      "expectedMove": "f4h6",
+      "bestMove": "f4h6",
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0232",
+      "expectedMove": "g5e6",
+      "bestMove": "g5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 86
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0251",
+      "expectedMove": "h4d8",
+      "bestMove": "h4d8",
+      "evaluation": {
+        "type": "cp",
+        "value": 292
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0253",
+      "expectedMove": "c6g2",
+      "bestMove": "c6g2",
+      "evaluation": {
+        "type": "cp",
+        "value": 254
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0265",
+      "expectedMove": "c4c3",
+      "bestMove": "c4c3",
+      "evaluation": {
+        "type": "mate",
+        "value": 5
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0269",
+      "expectedMove": "d3d4",
+      "bestMove": "d3d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 308
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0270",
+      "expectedMove": "e2a6",
+      "bestMove": "e2a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 706
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0271",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 174
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0274",
+      "expectedMove": "c4h4",
+      "bestMove": "c4h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 385
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0275",
+      "expectedMove": "b5c6",
+      "bestMove": "b5e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 50
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0276",
+      "expectedMove": "h5h3",
+      "bestMove": "h5h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 700
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0278",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 288
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0281",
+      "expectedMove": "f5e7",
+      "bestMove": "f5e7",
+      "evaluation": {
+        "type": "mate",
+        "value": 9
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0283",
+      "expectedMove": "f4h3",
+      "bestMove": "f4h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 807
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0285",
+      "expectedMove": "c1c6",
+      "bestMove": "c1c6",
+      "evaluation": {
+        "type": "cp",
+        "value": -8
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0286",
+      "expectedMove": "b2e2",
+      "bestMove": "b2e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 158
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0287",
+      "expectedMove": "c6e5",
+      "bestMove": "c6e5",
+      "evaluation": {
+        "type": "cp",
+        "value": -73
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0288",
+      "expectedMove": "d3h7",
+      "bestMove": "e3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 84
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0290",
+      "expectedMove": "a5a6",
+      "bestMove": "a5a6",
+      "evaluation": {
+        "type": "mate",
+        "value": 13
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0291",
+      "expectedMove": "e5e6",
+      "bestMove": "e5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 493
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0292",
+      "expectedMove": "h7g5",
+      "bestMove": "h7g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 181
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0293",
+      "expectedMove": "h5g3",
+      "bestMove": "h5g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 336
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0295",
+      "expectedMove": "f6d8",
+      "bestMove": "f6d8",
+      "evaluation": {
+        "type": "cp",
+        "value": 965
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0296",
+      "expectedMove": "e1e6",
+      "bestMove": "e1e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 271
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0297",
+      "expectedMove": "c8h3",
+      "bestMove": "c8h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 187
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0298",
+      "expectedMove": "h2h4",
+      "bestMove": "h2h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 515
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0299",
+      "expectedMove": "b7a7",
+      "bestMove": "b7a7",
+      "evaluation": {
+        "type": "mate",
+        "value": 3
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0301",
+      "expectedMove": "f6e4",
+      "bestMove": "f6e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 709
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0302",
+      "expectedMove": "c3b4",
+      "bestMove": "e1d1",
+      "evaluation": {
+        "type": "cp",
+        "value": 562
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0307",
+      "expectedMove": "h4h3",
+      "bestMove": "h4h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 469
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0308",
+      "expectedMove": "e5f7",
+      "bestMove": "e5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 242
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0309",
+      "expectedMove": "e3e7",
+      "bestMove": "d1f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 368
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0310",
+      "expectedMove": "d4d3",
+      "bestMove": "d4d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 282
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0311",
+      "expectedMove": "c1f4",
+      "bestMove": "c1f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 268
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0314",
+      "expectedMove": "g6c2",
+      "bestMove": "g6c2",
+      "evaluation": {
+        "type": "cp",
+        "value": 214
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0315",
+      "expectedMove": "g1g7",
+      "bestMove": "g1g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 203
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0316",
+      "expectedMove": "e5d4",
+      "bestMove": "e5d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 167
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0318",
+      "expectedMove": "c2g6",
+      "bestMove": "c2g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 228
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0321",
+      "expectedMove": "c1c8",
+      "bestMove": "c1c8",
+      "evaluation": {
+        "type": "cp",
+        "value": 273
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0322",
+      "expectedMove": "f8f3",
+      "bestMove": "f8f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 242
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0323",
+      "expectedMove": "e5c4",
+      "bestMove": "e5c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 476
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0324",
+      "expectedMove": "g6g7",
+      "bestMove": "g6g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 644
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0325",
+      "expectedMove": "c7e6",
+      "bestMove": "c7e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 404
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0326",
+      "expectedMove": "e2a2",
+      "bestMove": "e2a2",
+      "evaluation": {
+        "type": "mate",
+        "value": 5
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0327",
+      "expectedMove": "e1e6",
+      "bestMove": "e1e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 489
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0328",
+      "expectedMove": "e6e3",
+      "bestMove": "e6e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 78
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0329",
+      "expectedMove": "d2f2",
+      "bestMove": "d2f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 275
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0331",
+      "expectedMove": "f5h6",
+      "bestMove": "f5h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 540
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0337",
+      "expectedMove": "a6a2",
+      "bestMove": "a6a2",
+      "evaluation": {
+        "type": "cp",
+        "value": 609
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0338",
+      "expectedMove": "g5f7",
+      "bestMove": "g5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 426
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0341",
+      "expectedMove": "b5d4",
+      "bestMove": "b5d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 452
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0344",
+      "expectedMove": "g4h4",
+      "bestMove": "g4h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 496
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0345",
+      "expectedMove": "f5f6",
+      "bestMove": "f5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 209
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0347",
+      "expectedMove": "c7a5",
+      "bestMove": "c7a5",
+      "evaluation": {
+        "type": "cp",
+        "value": 266
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0350",
+      "expectedMove": "c3d5",
+      "bestMove": "c3d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 449
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0352",
+      "expectedMove": "c4d4",
+      "bestMove": "c4d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 327
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0353",
+      "expectedMove": "f3e5",
+      "bestMove": "f3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 189
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0354",
+      "expectedMove": "g4f2",
+      "bestMove": "g4f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 635
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0355",
+      "expectedMove": "g5h7",
+      "bestMove": "g5h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 406
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0356",
+      "expectedMove": "d3g6",
+      "bestMove": "d3g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 410
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0358",
+      "expectedMove": "g4g6",
+      "bestMove": "g4g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 400
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0360",
+      "expectedMove": "f1f7",
+      "bestMove": "f1f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 289
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0363",
+      "expectedMove": "f2d4",
+      "bestMove": "f2d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 446
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0364",
+      "expectedMove": "c4d6",
+      "bestMove": "c4d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 317
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0365",
+      "expectedMove": "d2f2",
+      "bestMove": "d2f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 250
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0366",
+      "expectedMove": "c8c2",
+      "bestMove": "c8c2",
+      "evaluation": {
+        "type": "cp",
+        "value": 325
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0367",
+      "expectedMove": "g7g8",
+      "bestMove": "g7g8",
+      "evaluation": {
+        "type": "cp",
+        "value": 253
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0368",
+      "expectedMove": "g8g2",
+      "bestMove": "g8g2",
+      "evaluation": {
+        "type": "cp",
+        "value": 561
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0370",
+      "expectedMove": "e5f7",
+      "bestMove": "e5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 514
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0372",
+      "expectedMove": "e5f7",
+      "bestMove": "e5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 211
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0373",
+      "expectedMove": "a5c4",
+      "bestMove": "a5c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 223
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0374",
+      "expectedMove": "c6f6",
+      "bestMove": "c6f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 309
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0375",
+      "expectedMove": "b6d4",
+      "bestMove": "b6d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 83
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0377",
+      "expectedMove": "d4c6",
+      "bestMove": "d4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": -12
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0379",
+      "expectedMove": "f5g3",
+      "bestMove": "f5g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 354
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0380",
+      "expectedMove": "e1e6",
+      "bestMove": "e1e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 442
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0381",
+      "expectedMove": "f2f3",
+      "bestMove": "f2f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 188
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0383",
+      "expectedMove": "c1g5",
+      "bestMove": "c1g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 380
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0384",
+      "expectedMove": "a1a8",
+      "bestMove": "a1a8",
+      "evaluation": {
+        "type": "cp",
+        "value": 394
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0385",
+      "expectedMove": "d3h7",
+      "bestMove": "d3h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 374
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0387",
+      "expectedMove": "h5h2",
+      "bestMove": "h5h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 125
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0389",
+      "expectedMove": "f6h6",
+      "bestMove": "f6h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 346
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0396",
+      "expectedMove": "d7c5",
+      "bestMove": "d7c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 309
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0398",
+      "expectedMove": "e3f5",
+      "bestMove": "e3f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 191
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0399",
+      "expectedMove": "c6d7",
+      "bestMove": "c6d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 562
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0400",
+      "expectedMove": "b5c6",
+      "bestMove": "b5c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 411
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0401",
+      "expectedMove": "e1e6",
+      "bestMove": "e1e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 280
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0404",
+      "expectedMove": "e4e2",
+      "bestMove": "e4e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 685
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0405",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 334
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0407",
+      "expectedMove": "c8c3",
+      "bestMove": "c8c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 103
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0408",
+      "expectedMove": "d4d8",
+      "bestMove": "d4d8",
+      "evaluation": {
+        "type": "cp",
+        "value": 302
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0409",
+      "expectedMove": "d3c5",
+      "bestMove": "d3c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 306
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0410",
+      "expectedMove": "e3c5",
+      "bestMove": "e3c5",
+      "evaluation": {
+        "type": "cp",
+        "value": -12
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0411",
+      "expectedMove": "d3e4",
+      "bestMove": "d3e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 378
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0413",
+      "expectedMove": "f5d4",
+      "bestMove": "f5d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 291
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0415",
+      "expectedMove": "b4d6",
+      "bestMove": "b4d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 356
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0416",
+      "expectedMove": "g8g3",
+      "bestMove": "g8g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 251
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0418",
+      "expectedMove": "g7f5",
+      "bestMove": "g7f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 249
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0419",
+      "expectedMove": "h4g6",
+      "bestMove": "h4g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 131
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0420",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 329
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0425",
+      "expectedMove": "e5e6",
+      "bestMove": "e5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 341
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0428",
+      "expectedMove": "a5c4",
+      "bestMove": "a5c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 342
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0429",
+      "expectedMove": "h3f5",
+      "bestMove": "h3f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 434
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0430",
+      "expectedMove": "g4h2",
+      "bestMove": "g4h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 452
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0431",
+      "expectedMove": "d5d6",
+      "bestMove": "d5d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 386
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0432",
+      "expectedMove": "a8b8",
+      "bestMove": "a8b8",
+      "evaluation": {
+        "type": "cp",
+        "value": 497
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0433",
+      "expectedMove": "b5f5",
+      "bestMove": "b5f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 393
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0434",
+      "expectedMove": "f8f3",
+      "bestMove": "f8f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 251
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0435",
+      "expectedMove": "b2b4",
+      "bestMove": "b2b4",
+      "evaluation": {
+        "type": "cp",
+        "value": 570
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0436",
+      "expectedMove": "b1b7",
+      "bestMove": "b1b7",
+      "evaluation": {
+        "type": "cp",
+        "value": 156
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0439",
+      "expectedMove": "f5f4",
+      "bestMove": "f5f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 381
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0440",
+      "expectedMove": "c6d4",
+      "bestMove": "c6d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 665
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0441",
+      "expectedMove": "c3e4",
+      "bestMove": "c3e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 219
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0442",
+      "expectedMove": "b3f7",
+      "bestMove": "h6g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 2518
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0444",
+      "expectedMove": "d2d5",
+      "bestMove": "d2d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 503
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0445",
+      "expectedMove": "b8b2",
+      "bestMove": "b8b2",
+      "evaluation": {
+        "type": "cp",
+        "value": 237
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0446",
+      "expectedMove": "d5f3",
+      "bestMove": "d5f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 304
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0447",
+      "expectedMove": "h3g2",
+      "bestMove": "h3g2",
+      "evaluation": {
+        "type": "mate",
+        "value": 4
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0448",
+      "expectedMove": "d5e7",
+      "bestMove": "d5e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 462
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0449",
+      "expectedMove": "h1d5",
+      "bestMove": "h1d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 44
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0450",
+      "expectedMove": "f5f4",
+      "bestMove": "f5f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 114
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0451",
+      "expectedMove": "f1f6",
+      "bestMove": "f1f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 385
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0452",
+      "expectedMove": "h7f5",
+      "bestMove": "h7f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 187
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0454",
+      "expectedMove": "f4f2",
+      "bestMove": "f4f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 256
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0456",
+      "expectedMove": "g7d4",
+      "bestMove": "g7d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 335
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0457",
+      "expectedMove": "g5f7",
+      "bestMove": "g5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 216
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0459",
+      "expectedMove": "f4f7",
+      "bestMove": "f4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 92
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0461",
+      "expectedMove": "d3e3",
+      "bestMove": "d3e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 355
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0462",
+      "expectedMove": "e1e6",
+      "bestMove": "e1e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 474
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0463",
+      "expectedMove": "d4f5",
+      "bestMove": "d4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 288
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0464",
+      "expectedMove": "c3e2",
+      "bestMove": "c3e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 173
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0466",
+      "expectedMove": "f8a3",
+      "bestMove": "f8a3",
+      "evaluation": {
+        "type": "cp",
+        "value": 199
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0468",
+      "expectedMove": "h1h7",
+      "bestMove": "c4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 212
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0469",
+      "expectedMove": "c2a2",
+      "bestMove": "c2a2",
+      "evaluation": {
+        "type": "cp",
+        "value": 318
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0470",
+      "expectedMove": "c1c5",
+      "bestMove": "c1c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 241
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0473",
+      "expectedMove": "f4f7",
+      "bestMove": "f4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 618
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0475",
+      "expectedMove": "d2c4",
+      "bestMove": "d2c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 370
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0478",
+      "expectedMove": "f5g3",
+      "bestMove": "f5g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 39
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0479",
+      "expectedMove": "d2b2",
+      "bestMove": "d2b2",
+      "evaluation": {
+        "type": "cp",
+        "value": 349
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0480",
+      "expectedMove": "f5g6",
+      "bestMove": "f5g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 612
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0486",
+      "expectedMove": "e1e6",
+      "bestMove": "e1e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 324
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0488",
+      "expectedMove": "c5e4",
+      "bestMove": "c5e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 246
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0489",
+      "expectedMove": "f8f4",
+      "bestMove": "f8f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 275
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0490",
+      "expectedMove": "f6d5",
+      "bestMove": "f6d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 139
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0492",
+      "expectedMove": "g3f5",
+      "bestMove": "g3f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 377
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0494",
+      "expectedMove": "e3e4",
+      "bestMove": "e3e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 203
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0495",
+      "expectedMove": "h4g6",
+      "bestMove": "h4g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 516
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0497",
+      "expectedMove": "f5e6",
+      "bestMove": "f5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 405
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0499",
+      "expectedMove": "g6g2",
+      "bestMove": "g6g2",
+      "evaluation": {
+        "type": "cp",
+        "value": 626
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0502",
+      "expectedMove": "c6d4",
+      "bestMove": "c6d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 199
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0503",
+      "expectedMove": "h8h2",
+      "bestMove": "h8h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 709
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0504",
+      "expectedMove": "d6g3",
+      "bestMove": "d6g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 513
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0506",
+      "expectedMove": "d7e5",
+      "bestMove": "d7e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 117
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0511",
+      "expectedMove": "b6a6",
+      "bestMove": "b6a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 505
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0512",
+      "expectedMove": "f5d4",
+      "bestMove": "f5d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 274
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0514",
+      "expectedMove": "c7f7",
+      "bestMove": "c7f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 324
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0515",
+      "expectedMove": "g6f4",
+      "bestMove": "g6f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 188
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0516",
+      "expectedMove": "a1a6",
+      "bestMove": "a1a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 201
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0517",
+      "expectedMove": "c7c4",
+      "bestMove": "c7c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 294
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0519",
+      "expectedMove": "c5c6",
+      "bestMove": "c5c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 341
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0520",
+      "expectedMove": "b2c1",
+      "bestMove": "b2c1",
+      "evaluation": {
+        "type": "cp",
+        "value": 146
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0522",
+      "expectedMove": "d4f5",
+      "bestMove": "d4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 209
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0524",
+      "expectedMove": "g4e3",
+      "bestMove": "g4e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 312
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0528",
+      "expectedMove": "a3b5",
+      "bestMove": "a3b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 170
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0530",
+      "expectedMove": "h5g3",
+      "bestMove": "h5g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 20
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0531",
+      "expectedMove": "g2h3",
+      "bestMove": "g2h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 276
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0532",
+      "expectedMove": "c5c6",
+      "bestMove": "c5c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 216
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0533",
+      "expectedMove": "c1h1",
+      "bestMove": "c1h1",
+      "evaluation": {
+        "type": "cp",
+        "value": 456
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0534",
+      "expectedMove": "g5h7",
+      "bestMove": "g5h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 193
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0537",
+      "expectedMove": "b7b2",
+      "bestMove": "b7b2",
+      "evaluation": {
+        "type": "cp",
+        "value": 507
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0541",
+      "expectedMove": "e6e3",
+      "bestMove": "e6e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 214
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0542",
+      "expectedMove": "h6f8",
+      "bestMove": "h6f8",
+      "evaluation": {
+        "type": "cp",
+        "value": 299
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0543",
+      "expectedMove": "g5f7",
+      "bestMove": "g5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 366
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0544",
+      "expectedMove": "e2g3",
+      "bestMove": "e2g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 602
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0545",
+      "expectedMove": "f4h3",
+      "bestMove": "f4h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 289
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0546",
+      "expectedMove": "h7h8",
+      "bestMove": "h7h8",
+      "evaluation": {
+        "type": "cp",
+        "value": 499
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0547",
+      "expectedMove": "d4e6",
+      "bestMove": "d4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 182
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0548",
+      "expectedMove": "c3b5",
+      "bestMove": "c3b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 149
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0551",
+      "expectedMove": "e5g7",
+      "bestMove": "e5g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 119
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0553",
+      "expectedMove": "g6f7",
+      "bestMove": "g6f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 356
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0555",
+      "expectedMove": "f2f6",
+      "bestMove": "f2f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 139
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0557",
+      "expectedMove": "a8f8",
+      "bestMove": "a8f8",
+      "evaluation": {
+        "type": "cp",
+        "value": 422
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0558",
+      "expectedMove": "c8h3",
+      "bestMove": "c8h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 194
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0560",
+      "expectedMove": "e1e7",
+      "bestMove": "e1e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 452
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0562",
+      "expectedMove": "f3f6",
+      "bestMove": "f3f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 431
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0564",
+      "expectedMove": "c1c8",
+      "bestMove": "c1c8",
+      "evaluation": {
+        "type": "cp",
+        "value": 368
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0565",
+      "expectedMove": "f3e5",
+      "bestMove": "f3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 214
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0569",
+      "expectedMove": "c3b5",
+      "bestMove": "c3b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 396
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0570",
+      "expectedMove": "c7c6",
+      "bestMove": "c7c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 170
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0571",
+      "expectedMove": "h3g2",
+      "bestMove": "h3g2",
+      "evaluation": {
+        "type": "cp",
+        "value": 495
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0573",
+      "expectedMove": "g4f2",
+      "bestMove": "g4f2",
+      "evaluation": {
+        "type": "cp",
+        "value": -20
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0574",
+      "expectedMove": "d4e2",
+      "bestMove": "d4e2",
+      "evaluation": {
+        "type": "cp",
+        "value": 454
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0575",
+      "expectedMove": "d2e4",
+      "bestMove": "d2e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 259
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0576",
+      "expectedMove": "e5f7",
+      "bestMove": "e5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 258
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0577",
+      "expectedMove": "b1b7",
+      "bestMove": "b1b7",
+      "evaluation": {
+        "type": "cp",
+        "value": 442
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0578",
+      "expectedMove": "g7g6",
+      "bestMove": "g7g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 242
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0579",
+      "expectedMove": "d5f7",
+      "bestMove": "d5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 455
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0580",
+      "expectedMove": "e3e6",
+      "bestMove": "e3e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 337
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0582",
+      "expectedMove": "b3f7",
+      "bestMove": "b3f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 77
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0585",
+      "expectedMove": "f5d7",
+      "bestMove": "f5d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 341
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0587",
+      "expectedMove": "b2e5",
+      "bestMove": "b2e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 275
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0588",
+      "expectedMove": "b3f3",
+      "bestMove": "b3f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 318
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0590",
+      "expectedMove": "e5g4",
+      "bestMove": "e5g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 265
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0591",
+      "expectedMove": "e4e5",
+      "bestMove": "e4e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 428
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0592",
+      "expectedMove": "c2a4",
+      "bestMove": "c2a4",
+      "evaluation": {
+        "type": "cp",
+        "value": 276
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0595",
+      "expectedMove": "b5b6",
+      "bestMove": "b5b6",
+      "evaluation": {
+        "type": "cp",
+        "value": 332
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0597",
+      "expectedMove": "c2h7",
+      "bestMove": "c2h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 110
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0599",
+      "expectedMove": "f6g4",
+      "bestMove": "f6g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 262
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0601",
+      "expectedMove": "e2e8",
+      "bestMove": "e2e8",
+      "evaluation": {
+        "type": "cp",
+        "value": 265
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0603",
+      "expectedMove": "f4e6",
+      "bestMove": "f4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 289
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0609",
+      "expectedMove": "g6h4",
+      "bestMove": "g6h4",
+      "evaluation": {
+        "type": "cp",
+        "value": -18
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0611",
+      "expectedMove": "f5h6",
+      "bestMove": "f5h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 425
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0612",
+      "expectedMove": "f3g3",
+      "bestMove": "f3g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 546
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0614",
+      "expectedMove": "f4c7",
+      "bestMove": "f4c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 713
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0616",
+      "expectedMove": "h4g6",
+      "bestMove": "h4g6",
+      "evaluation": {
+        "type": "mate",
+        "value": 4
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0620",
+      "expectedMove": "c4c5",
+      "bestMove": "c4c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 398
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0622",
+      "expectedMove": "f1f5",
+      "bestMove": "f1f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 625
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0625",
+      "expectedMove": "b4d5",
+      "bestMove": "b4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 276
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0626",
+      "expectedMove": "d6e5",
+      "bestMove": "d6e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 406
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0629",
+      "expectedMove": "h7g8",
+      "bestMove": "h7g8",
+      "evaluation": {
+        "type": "cp",
+        "value": 293
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0631",
+      "expectedMove": "a8b8",
+      "bestMove": "f6e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 404
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0632",
+      "expectedMove": "b5e5",
+      "bestMove": "b5e5",
+      "evaluation": {
+        "type": "mate",
+        "value": 9
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0636",
+      "expectedMove": "b7g7",
+      "bestMove": "h7g8",
+      "evaluation": {
+        "type": "cp",
+        "value": 461
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0638",
+      "expectedMove": "b3f7",
+      "bestMove": "b3f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 153
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0643",
+      "expectedMove": "e4g3",
+      "bestMove": "e4g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 307
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0644",
+      "expectedMove": "e7f6",
+      "bestMove": "e7f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 288
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0645",
+      "expectedMove": "d7h3",
+      "bestMove": "d7h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 230
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0646",
+      "expectedMove": "c2a4",
+      "bestMove": "c2a4",
+      "evaluation": {
+        "type": "cp",
+        "value": 346
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0648",
+      "expectedMove": "f3e5",
+      "bestMove": "f3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 220
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0649",
+      "expectedMove": "g2f1",
+      "bestMove": "g2f1",
+      "evaluation": {
+        "type": "cp",
+        "value": 306
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0650",
+      "expectedMove": "c3d5",
+      "bestMove": "c3d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 231
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0651",
+      "expectedMove": "g4e6",
+      "bestMove": "g4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 364
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0654",
+      "expectedMove": "f5g7",
+      "bestMove": "f5g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 302
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0662",
+      "expectedMove": "e2d3",
+      "bestMove": "e2d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 277
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0663",
+      "expectedMove": "f2f4",
+      "bestMove": "f2f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 223
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0665",
+      "expectedMove": "e4d6",
+      "bestMove": "e4d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 232
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0666",
+      "expectedMove": "f6g6",
+      "bestMove": "f6g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 184
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0667",
+      "expectedMove": "f6g4",
+      "bestMove": "f6g4",
+      "evaluation": {
+        "type": "mate",
+        "value": 4
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0669",
+      "expectedMove": "e4f6",
+      "bestMove": "e4f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 398
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0670",
+      "expectedMove": "f3f4",
+      "bestMove": "d2e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 390
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0671",
+      "expectedMove": "c3b5",
+      "bestMove": "c3b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 277
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0672",
+      "expectedMove": "c4d5",
+      "bestMove": "c4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 535
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0673",
+      "expectedMove": "e5f3",
+      "bestMove": "e5f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 350
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0675",
+      "expectedMove": "b3c4",
+      "bestMove": "b3c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 453
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0678",
+      "expectedMove": "f1f4",
+      "bestMove": "f1f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 169
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0680",
+      "expectedMove": "c3d5",
+      "bestMove": "c3d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 318
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0684",
+      "expectedMove": "e5g6",
+      "bestMove": "e5g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 91
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0685",
+      "expectedMove": "e7c7",
+      "bestMove": "e7c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 202
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0686",
+      "expectedMove": "d8d3",
+      "bestMove": "d8d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 130
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0688",
+      "expectedMove": "b2b4",
+      "bestMove": "b2b4",
+      "evaluation": {
+        "type": "cp",
+        "value": 176
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0689",
+      "expectedMove": "e4g5",
+      "bestMove": "e4g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 288
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0690",
+      "expectedMove": "e2f3",
+      "bestMove": "e2f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 7
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0713",
+      "expectedMove": "e5f3",
+      "bestMove": "g2g7",
+      "evaluation": {
+        "type": "mate",
+        "value": 4
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0719",
+      "expectedMove": "d6d7",
+      "bestMove": "d6d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 313
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0721",
+      "expectedMove": "f3f4",
+      "bestMove": "f3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 208
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0722",
+      "expectedMove": "c3d5",
+      "bestMove": "e5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 495
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0723",
+      "expectedMove": "f3f7",
+      "bestMove": "f3f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 304
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0724",
+      "expectedMove": "c8c3",
+      "bestMove": "c8c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 0
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0725",
+      "expectedMove": "e5c7",
+      "bestMove": "e5c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 493
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0726",
+      "expectedMove": "b5c3",
+      "bestMove": "b5c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 270
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0727",
+      "expectedMove": "f1f7",
+      "bestMove": "f1f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 58
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0729",
+      "expectedMove": "a4b3",
+      "bestMove": "a4b3",
+      "evaluation": {
+        "type": "cp",
+        "value": 249
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0730",
+      "expectedMove": "a4a2",
+      "bestMove": "a4a2",
+      "evaluation": {
+        "type": "cp",
+        "value": 165
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0731",
+      "expectedMove": "c1g5",
+      "bestMove": "c1g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 343
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0732",
+      "expectedMove": "c1h6",
+      "bestMove": "c1h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 278
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0733",
+      "expectedMove": "e5e6",
+      "bestMove": "e5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 273
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0734",
+      "expectedMove": "f1f6",
+      "bestMove": "f1f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 390
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0735",
+      "expectedMove": "b6c5",
+      "bestMove": "b6c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 581
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0736",
+      "expectedMove": "a5c5",
+      "bestMove": "a5c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 211
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0737",
+      "expectedMove": "f3f4",
+      "bestMove": "f3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 401
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0738",
+      "expectedMove": "c5a6",
+      "bestMove": "c5a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 334
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0740",
+      "expectedMove": "c1g5",
+      "bestMove": "c1g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 296
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0744",
+      "expectedMove": "e4e5",
+      "bestMove": "e4e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 158
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0747",
+      "expectedMove": "h4f6",
+      "bestMove": "h4f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 284
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0748",
+      "expectedMove": "f5h6",
+      "bestMove": "f5h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 102
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0750",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 296
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0751",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 303
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0752",
+      "expectedMove": "c6a5",
+      "bestMove": "c6a5",
+      "evaluation": {
+        "type": "cp",
+        "value": 180
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0754",
+      "expectedMove": "b7f7",
+      "bestMove": "b7f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 437
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0755",
+      "expectedMove": "f3d5",
+      "bestMove": "f3d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 211
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0756",
+      "expectedMove": "f8f4",
+      "bestMove": "g7g5",
+      "evaluation": {
+        "type": "cp",
+        "value": -72
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0757",
+      "expectedMove": "h3h2",
+      "bestMove": "h3h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 296
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0758",
+      "expectedMove": "g4d7",
+      "bestMove": "g4d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 499
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0759",
+      "expectedMove": "g3g6",
+      "bestMove": "g3g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 377
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0761",
+      "expectedMove": "e5f7",
+      "bestMove": "e5f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 216
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0763",
+      "expectedMove": "d7b5",
+      "bestMove": "d7b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 308
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0764",
+      "expectedMove": "f7f5",
+      "bestMove": "f7f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 160
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0765",
+      "expectedMove": "e2e1",
+      "bestMove": "e2e1",
+      "evaluation": {
+        "type": "cp",
+        "value": 366
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0766",
+      "expectedMove": "h4h5",
+      "bestMove": "h4h5",
+      "evaluation": {
+        "type": "cp",
+        "value": 294
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0767",
+      "expectedMove": "h1h8",
+      "bestMove": "h1h8",
+      "evaluation": {
+        "type": "cp",
+        "value": 632
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0769",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 168
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0771",
+      "expectedMove": "d2e4",
+      "bestMove": "d2e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 310
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0773",
+      "expectedMove": "b4d3",
+      "bestMove": "b4d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 254
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0774",
+      "expectedMove": "d2c4",
+      "bestMove": "d2c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 321
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0778",
+      "expectedMove": "e3c5",
+      "bestMove": "e3c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 379
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0781",
+      "expectedMove": "d4f5",
+      "bestMove": "g1g7",
+      "evaluation": {
+        "type": "cp",
+        "value": 540
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0790",
+      "expectedMove": "g7d4",
+      "bestMove": "g7d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 414
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0793",
+      "expectedMove": "e1e8",
+      "bestMove": "e1e8",
+      "evaluation": {
+        "type": "cp",
+        "value": 289
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0796",
+      "expectedMove": "b6d8",
+      "bestMove": "b6d8",
+      "evaluation": {
+        "type": "cp",
+        "value": 281
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0798",
+      "expectedMove": "c3c4",
+      "bestMove": "c3c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 362
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0799",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 22
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0801",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 82
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0803",
+      "expectedMove": "c4d5",
+      "bestMove": "c4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 477
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0805",
+      "expectedMove": "d6e6",
+      "bestMove": "d6e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 640
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0806",
+      "expectedMove": "d1d5",
+      "bestMove": "d1d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 310
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0807",
+      "expectedMove": "c8f5",
+      "bestMove": "c8f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 426
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0808",
+      "expectedMove": "h5f6",
+      "bestMove": "h5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 201
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0810",
+      "expectedMove": "h5f6",
+      "bestMove": "h5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 463
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0811",
+      "expectedMove": "g3g4",
+      "bestMove": "g3g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 157
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0812",
+      "expectedMove": "f4e6",
+      "bestMove": "f4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 322
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0813",
+      "expectedMove": "b2b4",
+      "bestMove": "b2b4",
+      "evaluation": {
+        "type": "cp",
+        "value": 327
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0814",
+      "expectedMove": "f5f3",
+      "bestMove": "f5f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 245
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0815",
+      "expectedMove": "f5e7",
+      "bestMove": "f5e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 333
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0820",
+      "expectedMove": "c7b7",
+      "bestMove": "e6d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 41
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0821",
+      "expectedMove": "g3h5",
+      "bestMove": "g3h5",
+      "evaluation": {
+        "type": "cp",
+        "value": 843
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0823",
+      "expectedMove": "c8h3",
+      "bestMove": "c8h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 304
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0824",
+      "expectedMove": "e3f5",
+      "bestMove": "e3f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 422
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0825",
+      "expectedMove": "f2e4",
+      "bestMove": "f2e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 258
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0826",
+      "expectedMove": "c5c6",
+      "bestMove": "c5c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 351
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0829",
+      "expectedMove": "b5d6",
+      "bestMove": "b5d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 263
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0830",
+      "expectedMove": "d1d2",
+      "bestMove": "d1d2",
+      "evaluation": {
+        "type": "cp",
+        "value": 543
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0832",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 257
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0835",
+      "expectedMove": "f6d5",
+      "bestMove": "f6d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 283
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0837",
+      "expectedMove": "e3e4",
+      "bestMove": "e3e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 292
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0838",
+      "expectedMove": "f3f2",
+      "bestMove": "f3f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 63
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0839",
+      "expectedMove": "d4c6",
+      "bestMove": "d4c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 173
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0840",
+      "expectedMove": "g7c3",
+      "bestMove": "g7c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 369
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0841",
+      "expectedMove": "d2h6",
+      "bestMove": "d2h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 656
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0842",
+      "expectedMove": "e7f6",
+      "bestMove": "e7f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 237
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0843",
+      "expectedMove": "a3b4",
+      "bestMove": "a3b4",
+      "evaluation": {
+        "type": "cp",
+        "value": 120
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0845",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 344
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0848",
+      "expectedMove": "d6c6",
+      "bestMove": "d6c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 461
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0849",
+      "expectedMove": "c4e3",
+      "bestMove": "c4e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 89
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0850",
+      "expectedMove": "g4f2",
+      "bestMove": "g4f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 344
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0851",
+      "expectedMove": "f3d4",
+      "bestMove": "b5d7",
+      "evaluation": {
+        "type": "cp",
+        "value": -6
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0854",
+      "expectedMove": "c6a6",
+      "bestMove": "c6a6",
+      "evaluation": {
+        "type": "cp",
+        "value": 333
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0855",
+      "expectedMove": "c3d5",
+      "bestMove": "c3d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 493
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0856",
+      "expectedMove": "d2h6",
+      "bestMove": "d2h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 215
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0857",
+      "expectedMove": "f1g1",
+      "bestMove": "f1g1",
+      "evaluation": {
+        "type": "cp",
+        "value": 154
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0858",
+      "expectedMove": "d4e6",
+      "bestMove": "d4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 306
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0859",
+      "expectedMove": "f4h3",
+      "bestMove": "f4h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 179
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0863",
+      "expectedMove": "b4d3",
+      "bestMove": "b4d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 258
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0864",
+      "expectedMove": "c8c2",
+      "bestMove": "c8c2",
+      "evaluation": {
+        "type": "cp",
+        "value": 287
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0865",
+      "expectedMove": "e4f6",
+      "bestMove": "e1d1",
+      "evaluation": {
+        "type": "cp",
+        "value": 123
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0867",
+      "expectedMove": "e4e5",
+      "bestMove": "e4e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 241
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0869",
+      "expectedMove": "g5g6",
+      "bestMove": "g5g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 157
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0870",
+      "expectedMove": "f3f6",
+      "bestMove": "f3f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 412
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0873",
+      "expectedMove": "c5d4",
+      "bestMove": "c5d4",
+      "evaluation": {
+        "type": "cp",
+        "value": 208
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0874",
+      "expectedMove": "d1d5",
+      "bestMove": "d1e1",
+      "evaluation": {
+        "type": "cp",
+        "value": 177
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0880",
+      "expectedMove": "e4h7",
+      "bestMove": "e4h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 79
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0882",
+      "expectedMove": "e4e5",
+      "bestMove": "e4e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 315
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0884",
+      "expectedMove": "e5b2",
+      "bestMove": "e4h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 6
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0888",
+      "expectedMove": "c2e3",
+      "bestMove": "c2e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 213
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0889",
+      "expectedMove": "e5d5",
+      "bestMove": "e5d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 388
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0890",
+      "expectedMove": "d6d7",
+      "bestMove": "d6d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 476
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0892",
+      "expectedMove": "d7c7",
+      "bestMove": "d7c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 351
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0893",
+      "expectedMove": "f3e5",
+      "bestMove": "f3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 634
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0895",
+      "expectedMove": "e5b5",
+      "bestMove": "e5b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 811
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0896",
+      "expectedMove": "e3f4",
+      "bestMove": "e3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 461
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0898",
+      "expectedMove": "c5d5",
+      "bestMove": "c5d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 238
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0899",
+      "expectedMove": "h3f2",
+      "bestMove": "h3f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 265
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0900",
+      "expectedMove": "g4e3",
+      "bestMove": "g4e3",
+      "evaluation": {
+        "type": "cp",
+        "value": 499
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0902",
+      "expectedMove": "e4d5",
+      "bestMove": "e4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 429
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0903",
+      "expectedMove": "a7e7",
+      "bestMove": "a7e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 229
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0905",
+      "expectedMove": "e5e7",
+      "bestMove": "b3b4",
+      "evaluation": {
+        "type": "cp",
+        "value": 351
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-0906",
+      "expectedMove": "d6b5",
+      "bestMove": "d6b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 284
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0907",
+      "expectedMove": "g3f5",
+      "bestMove": "g3f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 345
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0908",
+      "expectedMove": "g5f6",
+      "bestMove": "g5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 251
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0910",
+      "expectedMove": "e7g6",
+      "bestMove": "e7g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 425
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0911",
+      "expectedMove": "c7e6",
+      "bestMove": "c7e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 384
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0912",
+      "expectedMove": "c1c5",
+      "bestMove": "c1c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 361
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0914",
+      "expectedMove": "h5h4",
+      "bestMove": "h5h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 331
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0915",
+      "expectedMove": "e8g6",
+      "bestMove": "e8g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 428
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0917",
+      "expectedMove": "a4c5",
+      "bestMove": "a4c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 209
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0919",
+      "expectedMove": "f6f7",
+      "bestMove": "f6f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 322
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0920",
+      "expectedMove": "f3e5",
+      "bestMove": "f3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 288
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0921",
+      "expectedMove": "f4f5",
+      "bestMove": "f4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 497
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0922",
+      "expectedMove": "d4e6",
+      "bestMove": "d4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 351
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0923",
+      "expectedMove": "h5f4",
+      "bestMove": "h5f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 343
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0924",
+      "expectedMove": "b5d6",
+      "bestMove": "b5d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 279
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0925",
+      "expectedMove": "e5e4",
+      "bestMove": "e5e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 219
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0926",
+      "expectedMove": "e4g5",
+      "bestMove": "e4g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 459
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0927",
+      "expectedMove": "g5h6",
+      "bestMove": "g5h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 461
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0928",
+      "expectedMove": "f8h8",
+      "bestMove": "f8h8",
+      "evaluation": {
+        "type": "cp",
+        "value": 254
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0932",
+      "expectedMove": "g4e5",
+      "bestMove": "g4e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 534
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0933",
+      "expectedMove": "f6h4",
+      "bestMove": "f6h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 198
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0934",
+      "expectedMove": "d6c5",
+      "bestMove": "d6c5",
+      "evaluation": {
+        "type": "cp",
+        "value": 282
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0936",
+      "expectedMove": "f6e6",
+      "bestMove": "f6e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 240
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0937",
+      "expectedMove": "b7e4",
+      "bestMove": "b7e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 388
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0939",
+      "expectedMove": "d6d7",
+      "bestMove": "d6d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 264
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0940",
+      "expectedMove": "d4b5",
+      "bestMove": "d4b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 352
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0944",
+      "expectedMove": "e6f4",
+      "bestMove": "e6f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 318
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0950",
+      "expectedMove": "d6f6",
+      "bestMove": "d6f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 458
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0951",
+      "expectedMove": "h5f6",
+      "bestMove": "h5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 236
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0952",
+      "expectedMove": "g2c6",
+      "bestMove": "g2c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 486
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0953",
+      "expectedMove": "f3g5",
+      "bestMove": "f3g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 316
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0956",
+      "expectedMove": "f3g3",
+      "bestMove": "f3g3",
+      "evaluation": {
+        "type": "cp",
+        "value": 266
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0957",
+      "expectedMove": "f6h4",
+      "bestMove": "f6h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 247
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0958",
+      "expectedMove": "d4d3",
+      "bestMove": "d4d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 283
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0959",
+      "expectedMove": "f6f7",
+      "bestMove": "f6f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 363
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0960",
+      "expectedMove": "d2d5",
+      "bestMove": "d2d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 645
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0961",
+      "expectedMove": "h3f2",
+      "bestMove": "h3f2",
+      "evaluation": {
+        "type": "cp",
+        "value": 190
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0962",
+      "expectedMove": "f4e6",
+      "bestMove": "f4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 310
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0965",
+      "expectedMove": "d4d5",
+      "bestMove": "d4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 411
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0966",
+      "expectedMove": "e4g4",
+      "bestMove": "e4g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 496
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0967",
+      "expectedMove": "c5c6",
+      "bestMove": "c5c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 227
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0970",
+      "expectedMove": "h4c4",
+      "bestMove": "h4c4",
+      "evaluation": {
+        "type": "cp",
+        "value": 184
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0971",
+      "expectedMove": "b5b7",
+      "bestMove": "b5b7",
+      "evaluation": {
+        "type": "cp",
+        "value": 32
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0972",
+      "expectedMove": "h5h2",
+      "bestMove": "h5h2",
+      "evaluation": {
+        "type": "cp",
+        "value": 164
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0974",
+      "expectedMove": "d5c3",
+      "bestMove": "d5c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 0
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0976",
+      "expectedMove": "a5c6",
+      "bestMove": "a5c6",
+      "evaluation": {
+        "type": "cp",
+        "value": 153
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0977",
+      "expectedMove": "g5e7",
+      "bestMove": "g5e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 194
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0978",
+      "expectedMove": "h3h4",
+      "bestMove": "h3h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 293
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0979",
+      "expectedMove": "f4d5",
+      "bestMove": "f4d5",
+      "evaluation": {
+        "type": "cp",
+        "value": 276
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0980",
+      "expectedMove": "f5f3",
+      "bestMove": "f5f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 445
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0981",
+      "expectedMove": "b5c7",
+      "bestMove": "b5c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 237
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0982",
+      "expectedMove": "b7e4",
+      "bestMove": "b7e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 239
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0983",
+      "expectedMove": "h3e6",
+      "bestMove": "h3e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 642
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0984",
+      "expectedMove": "f4h3",
+      "bestMove": "f4h3",
+      "evaluation": {
+        "type": "cp",
+        "value": 182
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0985",
+      "expectedMove": "e5e6",
+      "bestMove": "e5e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 313
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0987",
+      "expectedMove": "e2g4",
+      "bestMove": "e2g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 427
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0988",
+      "expectedMove": "e8g8",
+      "bestMove": "e8g8",
+      "evaluation": {
+        "type": "cp",
+        "value": 427
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0990",
+      "expectedMove": "d3h7",
+      "bestMove": "",
+      "evaluation": null,
+      "classification": "engine_rejected"
+    },
+    {
+      "exerciseId": "exercise-0992",
+      "expectedMove": "d3h7",
+      "bestMove": "d3h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 224
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0996",
+      "expectedMove": "b4c3",
+      "bestMove": "b4c3",
+      "evaluation": {
+        "type": "cp",
+        "value": 114
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-0998",
+      "expectedMove": "g6f4",
+      "bestMove": "g6f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 150
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1000",
+      "expectedMove": "h5f6",
+      "bestMove": "h5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 211
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1002",
+      "expectedMove": "d3f4",
+      "bestMove": "d3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 323
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1003",
+      "expectedMove": "f5f4",
+      "bestMove": "f5f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 265
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1005",
+      "expectedMove": "e4e5",
+      "bestMove": "e4e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 275
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1008",
+      "expectedMove": "c3b5",
+      "bestMove": "c1b1",
+      "evaluation": {
+        "type": "cp",
+        "value": 75
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-1009",
+      "expectedMove": "b2b4",
+      "bestMove": "b2b4",
+      "evaluation": {
+        "type": "cp",
+        "value": 84
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1010",
+      "expectedMove": "c4f7",
+      "bestMove": "c4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 207
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1012",
+      "expectedMove": "c4f7",
+      "bestMove": "c4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 154
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1015",
+      "expectedMove": "h1h6",
+      "bestMove": "h1h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 0
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1018",
+      "expectedMove": "g3e5",
+      "bestMove": "g3e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 448
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1021",
+      "expectedMove": "a7a8",
+      "bestMove": "a7a8",
+      "evaluation": {
+        "type": "cp",
+        "value": 134
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1022",
+      "expectedMove": "h1h7",
+      "bestMove": "h1h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 218
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1023",
+      "expectedMove": "d2f4",
+      "bestMove": "d2d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 360
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-1029",
+      "expectedMove": "d3d7",
+      "bestMove": "d3d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 235
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1036",
+      "expectedMove": "d2f3",
+      "bestMove": "d2f3",
+      "evaluation": {
+        "type": "cp",
+        "value": 135
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1037",
+      "expectedMove": "h4h6",
+      "bestMove": "h4h6",
+      "evaluation": {
+        "type": "cp",
+        "value": 455
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1042",
+      "expectedMove": "h4e4",
+      "bestMove": "h4e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 250
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1043",
+      "expectedMove": "g4f6",
+      "bestMove": "g4f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 112
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1044",
+      "expectedMove": "f1f7",
+      "bestMove": "f1f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 155
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1045",
+      "expectedMove": "g5e4",
+      "bestMove": "g5e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 289
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1046",
+      "expectedMove": "c3e4",
+      "bestMove": "c3e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 223
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1047",
+      "expectedMove": "d4e6",
+      "bestMove": "d4e6",
+      "evaluation": {
+        "type": "cp",
+        "value": 218
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1050",
+      "expectedMove": "d5d6",
+      "bestMove": "d5d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 335
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1051",
+      "expectedMove": "e4d6",
+      "bestMove": "e4d6",
+      "evaluation": {
+        "type": "cp",
+        "value": 47
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1052",
+      "expectedMove": "h4f5",
+      "bestMove": "h4f5",
+      "evaluation": {
+        "type": "cp",
+        "value": -1
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1053",
+      "expectedMove": "h2h4",
+      "bestMove": "h2h4",
+      "evaluation": {
+        "type": "cp",
+        "value": 420
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1056",
+      "expectedMove": "d6f5",
+      "bestMove": "d6f5",
+      "evaluation": {
+        "type": "cp",
+        "value": 419
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1059",
+      "expectedMove": "f7e8",
+      "bestMove": "f7e8",
+      "evaluation": {
+        "type": "cp",
+        "value": 144
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1062",
+      "expectedMove": "d2c4",
+      "bestMove": "f6h5",
+      "evaluation": {
+        "type": "cp",
+        "value": 191
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-1064",
+      "expectedMove": "d6e7",
+      "bestMove": "d6e7",
+      "evaluation": {
+        "type": "cp",
+        "value": 290
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1068",
+      "expectedMove": "a5b7",
+      "bestMove": "a5b7",
+      "evaluation": {
+        "type": "cp",
+        "value": 92
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1073",
+      "expectedMove": "f2f4",
+      "bestMove": "d8d7",
+      "evaluation": {
+        "type": "cp",
+        "value": 446
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-1076",
+      "expectedMove": "d6g6",
+      "bestMove": "e3g5",
+      "evaluation": {
+        "type": "cp",
+        "value": 995
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-1080",
+      "expectedMove": "g5h7",
+      "bestMove": "g5h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 223
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1086",
+      "expectedMove": "f5f4",
+      "bestMove": "f5f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 168
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1088",
+      "expectedMove": "h1h7",
+      "bestMove": "h1h7",
+      "evaluation": {
+        "type": "cp",
+        "value": 327
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1091",
+      "expectedMove": "e2e4",
+      "bestMove": "e2e4",
+      "evaluation": {
+        "type": "cp",
+        "value": 104
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1097",
+      "expectedMove": "f1e1",
+      "bestMove": "d5f6",
+      "evaluation": {
+        "type": "cp",
+        "value": 299
+      },
+      "classification": "engine_suspicious"
+    },
+    {
+      "exerciseId": "exercise-1098",
+      "expectedMove": "g2g4",
+      "bestMove": "g2g4",
+      "evaluation": {
+        "type": "cp",
+        "value": 273
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1105",
+      "expectedMove": "e2d3",
+      "bestMove": "e2d3",
+      "evaluation": {
+        "type": "cp",
+        "value": 111
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1108",
+      "expectedMove": "d1a1",
+      "bestMove": "d1a1",
+      "evaluation": {
+        "type": "cp",
+        "value": 316
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1111",
+      "expectedMove": "g4g6",
+      "bestMove": "g4g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 195
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1115",
+      "expectedMove": "e1e5",
+      "bestMove": "e1e5",
+      "evaluation": {
+        "type": "cp",
+        "value": 222
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1116",
+      "expectedMove": "c3b5",
+      "bestMove": "c3b5",
+      "evaluation": {
+        "type": "cp",
+        "value": 145
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1117",
+      "expectedMove": "d5c7",
+      "bestMove": "d5c7",
+      "evaluation": {
+        "type": "cp",
+        "value": 224
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1118",
+      "expectedMove": "g5g6",
+      "bestMove": "g5g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 497
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1124",
+      "expectedMove": "d3g6",
+      "bestMove": "d3g6",
+      "evaluation": {
+        "type": "cp",
+        "value": 182
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1128",
+      "expectedMove": "b1e1",
+      "bestMove": "b1e1",
+      "evaluation": {
+        "type": "cp",
+        "value": 195
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1129",
+      "expectedMove": "h8h2",
+      "bestMove": "h8h2",
+      "evaluation": {
+        "type": "mate",
+        "value": 2
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1130",
+      "expectedMove": "f3f8",
+      "bestMove": "f3f8",
+      "evaluation": {
+        "type": "mate",
+        "value": 4
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1131",
+      "expectedMove": "e3f4",
+      "bestMove": "e3f4",
+      "evaluation": {
+        "type": "cp",
+        "value": 255
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1132",
+      "expectedMove": "d6d2",
+      "bestMove": "d6d2",
+      "evaluation": {
+        "type": "cp",
+        "value": 462
+      },
+      "classification": "engine_match"
+    },
+    {
+      "exerciseId": "exercise-1133",
+      "expectedMove": "c4f7",
+      "bestMove": "c4f7",
+      "evaluation": {
+        "type": "cp",
+        "value": 144
+      },
+      "classification": "engine_match"
+    }
+  ],
+  "priorReportPath": "data/exercises/generated/exercise.engine-report.json"
+}

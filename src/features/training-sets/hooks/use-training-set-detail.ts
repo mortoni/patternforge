@@ -44,11 +44,7 @@ export function useTrainingSetDetail(
   }, [trainingSetId]);
 
   React.useEffect(() => {
-    let cancelled = false;
-    load();
-    return () => {
-      cancelled = true;
-    };
+    void load();
   }, [load]);
 
   return { data, loading, error, reload: load };

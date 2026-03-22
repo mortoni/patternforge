@@ -7,7 +7,6 @@ import { evaluateFirstMove } from "@/services/puzzle-evaluator.service";
 import {
   validatePuzzleMove,
   applyCanonicalAutoMoves,
-  isPuzzleComplete,
   isUserMoveAtIndex,
 } from "@/lib/training/puzzle-line-validator";
 import { recordFailure, recordSkip } from "@/services/mistake-review.service";

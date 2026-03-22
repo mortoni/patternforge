@@ -30,7 +30,7 @@ export function validateAndTransformRow(
 ): { success: true; data: NormalizedPuzzle } | { success: false; errors: ValidationError[] } {
   const parsed = puzzleCsvRowSchema.safeParse(row);
   if (parsed.success) {
-    const data = transformToNormalized(parsed.data, rowNumber);
+    const data = transformToNormalized(parsed.data);
     return { success: true, data };
   }
   const errors: ValidationError[] = parsed.error.issues.map((issue) => ({
@@ -44,20 +44,17 @@ export function validateAndTransformRow(
 /**
  * Transform a parsed CSV row into normalized puzzle with id and createdAt.
  */
-function transformToNormalized(
-  row: {
-    trainingSetId: string;
-    puzzleNumber: number;
-    fen: string;
-    sideToMove: "w" | "b";
-    solutionMoves: string;
-    motifTags: string;
-    gameSource: string;
-    difficulty: ImportDifficulty;
-    comment?: string;
-  },
-  _rowNumber: number
-): NormalizedPuzzle {
+function transformToNormalized(row: {
+  trainingSetId: string;
+  puzzleNumber: number;
+  fen: string;
+  sideToMove: "w" | "b";
+  solutionMoves: string;
+  motifTags: string;
+  gameSource: string;
+  difficulty: ImportDifficulty;
+  comment?: string;
+}): NormalizedPuzzle {
   const id = formatPuzzleId(row.trainingSetId, row.puzzleNumber);
   const solutionMoves = row.solutionMoves
     .split(/\s+/)

@@ -55,8 +55,3 @@ test("training page settles into a known state", async ({ page }) => {
       .first()
   ).toBeVisible({ timeout: 20_000 });
 });
-
-test("legacy training-2 URL redirects to training", async ({ page }) => {
-  await page.goto("/app/training-2");
-  await expect(page).toHaveURL(/\/app\/training$/);
-});

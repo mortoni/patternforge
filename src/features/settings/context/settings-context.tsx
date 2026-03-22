@@ -22,10 +22,11 @@ const SettingsContext = React.createContext<SettingsContextValue | null>(null);
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const value = useSettings();
+  const themeMode = value.settings?.theme;
 
   React.useEffect(() => {
     if (typeof document === "undefined" || !value.settings) return;
-    const theme = value.settings.theme;
+    const { theme } = value.settings;
     const root = document.documentElement;
     const getEffective = (): "light" | "dark" => {
       if (theme !== "system") return theme;
@@ -42,10 +43,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* ignore */
     }
-  }, [value.settings?.theme]);
+  }, [value.settings]);
 
   React.useEffect(() => {
-    if (value.settings?.theme !== "system" || typeof window.matchMedia !== "function")
+    if (themeMode !== "system" || typeof window.matchMedia !== "function")
       return;
     const m = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => {
@@ -55,7 +56,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     };
     m.addEventListener("change", handler);
     return () => m.removeEventListener("change", handler);
-  }, [value.settings?.theme]);
+  }, [themeMode]);
 
   return (
     <SettingsContext.Provider value={value}>

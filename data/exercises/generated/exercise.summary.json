@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "certificationRulesVersion": 2,
+  "generatedAt": "2026-03-22T07:58:17.504Z",
+  "lastVerifiedAt": "2026-03-22T07:58:17.504Z",
+  "sourceContractPath": "data/exercises/generated/exercise.contract.json",
+  "sourceValidationReportPath": "data/exercises/generated/exercise.validation-report.json",
+  "totals": {
+    "total": 1133,
+    "certified": 594,
+    "manual_review": 539,
+    "broken": 0,
+    "pending": 0
+  },
+  "validationAlignmentWarning": false,
+  "notes": []
+}

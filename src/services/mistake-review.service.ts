@@ -64,8 +64,6 @@ export async function recordSolvedReview(mistakeEntryId: string): Promise<void> 
 /**
  * Get mistakes needing review. TODO: filter by training set when needed.
  */
-export async function getActiveMistakes(
-  _trainingSetId?: string
-): Promise<unknown[]> {
+export async function getActiveMistakes(): Promise<unknown[]> {
   return [];
 }

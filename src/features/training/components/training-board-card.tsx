@@ -68,10 +68,19 @@ function parseUci(uci: string): { from: string; to: string; promotion?: string }
   return null;
 }
 
+type LegalClickTargets = {
+  legalTargetSquares: TrainingSquare[];
+  captureSquares: Set<string>;
+  moveForDestination: (to: TrainingSquare) => {
+    uci: string;
+    newFen: string;
+  } | null;
+};
+
 /**
  * Legal moves from one square via chess.js (single source for click + drag hints).
  */
-function getLegalInfo(fen: string, sourceSquare: TrainingSquare) {
+function getLegalInfo(fen: string, sourceSquare: TrainingSquare): LegalClickTargets {
   try {
     const chess = new Chess(fen);
     const verbose = chess.moves({
@@ -101,10 +110,10 @@ function getLegalInfo(fen: string, sourceSquare: TrainingSquare) {
     return {
       legalTargetSquares: [] as TrainingSquare[],
       captureSquares: new Set<string>(),
-      moveForDestination: (_: TrainingSquare) => null as {
-        uci: string;
-        newFen: string;
-      } | null,
+      moveForDestination: (to: TrainingSquare) => {
+        void to;
+        return null;
+      },
     };
   }
 }
@@ -170,16 +179,11 @@ export function TrainingBoardCard({
     setSelectedSquare(null);
   }, [fen, disabled]);
 
-  const { legalTargetSquares, captureSquares, moveForDestination } =
-    React.useMemo(() => {
+  const { legalTargetSquares, captureSquares } = React.useMemo(() => {
       if (!selectedSquare) {
         return {
           legalTargetSquares: [] as TrainingSquare[],
           captureSquares: new Set<string>(),
-          moveForDestination: (_: TrainingSquare) => null as {
-            uci: string;
-            newFen: string;
-          } | null,
         };
       }
       return getLegalInfo(fen, selectedSquare);

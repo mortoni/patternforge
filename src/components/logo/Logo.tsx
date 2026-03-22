@@ -25,12 +25,14 @@ export default function Logo({ size = 120, className }: LogoProps) {
       className={cn("relative inline-block shrink-0", className)}
       style={{ width: dimension, height: dimension }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size SVG logos; pair swaps with theme */}
       <img
         src={LOGO_SRC_ON_LIGHT_BG}
         alt=""
         className={cn(imgClass, "dark:hidden")}
         draggable={false}
       />
+      {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size SVG logos; pair swaps with theme */}
       <img
         src={LOGO_SRC_ON_DARK_BG}
         alt=""

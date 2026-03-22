@@ -69,7 +69,6 @@ export async function getTrainingSetDetail(
 
   const exerciseCount =
     set.exerciseIds?.length ?? (await countByTrainingSetId(trainingSetId));
-  const totalExercises = exerciseCount;
 
   const [activeCycle, cycles] = await Promise.all([
     getActiveCycleRunForSet(trainingSetId),

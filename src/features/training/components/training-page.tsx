@@ -9,7 +9,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ROUTES, cycleSummaryRoute } from "@/lib/constants";
+import { ROUTES } from "@/lib/constants";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { formatDurationMs } from "@/lib/format-duration";
@@ -29,41 +29,32 @@ import { parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
 import { cn } from "@/lib/utils";
 import { useActiveTraining } from "../hooks/use-active-training";
 import { useCycleCompleteRedirect } from "../hooks/use-cycle-complete-redirect";
+import {
+  useSyncPuzzleFromReadyState,
+  type TrainingPuzzleUiState,
+} from "../hooks/use-sync-puzzle-from-ready-state";
+import { useTrainingBoardActions } from "../hooks/use-training-board-actions";
 import { TrainingEmptyState } from "./training-empty-state";
 import { TrainingBoardCard } from "./training-board-card";
-import { submitAttempt, skipPuzzle } from "../services/training-solver.service";
-import {
-  getPuzzleProgress,
-  setPuzzleProgress,
-  clearPuzzleProgress,
-} from "../services/puzzle-progress-storage";
 import { completeSession } from "@/services/training-session.service";
-
-const AUTO_PLAY_DELAY_MS = 500;
-
-/**
- * Pause after an exercise ends (solved or not) so the final position reads clearly
- * before loading the next puzzle — neutral UX, no correct/incorrect messaging.
- */
-const EXERCISE_TRANSITION_MS = 1000;
 
 /** Shared width for board column + below-board actions (responsive, viewport-aware). */
 const BOARD_COLUMN_CLASS =
   "w-[min(92vw,calc(100dvh-15rem))] max-w-[min(100%,40rem)]";
 
-type V2PuzzleState = "idle" | "checking" | "correct_so_far" | "transitioning";
-
-export function TrainingPageV2() {
+export function TrainingPage() {
   const router = useRouter();
   const { state, loading, error, reload } = useActiveTraining();
 
   const [positionFen, setPositionFen] = React.useState<string | null>(null);
-  const [puzzleState, setPuzzleState] = React.useState<V2PuzzleState>("idle");
+  const [puzzleState, setPuzzleState] =
+    React.useState<TrainingPuzzleUiState>("idle");
   const [currentSolutionIndex, setCurrentSolutionIndex] = React.useState(0);
   const [accumulatedUserMoves, setAccumulatedUserMoves] = React.useState<
     string[]
   >([]);
-  const attemptStartedAtRef = React.useRef<number>(Date.now());
+  /** Seeded by `useSyncPuzzleFromReadyState` when the active puzzle is known. */
+  const attemptStartedAtRef = React.useRef(0);
   const autoPlayTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
@@ -86,187 +77,50 @@ export function TrainingPageV2() {
   const baseFen = readyState?.exercise.fen ?? "";
   const displayFen = positionFen ?? baseFen;
 
-  currentFenRef.current = displayFen;
-  currentSolutionIndexRef.current = currentSolutionIndex;
-  accumulatedUserMovesRef.current = accumulatedUserMoves;
+  React.useLayoutEffect(() => {
+    currentFenRef.current = displayFen;
+    currentSolutionIndexRef.current = currentSolutionIndex;
+    accumulatedUserMovesRef.current = accumulatedUserMoves;
+  }, [displayFen, currentSolutionIndex, accumulatedUserMoves]);
 
-  React.useEffect(() => {
-    if (!readyState) return;
-    boardMoveInFlightRef.current = false;
-    if (autoPlayTimerRef.current) {
-      clearTimeout(autoPlayTimerRef.current);
-      autoPlayTimerRef.current = null;
-    }
-    if (exerciseTransitionTimerRef.current) {
-      clearTimeout(exerciseTransitionTimerRef.current);
-      exerciseTransitionTimerRef.current = null;
-    }
-    const progress = getPuzzleProgress(
-      readyState.cycleRun.id,
-      readyState.exercise.id
-    );
-    if (progress && progress.currentSolutionIndex > 0) {
-      setPositionFen(progress.currentFen);
-      setCurrentSolutionIndex(progress.currentSolutionIndex);
-      setAccumulatedUserMoves(progress.accumulatedUserMoves);
-      setPuzzleState("idle");
-      currentSolutionIndexRef.current = progress.currentSolutionIndex;
-      accumulatedUserMovesRef.current = progress.accumulatedUserMoves;
-      currentFenRef.current = progress.currentFen;
-    } else {
-      setPositionFen(null);
-      setCurrentSolutionIndex(0);
-      setAccumulatedUserMoves([]);
-      setPuzzleState("idle");
-      currentSolutionIndexRef.current = 0;
-      accumulatedUserMovesRef.current = [];
-      currentFenRef.current = readyState.exercise.fen ?? "";
-    }
-    attemptStartedAtRef.current = Date.now();
-    return () => {
-      if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
-      if (exerciseTransitionTimerRef.current) {
-        clearTimeout(exerciseTransitionTimerRef.current);
-        exerciseTransitionTimerRef.current = null;
-      }
-    };
-  }, [readyState?.exercise.id, readyState?.cycleRun.id]);
+  useSyncPuzzleFromReadyState(readyState, {
+    boardMoveInFlightRef,
+    autoPlayTimerRef,
+    exerciseTransitionTimerRef,
+    currentSolutionIndexRef,
+    accumulatedUserMovesRef,
+    currentFenRef,
+    attemptStartedAtRef,
+  }, {
+    setPositionFen,
+    setCurrentSolutionIndex,
+    setAccumulatedUserMoves,
+    setPuzzleState,
+  });
 
-  React.useEffect(() => {
-    return () => {
-      if (exerciseTransitionTimerRef.current) {
-        clearTimeout(exerciseTransitionTimerRef.current);
-        exerciseTransitionTimerRef.current = null;
-      }
-    };
-  }, []);
-
-  const handleBoardMove = React.useCallback(
-    async (uci: string, newFen: string) => {
-      if (!readyState || !readyState.sessionId) return;
-      if (boardMoveInFlightRef.current) return;
-      boardMoveInFlightRef.current = true;
-      const fenBefore = currentFenRef.current;
-      solvingSideRef.current = parseSideToMoveFromFen(fenBefore);
-      setPositionFen(newFen);
-      setPuzzleState("checking");
-      const indexToUse = currentSolutionIndexRef.current;
-      const accumulatedToUse = [...accumulatedUserMovesRef.current];
-      const fenToUse = fenBefore || baseFen;
-      try {
-        const result = await submitAttempt({
-          exerciseId: readyState.exercise.id,
-          cycleRunId: readyState.cycleRun.id,
-          trainingSetId: readyState.trainingSet.id,
-          sessionId: readyState.sessionId,
-          fen: fenToUse,
-          expectedFirstMove:
-            readyState.exercise.firstMove ??
-            readyState.exercise.solutionMoves[0] ??
-            "",
-          attemptedMoveUci: uci,
-          attemptStartedAt: attemptStartedAtRef.current,
-          solutionMoves: readyState.exercise.solutionMoves,
-          sideToMove: readyState.exercise.sideToMove,
-          currentSolutionIndex: indexToUse,
-          accumulatedUserMoves: accumulatedToUse,
-        });
-
-        if (!result.isCorrect) {
-          clearPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id);
-          setPuzzleState("transitioning");
-          if (exerciseTransitionTimerRef.current) {
-            clearTimeout(exerciseTransitionTimerRef.current);
-          }
-          const cycleRunId = readyState.cycleRun.id;
-          exerciseTransitionTimerRef.current = setTimeout(() => {
-            exerciseTransitionTimerRef.current = null;
-            if (result.cycleComplete) {
-              router.replace(cycleSummaryRoute(cycleRunId));
-            } else {
-              void reload();
-            }
-          }, EXERCISE_TRANSITION_MS);
-          return;
-        }
-
-        if (result.puzzleComplete) {
-          clearPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id);
-          setPuzzleState("transitioning");
-          if (exerciseTransitionTimerRef.current) {
-            clearTimeout(exerciseTransitionTimerRef.current);
-          }
-          const cycleRunId = readyState.cycleRun.id;
-          exerciseTransitionTimerRef.current = setTimeout(() => {
-            exerciseTransitionTimerRef.current = null;
-            if (result.cycleComplete) {
-              router.replace(cycleSummaryRoute(cycleRunId));
-            } else {
-              void reload();
-            }
-          }, EXERCISE_TRANSITION_MS);
-          return;
-        }
-
-        const nextFen = result.nextFen ?? newFen;
-        const nextIndex = result.nextSolutionIndex ?? indexToUse + 1;
-        const nextAccumulated = [
-          ...accumulatedToUse,
-          result.normalizedAttemptedMove,
-        ];
-
-        currentSolutionIndexRef.current = nextIndex;
-        accumulatedUserMovesRef.current = nextAccumulated;
-        currentFenRef.current = nextFen;
-
-        setPositionFen(nextFen);
-        setAccumulatedUserMoves(nextAccumulated);
-        setCurrentSolutionIndex(nextIndex);
-        setPuzzleState("correct_so_far");
-
-        setPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id, {
-          currentFen: nextFen,
-          currentSolutionIndex: nextIndex,
-          accumulatedUserMoves: nextAccumulated,
-        });
-
-        if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
-        autoPlayTimerRef.current = setTimeout(() => {
-          autoPlayTimerRef.current = null;
-          setPuzzleState("idle");
-        }, AUTO_PLAY_DELAY_MS);
-      } catch {
-        setPuzzleState("idle");
-        setPositionFen(currentFenRef.current || baseFen);
-      } finally {
-        boardMoveInFlightRef.current = false;
-      }
+  const { handleBoardMove, handleSkip } = useTrainingBoardActions(
+    readyState,
+    baseFen,
+    puzzleState,
+    reload,
+    router,
+    {
+      currentFenRef,
+      currentSolutionIndexRef,
+      accumulatedUserMovesRef,
+      solvingSideRef,
+      boardMoveInFlightRef,
+      attemptStartedAtRef,
+      autoPlayTimerRef,
+      exerciseTransitionTimerRef,
     },
-    [readyState, baseFen, reload, router]
-  );
-
-  const handleSkip = React.useCallback(async () => {
-    if (!readyState || !readyState.sessionId) return;
-    if (puzzleState === "checking" || puzzleState === "transitioning") return;
-    setPuzzleState("checking");
-    clearPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id);
-    try {
-      const { cycleComplete } = await skipPuzzle(
-        readyState.exercise.id,
-        readyState.cycleRun.id,
-        readyState.trainingSet.id,
-        readyState.sessionId,
-        attemptStartedAtRef.current
-      );
-      if (cycleComplete) {
-        router.replace(cycleSummaryRoute(readyState.cycleRun.id));
-      } else {
-        await reload();
-      }
-    } catch {
-      setPuzzleState("idle");
+    {
+      setPositionFen,
+      setPuzzleState,
+      setCurrentSolutionIndex,
+      setAccumulatedUserMoves,
     }
-  }, [readyState, puzzleState, reload, router]);
+  );
 
   const handleEndSession = React.useCallback(async () => {
     const sid = readyState?.sessionId;
@@ -384,8 +238,12 @@ export function TrainingPageV2() {
   }
 
   const sideToMoveFromFen = parseSideToMoveFromFen(displayFen);
+  // Set in `handleBoardMove` before `checking`; ref read ties indicator to pre-submit side.
   const turnForLabel =
-    puzzleState === "checking" ? solvingSideRef.current : sideToMoveFromFen;
+    puzzleState === "checking"
+      ? // eslint-disable-next-line react-hooks/refs -- paired write in move handler before this render
+        solvingSideRef.current
+      : sideToMoveFromFen;
 
   const boardDisabled =
     puzzleState === "checking" ||
@@ -416,29 +274,45 @@ export function TrainingPageV2() {
             BOARD_COLUMN_CLASS
           )}
         >
-          {puzzleState !== "transitioning" && (
+          <div
+            className={cn(
+              "transition-opacity duration-200",
+              puzzleState === "transitioning" &&
+                "pointer-events-none opacity-0"
+            )}
+            aria-hidden={puzzleState === "transitioning"}
+          >
             <SideToMoveIndicator sideToMove={turnForLabel} />
-          )}
-          <TrainingBoardCard
-            fen={displayFen}
-            boardOrientation={readyState!.boardOrientation}
-            onMove={handleBoardMove}
-            disabled={boardDisabled}
-            minimal
-            boardContainerClassName="w-full border-border/40 bg-[var(--muted)]/10"
-          />
+          </div>
+          <div className="relative w-full">
+            <TrainingBoardCard
+              fen={displayFen}
+              boardOrientation={readyState!.boardOrientation}
+              onMove={handleBoardMove}
+              disabled={boardDisabled}
+              minimal
+              boardContainerClassName="w-full border-border/40 bg-[var(--muted)]/10"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+              aria-hidden="true"
+            >
+              <div
+                className={cn(
+                  "rounded-md bg-black/70 px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity duration-200",
+                  puzzleState === "transitioning" ? "opacity-100" : "opacity-0"
+                )}
+              >
+                Exercise complete
+              </div>
+            </div>
+          </div>
+          <span className="sr-only" aria-live="polite">
+            {puzzleState === "transitioning" ? "Exercise complete" : ""}
+          </span>
         </div>
 
-        <div className={cn("space-y-5", BOARD_COLUMN_CLASS)}>
-          {puzzleState === "transitioning" && (
-            <p
-              className="text-sm text-[var(--muted-foreground)]"
-              aria-live="polite"
-            >
-              Exercise complete
-            </p>
-          )}
-
+        <div className={BOARD_COLUMN_CLASS}>
           <div>
             <Button
               type="button"

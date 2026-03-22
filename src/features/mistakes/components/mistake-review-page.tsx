@@ -28,7 +28,7 @@ export interface MistakeReviewPageProps {
 
 export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   const router = useRouter();
-  const { state, loading, error, reload } = useMistakeReview(mistakeId);
+  const { state, loading, error } = useMistakeReview(mistakeId);
 
   const [positionFen, setPositionFen] = React.useState<string | null>(null);
   const [attemptedMoveUci, setAttemptedMoveUci] = React.useState<string | null>(null);
@@ -49,7 +49,7 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
       setFeedbackExpectedMove(undefined);
       solvingSideRef.current = parseSideToMoveFromFen(state.exercise.fen);
     }
-  }, [state?.mistake.id]);
+  }, [state?.mistake.id]); // eslint-disable-line react-hooks/exhaustive-deps -- mistake identity only
 
   /** Move = submit: same as training flow. */
   const handleBoardMove = React.useCallback(
@@ -134,10 +134,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
     puzzleState === "incorrect" && attemptedMoveUci
       ? getHighlightedSquaresFromMove(attemptedMoveUci)
       : undefined;
-
-  const sideToMoveFromFen = parseSideToMoveFromFen(displayFen);
-  const boardTurnSide =
-    puzzleState === "checking" ? solvingSideRef.current : sideToMoveFromFen;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-5 md:px-5">

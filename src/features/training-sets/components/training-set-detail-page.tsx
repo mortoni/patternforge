@@ -21,7 +21,7 @@ export interface TrainingSetDetailPageProps {
 
 export function TrainingSetDetailPage({ trainingSetId }: TrainingSetDetailPageProps) {
   const router = useRouter();
-  const { data, loading, error, reload } = useTrainingSetDetail(trainingSetId);
+  const { data, loading, error } = useTrainingSetDetail(trainingSetId);
 
   const handleContinue = React.useCallback(async () => {
     const result = await continueTraining(trainingSetId);
