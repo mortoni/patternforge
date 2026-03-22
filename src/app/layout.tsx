@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SettingsProvider } from "@/features/settings/context/settings-context";
 import { FAVICON_SRC } from "@/components/logo/logo-sources";
@@ -46,6 +47,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
       >
         <SettingsProvider>{children}</SettingsProvider>
+        <Analytics />
       </body>
     </html>
   );
