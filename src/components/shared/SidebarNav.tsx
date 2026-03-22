@@ -41,9 +41,8 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
             key={href}
             href={href}
             className={cn(
-              "flex items-center rounded-md py-2 text-sm font-medium transition-colors",
-              collapsed ? "justify-center px-2" : "px-3",
-              collapsed ? "gap-0" : "gap-3",
+              "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
+              collapsed ? "justify-center px-2" : "gap-3 px-3",
               isActive
                 ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
                 : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
@@ -54,10 +53,10 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
             <Icon className="h-5 w-5 shrink-0" />
             <span
               className={cn(
-                "transition-all duration-200",
+                "min-w-0 transition-all duration-200",
                 collapsed
                   ? "pointer-events-none max-w-0 overflow-hidden opacity-0"
-                  : "max-w-full opacity-100"
+                  : "truncate opacity-100"
               )}
             >
               {label}
@@ -65,18 +64,34 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
           </Link>
         );
       })}
-      {!collapsed && (
-        <div className="mt-auto border-t border-[var(--border)] pt-4">
-          <Link
-            href={ROUTES.docs}
-            className="flex items-center gap-3 rounded-md px-3 py-2 text-xs text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
-            title="Documentation"
+      <div
+        className={cn(
+          "mt-auto border-t border-[var(--border)] pt-4",
+          collapsed && "flex justify-center px-0"
+        )}
+      >
+        <Link
+          href={ROUTES.docs}
+          className={cn(
+            "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-xs text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]",
+            collapsed ? "justify-center px-2" : "gap-3 px-3"
+          )}
+          title="Documentation"
+          aria-label={collapsed ? "Documentation" : undefined}
+        >
+          <BookOpen className="h-4 w-4 shrink-0" />
+          <span
+            className={cn(
+              "min-w-0 transition-all duration-200",
+              collapsed
+                ? "pointer-events-none max-w-0 overflow-hidden opacity-0"
+                : "truncate opacity-100"
+            )}
           >
-            <BookOpen className="h-4 w-4 shrink-0" />
-            <span>Docs</span>
-          </Link>
-        </div>
-      )}
+            Docs
+          </span>
+        </Link>
+      </div>
     </nav>
   );
 }

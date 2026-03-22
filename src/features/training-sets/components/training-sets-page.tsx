@@ -6,15 +6,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { TrainingSetsTable } from "./training-sets-table";
 import { TrainingSetsMobileList } from "./training-sets-mobile-list";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,14 +28,14 @@ import {
 import { mapOverviewToTableRow, dedupeTableRows } from "../lib/map-training-set-row";
 import type { TrainingSetOverview } from "../types";
 
-const isDev = typeof process !== "undefined" && process.env.NODE_ENV === "development";
+/** Dev-only UI (e.g. reset seed data). Omitted from production builds. */
+const isDev =
+  typeof process !== "undefined" && process.env.NODE_ENV === "development";
 
 export function TrainingSetsPage() {
   const router = useRouter();
   const [overviews, setOverviews] = React.useState<TrainingSetOverview[] | null>(null);
   const [loading, setLoading] = React.useState(true);
-  const [sourceFilter, setSourceFilter] = React.useState<string>("all");
-  const [difficultyFilter, setDifficultyFilter] = React.useState<string>("all");
   const [loadingGenerated, setLoadingGenerated] = React.useState(false);
 
   const loadOverviews = React.useCallback(async () => {
@@ -111,19 +103,11 @@ export function TrainingSetsPage() {
     return dedupeTableRows(overviews.map(mapOverviewToTableRow));
   }, [overviews]);
 
-  const filteredRows = React.useMemo(() => {
-    return tableRows.filter((row) => {
-      if (sourceFilter !== "all" && row.source !== sourceFilter) return false;
-      if (difficultyFilter !== "all" && row.difficulty !== difficultyFilter) return false;
-      return true;
-    });
-  }, [tableRows, sourceFilter, difficultyFilter]);
-
-  const filteredOverviews = React.useMemo(() => {
+  const displayedOverviews = React.useMemo(() => {
     if (!overviews?.length) return [];
-    const ids = new Set(filteredRows.map((r) => r.id));
+    const ids = new Set(tableRows.map((r) => r.id));
     return overviews.filter((o) => ids.has(o.trainingSetId));
-  }, [overviews, filteredRows]);
+  }, [overviews, tableRows]);
 
   if (loading) {
     return (
@@ -163,44 +147,16 @@ export function TrainingSetsPage() {
         description="Start a new training cycle or continue your active one."
       />
 
-      <div className="mb-6 flex flex-wrap items-center gap-3 border-b border-[var(--border)] pb-4">
-        <Input
-          type="search"
-          placeholder="Search sets…"
-          aria-label="Search training sets"
-          className="max-w-xs"
-        />
-        <Select value={sourceFilter} onValueChange={setSourceFilter}>
-          <SelectTrigger className="w-[180px]" aria-label="Filter by source">
-            <SelectValue placeholder="Source" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All sources</SelectItem>
-            <SelectItem value="Lichess">Lichess</SelectItem>
-            <SelectItem value="Custom">Custom</SelectItem>
-            <SelectItem value="Unknown">Unknown</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
-          <SelectTrigger className="w-[180px]" aria-label="Filter by difficulty">
-            <SelectValue placeholder="Difficulty" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All difficulties</SelectItem>
-            <SelectItem value="easy">Easy</SelectItem>
-            <SelectItem value="intermediate">Intermediate</SelectItem>
-            <SelectItem value="advanced">Advanced</SelectItem>
-            <SelectItem value="custom">Custom</SelectItem>
-          </SelectContent>
-        </Select>
-        {isDev && (
+      <div className="mt-6 flex flex-col gap-6">
+      {isDev && (
+        <div className="flex flex-wrap items-center justify-end gap-3 border-b border-[var(--border)] pb-4">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
                 variant="outline"
                 size="sm"
                 disabled={loadingGenerated}
-                className="ml-auto border-amber-500/50 text-amber-600 dark:text-amber-400"
+                className="border-amber-500/50 text-amber-600 dark:text-amber-400"
               >
                 {loadingGenerated ? "Resetting…" : "Reset everything & load generated"}
               </Button>
@@ -226,22 +182,23 @@ export function TrainingSetsPage() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="hidden md:block rounded-md border border-[var(--border)]">
         <TrainingSetsTable
-          rows={filteredRows}
+          rows={tableRows}
           onContinue={handleContinue}
           onStartCycle={handleStartCycle}
         />
       </div>
 
       <TrainingSetsMobileList
-        overviews={filteredOverviews}
+        overviews={displayedOverviews}
         onContinue={handleContinue}
         onStartCycle={handleStartCycle}
       />
+      </div>
     </div>
   );
 }

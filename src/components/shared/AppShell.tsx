@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 import { SidebarNav } from "@/components/shared/SidebarNav";
 import AppTitle from "@/components/logo/AppTitle";
 import Logo from "@/components/logo/Logo";
@@ -11,6 +11,14 @@ import { ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { runMigrations } from "@/db/migrations";
 import { SidebarProvider, useSidebar } from "@/components/shared/sidebar/sidebar-context";
+
+/**
+ * `react-remove-scroll-bar` injects styles for this class when Radix Select (etc.) lock
+ * scroll: full-bleed roots get `margin-right: var(scrollbar gap)` so layout does not
+ * shrink. Same string as `RemoveScroll.classNames.fullWidth` from `react-remove-scroll`.
+ * @see https://github.com/radix-ui/primitives/discussions/1586
+ */
+const REMOVE_SCROLL_FULL_WIDTH_CLASS = "width-before-scroll-bar";
 
 export function AppShell({
   children,
@@ -49,6 +57,13 @@ function AppShellInner({
     closeOverlay,
   } = useSidebar();
 
+  /** Full app navigation on small screens (persistent sidebar is `md:flex` only). */
+  const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setMobileNavOpen(false);
+  }, [pathname]);
+
   const isTrainingFocus =
     pathname != null &&
     (pathname === ROUTES.training || pathname.startsWith(`${ROUTES.training}/`));
@@ -71,6 +86,8 @@ function AppShellInner({
         if (mode === "hidden") {
           if (overlayOpen) closeOverlay();
           else openOverlay();
+        } else if (window.matchMedia("(max-width: 767.98px)").matches) {
+          setMobileNavOpen((open) => !open);
         } else {
           toggleCollapsed();
         }
@@ -82,10 +99,23 @@ function AppShellInner({
 
   const sidebarCollapsed = overlayMode === "collapsed";
 
+  const mobileDrawerOpen = mode === "hidden" ? overlayOpen : mobileNavOpen;
+
+  const openMobileDrawer = React.useCallback(() => {
+    if (mode === "hidden") openOverlay();
+    else setMobileNavOpen(true);
+  }, [mode, openOverlay]);
+
+  const closeMobileDrawer = React.useCallback(() => {
+    if (mode === "hidden") closeOverlay();
+    else setMobileNavOpen(false);
+  }, [mode, closeOverlay]);
+
   return (
     <div
       className={cn(
-        "flex h-dvh min-h-0 overflow-hidden bg-[var(--background)]",
+        "flex h-dvh min-h-0 w-full min-w-0 max-w-full overflow-hidden bg-[var(--background)]",
+        REMOVE_SCROLL_FULL_WIDTH_CLASS,
         className
       )}
     >
@@ -135,45 +165,54 @@ function AppShellInner({
         </aside>
       )}
 
-      {mode === "hidden" && overlayOpen && (
+      {mobileDrawerOpen && (
         <OverlaySidebar
-          collapsed={sidebarCollapsed}
-          overlayMode={overlayMode}
-          onClose={closeOverlay}
-          onToggle={toggleCollapsed}
+          collapsed={mode === "hidden" ? sidebarCollapsed : false}
+          overlayMode={mode === "hidden" ? overlayMode : "expanded"}
+          onClose={closeMobileDrawer}
+          onToggle={mode === "hidden" ? toggleCollapsed : undefined}
+          showCollapseToggle={mode === "hidden"}
         />
       )}
 
+      {/* Training focus: menu lives in the mobile top bar; floating control only on md+. */}
       {mode === "hidden" && !overlayOpen && (
         <button
           type="button"
           onClick={openOverlay}
-          aria-label="Open sidebar"
-          className="fixed left-4 top-4 z-50 rounded-md border border-[var(--border)] bg-[var(--background)]/90 p-2 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:text-[var(--foreground)] hover:bg-[var(--muted)] md:left-6 md:top-6"
+          aria-label="Open navigation menu"
+          className="pointer-events-none fixed left-6 top-6 z-50 hidden h-10 w-10 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)]/90 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)] md:pointer-events-auto md:inline-flex"
         >
           <Menu className="h-5 w-5 pointer-events-none" aria-hidden />
         </button>
       )}
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden transition-all duration-200">
-        <header className="z-10 flex h-14 shrink-0 items-center justify-between border-b border-[var(--border)] bg-[var(--background)]/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/60 md:hidden">
-          <Link
-            href={ROUTES.home}
-            aria-label="PatternForge — back to home"
-            className="flex min-w-0 cursor-pointer items-center gap-2 text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
-          >
-            <Logo size={28} className="shrink-0" />
-            <AppTitle className="min-w-0 truncate" />
-          </Link>
-          <Link
-            href={ROUTES.docs}
-            className="text-xs text-muted-foreground no-underline transition-colors hover:text-foreground"
-            title="Documentation"
-          >
-            Docs
-          </Link>
+      <div className="flex min-h-0 w-full min-w-0 max-w-full flex-1 flex-col overflow-hidden transition-all duration-200">
+        <header className="sticky top-0 z-40 shrink-0 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/60 md:hidden">
+          <div className="grid h-14 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 px-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center justify-self-start">
+              <button
+                type="button"
+                onClick={openMobileDrawer}
+                aria-label="Open navigation menu"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+              >
+                <Menu className="h-5 w-5 pointer-events-none" aria-hidden />
+              </button>
+            </div>
+            <Link
+              href={ROUTES.home}
+              aria-label="PatternForge — back to home"
+              className="flex min-w-0 max-w-full items-center justify-center gap-1.5 justify-self-center text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
+            >
+              <Logo size={24} className="shrink-0" />
+              <AppTitle className="min-w-0 truncate whitespace-nowrap text-xs tracking-[0.2em] sm:text-sm sm:tracking-[0.28em]" />
+            </Link>
+            {/* Spacer balances the menu control; Docs lives in the drawer on small screens. */}
+            <div className="h-10 w-10 shrink-0 justify-self-end" aria-hidden />
+          </div>
         </header>
-        <main className="min-h-0 flex-1 overflow-y-auto p-4 md:p-6 transition-all duration-200">
+        <main className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-y-auto p-4 md:p-6 transition-all duration-200">
           {children}
         </main>
       </div>
@@ -186,11 +225,13 @@ function OverlaySidebar({
   overlayMode,
   onClose,
   onToggle,
+  showCollapseToggle = true,
 }: {
   collapsed: boolean;
   overlayMode: "expanded" | "collapsed";
   onClose: () => void;
-  onToggle: () => void;
+  onToggle?: () => void;
+  showCollapseToggle?: boolean;
 }) {
   const [entered, setEntered] = React.useState(false);
 
@@ -219,33 +260,68 @@ function OverlaySidebar({
         <div
           className={cn(
             "flex h-16 shrink-0 items-center border-b border-[var(--border)] transition-all duration-200",
-            collapsed ? "justify-center px-3" : "justify-between gap-2 pl-5 pr-2"
+            showCollapseToggle
+              ? collapsed
+                ? "justify-center px-3"
+                : "justify-between gap-2 pl-5 pr-2"
+              : "justify-between gap-2 px-3"
           )}
         >
-          {!collapsed && (
-            <Link
-              href={ROUTES.home}
-              aria-label="PatternForge — back to home"
-              className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 overflow-hidden text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
-            >
-              <Logo size={28} className="shrink-0" />
-              <AppTitle className="block min-w-0 max-w-full truncate text-xs" />
-            </Link>
+          {showCollapseToggle ? (
+            <>
+              {!collapsed && (
+                <Link
+                  href={ROUTES.home}
+                  aria-label="PatternForge — back to home"
+                  className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 overflow-hidden text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
+                >
+                  <Logo size={28} className="shrink-0" />
+                  <AppTitle className="block min-w-0 max-w-full truncate text-xs" />
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => onToggle?.()}
+                aria-label={
+                  overlayMode === "expanded"
+                    ? "Collapse sidebar"
+                    : "Expand sidebar"
+                }
+                className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+              >
+                {overlayMode === "expanded" ? (
+                  <ChevronLeft
+                    className="h-4 w-4 pointer-events-none"
+                    aria-hidden
+                  />
+                ) : (
+                  <ChevronRight
+                    className="h-4 w-4 pointer-events-none"
+                    aria-hidden
+                  />
+                )}
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href={ROUTES.home}
+                aria-label="PatternForge — back to home"
+                className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 overflow-hidden text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
+              >
+                <Logo size={28} className="shrink-0" />
+                <AppTitle className="block min-w-0 max-w-full truncate text-xs" />
+              </Link>
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close navigation menu"
+                className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+              >
+                <X className="h-4 w-4 pointer-events-none" aria-hidden />
+              </button>
+            </>
           )}
-          <button
-            type="button"
-            onClick={onToggle}
-            aria-label={
-              overlayMode === "expanded" ? "Collapse sidebar" : "Expand sidebar"
-            }
-            className="inline-flex shrink-0 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
-          >
-            {overlayMode === "expanded" ? (
-              <ChevronLeft className="h-4 w-4 pointer-events-none" aria-hidden />
-            ) : (
-              <ChevronRight className="h-4 w-4 pointer-events-none" aria-hidden />
-            )}
-          </button>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto">
           <SidebarNav collapsed={collapsed} />

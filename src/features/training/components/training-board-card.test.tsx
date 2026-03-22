@@ -72,6 +72,8 @@ describe("TrainingBoardCard", () => {
     expect(typeof capturedOptions.current!.onPieceDrop).toBe("function");
     expect(typeof capturedOptions.current!.canDragPiece).toBe("function");
     expect(capturedOptions.current!.dragActivationDistance).toBe(8);
+    expect(capturedOptions.current!.animationDurationInMs).toBe(220);
+    expect(capturedOptions.current!.showAnimations).toBe(true);
   });
 
   it("passes arrows when correctMoveUci is set", () => {

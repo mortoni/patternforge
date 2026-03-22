@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { formatDurationMs } from "@/lib/format-duration";
+import { formatDurationMs, formatDurationMsChartAxis } from "@/lib/format-duration";
 import type { AnalyticsCycleHistoryRow } from "@/services/analytics-page.service";
 
 function medianMs(values: number[]): number {
@@ -94,7 +94,7 @@ export function ReflectionCyclesTimeChart({ rows }: ReflectionCyclesTimeChartPro
             tickLine={false}
             axisLine={false}
             width={52}
-            tickFormatter={(v) => formatDurationMs(Number(v))}
+            tickFormatter={(v) => formatDurationMsChartAxis(Number(v))}
           />
           <Tooltip
             content={({ active, payload }) => {

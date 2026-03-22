@@ -5,11 +5,19 @@ import { getActiveTrainingState } from "../services/training-loader.service";
 import { getOrCreateActiveSession } from "@/services/training-session.service";
 import type { ActiveTrainingState } from "../types";
 
+export type ReloadTrainingOptions = {
+  /**
+   * When true, skip the global loading flag so the training UI (e.g. board) stays mounted.
+   * Use after advancing to the next exercise so Dexie refresh does not flash a full-page loader.
+   */
+  silent?: boolean;
+};
+
 export interface UseActiveTrainingResult {
   state: ActiveTrainingState | null;
   loading: boolean;
   error: Error | null;
-  reload: () => Promise<void>;
+  reload: (opts?: ReloadTrainingOptions) => Promise<void>;
 }
 
 /**
@@ -17,7 +25,7 @@ export interface UseActiveTrainingResult {
  * Session is created/reused only when state is ready (interaction layer), not during load.
  *
  * The loader never returns sessionId. We keep `{ cycleRunId, sessionId }` in a ref so
- * each `reload()` reuses the same session for that cycle instead of calling getOrCreate
+ * each `reload()` / `reload({ silent: true })` reuses the same session for that cycle instead of calling getOrCreate
  * again (which could race and create duplicate empty sessions).
  */
 export function useActiveTraining(): UseActiveTrainingResult {
@@ -29,8 +37,11 @@ export function useActiveTraining(): UseActiveTrainingResult {
     sessionId: string;
   } | null>(null);
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  const load = useCallback(async (opts?: ReloadTrainingOptions) => {
+    const silent = opts?.silent === true;
+    if (!silent) {
+      setLoading(true);
+    }
     setError(null);
     try {
       const result = await getActiveTrainingState();
@@ -63,7 +74,9 @@ export function useActiveTraining(): UseActiveTrainingResult {
       sessionBindingRef.current = null;
       setState(null);
     } finally {
-      setLoading(false);
+      if (!silent) {
+        setLoading(false);
+      }
     }
   }, []);
 

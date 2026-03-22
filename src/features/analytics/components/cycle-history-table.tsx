@@ -33,7 +33,7 @@ export function CycleHistoryTable({
   return (
     <div
       className={cn(
-        "overflow-x-auto rounded-lg",
+        "min-w-0 overflow-x-auto rounded-lg",
         bordered && "border border-border/60"
       )}
     >

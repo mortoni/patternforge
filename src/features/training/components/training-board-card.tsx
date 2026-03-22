@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { getArrowFromUci } from "@/lib/chess/move-highlights";
 import { useBoardStyle } from "@/features/settings/hooks/use-board-style";
+import { MOVE_ANIMATION_MS } from "@/features/training/training-board-timing";
 
 type TrainingSquare = string;
 
@@ -386,6 +387,8 @@ export function TrainingBoardCard({
     () => ({
       position: fen,
       boardOrientation,
+      animationDurationInMs: MOVE_ANIMATION_MS,
+      showAnimations: true,
       lightSquareStyle: surface.lightSquareStyle,
       darkSquareStyle: surface.darkSquareStyle,
       ...(surface.boardStyle != null && { boardStyle: surface.boardStyle }),

@@ -48,8 +48,7 @@ export function ProgressPage() {
     ReturnType<typeof getProgressPageData>
   > | null>(null);
   const [loading, setLoading] = React.useState(true);
-  const [reflectionView, setReflectionView] =
-    React.useState<ReflectionView>("table");
+  const [reflectionView, setReflectionView] = React.useState<ReflectionView>("table");
 
   React.useEffect(() => {
     let cancelled = false;
@@ -104,9 +103,7 @@ export function ProgressPage() {
 
   const reflectionSelectedGroup = React.useMemo(() => {
     if (reflectionEffectiveSetId == null) return null;
-    return (
-      reflectionSetGroups.find((g) => g.id === reflectionEffectiveSetId) ?? null
-    );
+    return reflectionSetGroups.find((g) => g.id === reflectionEffectiveSetId) ?? null;
   }, [reflectionSetGroups, reflectionEffectiveSetId]);
 
   const reflectionTableRows = React.useMemo(() => {
@@ -123,8 +120,7 @@ export function ProgressPage() {
     });
   }, [reflectionSelectedGroup]);
 
-  const reflectionChartEnabled =
-    (reflectionSelectedGroup?.rows.length ?? 0) >= 2;
+  const reflectionChartEnabled = (reflectionSelectedGroup?.rows.length ?? 0) >= 2;
 
   React.useEffect(() => {
     if (!reflectionChartEnabled && reflectionView === "chart") {
@@ -149,10 +145,7 @@ export function ProgressPage() {
     const progressMax = progressTotal > 0 ? progressTotal : 100;
     const progressValue = Math.min(Math.max(0, progressPos), progressTotal);
     const progressLabel = formatCycleProgressLabel(progressPos, progressTotal);
-    const progressPercent = cycleProgressPercentRounded(
-      progressPos,
-      progressTotal
-    );
+    const progressPercent = cycleProgressPercentRounded(progressPos, progressTotal);
 
     return (
       <div className="mx-auto max-w-4xl px-4 py-6 md:px-6">
@@ -213,9 +206,7 @@ export function ProgressPage() {
             </h2>
             <Card className="border-border/60 bg-muted/5 shadow-none">
               <CardHeader className="pb-2 pt-5">
-                <CardTitle className="text-base font-medium">
-                  This cycle
-                </CardTitle>
+                <CardTitle className="text-base font-medium">This cycle</CardTitle>
                 <CardDescription className="text-xs">
                   Time and session count for your active cycle.
                 </CardDescription>
@@ -231,18 +222,14 @@ export function ProgressPage() {
                   <p className="text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl">
                     {formatDurationMs(cc.totalTimeMs)}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    Total time invested
-                  </p>
+                  <p className="text-sm text-muted-foreground">Total time invested</p>
                 </div>
                 {cc.averageSessionTimeMs != null ? (
                   <div className="space-y-1">
                     <p className="text-xl font-semibold tabular-nums text-foreground">
                       {formatDurationMs(cc.averageSessionTimeMs)}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      Average per session
-                    </p>
+                    <p className="text-sm text-muted-foreground">Average per session</p>
                   </div>
                 ) : null}
                 {cc.longestSessionMs > 0 ? (
@@ -250,9 +237,7 @@ export function ProgressPage() {
                     <p className="text-xl font-semibold tabular-nums text-foreground">
                       {formatDurationMs(cc.longestSessionMs)}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      Longest session
-                    </p>
+                    <p className="text-sm text-muted-foreground">Longest session</p>
                   </div>
                 ) : null}
               </CardContent>
@@ -297,7 +282,7 @@ export function ProgressPage() {
         description="Review completed cycles and revisit your training history."
       />
 
-      <section className="mt-10 space-y-4">
+      <section className="mt-10 w-full min-w-0 space-y-4 [&>*]:w-full [&>*]:min-w-0">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
             Completed cycles
@@ -345,37 +330,39 @@ export function ProgressPage() {
         </div>
 
         {showReflectionToggle ? (
-          <div className="space-y-1.5">
+          <div className="w-full min-w-0 space-y-1.5">
             <label
               htmlFor="reflection-training-set"
-              className="text-xs font-medium text-muted-foreground"
+              className="block text-xs font-medium text-muted-foreground"
             >
               Training set
             </label>
-            <Select
-              value={reflectionEffectiveSetId ?? undefined}
-              onValueChange={setReflectionTrainingSetId}
-            >
-              <SelectTrigger
-                id="reflection-training-set"
-                className="h-9 w-full sm:max-w-sm"
+            <div className="w-full min-w-0 max-w-full sm:max-w-sm">
+              <Select
+                value={reflectionEffectiveSetId ?? undefined}
+                onValueChange={setReflectionTrainingSetId}
               >
-                <SelectValue placeholder="Select a training set" />
-              </SelectTrigger>
-              <SelectContent>
-                {reflectionSetGroups.map((g) => (
-                  <SelectItem key={g.id} value={g.id}>
-                    {g.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                <SelectTrigger
+                  id="reflection-training-set"
+                  className="h-9 w-full min-w-0"
+                >
+                  <SelectValue placeholder="Select a training set" />
+                </SelectTrigger>
+                <SelectContent>
+                  {reflectionSetGroups.map((g) => (
+                    <SelectItem key={g.id} value={g.id}>
+                      {g.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         ) : null}
 
         {reflectionView === "table" || !reflectionChartEnabled ? (
-          <Card className="border-border/60 bg-muted/5 shadow-none">
-            <CardContent className="px-4 py-4 md:px-6 md:py-5">
+          <Card className="w-full min-w-0 border-border/60 bg-muted/5 shadow-none">
+            <CardContent className="min-w-0 px-4 py-4 md:px-6 md:py-5">
               <CycleHistoryTable
                 rows={reflectionTableRows}
                 bordered={false}
@@ -384,8 +371,8 @@ export function ProgressPage() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="border-border/60 bg-muted/5 shadow-none">
-            <CardContent className="px-4 py-4 md:px-6 md:py-5">
+          <Card className="w-full min-w-0 border-border/60 bg-muted/5 shadow-none">
+            <CardContent className="min-w-0 px-4 py-4 md:px-6 md:py-5">
               <ReflectionCyclesTimeChart rows={reflectionChartRows} />
             </CardContent>
           </Card>

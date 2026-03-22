@@ -3,7 +3,7 @@
 /**
  * Training — minimal Woodpecker solving surface.
  * Uses the loader, session, submitAttempt/skipPuzzle, and TrainingBoardCard;
- * post-move UX: no feedback panels, no “next” — wrong or solved single-step advances via reload().
+ * post-move UX: no feedback panels, no “next” — wrong or solved single-step advances via silent reload().
  */
 
 import * as React from "react";
@@ -39,28 +39,23 @@ import { TrainingBoardCard } from "./training-board-card";
 import { completeSession } from "@/services/training-session.service";
 
 /** Shared width for board column + below-board actions (responsive, viewport-aware). */
-const BOARD_COLUMN_CLASS =
-  "w-[min(92vw,calc(100dvh-15rem))] max-w-[min(100%,40rem)]";
+const BOARD_COLUMN_CLASS = "w-[min(92vw,calc(100dvh-14rem))] max-w-[min(100%,40rem)]";
 
 export function TrainingPage() {
   const router = useRouter();
   const { state, loading, error, reload } = useActiveTraining();
 
   const [positionFen, setPositionFen] = React.useState<string | null>(null);
-  const [puzzleState, setPuzzleState] =
-    React.useState<TrainingPuzzleUiState>("idle");
+  const [puzzleState, setPuzzleState] = React.useState<TrainingPuzzleUiState>("idle");
   const [currentSolutionIndex, setCurrentSolutionIndex] = React.useState(0);
-  const [accumulatedUserMoves, setAccumulatedUserMoves] = React.useState<
-    string[]
-  >([]);
+  const [accumulatedUserMoves, setAccumulatedUserMoves] = React.useState<string[]>([]);
   /** Seeded by `useSyncPuzzleFromReadyState` when the active puzzle is known. */
   const attemptStartedAtRef = React.useRef(0);
-  const autoPlayTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+  const autoPlayTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const opponentRevealTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const exerciseTransitionTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
-  const exerciseTransitionTimerRef = React.useRef<ReturnType<
-    typeof setTimeout
-  > | null>(null);
   const currentSolutionIndexRef = React.useRef(0);
   const accumulatedUserMovesRef = React.useRef<string[]>([]);
   const currentFenRef = React.useRef<string>("");
@@ -83,20 +78,25 @@ export function TrainingPage() {
     accumulatedUserMovesRef.current = accumulatedUserMoves;
   }, [displayFen, currentSolutionIndex, accumulatedUserMoves]);
 
-  useSyncPuzzleFromReadyState(readyState, {
-    boardMoveInFlightRef,
-    autoPlayTimerRef,
-    exerciseTransitionTimerRef,
-    currentSolutionIndexRef,
-    accumulatedUserMovesRef,
-    currentFenRef,
-    attemptStartedAtRef,
-  }, {
-    setPositionFen,
-    setCurrentSolutionIndex,
-    setAccumulatedUserMoves,
-    setPuzzleState,
-  });
+  useSyncPuzzleFromReadyState(
+    readyState,
+    {
+      boardMoveInFlightRef,
+      autoPlayTimerRef,
+      opponentRevealTimerRef,
+      exerciseTransitionTimerRef,
+      currentSolutionIndexRef,
+      accumulatedUserMovesRef,
+      currentFenRef,
+      attemptStartedAtRef,
+    },
+    {
+      setPositionFen,
+      setCurrentSolutionIndex,
+      setAccumulatedUserMoves,
+      setPuzzleState,
+    }
+  );
 
   const { handleBoardMove, handleSkip } = useTrainingBoardActions(
     readyState,
@@ -112,6 +112,7 @@ export function TrainingPage() {
       boardMoveInFlightRef,
       attemptStartedAtRef,
       autoPlayTimerRef,
+      opponentRevealTimerRef,
       exerciseTransitionTimerRef,
     },
     {
@@ -146,10 +147,7 @@ export function TrainingPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-lg py-8">
-        <TrainingEmptyState
-          title="Something went wrong"
-          description={error.message}
-        />
+        <TrainingEmptyState title="Something went wrong" description={error.message} />
       </div>
     );
   }
@@ -157,9 +155,7 @@ export function TrainingPage() {
   if (!state) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <p className="text-sm text-[var(--muted-foreground)]">
-          No training state.
-        </p>
+        <p className="text-sm text-[var(--muted-foreground)]">No training state.</p>
       </div>
     );
   }
@@ -178,7 +174,7 @@ export function TrainingPage() {
   if (state.status === "no-active-cycle") {
     const last = state.lastCompletedCycle;
     return (
-      <div className="flex min-h-[calc(100dvh-6rem)] flex-col md:min-h-[calc(100dvh-4rem)]">
+      <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col md:min-h-[calc(100dvh-4rem)]">
         <h1 className="sr-only">Training</h1>
         <div className="flex flex-1 flex-col items-center justify-center px-4 py-10">
           <div className="w-full max-w-md text-center">
@@ -202,8 +198,7 @@ export function TrainingPage() {
             </EmptyState>
             {last != null ? (
               <p className="mt-6 text-xs tabular-nums text-muted-foreground/70">
-                Last cycle: {formatDurationMs(last.totalTimeMs)} ·{" "}
-                {last.sessionCount}{" "}
+                Last cycle: {formatDurationMs(last.totalTimeMs)} · {last.sessionCount}{" "}
                 {last.sessionCount === 1 ? "session" : "sessions"}
               </p>
             ) : null}
@@ -227,9 +222,7 @@ export function TrainingPage() {
   if (state.status === "cycle-complete") {
     return (
       <div className="flex min-h-[45vh] flex-col items-center justify-center gap-2 px-4">
-        <p className="text-sm font-medium text-[var(--foreground)]">
-          Cycle complete
-        </p>
+        <p className="text-sm font-medium text-[var(--foreground)]">Cycle complete</p>
         <p className="text-center text-sm text-[var(--muted-foreground)]">
           Opening your cycle summary…
         </p>
@@ -251,40 +244,40 @@ export function TrainingPage() {
     puzzleState === "transitioning";
 
   return (
-    <div className="flex min-h-[calc(100dvh-6rem)] flex-col md:min-h-[calc(100dvh-4rem)]">
+    <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col pt-0.5 md:min-h-[calc(100dvh-4rem)] md:pt-0">
       <h1 className="sr-only">Training</h1>
-      <header className="mb-4 flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-xs text-[var(--muted-foreground)] sm:mb-5 sm:text-sm">
-        <span
-          className="max-w-[42ch] truncate text-xs font-medium text-[var(--muted-foreground)] sm:text-sm"
-          title={`${readyState!.trainingSet.name} · Cycle ${readyState!.cycleRun.cycleNumber}`}
-        >
-          {readyState!.trainingSet.name} · Cycle {readyState!.cycleRun.cycleNumber}
-        </span>
-        <span className="tabular-nums">
-          Exercise {readyState!.exerciseIndex + 1} /{" "}
-          {readyState!.totalExercises}
-        </span>
-        <EndSessionDialog onConfirm={handleEndSession} />
+      <header className="mb-3 flex w-full flex-col gap-y-2 text-[11px] leading-snug text-muted-foreground sm:mb-4 sm:text-xs md:flex-row md:flex-wrap md:items-center md:justify-end md:gap-x-2 md:gap-y-1 md:text-right md:text-sm">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 md:contents">
+          <span
+            className="min-w-0 max-w-full shrink truncate font-medium text-muted-foreground"
+            title={readyState!.trainingSet.name}
+          >
+            {readyState!.trainingSet.name}
+          </span>
+          <span className="text-muted-foreground" aria-hidden>
+            ·
+          </span>
+          <span className="shrink-0 tabular-nums font-medium text-muted-foreground">
+            Cycle {readyState!.cycleRun.cycleNumber}
+          </span>
+        </div>
+        <div className="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 md:contents">
+          <span className="hidden text-muted-foreground md:inline" aria-hidden>
+            ·
+          </span>
+          <span className="shrink-0 tabular-nums text-muted-foreground">
+            Exercise {readyState!.exerciseIndex + 1} / {readyState!.totalExercises}
+          </span>
+          <EndSessionDialog onConfirm={handleEndSession} />
+        </div>
       </header>
 
-      <div className="flex flex-1 flex-col items-center justify-center gap-8 pb-6">
-        <div
-          className={cn(
-            "flex flex-col items-stretch gap-1",
-            BOARD_COLUMN_CLASS
-          )}
-        >
-          <div
-            className={cn(
-              "transition-opacity duration-200",
-              puzzleState === "transitioning" &&
-                "pointer-events-none opacity-0"
-            )}
-            aria-hidden={puzzleState === "transitioning"}
-          >
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 pb-6 pt-1 sm:gap-8 sm:pt-0">
+        <div className={cn("flex flex-col items-stretch gap-1", BOARD_COLUMN_CLASS)}>
+          <div className="min-h-[1.75rem]">
             <SideToMoveIndicator sideToMove={turnForLabel} />
           </div>
-          <div className="relative w-full">
+          <div className="relative w-full min-h-0">
             <TrainingBoardCard
               fen={displayFen}
               boardOrientation={readyState!.boardOrientation}
@@ -297,14 +290,11 @@ export function TrainingPage() {
               className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
               aria-hidden="true"
             >
-              <div
-                className={cn(
-                  "rounded-md bg-black/70 px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity duration-200",
-                  puzzleState === "transitioning" ? "opacity-100" : "opacity-0"
-                )}
-              >
-                Exercise complete
-              </div>
+              {puzzleState === "transitioning" ? (
+                <div className="rounded-md bg-black/70 px-4 py-2 text-sm font-medium text-white shadow-sm">
+                  Exercise complete
+                </div>
+              ) : null}
             </div>
           </div>
           <span className="sr-only" aria-live="polite">
@@ -349,8 +339,8 @@ function EndSessionDialog({ onConfirm }: { onConfirm: () => void }) {
         <AlertDialogHeader>
           <AlertDialogTitle>End this session?</AlertDialogTitle>
           <AlertDialogDescription>
-            Your cycle progress is saved. You can resume training later from the
-            dashboard or Training Sets.
+            Your cycle progress is saved. You can resume training later from the dashboard
+            or Training Sets.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

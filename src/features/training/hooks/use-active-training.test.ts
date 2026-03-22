@@ -99,4 +99,40 @@ describe("useActiveTraining", () => {
       expect(result.current.state.sessionId).toBe("session-1");
     }
   });
+
+  it("reload({ silent: true }) does not toggle loading (board can stay mounted)", async () => {
+    mockGetActiveTrainingState.mockResolvedValue({
+      status: "ready",
+      sessionId: undefined,
+      trainingSet: { id: "set-1", name: "Set 1" },
+      cycleRun: {
+        id: "cycle-1",
+        cycleNumber: 1,
+        solvedCount: 0,
+        totalExercises: 5,
+        nextExerciseIndex: 0,
+        status: "active",
+      },
+      exercise: { id: "ex-1", fen: "fen", sideToMove: "w", solutionMoves: [] },
+      exerciseIndex: 0,
+      totalExercises: 5,
+      boardOrientation: "white",
+    });
+    mockGetOrCreateActiveSession.mockResolvedValue({ id: "session-1" });
+
+    const { result } = renderHook(() => useActiveTraining());
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    await act(async () => {
+      const p = result.current.reload({ silent: true });
+      expect(result.current.loading).toBe(false);
+      await p;
+    });
+
+    expect(result.current.loading).toBe(false);
+    expect(mockGetActiveTrainingState).toHaveBeenCalledTimes(2);
+  });
 });

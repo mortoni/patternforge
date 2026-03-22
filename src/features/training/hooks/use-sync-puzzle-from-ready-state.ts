@@ -18,6 +18,8 @@ export type TrainingPuzzleUiState =
 export interface SyncPuzzleRefs {
   boardMoveInFlightRef: React.MutableRefObject<boolean>;
   autoPlayTimerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
+  /** Cleared when switching exercises; defers opponent FEN after a correct move. */
+  opponentRevealTimerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
   exerciseTransitionTimerRef: React.MutableRefObject<
     ReturnType<typeof setTimeout> | null
   >;
@@ -46,6 +48,7 @@ export function useSyncPuzzleFromReadyState(
   const {
     boardMoveInFlightRef,
     autoPlayTimerRef,
+    opponentRevealTimerRef,
     exerciseTransitionTimerRef,
     currentSolutionIndexRef,
     accumulatedUserMovesRef,
@@ -62,12 +65,16 @@ export function useSyncPuzzleFromReadyState(
   const cycleRunId = readyState?.cycleRun.id;
   const exerciseId = readyState?.exercise.id;
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!readyState || cycleRunId == null || exerciseId == null) return;
     boardMoveInFlightRef.current = false;
     if (autoPlayTimerRef.current) {
       clearTimeout(autoPlayTimerRef.current);
       autoPlayTimerRef.current = null;
+    }
+    if (opponentRevealTimerRef.current) {
+      clearTimeout(opponentRevealTimerRef.current);
+      opponentRevealTimerRef.current = null;
     }
     if (exerciseTransitionTimerRef.current) {
       clearTimeout(exerciseTransitionTimerRef.current);
@@ -94,12 +101,17 @@ export function useSyncPuzzleFromReadyState(
     attemptStartedAtRef.current = Date.now();
     return () => {
       if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
+      if (opponentRevealTimerRef.current) {
+        clearTimeout(opponentRevealTimerRef.current);
+        opponentRevealTimerRef.current = null;
+      }
       if (exerciseTransitionTimerRef.current) {
         clearTimeout(exerciseTransitionTimerRef.current);
         exerciseTransitionTimerRef.current = null;
       }
     };
     // Intentionally only cycle + exercise identity; `readyState` / setters / refs omitted (stable or intentional).
+    // useLayoutEffect: align FEN / indices with the new exercise before paint to avoid a one-frame stale board.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cycleRunId, exerciseId]);
 }
