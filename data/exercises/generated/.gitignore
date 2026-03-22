@@ -1,0 +1,12 @@
+# Produced by `pnpm run exercises:normalize`
+exercise.contract.json
+exercise.normalization-report.json
+exercise.validation-report.json
+exercise.verified.json
+exercise.manual-review.json
+exercise.broken.json
+exercise.summary.json
+exercise.engine-report.json
+exercise.engine-review-queue.json
+exercise.engine-review-queue.csv
+exercise.final.json

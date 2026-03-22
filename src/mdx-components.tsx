@@ -204,21 +204,45 @@ export function useMDXComponents(
     a: DocsAnchor,
     code: MDXCode,
     pre: MDXPre,
+    /*
+     * Tables: match `src/components/ui/table.tsx` (shadcn) — bordered shell, row dividers,
+     * generous cell padding. Prose tweaks: td align-top + line-height for multi-line cells.
+     */
     table: ({ className, ...props }: ComponentPropsWithoutRef<"table">) => (
-      <div className="my-6 overflow-x-auto rounded-lg border border-border">
-        <table
-          className={cn("w-full min-w-[20rem] text-left text-sm", className)}
-          {...props}
-        />
+      <div className="my-8 rounded-md border border-border bg-card text-card-foreground shadow-sm">
+        <div className="relative w-full overflow-x-auto">
+          <table
+            className={cn("w-full caption-bottom text-sm", className)}
+            {...props}
+          />
+        </div>
       </div>
     ),
     thead: ({ className, ...props }: ComponentPropsWithoutRef<"thead">) => (
-      <thead className={cn("border-b border-border bg-muted/40", className)} {...props} />
+      <thead
+        className={cn("bg-muted/50 [&_tr]:border-b", className)}
+        {...props}
+      />
+    ),
+    tbody: ({ className, ...props }: ComponentPropsWithoutRef<"tbody">) => (
+      <tbody
+        className={cn("[&_tr:last-child]:border-0", className)}
+        {...props}
+      />
+    ),
+    tr: ({ className, ...props }: ComponentPropsWithoutRef<"tr">) => (
+      <tr
+        className={cn(
+          "border-b border-border transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+          className
+        )}
+        {...props}
+      />
     ),
     th: ({ className, ...props }: ComponentPropsWithoutRef<"th">) => (
       <th
         className={cn(
-          "px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground",
+          "h-10 px-4 text-left align-middle text-sm font-medium text-muted-foreground",
           className
         )}
         {...props}
@@ -227,7 +251,8 @@ export function useMDXComponents(
     td: ({ className, ...props }: ComponentPropsWithoutRef<"td">) => (
       <td
         className={cn(
-          "border-b border-border/60 px-4 py-2.5 text-[15px] text-muted-foreground",
+          "p-4 align-top text-[15px] leading-relaxed text-muted-foreground",
+          "[&_strong]:font-semibold [&_strong]:text-foreground",
           className
         )}
         {...props}

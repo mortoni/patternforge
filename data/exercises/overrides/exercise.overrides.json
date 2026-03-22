@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "overrides": [
+    {
+      "id": "exercise-0026",
+      "verification": {
+        "status": "certified",
+        "reasons": [
+          "[manual_override] Puzzle line is intentional; Stockfish prefers a quieter defense."
+        ],
+        "developerNotes": "…",
+        "manualReviewNotes": "Accepted alternative first moves (UCI): h1g2",
+        "lastVerifiedAt": "2026-03-22T12:00:00.000Z"
+      }
+    },
+    
+  ]
+}
+
+
+{
+  "schemaVersion": 1,
+  "overrides": [
+    {
+      "id": "exercise-0026",
+      "verification": {
+        "status": "certified",
+        "reasons": [
+          "[manual_override] Engine prefers a different move, but the book line is a valid tactical continuation aligned with the training objective."
+        ],
+        "developerNotes": "Engine best move deviates, but expected move still preserves advantage and matches the Woodpecker training theme.",
+        "manualReviewNotes": "Accepted alternative first moves (UCI): h1g2. This puzzle is not about the absolute best move but pattern recognition.",
+        "lastVerifiedAt": "2026-03-22T12:00:00.000Z"
+      }
+    }
+  ]
+}

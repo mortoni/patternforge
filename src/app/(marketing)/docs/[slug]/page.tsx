@@ -10,6 +10,7 @@ const validSlugs = [
   "architecture",
   "data-model",
   "decisions",
+  "exercise-verification-policy",
 ] as const;
 
 type Slug = (typeof validSlugs)[number];

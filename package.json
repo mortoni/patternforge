@@ -19,7 +19,16 @@
     "import:puzzles": "tsx scripts/import-puzzles.ts",
     "refresh-data": "pnpm run validate:puzzles && pnpm run generate:puzzles",
     "woodpecker:fill-fens": "tsx scripts/fill-woodpecker-fens.ts",
-    "woodpecker:to-puzzle-csv": "tsx scripts/woodpecker-to-puzzle-csv.ts"
+    "woodpecker:to-puzzle-csv": "tsx scripts/woodpecker-to-puzzle-csv.ts",
+    "exercises:normalize": "tsx scripts/exercises/normalize-exercises.ts",
+    "exercises:validate": "tsx scripts/exercises/validate-exercises.ts",
+    "exercises:certify": "tsx scripts/exercises/certify-exercises.ts",
+    "exercises:verify": "tsx scripts/exercises/verify-exercises.ts",
+    "exercises:engine:test": "tsx scripts/exercises/engine/test-stockfish.ts",
+    "exercises:engine:validate": "tsx scripts/exercises/engine/validate-first-move.ts",
+    "exercises:engine:validate-suspicious": "tsx scripts/exercises/engine/validate-first-move.ts --suspicious-only",
+    "exercises:engine:review-queue": "tsx scripts/exercises/engine/build-review-queue.ts",
+    "exercises:apply-overrides": "tsx scripts/exercises/apply-overrides.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -59,6 +68,7 @@
     "eslint-config-prettier": "^10.1.8",
     "jsdom": "^28.1.0",
     "prettier": "^3.8.1",
+    "remark-gfm": "^4.0.1",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",

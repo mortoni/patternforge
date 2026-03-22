@@ -1,0 +1,75 @@
+# Exercise verification policy
+
+Developer reference: how Pattern Forge classifies exercises after the **static** verification pipeline and when to perform a **manual confidence check**.
+
+## Purpose of the pipeline
+
+The pipeline turns the human-editable CSV into a normalized contract (`exercise.contract.json`, `schemaVersion` 3). **Imported** solution tokens are preserved as `solution.rawMoves` (editorial input, typically SAN). The normalize step replays them locally with chess.js and stores **true UCI** in `solution.moves` with `format: "uci"`. Outcome is recorded on `solution.normalizationStatus` / optional `solution.normalizationIssues`. **Static validation** replays that UCI line from the FEN where possible; it does not treat “could not normalize this token” the same as “illegal chess move” (see `solution_normalization_*` flags). Outputs live under `data/exercises/generated/` and are **informational** for developers until downstream tooling consumes them.
+
+Run the full flow:
+
+```bash
+pnpm run exercises:verify
+```
+
+Steps: `exercises:normalize` → `exercises:validate` → `exercises:certify`.
+
+## Status meanings
+
+| Status             | Meaning                                                                                                                                                                                                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **certified**      | Passed all current static checks: no validation flags on that row.                                                                                                                                                                                                      |
+| **manual_review**  | Static checks did not find a “hard” failure, but at least one **soft** flag was raised (e.g. missing title, side-to-move mismatch vs FEN). Requires a human decision.                                                                                                 |
+| **broken**         | At least one **hard** flag: invalid/missing FEN, illegal or missing solution line (per static rules), duplicate id, etc. Do not treat as production-ready until fixed at source.                                                                                       |
+| **pending**        | Status could not be decided from the validation report (e.g. report missing, misaligned row count, no entry for that index). Fix tooling or re-run after a successful validate/certify.                                                                                |
+
+Hard vs soft tiers are implemented in `scripts/exercises/certify-exercises.ts` (`CERTIFICATION_RULES_VERSION` — currently **2**, `BROKEN_FLAGS`).
+
+## When manual review is required
+
+Manual review is required when an exercise is classified as **manual_review**, or whenever a developer **disagrees** with **certified** or **broken** based on domain judgment (e.g. false positive from SAN/chess.js ambiguity).
+
+**Always** inspect manually if:
+
+- The exercise is business-critical or customer-facing and you need explicit sign-off.
+- Validation limitations apply (see `limitations` in `exercise.validation-report.json`): notation quirks, figurine symbols, or non-standard SAN may produce misleading flags.
+
+## Examples of manual review triggers
+
+- **`missing_title`** — empty or weak catalog title; confirm the intended display/source string.
+- **`side_to_move_mismatch`** — CSV side field disagrees with FEN active color; confirm which is authoritative and fix the source.
+- **`solution_normalization_partial`** — a prefix of the line converted to UCI and replayed cleanly; one or more trailing raw tokens could not be parsed (fix notation or tooling).
+- **`solution_normalization_failed`** — no UCI sequence was produced from the raw tokens (or normalization never ran); the row is not auto-classified as an illegal move line—inspect the import and FEN.
+- Any future **non-broken** validation flag added by static checks.
+
+## What a reviewer should check
+
+1. **Position** — FEN matches the intended puzzle; side to move is correct.
+2. **Solution** — Compare `rawMoves` to the intended main line; confirm `moves` (UCI, `format: "uci"`) matches after normalization. Use `normalizationStatus` / `normalizationIssues` for partial or failed runs.
+3. **Metadata** — Title, section/set id, difficulty align with your dataset conventions.
+4. **Duplicates** — Same position or id should not appear unintentionally.
+
+## Possible outcomes after manual review
+
+| Outcome            | Action                                                                                                                                                                  |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Accept as-is**   | No source change; document in team notes if needed. Later pipeline versions may add a dedicated “human certified” field—today, static **certified** is only “no flags.” |
+| **Fix source CSV** | Correct FEN, moves, titles, or ids; re-run `pnpm run exercises:verify`.                                                                                                 |
+| **Defer**          | Leave as **manual_review** / **broken** until notation or tooling improves; track in your issue tracker.                                                                |
+
+There is **no** in-app admin UI for this workflow; outcomes are reflected by **editing source data** and regenerating artifacts.
+
+## Correcting source data
+
+1. Edit **`data/imports/puzzle.csv`** (or the CSV path you pass to normalize)—this remains the **human-editable source of truth**.
+2. Re-run **`pnpm run exercises:verify`**.
+3. Do **not** hand-edit `exercise.contract.json`, `exercise.*.json` splits, or reports **unless** you are deliberately experimenting or maintaining a one-off artifact. Routine fixes belong in the CSV (or future import sources), then regenerate.
+
+## Current scope (important)
+
+- **Static validation** — Implemented (`exercises:validate`, chess.js for FEN + **UCI replay** of `solution.moves` when present; legacy contracts without `rawMoves` still use SAN replay).
+- **Engine / tablebase verification** — **Not** in scope yet; do not assume tactical correctness beyond static replay.
+- **App-flow verification** — **Not** in scope yet (training UI, session flow, etc.).
+- **Reports** — `exercise.validation-report.json`, `exercise.summary.json`, and certified/broken/manual-review splits are **developer visibility** only unless another tool explicitly consumes them.
+
+As engine and product checks land, this policy should be updated to describe any new gates and statuses.

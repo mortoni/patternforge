@@ -42,6 +42,11 @@ const docsPages = [
     slug: "decisions",
     group: "Technical",
   },
+  {
+    title: "Exercise verification",
+    slug: "exercise-verification-policy",
+    group: "Technical",
+  },
 ] as const;
 
 const groups = [

@@ -6,25 +6,15 @@ const nextConfig = {
   experimental: {
     mdxRs: false,
   },
-  async redirects() {
-    return [
-      {
-        source: "/app/training-2",
-        destination: "/app/training",
-        permanent: true,
-      },
-      {
-        source: "/app/training-2/session-summary",
-        destination: "/app/training/session-summary",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [],
+    // String form: Turbopack requires serializable MDX loader options. The
+    // loader resolves `remark-gfm` at compile time. GFM tables compile through
+    // `_components.table`, so `useMDXComponents` styling applies (raw `<table>`
+    // JSX does not).
+    remarkPlugins: ["remark-gfm"],
     rehypePlugins: [],
   },
 });
