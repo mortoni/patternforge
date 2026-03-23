@@ -21,8 +21,7 @@ export function AutorBoardOrientationCard({
       <CardHeader>
         <h3 className="text-sm font-medium text-foreground">Auto flip board</h3>
         <p className="text-xs text-muted-foreground">
-          Automatically flips the board with side to move on the bottom in training and
-          mistake review.
+          Automatically flips the board with side to move on the bottom in training.
         </p>
       </CardHeader>
       <CardContent>
