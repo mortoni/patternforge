@@ -42,12 +42,18 @@ const docsPages = [
     slug: "decisions",
     group: "Technical",
   },
+  {
+    title: "Roadmap & TODOs",
+    slug: "roadmap",
+    group: "Planning",
+  },
 ] as const;
 
 const groups = [
   { name: "Getting Started", pages: docsPages.filter((p) => p.group === "Getting Started") },
   { name: "Concepts", pages: docsPages.filter((p) => p.group === "Concepts") },
   { name: "Technical", pages: docsPages.filter((p) => p.group === "Technical") },
+  { name: "Planning", pages: docsPages.filter((p) => p.group === "Planning") },
 ];
 
 const linkClass =

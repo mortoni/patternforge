@@ -1,0 +1,50 @@
+# Roadmap & TODOs
+
+Living backlog for PatternForge. Items are not commitments or ordered by priority unless noted.
+
+## Data & backend
+
+- [ ] **Evaluate a server-backed database** — Today the app is local-first (Dexie / IndexedDB). Explore syncing training history, sets, and attempts to a hosted DB for backup, multi-device use, and optional collaboration. Decide migration path and conflict resolution.
+- [ ] **Account sync model** — If login exists, define what syncs vs stays device-only, offline behavior, and deletion/export rules.
+- [ ] **Import/export hardening** — Broader CSV/JSON export of progress; validate large imports; document limits.
+
+## Identity & accounts
+
+- [ ] **User login** — Choose provider (e.g. OAuth, email magic link) and map to training data ownership. Align with any future server DB.
+- [ ] **Session security** — Secure cookies, CSRF strategy if server actions/APIs grow, and secrets handling on Vercel.
+
+## Monetization
+
+- [ ] **Donations or sponsorship** — Optional integration (e.g. Stripe, Ko-fi, GitHub Sponsors) with clear UX and privacy policy updates.
+
+## Delivery & operations
+
+- [ ] **Deploy pipeline** — Document and automate: branch → preview → production; required checks (`lint`, `test`, `typecheck`, `build`); environment variables (`NEXT_PUBLIC_SITE_URL`, analytics).
+- [ ] **Preview vs production data** — Clarify that IndexedDB is per-origin; staging URLs get separate data unless you add server sync.
+- [ ] **Release checklist** — Changelog, `public/data/generated` freshness after `refresh-data`, icon regeneration (`pnpm run generate:icons`) when branding changes.
+
+## Accessibility & UX
+
+- [ ] **Accessibility pass** — Keyboard paths for training and navigation, focus management in dialogs/menus, ARIA on the board where applicable, contrast audit.
+- [ ] **Motion preferences** — Respect `prefers-reduced-motion` for board animations and transitions.
+- [ ] **Screen reader testing** — Training flow, progress, and mistakes review with VoiceOver / TalkBack.
+
+## Quality & testing
+
+- [ ] **E2E in CI** — Run Playwright on PRs (install Chromium in CI, smoke critical flows).
+- [ ] **Visual or snapshot tests** — Optional for marketing pages and shell layout regressions.
+
+## Product & chess UX
+
+- [ ] **Puzzle pipeline** — Keep `validate:puzzles` / `generate:puzzles` documented; consider CI validation of generated JSON on change.
+- [ ] **Offline & PWA** — Today install is home-screen + manifest; optional service worker for shell cache only (avoid heavy offline puzzle sync until requirements are clear).
+- [ ] **Analytics & privacy** — Document what Vercel Analytics collects; add consent if required by jurisdiction.
+
+## Docs & developer experience
+
+- [ ] **Architecture updates** — When backend or auth lands, update Architecture and Data Model docs.
+- [ ] **Contributing** — Short guide for scripts (`refresh-data`, `generate:icons`, DB reset in dev).
+
+---
+
+*Last updated as a working note; trim or promote items into issues as the project matures.*
