@@ -101,6 +101,26 @@ export async function seedPuzzlesFromGeneratedJson(
 }
 
 /**
+ * If IndexedDB has no training sets, fetch `public/data/generated/*.json` and upsert into Dexie.
+ * Runs in production (first visit) and development. No-op when sets already exist.
+ * Safe to call multiple times.
+ */
+export async function ensureGeneratedPuzzlesInDbIfEmpty(): Promise<boolean> {
+  const count = await db.trainingSets.count();
+  if (count > 0) return false;
+  try {
+    await seedPuzzlesFromGeneratedJson();
+    return true;
+  } catch (err) {
+    console.error(
+      "[PatternForge] Failed to load training library from /data/generated. Commit public/data/generated/ and redeploy, or run pnpm run refresh-data locally.",
+      err
+    );
+    return false;
+  }
+}
+
+/**
  * Reset puzzle-related data for development (easy, intermediate, advanced sets and their exercises).
  * Does not call automatically. Use from dev console or a guarded dev-only button.
  */

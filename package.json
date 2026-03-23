@@ -19,7 +19,8 @@
     "import:puzzles": "tsx scripts/import-puzzles.ts",
     "refresh-data": "pnpm run validate:puzzles && pnpm run generate:puzzles",
     "woodpecker:fill-fens": "tsx scripts/fill-woodpecker-fens.ts",
-    "woodpecker:to-puzzle-csv": "tsx scripts/woodpecker-to-puzzle-csv.ts"
+    "woodpecker:to-puzzle-csv": "tsx scripts/woodpecker-to-puzzle-csv.ts",
+    "generate:icons": "tsx scripts/generate-icons.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -59,7 +60,9 @@
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
     "jsdom": "^28.1.0",
+    "png-to-ico": "^3.0.1",
     "prettier": "^3.8.1",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",

@@ -25,6 +25,8 @@ import {
   clearAllTrainingSetsForDevelopment,
   seedPuzzlesFromGeneratedJson,
 } from "@/db/seed-puzzles";
+
+export { ensureGeneratedPuzzlesInDbIfEmpty } from "@/db/seed-puzzles";
 import { resetUserProgressPreserveLibrary } from "@/services/reset-user-progress.service";
 import type { TrainingSetOverview } from "../types";
 import type { ContinueTrainingResult, StartNextCycleResult } from "../types";

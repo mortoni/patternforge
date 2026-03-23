@@ -8,6 +8,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("../services/training-sets.service", () => ({
+  ensureGeneratedPuzzlesInDbIfEmpty: vi.fn().mockResolvedValue(false),
   ensureSeededForDevelopment: vi.fn().mockResolvedValue(false),
   getTrainingSetsOverview: vi.fn(),
   continueTraining: vi.fn().mockResolvedValue({ success: true, route: "/app/training" }),

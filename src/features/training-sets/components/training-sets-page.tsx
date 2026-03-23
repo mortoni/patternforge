@@ -19,6 +19,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
+  ensureGeneratedPuzzlesInDbIfEmpty,
   ensureSeededForDevelopment,
   getTrainingSetsOverview,
   continueTraining,
@@ -49,6 +50,8 @@ export function TrainingSetsPage() {
 
     async function load() {
       try {
+        await ensureGeneratedPuzzlesInDbIfEmpty();
+        if (cancelled) return;
         await ensureSeededForDevelopment();
         if (cancelled) return;
         await loadOverviews();
