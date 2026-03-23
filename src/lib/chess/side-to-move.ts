@@ -16,3 +16,8 @@ export function parseSideToMoveFromFen(fen: string): ChessSideToMove {
 export function sideToMoveColorWord(side: ChessSideToMove): "White" | "Black" {
   return side === CHESS_SIDE_WHITE ? "White" : "Black";
 }
+
+
+export function getsideToMove(side: ChessSideToMove): "white" | "black" {
+  return side === CHESS_SIDE_WHITE ? "white" : "black";
+}

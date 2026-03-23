@@ -13,12 +13,17 @@ import { parseBoardStyleId, type BoardStyleId } from "@/lib/chess/board-styles";
 
 const DEFAULTS: Pick<
   AppSettingsSchema,
-  "theme" | "boardOrientation" | "boardStyle" | "lastTrainingSetId"
+  | "theme"
+  | "boardOrientation"
+  | "boardStyle"
+  | "lastTrainingSetId"
+  | "autoBoardOrientation"
 > = {
   theme: "system",
   boardOrientation: "white",
   boardStyle: "classic",
   lastTrainingSetId: undefined,
+  autoBoardOrientation: false,
 };
 
 function normalizeSettings(row: AppSettingsSchema | undefined): AppSettingsSchema {
@@ -36,6 +41,7 @@ function normalizeSettings(row: AppSettingsSchema | undefined): AppSettingsSchem
 
 export type ThemeValue = AppSettingsSchema["theme"];
 export type BoardOrientationValue = AppSettingsSchema["boardOrientation"];
+export type AutoBoardOrientationValue = AppSettingsSchema["autoBoardOrientation"];
 export type BoardStyleValue = BoardStyleId;
 
 /**
@@ -54,9 +60,7 @@ export async function getSettingsWithDefaults(): Promise<AppSettingsSchema> {
 /**
  * Updates theme and persists.
  */
-export async function updateTheme(
-  theme: ThemeValue
-): Promise<AppSettingsSchema> {
+export async function updateTheme(theme: ThemeValue): Promise<AppSettingsSchema> {
   await updateSettings({ theme });
   const next = await getSettings();
   return normalizeSettings(next ?? { id: "default", ...DEFAULTS, theme });
@@ -70,9 +74,18 @@ export async function updateBoardOrientation(
 ): Promise<AppSettingsSchema> {
   await updateSettings({ boardOrientation });
   const next = await getSettings();
-  return normalizeSettings(
-    next ?? { id: "default", ...DEFAULTS, boardOrientation }
-  );
+  return normalizeSettings(next ?? { id: "default", ...DEFAULTS, boardOrientation });
+}
+
+/**
+ * Updates auto board orientation and persists.
+ */
+export async function updateAutoBoardOrientation(
+  autoBoardOrientation: AutoBoardOrientationValue
+): Promise<AppSettingsSchema> {
+  await updateSettings({ autoBoardOrientation });
+  const next = await getSettings();
+  return normalizeSettings(next ?? { id: "default", ...DEFAULTS, autoBoardOrientation });
 }
 
 /**

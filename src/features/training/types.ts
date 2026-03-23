@@ -63,4 +63,5 @@ export type ActiveTrainingState =
       exerciseIndex: number;
       totalExercises: number;
       boardOrientation: "white" | "black";
+      autoBoardOrientation: boolean;
     };

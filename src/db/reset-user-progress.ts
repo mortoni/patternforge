@@ -4,7 +4,7 @@
  *
  * Preserves: trainingSets, exercises
  * Clears: cycleRuns, sessions, exerciseAttempts, mistakeEntries, appInstance
- * Resets: settings to default (theme: system, boardOrientation: white, boardStyle: classic, no lastTrainingSetId)
+ * Resets: settings to default (theme: system, boardOrientation: white, boardStyle: classic, no lastTrainingSetId, autoBoardOrientation: false)
  */
 
 import { db } from "./dexie";
@@ -18,6 +18,7 @@ const DEFAULT_SETTINGS = {
   boardOrientation: "white" as const,
   boardStyle: "classic" as const,
   lastTrainingSetId: undefined as string | undefined,
+  autoBoardOrientation: false as const
 };
 
 export interface ResetUserProgressResult {

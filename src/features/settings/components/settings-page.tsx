@@ -8,16 +8,11 @@ import { TrainingPreferencesCard } from "./training-preferences-card";
 import { DevResetProgressCard } from "./dev-reset-progress-card";
 import { useSettingsContext } from "../context/settings-context";
 import { parseBoardStyleId } from "@/lib/chess/board-styles";
+import { AutorBoardOrientationCard } from "./auto-board-orientation-card";
 
 export function SettingsPage() {
-  const {
-    settings,
-    loading,
-    error,
-    setTheme,
-    setBoardOrientation,
-    setBoardStyle,
-  } = useSettingsContext();
+  const { settings, loading, error, setTheme, setBoardOrientation, setBoardStyle, setAutoBoardOrientation } =
+    useSettingsContext();
 
   if (error) {
     return (
@@ -48,6 +43,11 @@ export function SettingsPage() {
         <BoardOrientationCard
           value={settings?.boardOrientation ?? "white"}
           onChange={(boardOrientation) => setBoardOrientation(boardOrientation)}
+          disabled={loading || settings?.autoBoardOrientation}
+        />
+        <AutorBoardOrientationCard
+          value={settings?.autoBoardOrientation ?? false}
+          onChange={(autoBoardOrientation) => setAutoBoardOrientation(autoBoardOrientation)}
           disabled={loading}
         />
         <BoardStyleCard

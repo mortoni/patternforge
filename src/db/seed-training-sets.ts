@@ -11,10 +11,7 @@ import type { ExerciseSchema } from "./schema";
 import type { CycleRunSchema } from "./schema";
 
 /** Reusable sample exercises; puzzleNumber set for display consistency. */
-const SAMPLE_EXERCISES: Omit<
-  ExerciseSchema,
-  "id" | "trainingSetId" | "createdAt"
->[] = [
+const SAMPLE_EXERCISES: Omit<ExerciseSchema, "id" | "trainingSetId" | "createdAt">[] = [
   {
     fen: "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 4",
     sideToMove: "w",
@@ -119,11 +116,7 @@ export async function seedTrainingSetsIfEmpty(): Promise<boolean> {
   const setId1 = createId();
   const exerciseIds1: string[] = [];
   for (let i = 0; i < 5; i++) {
-    const ex = makeExercise(
-      setId1,
-      now,
-      SAMPLE_EXERCISES[i] ?? SAMPLE_EXERCISES[0]
-    );
+    const ex = makeExercise(setId1, now, SAMPLE_EXERCISES[i] ?? SAMPLE_EXERCISES[0]);
     ex.id = createId();
     exerciseIds1.push(ex.id);
     await db.exercises.add(ex);
@@ -143,11 +136,7 @@ export async function seedTrainingSetsIfEmpty(): Promise<boolean> {
   const setId2 = createId();
   const exerciseIds2: string[] = [];
   for (let i = 0; i < 5; i++) {
-    const ex = makeExercise(
-      setId2,
-      now,
-      SAMPLE_EXERCISES[i] ?? SAMPLE_EXERCISES[0]
-    );
+    const ex = makeExercise(setId2, now, SAMPLE_EXERCISES[i] ?? SAMPLE_EXERCISES[0]);
     ex.id = createId();
     exerciseIds2.push(ex.id);
     await db.exercises.add(ex);
@@ -200,5 +189,6 @@ export async function seedDefaultSettingsIfMissing(): Promise<void> {
     boardOrientation: "white",
     boardStyle: "classic",
     lastTrainingSetId: undefined,
+    autoBoardOrientation: false,
   });
 }

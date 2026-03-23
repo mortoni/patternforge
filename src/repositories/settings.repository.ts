@@ -21,6 +21,7 @@ export async function putSettings(
     boardOrientation: data.boardOrientation ?? "white",
     boardStyle: data.boardStyle ?? "classic",
     lastTrainingSetId: data.lastTrainingSetId,
+    autoBoardOrientation: data.autoBoardOrientation ?? false,
   });
 }
 
@@ -35,9 +36,7 @@ export async function updateSettings(
   await db.settings.update(SETTINGS_ID, patch);
 }
 
-export async function setLastTrainingSet(
-  trainingSetId: string
-): Promise<void> {
+export async function setLastTrainingSet(trainingSetId: string): Promise<void> {
   await updateSettings({ lastTrainingSetId: trainingSetId });
 }
 

@@ -89,6 +89,8 @@ export async function getActiveTrainingState(): Promise<ActiveTrainingState> {
   const boardOrientation =
     settings?.boardOrientation === "black" ? "black" : "white";
 
+  const autoBoardOrientation = settings?.autoBoardOrientation ?? false  
+
   return {
     status: "ready",
     sessionId: undefined,
@@ -119,5 +121,6 @@ export async function getActiveTrainingState(): Promise<ActiveTrainingState> {
     exerciseIndex: nextIndex,
     totalExercises: orderedExercises.length,
     boardOrientation,
+    autoBoardOrientation
   };
 }
