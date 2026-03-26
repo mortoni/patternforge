@@ -243,8 +243,6 @@ export function TrainingPage() {
     puzzleState === "correct_so_far" ||
     puzzleState === "transitioning";
 
-  console.log("### state: ", state);
-
   return (
     <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col pt-0.5 md:min-h-[calc(100dvh-4rem)] md:pt-0">
       <h1 className="sr-only">Training</h1>
