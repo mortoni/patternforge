@@ -64,6 +64,15 @@ The app can import a large dataset of chess puzzles from a CSV file and seed the
 - **Expected columns:** `trainingSetId`, `puzzleNumber`, `fen`, `sideToMove`, `solutionMoves`, `motifTags`, `gameSource`, `difficulty`
 - **Validation:** Rows are validated with Zod. `trainingSetId` is any set / group label you choose. `difficulty` must be `easy` | `intermediate` | `advanced` | `custom` (stored on exercises; independent of set id).
 
+## First step
+
+The project uses **pnpm** as the package manager.
+Let's first ensure we have all packages installed.
+
+```bash
+pnpm install
+```
+
 ### How to validate
 
 ```bash
@@ -117,10 +126,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on pushes and pull requests to 
 
 ## How to run
 
-The project uses **pnpm** as the package manager.
-
 ```bash
-pnpm install
 pnpm run dev
 ```
 
