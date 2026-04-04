@@ -6,6 +6,7 @@ import {
   updateTheme as serviceUpdateTheme,
   updateBoardOrientation as serviceUpdateBoardOrientation,
   updateBoardStyle as serviceUpdateBoardStyle,
+  updateAutoBoardOrientation as serviceAutoUpdateBoardOrientation,
 } from "../services/settings.service";
 import type { AppSettingsSchema } from "@/db/schema";
 import type { BoardStyleId } from "@/lib/chess/board-styles";
@@ -20,6 +21,9 @@ export interface UseSettingsResult {
   ) => Promise<void>;
   setBoardStyle: (boardStyle: BoardStyleId) => Promise<void>;
   reload: () => Promise<void>;
+  setAutoBoardOrientation: (
+    autoBoardOrientation: AppSettingsSchema["autoBoardOrientation"]
+  ) => Promise<void>;
 }
 
 /**
@@ -48,13 +52,10 @@ export function useSettings(): UseSettingsResult {
     load();
   }, [load]);
 
-  const setTheme = useCallback(
-    async (theme: AppSettingsSchema["theme"]) => {
-      const next = await serviceUpdateTheme(theme);
-      setSettings((prev) => (prev ? { ...prev, theme: next.theme } : next));
-    },
-    []
-  );
+  const setTheme = useCallback(async (theme: AppSettingsSchema["theme"]) => {
+    const next = await serviceUpdateTheme(theme);
+    setSettings((prev) => (prev ? { ...prev, theme: next.theme } : next));
+  }, []);
 
   const setBoardOrientation = useCallback(
     async (boardOrientation: AppSettingsSchema["boardOrientation"]) => {
@@ -66,11 +67,19 @@ export function useSettings(): UseSettingsResult {
     []
   );
 
+  const setAutoBoardOrientation = useCallback(
+    async (autoBoardOrientation: AppSettingsSchema["autoBoardOrientation"]) => {
+      const next = await serviceAutoUpdateBoardOrientation(autoBoardOrientation);
+      setSettings((prev) =>
+        prev ? { ...prev, autoBoardOrientation: next.autoBoardOrientation } : next
+      );
+    },
+    []
+  );
+
   const setBoardStyle = useCallback(async (boardStyle: BoardStyleId) => {
     const next = await serviceUpdateBoardStyle(boardStyle);
-    setSettings((prev) =>
-      prev ? { ...prev, boardStyle: next.boardStyle } : next
-    );
+    setSettings((prev) => (prev ? { ...prev, boardStyle: next.boardStyle } : next));
   }, []);
 
   return {
@@ -79,6 +88,7 @@ export function useSettings(): UseSettingsResult {
     error,
     setTheme,
     setBoardOrientation,
+    setAutoBoardOrientation,
     setBoardStyle,
     reload: load,
   };

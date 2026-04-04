@@ -73,6 +73,7 @@ export async function getMistakeReviewState(
   if (!exercise || !trainingSet) return null;
   const boardOrientation =
     settings?.boardOrientation === "black" ? "black" : "white";
+  const autoBoardOrientation = settings?.autoBoardOrientation ?? false;
   return {
     mistake,
     exercise: {
@@ -88,6 +89,7 @@ export async function getMistakeReviewState(
     },
     trainingSet: { id: trainingSet.id, name: trainingSet.name },
     boardOrientation,
+    autoBoardOrientation
   };
 }
 

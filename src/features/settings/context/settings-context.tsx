@@ -7,6 +7,7 @@ import type { BoardStyleId } from "@/lib/chess/board-styles";
 
 type ThemeValue = AppSettingsSchema["theme"];
 type BoardOrientationValue = AppSettingsSchema["boardOrientation"];
+type AutoBoardOrientationValue = AppSettingsSchema["autoBoardOrientation"];
 
 interface SettingsContextValue {
   settings: AppSettingsSchema | null;
@@ -16,6 +17,7 @@ interface SettingsContextValue {
   setBoardOrientation: (boardOrientation: BoardOrientationValue) => Promise<void>;
   setBoardStyle: (boardStyle: BoardStyleId) => Promise<void>;
   reload: () => Promise<void>;
+  setAutoBoardOrientation: (autoBoardOrientation: AutoBoardOrientationValue) => Promise<void>;
 }
 
 const SettingsContext = React.createContext<SettingsContextValue | null>(null);

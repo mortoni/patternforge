@@ -10,4 +10,5 @@ export interface AppSettings {
   theme: Theme;
   boardOrientation: BoardOrientation;
   lastTrainingSetId?: string;
+  autoBoardOrientation: boolean;
 }

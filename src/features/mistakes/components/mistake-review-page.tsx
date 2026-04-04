@@ -10,6 +10,7 @@ import { MistakeReviewSidePanel } from "./mistake-review-side-panel";
 import type { ReviewInteractionState } from "./mistake-review-side-panel";
 import { getHighlightedSquaresFromMove } from "@/lib/chess/move-highlights";
 import {
+  getsideToMove,
   parseSideToMoveFromFen,
   type ChessSideToMove,
 } from "@/lib/chess/side-to-move";
@@ -33,10 +34,10 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   const [positionFen, setPositionFen] = React.useState<string | null>(null);
   const [attemptedMoveUci, setAttemptedMoveUci] = React.useState<string | null>(null);
   const [puzzleState, setPuzzleState] = React.useState<ReviewInteractionState>("idle");
-  const [feedbackExpectedMove, setFeedbackExpectedMove] = React.useState<string | undefined>();
-  const solvingSideRef = React.useRef<ChessSideToMove>(
-    parseSideToMoveFromFen("")
-  );
+  const [feedbackExpectedMove, setFeedbackExpectedMove] = React.useState<
+    string | undefined
+  >();
+  const solvingSideRef = React.useRef<ChessSideToMove>(parseSideToMoveFromFen(""));
 
   const baseFen = state?.exercise.fen ?? "";
   const displayFen = positionFen ?? baseFen;
@@ -135,6 +136,12 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
       ? getHighlightedSquaresFromMove(attemptedMoveUci)
       : undefined;
 
+  const sideToMoveFromFen = parseSideToMoveFromFen(displayFen);
+  const turnForLabel =
+    puzzleState === "checking"
+      ? // eslint-disable-next-line react-hooks/refs -- paired write in move handler before this render
+        solvingSideRef.current
+      : sideToMoveFromFen;
   return (
     <div className="mx-auto max-w-5xl px-4 py-5 md:px-5">
       <div className="grid gap-5 lg:grid-cols-[1fr_minmax(260px,300px)]">
@@ -142,7 +149,11 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
           <div>
             <TrainingBoardCard
               fen={displayFen}
-              boardOrientation={state.boardOrientation}
+              boardOrientation={
+                state.autoBoardOrientation
+                  ? getsideToMove(turnForLabel)
+                  : state.boardOrientation
+              }
               onMove={handleBoardMove}
               disabled={
                 puzzleState === "checking" ||

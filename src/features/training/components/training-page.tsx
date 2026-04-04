@@ -25,7 +25,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { SideToMoveIndicator } from "@/components/shared/SideToMoveIndicator";
-import { parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
+import { getsideToMove, parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
 import { cn } from "@/lib/utils";
 import { useActiveTraining } from "../hooks/use-active-training";
 import { useCycleCompleteRedirect } from "../hooks/use-cycle-complete-redirect";
@@ -280,7 +280,11 @@ export function TrainingPage() {
           <div className="relative w-full min-h-0">
             <TrainingBoardCard
               fen={displayFen}
-              boardOrientation={readyState!.boardOrientation}
+              boardOrientation={
+                readyState?.autoBoardOrientation
+                  ? getsideToMove(turnForLabel)
+                  : readyState!.boardOrientation
+              }
               onMove={handleBoardMove}
               disabled={boardDisabled}
               minimal

@@ -17,6 +17,7 @@ export function SettingsPage() {
     setTheme,
     setBoardOrientation,
     setBoardStyle,
+    setAutoBoardOrientation,
   } = useSettingsContext();
 
   if (error) {
@@ -48,6 +49,10 @@ export function SettingsPage() {
         <BoardOrientationCard
           value={settings?.boardOrientation ?? "white"}
           onChange={(boardOrientation) => setBoardOrientation(boardOrientation)}
+          onChangeAutoBoardOrientation={(autoBoardOrientation) =>
+            setAutoBoardOrientation(autoBoardOrientation)
+          }
+          isAutoBoardOrientation={settings?.autoBoardOrientation ?? false}
           disabled={loading}
         />
         <BoardStyleCard

@@ -12,15 +12,31 @@ const OPTIONS: { value: BoardOrientationValue; label: string }[] = [
   { value: "black", label: "Black" },
 ];
 
+const isSelected = (
+  value: BoardOrientationValue,
+  optValue: BoardOrientationValue,
+  isAutoBoardOrientation: boolean
+) => {
+  return Boolean(value === optValue && !isAutoBoardOrientation);
+};
+
 export function BoardOrientationCard({
   value,
+  isAutoBoardOrientation = false,
   onChange,
+  onChangeAutoBoardOrientation,
   disabled,
 }: {
   value: BoardOrientationValue;
+  isAutoBoardOrientation: boolean;
   onChange: (boardOrientation: BoardOrientationValue) => void;
+  onChangeAutoBoardOrientation: (autoBoardOrientation: boolean) => void;
   disabled?: boolean;
 }) {
+  const handleChange = (option: BoardOrientationValue) => {
+    onChangeAutoBoardOrientation(false);
+    onChange(option);
+  };
   return (
     <Card>
       <CardHeader>
@@ -42,18 +58,37 @@ export function BoardOrientationCard({
               variant="outline"
               size="sm"
               role="radio"
-              aria-checked={value === opt.value}
+              aria-checked={isSelected(value, opt.value, isAutoBoardOrientation)}
               disabled={disabled}
               className={cn(
                 "min-w-[5rem]",
-                value === opt.value &&
+                isSelected(value, opt.value, isAutoBoardOrientation) &&
                   "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
               )}
-              onClick={() => onChange(opt.value)}
+              onClick={() => {
+                handleChange(opt.value);
+              }}
             >
               {opt.label}
             </Button>
           ))}
+          <Button
+            key="auto-side"
+            type="button"
+            variant="outline"
+            size="sm"
+            role="radio"
+            aria-checked={isAutoBoardOrientation}
+            disabled={disabled}
+            className={cn(
+              "min-w-[5rem]",
+              isAutoBoardOrientation &&
+                "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]"
+            )}
+            onClick={() => onChangeAutoBoardOrientation(!isAutoBoardOrientation)}
+          >
+            Side to move
+          </Button>
         </div>
       </CardContent>
     </Card>

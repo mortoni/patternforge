@@ -27,6 +27,7 @@ export const appSettingsSchema = z.object({
   /** Global chessboard palette; persisted in IndexedDB settings row. */
   boardStyle: boardStyleSchema.optional(),
   lastTrainingSetId: z.string().optional(),
+  autoBoardOrientation: z.boolean()
 });
 export type AppSettingsSchema = z.infer<typeof appSettingsSchema>;
 

@@ -41,4 +41,5 @@ export interface MistakeReviewState {
   };
   trainingSet: { id: string; name: string };
   boardOrientation: "white" | "black";
+  autoBoardOrientation: boolean;
 }
