@@ -226,7 +226,7 @@ export function ProgressPage() {
                 </div>
                 {cc.averageSessionTimeMs != null ? (
                   <div className="space-y-1">
-                    <p className="text-xl font-semibold tabular-nums text-foreground">
+                    <p className="text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl">
                       {formatDurationMs(cc.averageSessionTimeMs)}
                     </p>
                     <p className="text-sm text-muted-foreground">Average per session</p>
@@ -234,7 +234,7 @@ export function ProgressPage() {
                 ) : null}
                 {cc.longestSessionMs > 0 ? (
                   <div className="space-y-1">
-                    <p className="text-xl font-semibold tabular-nums text-foreground">
+                    <p className="text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl">
                       {formatDurationMs(cc.longestSessionMs)}
                     </p>
                     <p className="text-sm text-muted-foreground">Longest session</p>

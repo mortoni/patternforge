@@ -27,6 +27,7 @@ import {
 import { SideToMoveIndicator } from "@/components/shared/SideToMoveIndicator";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { getsideToMove, parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
+import { Chess } from "chess.js";
 import { cn } from "@/lib/utils";
 import { useActiveTraining } from "../hooks/use-active-training";
 import { useCycleCompleteRedirect } from "../hooks/use-cycle-complete-redirect";
@@ -41,6 +42,17 @@ import { completeSession } from "@/services/training-session.service";
 
 /** Shared width for board column + below-board actions (responsive, viewport-aware). */
 const BOARD_COLUMN_CLASS = "w-[min(92vw,calc(100dvh-14rem))] max-w-[min(100%,40rem)]";
+
+function parseUciForExecution(
+  uci: string
+): { from: string; to: string; promotion?: string } | null {
+  const t = uci.trim().toLowerCase();
+  if (t.length === 4) return { from: t.slice(0, 2), to: t.slice(2, 4) };
+  if (t.length === 5 && /^[a-h][1-8][a-h][1-8][qnrb]$/.test(t)) {
+    return { from: t.slice(0, 2), to: t.slice(2, 4), promotion: t[4] };
+  }
+  return null;
+}
 
 export function TrainingPage() {
   const router = useRouter();
@@ -66,6 +78,7 @@ export function TrainingPage() {
    * for one gesture (e.g. drop + synthetic click) before React disables interaction.
    */
   const boardMoveInFlightRef = React.useRef(false);
+  const queuedPreMoveUciRef = React.useRef<string | null>(null);
 
   useCycleCompleteRedirect(state);
 
@@ -123,6 +136,45 @@ export function TrainingPage() {
       setAccumulatedUserMoves,
     }
   );
+
+  React.useEffect(() => {
+    queuedPreMoveUciRef.current = null;
+  }, [readyState?.cycleRun.id, readyState?.exercise.id]);
+
+  const handleQueuePreMove = React.useCallback((uci: string) => {
+    if (!readyState || puzzleState !== "checking") return;
+    queuedPreMoveUciRef.current = uci;
+  }, [readyState, puzzleState]);
+
+  /**
+   * Execute one queued pre-move as soon as the board returns to the trainee side.
+   * Invalid queued moves are silently discarded.
+   */
+  React.useEffect(() => {
+    const queued = queuedPreMoveUciRef.current;
+    if (!readyState || !queued) return;
+    if (puzzleState === "checking" || puzzleState === "transitioning") return;
+    if (boardMoveInFlightRef.current) return;
+    const sideToMove = parseSideToMoveFromFen(displayFen);
+    if (sideToMove !== readyState.exercise.sideToMove) return;
+    try {
+      const chess = new Chess(displayFen);
+      const parsed = parseUciForExecution(queued);
+      const made = parsed ? chess.move(parsed) : chess.move(queued);
+      queuedPreMoveUciRef.current = null;
+      if (!made) return;
+      const m = made as { from: string; to: string; promotion?: string };
+      const normalizedUci = `${m.from}${m.to}${m.promotion ?? ""}`;
+      void handleBoardMove(normalizedUci, chess.fen());
+    } catch {
+      queuedPreMoveUciRef.current = null;
+    }
+  }, [readyState, puzzleState, displayFen, handleBoardMove]);
+
+  const handleSkipWithPreMoveReset = React.useCallback(async () => {
+    queuedPreMoveUciRef.current = null;
+    await handleSkip();
+  }, [handleSkip]);
 
   const handleEndSession = React.useCallback(async () => {
     const sid = readyState?.sessionId;
@@ -288,7 +340,10 @@ export function TrainingPage() {
                   : readyState!.boardOrientation
               }
               onMove={handleBoardMove}
+              onPreMove={handleQueuePreMove}
               disabled={boardDisabled}
+              preMoveEnabled={puzzleState === "checking"}
+              preMoveSide={readyState!.exercise.sideToMove}
               minimal
               boardContainerClassName="w-full border-border/40 bg-[var(--muted)]/10"
             />
@@ -314,7 +369,7 @@ export function TrainingPage() {
               type="button"
               variant="ghost"
               size="sm"
-              onClick={handleSkip}
+              onClick={handleSkipWithPreMoveReset}
               disabled={boardDisabled}
               aria-label="Skip this puzzle"
               className="h-auto px-2 py-1 text-xs text-muted-foreground sm:text-sm"

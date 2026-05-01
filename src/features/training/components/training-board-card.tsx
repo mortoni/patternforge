@@ -21,8 +21,19 @@ export interface TrainingBoardCardProps {
   boardOrientation: "white" | "black";
   /** Called when user makes a legal move. Receives UCI and new FEN so parent can update. */
   onMove?: (uci: string, newFen: string) => void;
+  /**
+   * Optional single pre-move queue callback used while board is otherwise locked.
+   * Parent owns queue semantics and execution timing.
+   */
+  onPreMove?: (uci: string) => void;
   /** When true, board is not interactive (e.g. after puzzle resolved). */
   disabled?: boolean;
+  /**
+   * When true, allow dragging/queuing one pre-move even if `disabled` is true.
+   * Only pieces matching `preMoveSide` are draggable.
+   */
+  preMoveEnabled?: boolean;
+  preMoveSide?: "w" | "b";
   /** Square ids to highlight as the correct move (e.g. after incorrect result). */
   correctMoveSquares?: string[];
   /** Optional: square ids for the user's attempted move (subtle different style). */
@@ -158,7 +169,10 @@ export function TrainingBoardCard({
   fen,
   boardOrientation,
   onMove,
+  onPreMove,
   disabled = false,
+  preMoveEnabled = false,
+  preMoveSide,
   correctMoveSquares,
   attemptedMoveSquares,
   correctMoveUci,
@@ -312,8 +326,15 @@ export function TrainingBoardCard({
       piece: { pieceType: string };
       square: string | null;
     }) => {
-      if (disabled || !onMove || isSparePiece || !square) return;
+      if (isSparePiece || !square) return;
       try {
+        if (disabled) {
+          if (!preMoveEnabled || !preMoveSide) return;
+          if (!isOwnPiece(piece.pieceType, preMoveSide)) return;
+          setSelectedSquare(square);
+          return;
+        }
+        if (!onMove) return;
         const chess = new Chess(fen);
         if (!isOwnPiece(piece.pieceType, chess.turn())) return;
         setSelectedSquare(square);
@@ -321,7 +342,7 @@ export function TrainingBoardCard({
         /* invalid FEN */
       }
     },
-    [fen, disabled, onMove]
+    [fen, disabled, onMove, preMoveEnabled, preMoveSide]
   );
 
   const canDragPiece = React.useCallback(
@@ -333,14 +354,19 @@ export function TrainingBoardCard({
       piece: { pieceType: string };
       square: string | null;
     }) => {
-      if (disabled || !onMove || isSparePiece) return false;
+      if (isSparePiece) return false;
+      if (disabled) {
+        if (!preMoveEnabled || !preMoveSide) return false;
+        return isOwnPiece(piece.pieceType, preMoveSide);
+      }
+      if (!onMove) return false;
       try {
         return isOwnPiece(piece.pieceType, new Chess(fen).turn());
       } catch {
         return false;
       }
     },
-    [fen, disabled, onMove]
+    [fen, disabled, onMove, preMoveEnabled, preMoveSide]
   );
 
   const arrows = React.useMemo(() => {
@@ -359,8 +385,20 @@ export function TrainingBoardCard({
       targetSquare: string | null;
       piece?: { pieceType?: string };
     }) => {
-      if (disabled || !onMove || !targetSquare) return false;
+      if (!targetSquare) return false;
       setSelectedSquare(null);
+      if (disabled) {
+        if (!preMoveEnabled || !onPreMove) return false;
+        const promotion = isPawnPromotion(piece?.pieceType, targetSquare)
+          ? "q"
+          : undefined;
+        const queuedUci = promotion
+          ? `${sourceSquare}${targetSquare}${promotion}`
+          : `${sourceSquare}${targetSquare}`;
+        onPreMove(queuedUci);
+        return true;
+      }
+      if (!onMove) return false;
       const promotion = isPawnPromotion(piece?.pieceType, targetSquare)
         ? "q"
         : undefined;
@@ -380,7 +418,7 @@ export function TrainingBoardCard({
         return false;
       }
     },
-    [fen, disabled, onMove]
+    [fen, disabled, onMove, onPreMove, preMoveEnabled]
   );
 
   const options = React.useMemo(
@@ -397,7 +435,7 @@ export function TrainingBoardCard({
         lightSquareNotationStyle: surface.notation.lightSquareNotationStyle,
       }),
       ...(surface.pieces && { pieces: surface.pieces }),
-      allowDragging: !disabled,
+      allowDragging: !disabled || preMoveEnabled,
       /** Default 1px makes almost every pointer move a drag; clicks never register. */
       dragActivationDistance: 8,
       allowDrawingArrows: false,
@@ -418,6 +456,7 @@ export function TrainingBoardCard({
       surface.notation,
       surface.pieces,
       disabled,
+      preMoveEnabled,
       canDragPiece,
       onPieceClick,
       onPieceDrag,
