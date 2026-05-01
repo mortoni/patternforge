@@ -8,9 +8,20 @@ import * as path from "path";
 import { parseCsv } from "../src/lib/csv";
 import { validateAndTransformAll } from "../src/lib/puzzle-import";
 
-const CSV_PATH = path.join(process.cwd(), "data", "imports", "puzzle.csv");
+function resolveCsvPath(): string {
+  const argIndex = process.argv.indexOf("--csv");
+  const argPath =
+    argIndex >= 0 && process.argv[argIndex + 1] && !process.argv[argIndex + 1].startsWith("--")
+      ? process.argv[argIndex + 1]
+      : undefined;
+  const fromEnv = process.env.PUZZLE_CSV_PATH;
+  const selected =
+    argPath ?? fromEnv ?? path.join(process.cwd(), "data", "imports", "puzzle.csv");
+  return path.isAbsolute(selected) ? selected : path.join(process.cwd(), selected);
+}
 
 function main() {
+  const CSV_PATH = resolveCsvPath();
   console.log("Validating", CSV_PATH, "\n");
 
   if (!fs.existsSync(CSV_PATH)) {

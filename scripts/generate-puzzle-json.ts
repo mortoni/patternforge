@@ -13,9 +13,20 @@ import {
   exercisesJsonBasename,
 } from "../src/lib/puzzle-import";
 
-const CSV_PATH = path.join(process.cwd(), "data", "imports", "puzzle.csv");
 const OUT_DIR = path.join(process.cwd(), "data", "generated");
 const PUBLIC_OUT_DIR = path.join(process.cwd(), "public", "data", "generated");
+
+function resolveCsvPath(): string {
+  const argIndex = process.argv.indexOf("--csv");
+  const argPath =
+    argIndex >= 0 && process.argv[argIndex + 1] && !process.argv[argIndex + 1].startsWith("--")
+      ? process.argv[argIndex + 1]
+      : undefined;
+  const fromEnv = process.env.PUZZLE_CSV_PATH;
+  const selected =
+    argPath ?? fromEnv ?? path.join(process.cwd(), "data", "imports", "puzzle.csv");
+  return path.isAbsolute(selected) ? selected : path.join(process.cwd(), selected);
+}
 
 function ensureDir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -24,6 +35,7 @@ function ensureDir(dir: string) {
 }
 
 function main() {
+  const CSV_PATH = resolveCsvPath();
   console.log("Reading", CSV_PATH);
 
   if (!fs.existsSync(CSV_PATH)) {
