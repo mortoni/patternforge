@@ -14,6 +14,8 @@ export const BOARD_STYLE_IDS = [
   "tournament",
   /** Dark monochrome board: charcoal light squares, hatched dark squares (see MT reference). */
   "mtModel",
+  /** Light monochrome board: same MT hatch pattern with inverted brightness. */
+  "mtLight",
 ] as const;
 
 export type BoardStyleId = (typeof BOARD_STYLE_IDS)[number];
@@ -155,6 +157,54 @@ export const BOARD_STYLE_MAP: Record<BoardStyleId, BoardStyleDefinition> = {
       },
       lightSquareNotationStyle: {
         color: "rgba(255, 255, 255, 0.42)",
+        fontSize: "11px",
+      },
+    },
+  },
+  /**
+   * MT light variant: same 135° hatch pattern and spacing as MT dark,
+   * but with a light monochrome palette.
+   */
+  mtLight: {
+    id: "mtLight",
+    label: "MT (light)",
+    lightSquare: "#f3f3f3",
+    darkSquare: "#d7d7d7",
+    lightSquareStyle: { backgroundColor: "#f3f3f3" },
+    darkSquareStyle: {
+      backgroundColor: "#d7d7d7",
+      backgroundImage: `repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 8px,
+        rgba(0, 0, 0, 0.22) 8px,
+        rgba(0, 0, 0, 0.22) 10px
+      )`,
+    },
+    boardBackground: "#ececec",
+    frameBackground: "rgba(242, 242, 242, 0.98)",
+    frameBorder: "rgba(0, 0, 0, 0.14)",
+    interaction: {
+      selectedSquare: {
+        backgroundColor: "#b7c8e8",
+        boxShadow: "inset 0 0 0 1px rgba(22, 45, 90, 0.28)",
+      },
+      legalDot: {
+        backgroundImage:
+          "radial-gradient(circle at center, rgba(56, 56, 56, 0.34) 0%, rgba(56, 56, 56, 0.34) 11%, transparent 12%)",
+      },
+      legalCapture: {
+        boxShadow: "inset 0 0 0 2px rgba(56, 56, 56, 0.34)",
+        borderRadius: "50%",
+      },
+    },
+    notation: {
+      darkSquareNotationStyle: {
+        color: "rgba(0, 0, 0, 0.48)",
+        fontSize: "11px",
+      },
+      lightSquareNotationStyle: {
+        color: "rgba(0, 0, 0, 0.48)",
         fontSize: "11px",
       },
     },

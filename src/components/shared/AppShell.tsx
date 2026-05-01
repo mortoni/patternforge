@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 import { SidebarNav } from "@/components/shared/SidebarNav";
 import AppTitle from "@/components/logo/AppTitle";
 import Logo from "@/components/logo/Logo";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { runMigrations } from "@/db/migrations";
@@ -66,6 +67,7 @@ function AppShellInner({
 
   const isTrainingFocus =
     pathname != null &&
+    pathname !== ROUTES.trainingSessionSummary &&
     (pathname === ROUTES.training || pathname.startsWith(`${ROUTES.training}/`));
 
   React.useEffect(() => {
@@ -208,14 +210,18 @@ function AppShellInner({
               <Logo size={24} className="shrink-0" />
               <AppTitle className="min-w-0 truncate whitespace-nowrap text-xs tracking-[0.2em] sm:text-sm sm:tracking-[0.28em]" />
             </Link>
-            {/* Spacer balances the menu control; Docs lives in the drawer on small screens. */}
-            <div className="h-10 w-10 shrink-0 justify-self-end" aria-hidden />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center justify-self-end">
+              <ThemeToggle />
+            </div>
           </div>
         </header>
         <main className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-y-auto p-4 md:p-6 transition-all duration-200">
           {children}
         </main>
       </div>
+      {!isTrainingFocus && (
+        <ThemeToggle className="fixed right-6 top-5 z-50 hidden border border-[var(--border)] bg-[var(--background)]/90 backdrop-blur transition-colors hover:bg-[var(--muted)] md:inline-flex" />
+      )}
     </div>
   );
 }

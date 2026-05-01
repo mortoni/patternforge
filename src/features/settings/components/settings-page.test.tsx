@@ -46,24 +46,16 @@ describe("SettingsPage", () => {
 
     await screen.findByRole("heading", { name: /settings/i });
     expect(screen.getByText(/manage your training preferences/i)).toBeInTheDocument();
-    expect(screen.getByRole("radiogroup", { name: /theme/i })).toBeInTheDocument();
     expect(screen.getByRole("radiogroup", { name: /board orientation/i })).toBeInTheDocument();
     expect(screen.getByRole("radiogroup", { name: /board style/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /training preferences/i })).toBeInTheDocument();
   });
 
-  it("shows current theme and board orientation", async () => {
+  it("shows current board orientation", async () => {
     render(
       <SettingsProvider>
         <SettingsPage />
       </SettingsProvider>
-    );
-
-    await screen.findByRole("radiogroup", { name: /theme/i });
-    const themeGroup = screen.getByRole("radiogroup", { name: /theme/i });
-    expect(within(themeGroup).getByRole("radio", { name: /system/i })).toHaveAttribute(
-      "aria-checked",
-      "true"
     );
 
     const boardGroup = screen.getByRole("radiogroup", { name: /board orientation/i });
@@ -71,23 +63,6 @@ describe("SettingsPage", () => {
       "aria-checked",
       "true"
     );
-  });
-
-  it("updates theme when option clicked", async () => {
-    render(
-      <SettingsProvider>
-        <SettingsPage />
-      </SettingsProvider>
-    );
-
-    const themeGroup = await screen.findByRole("radiogroup", { name: /theme/i });
-    mockGetSettings.mockResolvedValue({ ...defaultSettings, theme: "dark" });
-
-    await act(async () => {
-      fireEvent.click(within(themeGroup).getByRole("radio", { name: /^dark$/i }));
-    });
-
-    expect(mockUpdateSettings).toHaveBeenCalledWith({ theme: "dark" });
   });
 
   it("updates board orientation when option clicked", async () => {

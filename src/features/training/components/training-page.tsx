@@ -25,6 +25,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { SideToMoveIndicator } from "@/components/shared/SideToMoveIndicator";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { getsideToMove, parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
 import { cn } from "@/lib/utils";
 import { useActiveTraining } from "../hooks/use-active-training";
@@ -269,6 +270,7 @@ export function TrainingPage() {
             Exercise {readyState!.exerciseIndex + 1} / {readyState!.totalExercises}
           </span>
           <EndSessionDialog onConfirm={handleEndSession} />
+          <ThemeToggle className="hidden md:inline-flex" />
         </div>
       </header>
 

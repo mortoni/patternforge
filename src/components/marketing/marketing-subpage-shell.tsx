@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AppTitle from "@/components/logo/AppTitle";
 import Logo from "@/components/logo/Logo";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { APP_NAME, ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ export function MarketingSubpageShell({
             )}
           </Link>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Button asChild variant="ghost" size="sm">
               <Link href={ROUTES.home}>Home</Link>
             </Button>

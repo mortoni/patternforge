@@ -19,7 +19,7 @@ export function useBoardStyle(): ResolvedBoardChessStyles {
     const base = resolveBoardChessStyles(id);
     return {
       ...base,
-      pieces: id === "mtModel" ? MT_MODEL_PIECES : undefined,
+      pieces: id === "mtModel" || id === "mtLight" ? MT_MODEL_PIECES : undefined,
     };
   }, [id]);
 }

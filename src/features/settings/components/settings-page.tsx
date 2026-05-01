@@ -1,7 +1,6 @@
 "use client";
 
 import { PageHeader } from "@/components/shared/PageHeader";
-import { ThemeSettingCard } from "./theme-setting-card";
 import { BoardOrientationCard } from "./board-orientation-card";
 import { BoardStyleCard } from "./board-style-card";
 import { TrainingPreferencesCard } from "./training-preferences-card";
@@ -14,7 +13,6 @@ export function SettingsPage() {
     settings,
     loading,
     error,
-    setTheme,
     setBoardOrientation,
     setBoardStyle,
     setAutoBoardOrientation,
@@ -41,11 +39,6 @@ export function SettingsPage() {
         description="Manage your training preferences and interface settings."
       />
       <div className="max-w-xl space-y-6">
-        <ThemeSettingCard
-          value={settings?.theme ?? "system"}
-          onChange={(theme) => setTheme(theme)}
-          disabled={loading}
-        />
         <BoardOrientationCard
           value={settings?.boardOrientation ?? "white"}
           onChange={(boardOrientation) => setBoardOrientation(boardOrientation)}
