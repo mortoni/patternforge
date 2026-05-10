@@ -10,6 +10,7 @@ import {
   TrendingUp,
   Settings,
   BookOpen,
+  Bug,
 } from "lucide-react";
 
 const navItems = [
@@ -18,6 +19,9 @@ const navItems = [
   { href: ROUTES.progress, label: "Progress", icon: TrendingUp },
   { href: ROUTES.settings, label: "Settings", icon: Settings },
 ] as const;
+
+const isDev =
+  typeof process !== "undefined" && process.env.NODE_ENV === "development";
 
 export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
@@ -44,8 +48,8 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
               "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
               collapsed ? "justify-center px-2" : "gap-3 px-3",
               isActive
-                ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
-                : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
             title={collapsed ? label : undefined}
             aria-label={collapsed ? label : undefined}
@@ -64,16 +68,42 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
           </Link>
         );
       })}
+      {isDev ? (
+        <Link
+          href={ROUTES.debug}
+          className={cn(
+            "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
+            collapsed ? "justify-center px-2" : "gap-3 px-3",
+            path.startsWith(ROUTES.debug)
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+          )}
+          title={collapsed ? "Debug" : undefined}
+          aria-label={collapsed ? "Debug" : undefined}
+        >
+          <Bug className="h-5 w-5 shrink-0" />
+          <span
+            className={cn(
+              "min-w-0 transition-all duration-200",
+              collapsed
+                ? "pointer-events-none max-w-0 overflow-hidden opacity-0"
+                : "truncate opacity-100"
+            )}
+          >
+            Debug
+          </span>
+        </Link>
+      ) : null}
       <div
         className={cn(
-          "mt-auto border-t border-[var(--border)] pt-4",
+          "mt-auto border-t border-border pt-4",
           collapsed && "flex justify-center px-0"
         )}
       >
         <Link
           href={ROUTES.docs}
           className={cn(
-            "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-xs text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]",
+            "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
             collapsed ? "justify-center px-2" : "gap-3 px-3"
           )}
           title="Documentation"

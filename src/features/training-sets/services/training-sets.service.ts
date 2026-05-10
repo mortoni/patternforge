@@ -55,8 +55,8 @@ export async function ensureSeededForDevelopment(): Promise<boolean> {
 }
 
 /**
- * Remove all training sets and load only the 3 from generated JSON (data/generated) into IndexedDB.
- * Dev only. Run after: pnpm run generate:puzzles (so public/data/generated/ is up to date).
+ * Remove all training sets and load only the 3 from Woodpecker JSON bundles into IndexedDB.
+ * Dev only. Run after updating public/data/woodpecker/*.json.
  */
 export async function loadGeneratedSetsIntoDb(): Promise<{
   trainingSets: number;
@@ -70,8 +70,8 @@ export async function loadGeneratedSetsIntoDb(): Promise<{
 }
 
 /**
- * Full reset: clear all user progress and all training sets, then load only the 3 sets from generated JSON.
- * Dev only. Run after: pnpm run refresh-data (or generate:puzzles).
+ * Full reset: clear all user progress and all training sets, then load only the 3 sets from Woodpecker JSON bundles.
+ * Dev only. Run after updating public/data/woodpecker/*.json.
  */
 export async function resetAllAndLoadGenerated(): Promise<{
   trainingSets: number;
@@ -89,7 +89,7 @@ export async function resetAllAndLoadGenerated(): Promise<{
   }
   await clearAllTrainingSetsForDevelopment();
   if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
-    console.log("[resetAllAndLoadGenerated] Seeding from generated JSON…");
+    console.log("[resetAllAndLoadGenerated] Seeding from Woodpecker JSON bundles…");
   }
   const result = await seedPuzzlesFromGeneratedJson();
   if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {

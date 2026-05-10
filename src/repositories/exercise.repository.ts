@@ -33,6 +33,19 @@ export async function countByTrainingSetId(
   return db.exercises.where("trainingSetId").equals(trainingSetId).count();
 }
 
+/**
+ * Find exercises by puzzleNumber across all sets.
+ * Uses in-memory filtering because puzzleNumber is not indexed in Dexie schema.
+ */
+export async function getExercisesByPuzzleNumber(
+  puzzleNumber: number
+): Promise<ExerciseSchema[]> {
+  const all = await db.exercises.toArray();
+  return all
+    .filter((e) => e.puzzleNumber === puzzleNumber)
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
 export async function addExercise(
   data: Omit<ExerciseSchema, "id"> & { id?: string }
 ): Promise<string> {

@@ -56,13 +56,13 @@ Local-first chess tactics training web app. Built for desktop and mobile, with f
 - Seed is implemented in `src/db/seed-training-sets.ts` and invoked from the Training Sets page via `ensureSeededForDevelopment()`. It does **not** run in production.
 - To **reset IndexedDB** during development: open DevTools → Application (Chrome) or Storage (Firefox) → IndexedDB → delete the `PatternForgeDB` database. Refresh the app and revisit `/app/sets` to re-seed.
 
-## Puzzle Import Pipeline
+## Puzzle Data Bundles
 
-The app can import a large dataset of chess puzzles from a CSV file and seed them into Dexie.
+The app now reads puzzle content from static Woodpecker bundle JSON files.
 
-- **Canonical source:** `data/imports/puzzle.csv`
-- **Expected columns:** `trainingSetId`, `puzzleNumber`, `fen`, `sideToMove`, `solutionMoves`, `motifTags`, `gameSource`, `difficulty`
-- **Validation:** Rows are validated with Zod. `trainingSetId` is any set / group label you choose. `difficulty` must be `easy` | `intermediate` | `advanced` | `custom` (stored on exercises; independent of set id).
+- **Canonical runtime source:** `public/data/woodpecker/`
+- **Bundle files:** `woodpecker-easy.json`, `woodpecker-intermediate.json`, `woodpecker-advanced.json`
+- **Validation:** run `pnpm run validate:woodpecker` after editing bundles
 
 ## First step
 
@@ -73,35 +73,18 @@ Let's first ensure we have all packages installed.
 pnpm install
 ```
 
-### How to validate
+### How to validate bundles
 
 ```bash
-pnpm run validate:puzzles
+pnpm run validate:woodpecker
 ```
 
-Reads `data/imports/puzzle.csv` and prints validation errors with row numbers and a summary (total/valid/invalid and counts per set).
+This validates the 3 required bundle files in `public/data/woodpecker` (or another directory via `--dir`) for:
 
-### How to generate JSON
-
-```bash
-pnpm run generate:puzzles
-```
-
-Converts the CSV to normalized JSON and writes to `data/generated/` and `public/data/generated/`:
-
-- One `{trainingSetId}-exercises.json` per set (e.g. `easy-exercises.json`, `test-exercises.json`)
-- `all-puzzles.json`
-- `training-sets-meta.json`
-
-Validation must pass (run `validate:puzzles` first or use `import:puzzles`).
-
-### Full pipeline (validate + generate)
-
-```bash
-pnpm run import:puzzles
-```
-
-Validates the CSV, then generates all JSON files. Does **not** write to Dexie (Node has no IndexedDB). To load generated puzzles into the app, use the browser console: run `seedPuzzlesFromGeneratedJson()` from `@/db/seed-puzzles` (e.g. after building a small in-app loader or importing the module in the console). The generated files are written to `public/data/generated/` so they can be fetched at `/data/generated/` when the app is served.
+- schema shape
+- duplicate ids / puzzle numbers
+- FEN validity and side-to-move consistency
+- solution line consistency (`mainLine`, `uci`, `fullLine`)
 
 ### Resetting puzzle data in development
 
@@ -116,9 +99,11 @@ To reset the app to a “fresh user” state **without** deleting training sets 
 
 This reset is **not** exposed in production UI. There is no Node script for it (IndexedDB is browser-only).
 
-### Intended for larger datasets
+### Updating puzzle data
 
-The pipeline is designed so you can drop a large real `puzzle.csv` into `data/imports/`, run `pnpm run import:puzzles`, then load it in the app via the dev seed. A small sample CSV is included for local testing only.
+1. Edit the bundle files in `public/data/woodpecker`.
+2. Run `pnpm run validate:woodpecker`.
+3. Use the dev action in Training Sets to reset and reload bundles into IndexedDB.
 
 ## Continuous integration
 
@@ -143,9 +128,8 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `pnpm run test:watch` – Vitest watch mode
 - `pnpm run ci` – `lint` → `test` → `typecheck` → `build` (same sequence as GitHub Actions)
 - `pnpm run test:e2e` – Playwright E2E (starts dev server if needed). **Browsers are not installed by `pnpm install`.** Before the first run (or after upgrading `@playwright/test`), run **`pnpm run test:e2e:install`** (Chromium only) or `pnpm exec playwright install`.
-- `pnpm run validate:puzzles` – Validate `data/imports/puzzle.csv`
-- `pnpm run generate:puzzles` – Convert CSV to JSON in `data/generated/` and `public/data/generated/`
-- `pnpm run import:puzzles` – Validate + generate JSON (then seed in browser via dev button)
+- `pnpm run validate:woodpecker` – Validate Woodpecker bundle JSON in `public/data/woodpecker/`
+- `pnpm run generate:icons` – Regenerate icon assets
 
 ## Routes
 
@@ -174,6 +158,5 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `src/repositories/` – Dexie table access
 - `src/services/` – puzzle-evaluator (first-move compare), mistake-review, cycle-progress, training-session, training-session summaries, **progress page** data (`getProgressPageData`: active cycle + per-set cycle history for Reflection)
 - `src/lib/` – utils, constants, ids, dates, csv, puzzle-import
-- `data/imports/` – canonical `puzzle.csv` for the import pipeline
-- `data/generated/` – generated JSON (also copied to `public/data/generated/` for in-browser fetch)
-- `scripts/` – validate-puzzles, generate-puzzle-json, import-puzzles (Node)
+- `public/data/woodpecker/` – runtime bundle JSON fetched by the app
+- `scripts/` – utility scripts (`validate-woodpecker-json`, `generate-icons`)

@@ -21,7 +21,7 @@ Living backlog for PatternForge. Items are not commitments or ordered by priorit
 
 - [ ] **Deploy pipeline** — Document and automate: branch → preview → production; required checks (`lint`, `test`, `typecheck`, `build`); environment variables (`NEXT_PUBLIC_SITE_URL`, analytics).
 - [ ] **Preview vs production data** — Clarify that IndexedDB is per-origin; staging URLs get separate data unless you add server sync.
-- [ ] **Release checklist** — Changelog, `public/data/generated` freshness after `refresh-data`, icon regeneration (`pnpm run generate:icons`) when branding changes.
+- [ ] **Release checklist** — Changelog, `public/data/woodpecker` freshness after puzzle updates, icon regeneration (`pnpm run generate:icons`) when branding changes.
 
 ## Accessibility & UX
 
@@ -36,14 +36,14 @@ Living backlog for PatternForge. Items are not commitments or ordered by priorit
 
 ## Product & chess UX
 
-- [ ] **Puzzle pipeline** — Keep `validate:puzzles` / `generate:puzzles` documented; consider CI validation of generated JSON on change.
+- [ ] **Puzzle pipeline** — Keep `validate:woodpecker` documented; consider CI validation of bundle JSON on change.
 - [ ] **Offline & PWA** — Today install is home-screen + manifest; optional service worker for shell cache only (avoid heavy offline puzzle sync until requirements are clear).
 - [ ] **Analytics & privacy** — Document what Vercel Analytics collects; add consent if required by jurisdiction.
 
 ## Docs & developer experience
 
 - [ ] **Architecture updates** — When backend or auth lands, update Architecture and Data Model docs.
-- [ ] **Contributing** — Short guide for scripts (`refresh-data`, `generate:icons`, DB reset in dev).
+- [ ] **Contributing** — Short guide for scripts (`validate:woodpecker`, `generate:icons`, DB reset in dev).
 
 ---
 

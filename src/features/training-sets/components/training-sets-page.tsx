@@ -94,7 +94,7 @@ export function TrainingSetsPage() {
       );
       window.location.reload();
     } catch (e) {
-      console.error("Reset & load generated failed:", e);
+      console.error("Reset & load Woodpecker bundles failed:", e);
       window.alert(`Failed: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setLoadingGenerated(false);
@@ -120,7 +120,7 @@ export function TrainingSetsPage() {
           description="Start a new training cycle or continue your active one."
         />
         <div className="flex items-center justify-center py-12">
-          <p className="text-sm text-[var(--muted-foreground)]">
+          <p className="text-sm text-muted-foreground">
             Loading training sets…
           </p>
         </div>
@@ -152,7 +152,7 @@ export function TrainingSetsPage() {
 
       <div className="mt-6 flex flex-col gap-6">
       {isDev && (
-        <div className="flex flex-wrap items-center justify-end gap-3 border-b border-[var(--border)] pb-4">
+        <div className="flex flex-wrap items-center justify-end gap-3 border-b border-border pb-4">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
@@ -161,17 +161,19 @@ export function TrainingSetsPage() {
                 disabled={loadingGenerated}
                 className="border-amber-500/50 text-amber-600 dark:text-amber-400"
               >
-                {loadingGenerated ? "Resetting…" : "Reset everything & load generated"}
+                {loadingGenerated ? "Resetting…" : "Reset everything & load Woodpecker bundles"}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Reset everything & load generated?</AlertDialogTitle>
+                <AlertDialogTitle>Reset everything & load Woodpecker bundles?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This will reset ALL user data (progress, cycles, sessions) and replace
-                  training sets with the 3 sets from data/generated. Run{" "}
-                  <code className="rounded bg-[var(--muted)] px-1 py-0.5 text-xs">pnpm run refresh-data</code>{" "}
-                  first if you changed puzzle.csv.
+                  training sets with the 3 sets from public/data/woodpecker. Run{" "}
+                  <code className="rounded bg-muted px-1 py-0.5 text-xs">
+                    pnpm run validate:woodpecker
+                  </code>{" "}
+                  after editing JSON files.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -180,7 +182,7 @@ export function TrainingSetsPage() {
                   onClick={() => void handleResetAllAndLoadGenerated()}
                   className="border-amber-500/50 bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 dark:text-amber-400"
                 >
-                  Reset & load generated
+                  Reset & load Woodpecker bundles
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -188,7 +190,7 @@ export function TrainingSetsPage() {
         </div>
       )}
 
-      <div className="hidden md:block rounded-md border border-[var(--border)]">
+      <div className="hidden md:block rounded-md border border-border">
         <TrainingSetsTable
           rows={tableRows}
           onContinue={handleContinue}

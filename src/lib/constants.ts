@@ -29,6 +29,7 @@ export const ROUTES = {
   /** Legacy path; redirects to {@link ROUTES.progress}. */
   analytics: "/app/analytics",
   settings: "/app/settings",
+  debug: "/app/debug",
 } as const;
 
 /** Completed-cycle reflection report. */
