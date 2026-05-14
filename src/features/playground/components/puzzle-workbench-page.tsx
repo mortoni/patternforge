@@ -14,7 +14,8 @@ import { ensureGeneratedPuzzlesInDbIfEmpty } from "@/features/training-sets/serv
 import { TrainingBoardCard } from "@/features/training/components/training-board-card";
 import type { ExerciseSchema } from "@/db/schema";
 
-const BOARD_COLUMN_CLASS = "w-[min(92vw,calc(100dvh-14rem))] max-w-[min(100%,40rem)]";
+const BOARD_COLUMN_CLASS =
+  "w-full min-w-0 max-w-[min(100%,calc(100dvh-14rem),40rem)] self-stretch";
 
 type WorkbenchPuzzleState = "idle" | "checking" | "complete";
 const AUTO_PLAY_STEP_MS = 420;

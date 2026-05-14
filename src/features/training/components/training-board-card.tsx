@@ -43,7 +43,7 @@ export interface TrainingBoardCardProps {
   minimal?: boolean;
   /**
    * Classes for the square board container (aspect-square). Use for responsive sizing, e.g.
-   * `w-[min(92vw,calc(100dvh-14rem))]` so the board fits the viewport with header/footer.
+   * Parent should set width (e.g. `w-full max-w-[min(100%,calc(100dvh-14rem))]`) for responsive fit.
    */
   boardContainerClassName?: string;
   /** Bumps Chessground sync without full remount; use stable exercise/review ids. */

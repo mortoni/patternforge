@@ -3,15 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ROUTES, STORYBOOK_URL } from "@/lib/constants";
-import {
-  Dumbbell,
-  Library,
-  TrendingUp,
-  Settings,
-  BookOpen,
-  PanelsTopLeft,
-} from "lucide-react";
+import { DOCUMENTATION_URL, ROUTES } from "@/lib/constants";
+import { Dumbbell, Library, TrendingUp, Settings, BookOpen } from "lucide-react";
 
 const navItems = [
   { href: ROUTES.training, label: "Training", icon: Dumbbell },
@@ -20,13 +13,7 @@ const navItems = [
   { href: ROUTES.settings, label: "Settings", icon: Settings },
 ] as const;
 
-const isDev =
-  typeof process !== "undefined" && process.env.NODE_ENV === "development";
-
-const showWorkbenchLink =
-  isDev ||
-  (typeof process !== "undefined" &&
-    Boolean(process.env.NEXT_PUBLIC_STORYBOOK_URL?.trim()));
+const showDocumentationLink = Boolean(DOCUMENTATION_URL);
 
 export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
@@ -73,62 +60,44 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
           </Link>
         );
       })}
-      {showWorkbenchLink ? (
-        <a
-          href={STORYBOOK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+      {showDocumentationLink ? (
+        <div
           className={cn(
-            "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
-            collapsed ? "justify-center px-2" : "gap-3 px-3",
-            "text-muted-foreground hover:bg-muted hover:text-foreground"
+            "mt-auto border-t border-border pt-4",
+            collapsed && "flex justify-center px-0"
           )}
-          title={collapsed ? "Workbench (Storybook)" : undefined}
-          aria-label={
-            collapsed ? "Open Storybook puzzle workbench in a new tab" : undefined
-          }
         >
-          <PanelsTopLeft className="h-5 w-5 shrink-0" aria-hidden />
-          <span
+          <a
+            href={DOCUMENTATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
-              "min-w-0 transition-all duration-200",
-              collapsed
-                ? "pointer-events-none max-w-0 overflow-hidden opacity-0"
-                : "truncate opacity-100"
+              "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+              collapsed ? "justify-center px-2" : "gap-3 px-3"
             )}
-          >
-            Workbench
-          </span>
-        </a>
-      ) : null}
-      <div
-        className={cn(
-          "mt-auto border-t border-border pt-4",
-          collapsed && "flex justify-center px-0"
-        )}
-      >
-        <Link
-          href={ROUTES.docs}
-          className={cn(
-            "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-            collapsed ? "justify-center px-2" : "gap-3 px-3"
-          )}
-          title="Documentation"
-          aria-label={collapsed ? "Documentation" : undefined}
-        >
-          <BookOpen className="h-4 w-4 shrink-0" />
-          <span
-            className={cn(
-              "min-w-0 transition-all duration-200",
+            title="Documentation (Storybook)"
+            aria-label={
               collapsed
-                ? "pointer-events-none max-w-0 overflow-hidden opacity-0"
-                : "truncate opacity-100"
-            )}
+                ? "Open documentation in Storybook (new tab)"
+                : undefined
+            }
           >
-            Docs
-          </span>
-        </Link>
-      </div>
+            <BookOpen className="h-4 w-4 shrink-0" aria-hidden />
+            <span
+              className={cn(
+                "min-w-0 transition-all duration-200",
+                collapsed
+                  ? "pointer-events-none max-w-0 overflow-hidden opacity-0"
+                  : "truncate opacity-100"
+              )}
+            >
+              Documentation
+            </span>
+          </a>
+        </div>
+      ) : (
+        <div className="mt-auto" aria-hidden />
+      )}
     </nav>
   );
 }

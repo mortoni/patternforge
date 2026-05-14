@@ -40,8 +40,12 @@ import { TrainingEmptyState } from "./training-empty-state";
 import { TrainingBoardCard } from "./training-board-card";
 import { completeSession } from "@/services/training-session.service";
 
-/** Shared width for board column + below-board actions (responsive, viewport-aware). */
-const BOARD_COLUMN_CLASS = "w-[min(92vw,calc(100dvh-14rem))] max-w-[min(100%,40rem)]";
+/**
+ * Board column width: use the padded main width (`100%`), not `vw`, so the board
+ * does not overflow horizontally on mobile (main uses `p-4`).
+ */
+const BOARD_COLUMN_CLASS =
+  "w-full min-w-0 max-w-[min(100%,calc(100dvh-14rem),40rem)] self-stretch";
 
 function parseUciForExecution(
   uci: string

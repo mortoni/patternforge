@@ -12,10 +12,13 @@ import {
   StaggerContainer,
 } from "@/components/shared/motion-primitives";
 import { Button } from "@/components/ui/button";
-import { ROUTES } from "@/lib/constants";
+import { DOCUMENTATION_URL, ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const containerClass = "mx-auto w-full max-w-6xl px-3.5 sm:px-5 md:px-6 lg:px-8";
+/** Wider hero on desktop: uses most of the viewport up to a generous cap. */
+const heroContainerClass =
+  "mx-auto w-full max-w-6xl min-w-0 px-3.5 sm:px-5 md:px-6 lg:max-w-[min(95vw,100rem)] lg:px-[clamp(1.75rem,4vw,3.5rem)]";
 const headerWordmarkClass =
   "text-[11px] tracking-[0.2em] sm:text-xs sm:tracking-[0.28em] md:text-sm md:tracking-[0.35em]";
 const footerWordmarkClass =
@@ -95,9 +98,16 @@ function Header() {
             <Link href="#method" className={navLinkClass}>
               Method
             </Link>
-            <Link href={ROUTES.docs} className={navLinkClass}>
-              Docs
-            </Link>
+            {DOCUMENTATION_URL ? (
+              <a
+                href={DOCUMENTATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={navLinkClass}
+              >
+                Documentation
+              </a>
+            ) : null}
             <Link href={ROUTES.sets} className={navLinkClass}>
               Training Sets
             </Link>
@@ -167,27 +177,18 @@ function Footer() {
                   Philosophy
                 </Link>
               </li>
-              <li>
-                <Link
-                  href={`${ROUTES.docs}/philosophy`}
-                  className={`${footerLinkClass} block py-0.5`}
-                >
-                  Philosophy (docs)
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`${ROUTES.docs}/woodpecker-method`}
-                  className={`${footerLinkClass} block py-0.5`}
-                >
-                  Method (docs)
-                </Link>
-              </li>
-              <li>
-                <Link href={ROUTES.docs} className={`${footerLinkClass} block py-0.5`}>
-                  Docs
-                </Link>
-              </li>
+              {DOCUMENTATION_URL ? (
+                <li>
+                  <a
+                    href={DOCUMENTATION_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${footerLinkClass} block py-0.5`}
+                  >
+                    Documentation
+                  </a>
+                </li>
+              ) : null}
             </ul>
           </div>
           <div>
@@ -324,23 +325,23 @@ export default function HomePage() {
       <main>
         {/* Hero */}
         <section className="border-b border-border" aria-labelledby="hero-heading">
-          <div className={`${containerClass} py-16 md:py-24`}>
-            <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_minmax(470px,1fr)] lg:items-center lg:gap-14">
-              <FadeIn className="text-center lg:text-left">
+          <div className={`${heroContainerClass} py-12 sm:py-16 md:py-20 lg:py-24`}>
+            <div className="mx-auto grid w-full min-w-0 grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-[clamp(2rem,5vw,3.75rem)] lg:gap-y-0">
+              <FadeIn className="min-w-0 max-w-xl justify-self-center text-center sm:max-w-2xl lg:max-w-none lg:justify-self-stretch lg:text-left">
                 <h1
                   id="hero-heading"
-                  className="text-balance text-[1.625rem] font-light leading-[1.16] tracking-tight text-foreground min-[400px]:text-4xl sm:text-5xl lg:text-[3.65rem]"
+                  className="text-balance text-[1.625rem] font-light leading-[1.16] tracking-tight text-foreground min-[400px]:text-4xl sm:text-5xl lg:text-[3.85rem] xl:text-[clamp(3.85rem,calc(3.25rem_+_1.75vw),4.75rem)]"
                 >
                   Train patterns, not just puzzles.
                 </h1>
-                <p className="mx-auto mt-5 max-w-xl text-pretty text-[15px] leading-relaxed text-muted-foreground sm:text-base md:text-lg lg:mx-0">
+                <p className="mx-auto mt-5 max-w-xl text-pretty text-[15px] leading-relaxed text-muted-foreground sm:text-base md:text-lg lg:mx-0 lg:max-w-2xl lg:text-xl xl:max-w-3xl">
                   Build tactical recognition through repeated cycles, mistake review, and
                   focused puzzle sets.
                 </p>
-                <p className="mx-auto mt-3 max-w-xl text-sm italic leading-relaxed text-muted-foreground/85 lg:mx-0">
+                <p className="mx-auto mt-3 max-w-xl text-sm italic leading-relaxed text-muted-foreground/85 lg:mx-0 lg:max-w-2xl lg:text-base xl:max-w-3xl">
                   The goal is not to solve puzzles. The goal is to stop needing to think.
                 </p>
-                <div className="mx-auto mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:flex-row sm:items-center lg:mx-0">
+                <div className="mx-auto mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:mx-0 lg:justify-start">
                   <Button
                     asChild
                     size="lg"
@@ -359,20 +360,31 @@ export default function HomePage() {
                 </div>
               </FadeIn>
               <FadeIn
-                className="relative mx-auto flex w-full max-w-lg items-center justify-center lg:max-w-none"
+                className="relative flex w-full min-w-0 max-w-full justify-center justify-self-center lg:justify-self-end"
                 delay={0.08}
               >
                 <div
-                  className="pointer-events-none absolute inset-x-[10%] top-[8%] h-[72%] rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.24)_0%,rgba(120,75,255,0.08)_45%,transparent_75%)] blur-3xl"
+                  className="pointer-events-none absolute inset-x-0 top-[8%] flex justify-center sm:inset-x-[4%] lg:inset-x-0"
                   aria-hidden
-                />
+                >
+                  <div
+                    className="rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.24)_0%,rgba(120,75,255,0.08)_45%,transparent_75%)] blur-3xl"
+                    style={{
+                      height: "min(60dvh, 48rem)",
+                      width: "min(92vw, calc(min(60dvh, 48rem) * 0.55 + 6rem))",
+                      maxWidth: "48rem",
+                    }}
+                  />
+                </div>
                 <TrainingPreview
                   theme="light"
-                  className="relative z-10 max-w-[410px] sm:max-w-[455px] lg:max-w-[500px] dark:hidden"
+                  className="relative z-10 dark:hidden"
+                  layout="hero"
                 />
                 <TrainingPreview
                   theme="dark"
-                  className="relative z-10 hidden max-w-[410px] sm:max-w-[455px] lg:max-w-[500px] dark:block"
+                  className="relative z-10 hidden dark:block"
+                  layout="hero"
                 />
               </FadeIn>
             </div>

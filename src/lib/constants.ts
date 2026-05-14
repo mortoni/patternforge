@@ -17,7 +17,6 @@ export const ROUTES = {
   home: "/",
   privacy: "/privacy",
   terms: "/terms",
-  docs: "/docs",
   app: "/app",
   training: "/app/training",
   /** Post–end-session checkpoint; query: `?sessionId=` */
@@ -32,14 +31,28 @@ export const ROUTES = {
 } as const;
 
 /**
- * Storybook (docs + puzzle workbench). Sidebar link in development; set
- * `NEXT_PUBLIC_STORYBOOK_URL` when hosting Storybook outside localhost.
+ * Hosted Storybook (product docs + tooling). Sidebar “Documentation” opens this URL in a new tab.
+ *
+ * Prefer `NEXT_PUBLIC_DOCUMENTATION_URL` for production. `NEXT_PUBLIC_STORYBOOK_URL` is still read for compatibility.
+ * In development, defaults to `http://localhost:6006` when neither env var is set.
  */
-export const STORYBOOK_URL =
-  typeof process !== "undefined" &&
-  process.env.NEXT_PUBLIC_STORYBOOK_URL?.trim()
-    ? process.env.NEXT_PUBLIC_STORYBOOK_URL.trim()
-    : "http://localhost:6006";
+function resolveDocumentationUrl(): string {
+  const fromEnv =
+    (typeof process !== "undefined" &&
+      (process.env.NEXT_PUBLIC_DOCUMENTATION_URL?.trim() ||
+        process.env.NEXT_PUBLIC_STORYBOOK_URL?.trim())) ||
+    "";
+  if (fromEnv) return fromEnv;
+  if (
+    typeof process !== "undefined" &&
+    process.env.NODE_ENV === "development"
+  ) {
+    return "http://localhost:6006";
+  }
+  return "";
+}
+
+export const DOCUMENTATION_URL = resolveDocumentationUrl();
 
 /** Completed-cycle reflection report. */
 export function cycleSummaryRoute(cycleId: string): string {
