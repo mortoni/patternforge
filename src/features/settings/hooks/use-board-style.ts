@@ -7,19 +7,17 @@ import {
   resolveBoardChessStyles,
   type ResolvedBoardChessStyles,
 } from "@/lib/chess/board-styles";
-import { MT_MODEL_PIECES } from "@/lib/chess/mt-model-pieces";
+import { useEffectiveAppColorScheme } from "./use-effective-app-color-scheme";
 
 /**
  * Resolved square / frame tokens for the user’s global board style preference.
  */
 export function useBoardStyle(): ResolvedBoardChessStyles {
   const { settings } = useSettingsContext();
+  const colorScheme = useEffectiveAppColorScheme();
   const id = parseBoardStyleId(settings?.boardStyle);
-  return React.useMemo(() => {
-    const base = resolveBoardChessStyles(id);
-    return {
-      ...base,
-      pieces: id === "mtModel" || id === "mtLight" ? MT_MODEL_PIECES : undefined,
-    };
-  }, [id]);
+  return React.useMemo(
+    () => resolveBoardChessStyles(id, { colorScheme }),
+    [id, colorScheme]
+  );
 }

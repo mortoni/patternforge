@@ -149,6 +149,7 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
           <div>
             <TrainingBoardCard
               fen={displayFen}
+              positionSyncKey={mistakeId}
               boardOrientation={
                 state.autoBoardOrientation
                   ? getsideToMove(turnForLabel)

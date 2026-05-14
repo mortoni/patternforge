@@ -3,7 +3,7 @@
  * Adjust here for Lichess-like feel without hunting through components.
  */
 
-/** react-chessboard piece transition duration (default library value is 300ms). */
+/** Piece move animation duration; matched to Chessground in PatternBoard. */
 export const MOVE_ANIMATION_MS = 220;
 
 /** Brief beat after a move animation so the eye registers the new position. */

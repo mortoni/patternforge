@@ -334,6 +334,7 @@ export function TrainingPage() {
           <div className="relative w-full min-h-0">
             <TrainingBoardCard
               fen={displayFen}
+              positionSyncKey={readyState!.exercise.id}
               boardOrientation={
                 readyState?.autoBoardOrientation
                   ? getsideToMove(turnForLabel)

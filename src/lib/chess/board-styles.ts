@@ -1,212 +1,155 @@
 /**
- * Single source of truth for chessboard square colors and frame tokens.
- * Consumed by TrainingBoardCard and Settings previews.
+ * Board themes: each id maps to definitions; non-solid-checker themes use
+ * extra fields (e.g. hatch). Resolve with app shell mode for light/dark pairs.
  */
 
 import type { CSSProperties } from "react";
-import type { PieceRenderObject } from "react-chessboard";
 
-export const BOARD_STYLE_IDS = [
-  "classic",
-  "walnut",
-  "slate",
-  "forest",
-  "tournament",
-  /** Dark monochrome board: charcoal light squares, hatched dark squares (see MT reference). */
-  "mtModel",
-  /** Light monochrome board: same MT hatch pattern with inverted brightness. */
-  "mtLight",
-] as const;
+export type AppColorScheme = "light" | "dark";
+
+export const BOARD_STYLE_IDS = ["classic", "blueprint"] as const;
 
 export type BoardStyleId = (typeof BOARD_STYLE_IDS)[number];
 
-/** Matches react-chessboard defaults (classic wood). */
-const CLASSIC_LIGHT = "#F0D9B5";
-const CLASSIC_DARK = "#B58863";
+/** Default board: soft lilac (light shell) vs deep violet (dark shell). */
+const CLASSIC_APP_LIGHT = {
+  lightSquare: "#F4F0FD",
+  darkSquare: "#D8CCEF",
+  boardBackground: "#EEEBFA",
+  frameBackground: "rgba(250, 248, 255, 0.96)",
+  frameBorder: "rgba(100, 82, 140, 0.16)",
+  coordColor: "rgba(72, 62, 108, 0.6)",
+} as const;
 
-/** Optional overrides for selection / legal-move overlays (TrainingBoardCard). */
-export interface BoardInteractionStyles {
-  selectedSquare: CSSProperties;
-  legalDot: CSSProperties;
-  legalCapture: CSSProperties;
-}
+const CLASSIC_APP_DARK = {
+  lightSquare: "#4A4568",
+  darkSquare: "#2D2842",
+  boardBackground: "#15131E",
+  frameBackground: "rgba(26, 24, 36, 0.94)",
+  frameBorder: "rgba(190, 180, 235, 0.14)",
+  coordColor: "rgba(205, 200, 232, 0.66)",
+} as const;
 
-export interface BoardStyleDefinition {
-  id: BoardStyleId;
-  label: string;
-  /** Fallback hex when full `lightSquareStyle` / `darkSquareStyle` not used */
+export interface SolidBoardVariant {
   lightSquare: string;
   darkSquare: string;
-  /**
-   * Full CSS for light squares (overrides `lightSquare` background-only).
-   * Use for complex surfaces; omit for solid `lightSquare` color.
-   */
-  lightSquareStyle?: CSSProperties;
-  /**
-   * Full CSS for dark squares (e.g. diagonal hatch pattern).
-   */
-  darkSquareStyle?: CSSProperties;
-  /**
-   * Optional background behind squares (react-chessboard `boardStyle`).
-   * Omit for `classic` so library defaults apply.
-   */
-  boardBackground?: string;
-  /**
-   * When set, TrainingBoardCard outer frame uses these instead of theme `border` / `muted`.
-   */
-  frameBackground?: string;
-  frameBorder?: string;
-  /** Selection + legal move indicators; defaults used when omitted */
-  interaction?: BoardInteractionStyles;
-  /** File/rank labels on dark vs light squares */
-  notation?: {
-    darkSquareNotationStyle: CSSProperties;
-    lightSquareNotationStyle: CSSProperties;
-  };
+  boardBackground: string;
+  frameBackground: string;
+  frameBorder: string;
+  coordColor: string;
 }
+
+export interface BoardThemeVariant {
+  chessLightSquare: string;
+  chessDarkSquare: string;
+  hatchBase: string;
+  hatchLine: string;
+  hatchOnLightChessSquares: boolean;
+  boardBackground: string;
+  frameBackground: string;
+  frameBorder: string;
+  coordColor: string;
+}
+
+export type BoardStyleDefinition =
+  | {
+      kind: "solid-checker";
+      id: "classic";
+      label: string;
+      description?: string;
+      /** Settings preview — app-light pair */
+      lightSquare: string;
+      darkSquare: string;
+      variants: Record<AppColorScheme, SolidBoardVariant>;
+    }
+  | {
+      kind: "blueprint-grid";
+      id: "blueprint";
+      label: string;
+      description?: string;
+      lightSquare: string;
+      darkSquare: string;
+      variants: Record<AppColorScheme, BoardThemeVariant>;
+    };
+
+function svgSolidCheckerboardUrl(lightSquare: string, darkSquare: string): string {
+  const cells: string[] = [];
+  for (let r = 0; r < 8; r++) {
+    for (let f = 0; f < 8; f++) {
+      const isLightChess = (r + f) % 2 === 0;
+      const fill = isLightChess ? lightSquare : darkSquare;
+      cells.push(`<rect x="${f}" y="${r}" width="1" height="1" fill="${fill}"/>`);
+    }
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" preserveAspectRatio="none">${cells.join("")}</svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+function svgBlueprintBoardUrl(v: BoardThemeVariant): string {
+  const pid = "pf-bp-h";
+  const cells: string[] = [];
+  for (let r = 0; r < 8; r++) {
+    for (let f = 0; f < 8; f++) {
+      const isLightChess = (r + f) % 2 === 0;
+      const hatched = v.hatchOnLightChessSquares ? isLightChess : !isLightChess;
+      const solid = isLightChess ? v.chessLightSquare : v.chessDarkSquare;
+      const fill = hatched ? `url(#${pid})` : solid;
+      cells.push(`<rect x="${f}" y="${r}" width="1" height="1" fill="${fill}"/>`);
+    }
+  }
+  const pattern = `<pattern id="${pid}" patternUnits="userSpaceOnUse" width="0.125" height="0.125"><rect width="0.125" height="0.125" fill="${v.hatchBase}"/><line x1="0" y1="0.125" x2="0.125" y2="0" stroke="${v.hatchLine}" stroke-width="0.019" stroke-linecap="square"/><line x1="-0.0625" y1="0.0625" x2="0.0625" y2="-0.0625" stroke="${v.hatchLine}" stroke-width="0.019" stroke-linecap="square"/></pattern>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" preserveAspectRatio="none"><defs>${pattern}</defs>${cells.join("")}</svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
+const BLUEPRINT_APP_LIGHT: BoardThemeVariant = {
+  chessLightSquare: "#f0f0f0",
+  chessDarkSquare: "#d0d0d0",
+  hatchBase: "#d0d0d0",
+  hatchLine: "rgba(40,45,55,0.22)",
+  hatchOnLightChessSquares: false,
+  boardBackground: "#eaeaea",
+  frameBackground: "rgba(248, 248, 248, 0.94)",
+  frameBorder: "rgba(120, 120, 135, 0.2)",
+  coordColor: "rgba(100, 105, 115, 0.75)",
+};
+
+const BLUEPRINT_APP_DARK: BoardThemeVariant = {
+  chessLightSquare: "#3a3a3a",
+  chessDarkSquare: "#121212",
+  hatchBase: "#121212",
+  hatchLine: "rgba(255,255,255,0.17)",
+  hatchOnLightChessSquares: false,
+  boardBackground: "#1a1a1a",
+  frameBackground: "rgba(24, 24, 26, 0.92)",
+  frameBorder: "rgba(240, 240, 248, 0.12)",
+  coordColor: "rgba(215, 218, 225, 0.72)",
+};
 
 export const BOARD_STYLE_MAP: Record<BoardStyleId, BoardStyleDefinition> = {
   classic: {
+    kind: "solid-checker",
     id: "classic",
     label: "Classic",
-    lightSquare: CLASSIC_LIGHT,
-    darkSquare: CLASSIC_DARK,
-  },
-  walnut: {
-    id: "walnut",
-    label: "Walnut",
-    lightSquare: "#e8dcc8",
-    darkSquare: "#4a3024",
-    boardBackground: "#2a1f1a",
-    frameBackground: "rgba(42, 31, 26, 0.35)",
-    frameBorder: "rgba(74, 48, 36, 0.5)",
-  },
-  slate: {
-    id: "slate",
-    label: "Slate",
-    lightSquare: "#c9d4dc",
-    darkSquare: "#3d4f5c",
-    boardBackground: "#1e2830",
-    frameBackground: "rgba(30, 40, 48, 0.4)",
-    frameBorder: "rgba(80, 96, 112, 0.45)",
-  },
-  forest: {
-    id: "forest",
-    label: "Forest",
-    lightSquare: "#d4e3d6",
-    darkSquare: "#2f4a38",
-    boardBackground: "#1c2a22",
-    frameBackground: "rgba(28, 42, 34, 0.4)",
-    frameBorder: "rgba(61, 90, 72, 0.5)",
-  },
-  tournament: {
-    id: "tournament",
-    label: "Tournament",
-    lightSquare: "#eeeed2",
-    darkSquare: "#769656",
-    boardBackground: "#262421",
-    frameBackground: "rgba(38, 36, 33, 0.35)",
-    frameBorder: "rgba(90, 85, 75, 0.45)",
-  },
-  /**
-   * Inspired by a dark, minimal training UI: flat charcoal “light” squares,
-   * hatched darker squares, deep blue selection, subtle grey move dots.
-   * Piece graphics remain the default react-chessboard set.
-   */
-  mtModel: {
-    id: "mtModel",
-    label: "MT (dark)",
-    lightSquare: "#2d2d2d",
-    darkSquare: "#0e0e0e",
-    lightSquareStyle: { backgroundColor: "#2d2d2d" },
-    /**
-     * Dark squares: diagonal hatch with fewer, farther-spaced lines so each stripe reads clearly.
-     * ~10px repeat: wide gap + 2px hairline at higher contrast than the old dense 2px pattern.
-     */
-    darkSquareStyle: {
-      backgroundColor: "#0e0e0e",
-      backgroundImage: `repeating-linear-gradient(
-        135deg,
-        transparent 0,
-        transparent 8px,
-        rgba(255, 255, 255, 0.2) 8px,
-        rgba(255, 255, 255, 0.2) 10px
-      )`,
-    },
-    boardBackground: "#0f0f0f",
-    frameBackground: "rgba(15, 15, 15, 0.95)",
-    frameBorder: "rgba(255, 255, 255, 0.09)",
-    interaction: {
-      selectedSquare: {
-        backgroundColor: "#2b3d63",
-        boxShadow: "inset 0 0 0 1px rgba(255, 255, 255, 0.08)",
-      },
-      legalDot: {
-        backgroundImage:
-          "radial-gradient(circle at center, rgba(200, 200, 200, 0.42) 0%, rgba(200, 200, 200, 0.42) 11%, transparent 12%)",
-      },
-      legalCapture: {
-        boxShadow: "inset 0 0 0 2px rgba(200, 200, 200, 0.45)",
-        borderRadius: "50%",
-      },
-    },
-    notation: {
-      darkSquareNotationStyle: {
-        color: "rgba(255, 255, 255, 0.42)",
-        fontSize: "11px",
-      },
-      lightSquareNotationStyle: {
-        color: "rgba(255, 255, 255, 0.42)",
-        fontSize: "11px",
-      },
+    description: "Soft lilac squares in light mode; deep violet in dark mode",
+    lightSquare: CLASSIC_APP_LIGHT.lightSquare,
+    darkSquare: CLASSIC_APP_LIGHT.darkSquare,
+    variants: {
+      light: { ...CLASSIC_APP_LIGHT },
+      dark: { ...CLASSIC_APP_DARK },
     },
   },
-  /**
-   * MT light variant: same 135° hatch pattern and spacing as MT dark,
-   * but with a light monochrome palette.
-   */
-  mtLight: {
-    id: "mtLight",
-    label: "MT (light)",
-    lightSquare: "#f3f3f3",
-    darkSquare: "#d7d7d7",
-    lightSquareStyle: { backgroundColor: "#f3f3f3" },
-    darkSquareStyle: {
-      backgroundColor: "#d7d7d7",
-      backgroundImage: `repeating-linear-gradient(
-        135deg,
-        transparent 0,
-        transparent 8px,
-        rgba(0, 0, 0, 0.22) 8px,
-        rgba(0, 0, 0, 0.22) 10px
-      )`,
-    },
-    boardBackground: "#ececec",
-    frameBackground: "rgba(242, 242, 242, 0.98)",
-    frameBorder: "rgba(0, 0, 0, 0.14)",
-    interaction: {
-      selectedSquare: {
-        backgroundColor: "#b7c8e8",
-        boxShadow: "inset 0 0 0 1px rgba(22, 45, 90, 0.28)",
-      },
-      legalDot: {
-        backgroundImage:
-          "radial-gradient(circle at center, rgba(56, 56, 56, 0.34) 0%, rgba(56, 56, 56, 0.34) 11%, transparent 12%)",
-      },
-      legalCapture: {
-        boxShadow: "inset 0 0 0 2px rgba(56, 56, 56, 0.34)",
-        borderRadius: "50%",
-      },
-    },
-    notation: {
-      darkSquareNotationStyle: {
-        color: "rgba(0, 0, 0, 0.48)",
-        fontSize: "11px",
-      },
-      lightSquareNotationStyle: {
-        color: "rgba(0, 0, 0, 0.48)",
-        fontSize: "11px",
-      },
+  blueprint: {
+    kind: "blueprint-grid",
+    id: "blueprint",
+    label: "Blueprint",
+    description:
+      "Diagonal hatching on the darker squares; colors follow light/dark mode",
+    lightSquare: BLUEPRINT_APP_LIGHT.chessLightSquare,
+    darkSquare: BLUEPRINT_APP_LIGHT.chessDarkSquare,
+    variants: {
+      light: BLUEPRINT_APP_LIGHT,
+      dark: BLUEPRINT_APP_DARK,
     },
   },
 };
@@ -222,58 +165,114 @@ export function parseBoardStyleId(value: unknown): BoardStyleId {
 }
 
 export interface ResolvedBoardChessStyles {
+  boardStyleId: BoardStyleId;
+  coordColor?: string;
   lightSquareStyle: CSSProperties;
   darkSquareStyle: CSSProperties;
-  /** When present, merged into ChessboardProvider options.boardStyle */
   boardStyle?: CSSProperties;
-  /**
-   * Inline frame for the outer board shell; `null` keeps TrainingBoardCard theme classes (classic).
-   */
   frame: { backgroundColor: string; borderColor: string } | null;
-  interaction?: BoardInteractionStyles;
-  notation?: BoardStyleDefinition["notation"];
-  /**
-   * Custom piece render map (e.g. MT style outlines black pieces only).
-   * Omitted when using library defaults.
-   */
-  pieces?: PieceRenderObject;
+  cgBoardAppearance: Pick<
+    CSSProperties,
+    "backgroundColor" | "backgroundImage" | "backgroundSize"
+  > | null;
 }
 
-export function resolveBoardChessStyles(id: BoardStyleId): ResolvedBoardChessStyles {
+export function resolveBoardChessStyles(
+  id: BoardStyleId,
+  opts?: { colorScheme?: AppColorScheme }
+): ResolvedBoardChessStyles {
+  const scheme = opts?.colorScheme ?? "light";
   const def = BOARD_STYLE_MAP[id];
-  const lightSquareStyle: CSSProperties =
-    def.lightSquareStyle ?? { backgroundColor: def.lightSquare };
-  const darkSquareStyle: CSSProperties =
-    def.darkSquareStyle ?? { backgroundColor: def.darkSquare };
-  const boardStyle =
-    def.boardBackground != null
-      ? { backgroundColor: def.boardBackground }
-      : undefined;
-  const frame =
-    def.frameBackground != null && def.frameBorder != null
-      ? {
-          backgroundColor: def.frameBackground,
-          borderColor: def.frameBorder,
-        }
-      : null;
+
+  if (def.kind === "solid-checker") {
+    const v = def.variants[scheme];
+    return {
+      boardStyleId: def.id,
+      coordColor: v.coordColor,
+      lightSquareStyle: { backgroundColor: v.lightSquare },
+      darkSquareStyle: { backgroundColor: v.darkSquare },
+      boardStyle: { backgroundColor: v.boardBackground },
+      frame: {
+        backgroundColor: v.frameBackground,
+        borderColor: v.frameBorder,
+      },
+      cgBoardAppearance: {
+        backgroundColor: v.lightSquare,
+        backgroundImage: svgSolidCheckerboardUrl(v.lightSquare, v.darkSquare),
+        backgroundSize: "100% 100%",
+      },
+    };
+  }
+
+  const v = def.variants[scheme];
+  const hatchPreviewLine =
+    scheme === "light"
+      ? "rgba(40,45,55,0.18)"
+      : "rgba(255,255,255,0.17)";
+
+  const lightSqPreview: CSSProperties = v.hatchOnLightChessSquares
+    ? {
+        backgroundColor: v.hatchBase,
+        backgroundImage: `repeating-linear-gradient(135deg, transparent 0px, transparent 5px, ${hatchPreviewLine} 5px, ${hatchPreviewLine} 6px)`,
+      }
+    : { backgroundColor: v.chessLightSquare };
+
+  const darkSqPreview: CSSProperties = !v.hatchOnLightChessSquares
+    ? {
+        backgroundColor: v.hatchBase,
+        backgroundImage: `repeating-linear-gradient(135deg, transparent 0px, transparent 5px, ${hatchPreviewLine} 5px, ${hatchPreviewLine} 6px)`,
+      }
+    : { backgroundColor: v.chessDarkSquare };
 
   return {
-    lightSquareStyle,
-    darkSquareStyle,
-    boardStyle,
-    frame,
-    interaction: def.interaction,
-    notation: def.notation,
+    boardStyleId: def.id,
+    coordColor: v.coordColor,
+    lightSquareStyle: lightSqPreview,
+    darkSquareStyle: darkSqPreview,
+    boardStyle: { backgroundColor: v.boardBackground },
+    frame: {
+      backgroundColor: v.frameBackground,
+      borderColor: v.frameBorder,
+    },
+    cgBoardAppearance: {
+      backgroundColor: v.chessLightSquare,
+      backgroundImage: svgBlueprintBoardUrl(v),
+      backgroundSize: "100% 100%",
+    },
   };
 }
 
-/** Settings preview swatches: full CSS per checker cell. */
-export function getBoardStylePreviewCellStyles(def: BoardStyleDefinition): {
+export function getBoardStylePreviewCellStyles(
+  def: BoardStyleDefinition,
+  scheme: AppColorScheme = "light"
+): {
   light: CSSProperties;
   dark: CSSProperties;
 } {
+  if (def.kind === "solid-checker") {
+    const v = def.variants[scheme];
+    return {
+      light: { backgroundColor: v.lightSquare },
+      dark: { backgroundColor: v.darkSquare },
+    };
+  }
+  const v = def.variants[scheme];
+  const hatchPreviewLine =
+    scheme === "light"
+      ? "rgba(40,45,55,0.18)"
+      : "rgba(255,255,255,0.17)";
   return {
-    light: def.lightSquareStyle ?? { backgroundColor: def.lightSquare },
-    dark: def.darkSquareStyle ?? { backgroundColor: def.darkSquare },
+    light: v.hatchOnLightChessSquares
+      ? {
+          backgroundColor: v.hatchBase,
+          backgroundImage: `repeating-linear-gradient(135deg, transparent 0px, transparent 5px, ${hatchPreviewLine} 5px, ${hatchPreviewLine} 6px)`,
+        }
+      : { backgroundColor: v.chessLightSquare },
+    dark: !v.hatchOnLightChessSquares
+      ? {
+          backgroundColor: v.hatchBase,
+          backgroundImage: `repeating-linear-gradient(135deg, transparent 0px, transparent 5px, ${hatchPreviewLine} 5px, ${hatchPreviewLine} 6px)`,
+        }
+      : { backgroundColor: v.chessDarkSquare },
   };
 }

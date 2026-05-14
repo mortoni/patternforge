@@ -14,6 +14,8 @@
   --border: hsl(220 15% 88%);
   --card: #ffffff;
   --card-foreground: hsl(220 35% 12%);
+  /* Chessground last-move: soft sky blue on light boards */
+  --pf-board-last-move: hsl(214 88% 48% / 0.13);
 }
 
 @theme inline {
@@ -41,6 +43,8 @@ html.dark {
   --border: hsl(220 20% 20%);
   --card: hsl(220 25% 10%);
   --card-foreground: hsl(210 40% 98%);
+  /* Last-move: light airy blue on dark boards */
+  --pf-board-last-move: hsl(212 92% 74% / 0.16);
 }
 
 /*

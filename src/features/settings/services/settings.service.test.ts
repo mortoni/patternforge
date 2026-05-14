@@ -86,7 +86,7 @@ describe("settings.service", () => {
         id: "default",
         theme: "system",
         boardOrientation: "black",
-        boardStyle: "slate",
+        boardStyle: "blueprint",
       });
 
       const result = await updateBoardOrientation("black");
@@ -105,15 +105,15 @@ describe("settings.service", () => {
         id: "default",
         theme: "system",
         boardOrientation: "white",
-        boardStyle: "forest",
+        boardStyle: "blueprint",
       });
 
-      const result = await updateBoardStyle("forest");
+      const result = await updateBoardStyle("blueprint");
 
       expect(mockUpdateSettings).toHaveBeenCalledWith({
-        boardStyle: "forest",
+        boardStyle: "blueprint",
       });
-      expect(result.boardStyle).toBe("forest");
+      expect(result.boardStyle).toBe("blueprint");
     });
   });
 });

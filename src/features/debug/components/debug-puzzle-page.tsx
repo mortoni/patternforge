@@ -293,6 +293,7 @@ export function DebugPuzzlePage() {
           <div className={BOARD_COLUMN_CLASS}>
             <TrainingBoardCard
               fen={positionFen}
+              positionSyncKey={loaded.id}
               boardOrientation="white"
               onMove={(uci, newFen) => void handleBoardMove(uci, newFen)}
               disabled={state !== "idle"}

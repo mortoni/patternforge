@@ -1,62 +1,55 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
 import { TrainingBoardCard } from "./training-board-card";
+import type { PatternBoardProps } from "./pattern-board";
 
-const capturedOptions: { current: Record<string, unknown> | null } = { current: null };
+const capturedProps: { current: PatternBoardProps | null } = { current: null };
+
+import { resolveBoardChessStyles } from "@/lib/chess/board-styles";
+
+const classicLightSurface = resolveBoardChessStyles("classic", {
+  colorScheme: "light",
+});
 
 vi.mock("@/features/settings/hooks/use-board-style", () => ({
-  useBoardStyle: () => ({
-    lightSquareStyle: { backgroundColor: "#F0D9B5" },
-    darkSquareStyle: { backgroundColor: "#B58863" },
-    boardStyle: undefined,
-    frame: null,
-    interaction: undefined,
-    notation: undefined,
-    pieces: undefined,
-  }),
+  useBoardStyle: (): import("@/lib/chess/board-styles").ResolvedBoardChessStyles =>
+    classicLightSurface,
 }));
 
-vi.mock("react-chessboard", () => ({
-  ChessboardProvider: ({
-    options,
-    children,
-  }: {
-    options: Record<string, unknown>;
-    children: React.ReactNode;
-  }) => {
-    capturedOptions.current = options;
-    return <div data-testid="chessboard-provider">{children}</div>;
+vi.mock("./pattern-board", () => ({
+  PatternBoard: (props: PatternBoardProps) => {
+    capturedProps.current = props;
+    return <div data-testid="pattern-board" />;
   },
-  Chessboard: () => <div data-testid="chessboard" />,
-  useChessboardContext: () => ({ draggingPiece: null }),
 }));
 
 describe("TrainingBoardCard", () => {
-  const defaultFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  const defaultFen =
+    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
   beforeEach(() => {
-    capturedOptions.current = null;
+    capturedProps.current = null;
   });
 
-  it("renders and passes position and boardOrientation to the board", () => {
+  it("renders PatternBoard with fen and boardOrientation", () => {
     render(
       <TrainingBoardCard
         fen={defaultFen}
         boardOrientation="white"
       />
     );
-    expect(capturedOptions.current).not.toBeNull();
-    expect(capturedOptions.current!.position).toBe(defaultFen);
-    expect(capturedOptions.current!.boardOrientation).toBe("white");
-    expect(capturedOptions.current!.lightSquareStyle).toEqual({
-      backgroundColor: "#F0D9B5",
-    });
-    expect(capturedOptions.current!.darkSquareStyle).toEqual({
-      backgroundColor: "#B58863",
-    });
+    expect(capturedProps.current).not.toBeNull();
+    expect(capturedProps.current!.fen).toBe(defaultFen);
+    expect(capturedProps.current!.boardOrientation).toBe("white");
+    expect(capturedProps.current!.surface.lightSquareStyle).toEqual(
+      classicLightSurface.lightSquareStyle
+    );
+    expect(capturedProps.current!.surface.darkSquareStyle).toEqual(
+      classicLightSurface.darkSquareStyle
+    );
   });
 
-  it("passes click/drag handlers and drag activation when not disabled", () => {
+  it("passes move callbacks when not disabled", () => {
     const onMove = vi.fn();
     render(
       <TrainingBoardCard
@@ -66,17 +59,11 @@ describe("TrainingBoardCard", () => {
         disabled={false}
       />
     );
-    expect(typeof capturedOptions.current!.onSquareClick).toBe("function");
-    expect(typeof capturedOptions.current!.onPieceClick).toBe("function");
-    expect(typeof capturedOptions.current!.onPieceDrag).toBe("function");
-    expect(typeof capturedOptions.current!.onPieceDrop).toBe("function");
-    expect(typeof capturedOptions.current!.canDragPiece).toBe("function");
-    expect(capturedOptions.current!.dragActivationDistance).toBe(8);
-    expect(capturedOptions.current!.animationDurationInMs).toBe(220);
-    expect(capturedOptions.current!.showAnimations).toBe(true);
+    expect(typeof capturedProps.current!.onMove).toBe("function");
+    expect(capturedProps.current!.disabled).toBe(false);
   });
 
-  it("passes arrows when correctMoveUci is set", () => {
+  it("passes correctMoveUci for drawable hint layer", () => {
     render(
       <TrainingBoardCard
         fen={defaultFen}
@@ -84,26 +71,20 @@ describe("TrainingBoardCard", () => {
         correctMoveUci="e2e4"
       />
     );
-    expect(capturedOptions.current!.arrows).toEqual([
-      expect.objectContaining({
-        startSquare: "e2",
-        endSquare: "e4",
-        color: expect.any(String),
-      }),
-    ]);
+    expect(capturedProps.current!.correctMoveUci).toBe("e2e4");
   });
 
-  it("does not pass arrows when correctMoveUci is undefined", () => {
+  it("omits correctMoveUci when unset", () => {
     render(
       <TrainingBoardCard
         fen={defaultFen}
         boardOrientation="white"
       />
     );
-    expect(capturedOptions.current!.arrows).toBeUndefined();
+    expect(capturedProps.current!.correctMoveUci).toBeUndefined();
   });
 
-  it("passes squareStyles for correct and attempted move when provided", () => {
+  it("passes highlight square ids when provided", () => {
     render(
       <TrainingBoardCard
         fen={defaultFen}
@@ -112,14 +93,11 @@ describe("TrainingBoardCard", () => {
         attemptedMoveSquares={["e2", "e3"]}
       />
     );
-    const styles = capturedOptions.current!.squareStyles as Record<string, unknown>;
-    expect(styles).toBeDefined();
-    expect(Object.keys(styles)).toContain("e2");
-    expect(Object.keys(styles)).toContain("e4");
-    expect(Object.keys(styles)).toContain("e3");
+    expect(capturedProps.current!.correctMoveSquares).toEqual(["e2", "e4"]);
+    expect(capturedProps.current!.attemptedMoveSquares).toEqual(["e2", "e3"]);
   });
 
-  it("sets allowDragging false when disabled", () => {
+  it("sets disabled on PatternBoard when disabled", () => {
     render(
       <TrainingBoardCard
         fen={defaultFen}
@@ -128,6 +106,6 @@ describe("TrainingBoardCard", () => {
         disabled={true}
       />
     );
-    expect(capturedOptions.current!.allowDragging).toBe(false);
+    expect(capturedProps.current!.disabled).toBe(true);
   });
 });

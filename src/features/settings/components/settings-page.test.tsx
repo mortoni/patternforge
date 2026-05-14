@@ -107,24 +107,24 @@ describe("SettingsPage", () => {
     const styleGroup = await screen.findByRole("radiogroup", {
       name: /board style/i,
     });
-    const slateRadio = within(styleGroup).getByRole("radio", {
-      name: /^slate$/i,
+    const blueprintRadio = within(styleGroup).getByRole("radio", {
+      name: /^blueprint\./i,
     });
     await waitFor(() => {
-      expect(slateRadio).not.toBeDisabled();
+      expect(blueprintRadio).not.toBeDisabled();
     });
     mockGetSettings.mockResolvedValue({
       ...defaultSettings,
-      boardStyle: "slate",
+      boardStyle: "blueprint",
     });
 
     await act(async () => {
-      fireEvent.click(slateRadio);
+      fireEvent.click(blueprintRadio);
     });
 
     await vi.waitFor(() => {
       expect(mockUpdateSettings).toHaveBeenCalledWith({
-        boardStyle: "slate",
+        boardStyle: "blueprint",
       });
     });
   });

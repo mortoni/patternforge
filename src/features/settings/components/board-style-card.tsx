@@ -3,6 +3,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useEffectiveAppColorScheme } from "../hooks/use-effective-app-color-scheme";
 import {
   BOARD_STYLE_IDS,
   BOARD_STYLE_MAP,
@@ -50,6 +51,7 @@ export function BoardStyleCard({
   onChange: (boardStyle: BoardStyleId) => void;
   disabled?: boolean;
 }) {
+  const scheme = useEffectiveAppColorScheme();
   const selected = parseBoardStyleId(value);
 
   return (
@@ -68,27 +70,39 @@ export function BoardStyleCard({
         >
           {BOARD_STYLE_IDS.map((id) => {
             const def = BOARD_STYLE_MAP[id];
-            const preview = getBoardStylePreviewCellStyles(def);
+            const preview = getBoardStylePreviewCellStyles(def, scheme);
             const isSelected = selected === id;
+            const ariaLabel = def.description
+              ? `${def.label}. ${def.description}`
+              : def.label;
+
             return (
               <button
                 key={id}
                 type="button"
                 role="radio"
+                aria-label={ariaLabel}
                 aria-checked={isSelected}
                 disabled={disabled}
                 onClick={() => onChange(id)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg border p-3 text-left transition-colors",
+                  "flex items-start gap-3 rounded-lg border p-3 text-left transition-colors",
                   "border-border bg-card hover:bg-muted/30",
                   isSelected &&
                     "border-[var(--primary)] bg-[var(--primary)]/8 ring-1 ring-[var(--primary)]/40"
                 )}
               >
                 <MiniBoardPreview light={preview.light} dark={preview.dark} />
-                <span className="text-sm font-medium text-foreground">
-                  {def.label}
-                </span>
+                <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                  <span className="text-sm font-medium text-foreground">
+                    {def.label}
+                  </span>
+                  {def.description ? (
+                    <span className="text-xs leading-snug text-muted-foreground">
+                      {def.description}
+                    </span>
+                  ) : null}
+                </div>
               </button>
             );
           })}
