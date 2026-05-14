@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ROUTES } from "@/lib/constants";
+import { ROUTES, STORYBOOK_URL } from "@/lib/constants";
 import {
   Dumbbell,
   Library,
   TrendingUp,
   Settings,
   BookOpen,
-  Bug,
+  PanelsTopLeft,
 } from "lucide-react";
 
 const navItems = [
@@ -22,6 +22,11 @@ const navItems = [
 
 const isDev =
   typeof process !== "undefined" && process.env.NODE_ENV === "development";
+
+const showWorkbenchLink =
+  isDev ||
+  (typeof process !== "undefined" &&
+    Boolean(process.env.NEXT_PUBLIC_STORYBOOK_URL?.trim()));
 
 export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
@@ -68,20 +73,22 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
           </Link>
         );
       })}
-      {isDev ? (
-        <Link
-          href={ROUTES.debug}
+      {showWorkbenchLink ? (
+        <a
+          href={STORYBOOK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className={cn(
             "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
             collapsed ? "justify-center px-2" : "gap-3 px-3",
-            path.startsWith(ROUTES.debug)
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            "text-muted-foreground hover:bg-muted hover:text-foreground"
           )}
-          title={collapsed ? "Debug" : undefined}
-          aria-label={collapsed ? "Debug" : undefined}
+          title={collapsed ? "Workbench (Storybook)" : undefined}
+          aria-label={
+            collapsed ? "Open Storybook puzzle workbench in a new tab" : undefined
+          }
         >
-          <Bug className="h-5 w-5 shrink-0" />
+          <PanelsTopLeft className="h-5 w-5 shrink-0" aria-hidden />
           <span
             className={cn(
               "min-w-0 transition-all duration-200",
@@ -90,9 +97,9 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
                 : "truncate opacity-100"
             )}
           >
-            Debug
+            Workbench
           </span>
-        </Link>
+        </a>
       ) : null}
       <div
         className={cn(

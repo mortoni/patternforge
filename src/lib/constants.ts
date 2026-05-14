@@ -29,8 +29,17 @@ export const ROUTES = {
   /** Legacy path; redirects to {@link ROUTES.progress}. */
   analytics: "/app/analytics",
   settings: "/app/settings",
-  debug: "/app/debug",
 } as const;
+
+/**
+ * Storybook (docs + puzzle workbench). Sidebar link in development; set
+ * `NEXT_PUBLIC_STORYBOOK_URL` when hosting Storybook outside localhost.
+ */
+export const STORYBOOK_URL =
+  typeof process !== "undefined" &&
+  process.env.NEXT_PUBLIC_STORYBOOK_URL?.trim()
+    ? process.env.NEXT_PUBLIC_STORYBOOK_URL.trim()
+    : "http://localhost:6006";
 
 /** Completed-cycle reflection report. */
 export function cycleSummaryRoute(cycleId: string): string {

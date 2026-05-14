@@ -21,3 +21,14 @@ If you're new to PatternForge, start with:
 - [Woodpecker Method](/docs/woodpecker-method) — How the training method works
 - [Lifecycle](/docs/lifecycle) — Understanding cycles, sessions, and progress
 - [Exercise verification policy](/docs/exercise-verification-policy) — Dataset pipeline, statuses, and manual review (developers)
+
+_Links starting with `/docs/…` open the mirrored **Docs** pages in Storybook when you browse here. Paths that aren’t mirrored (yet) open the Next.js app instead (default **`http://localhost:3000`**; set **`STORYBOOK_APP_ORIGIN`** when your app runs elsewhere)._
+
+## Local Storybook & contributors
+
+The repo includes a **Storybook** instance for living UI/docs and tools such as **Workbench** (Puzzle Inspector):
+
+- From the repo root: `pnpm storybook` — opens the dev server at [http://localhost:6006/](http://localhost:6006/)
+- The main app sidebar links to **Workbench** in development.
+
+Handbook-style pages for this introduction live in `src/stories/docs/Introduction.mdx` (Storybook entry only). Long-form product docs are authored in `src/docs` and mirrored into Storybook under **Docs** via small wrappers in `src/stories/docs/product/`.

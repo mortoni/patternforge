@@ -14,12 +14,9 @@ import { ensureGeneratedPuzzlesInDbIfEmpty } from "@/features/training-sets/serv
 import { TrainingBoardCard } from "@/features/training/components/training-board-card";
 import type { ExerciseSchema } from "@/db/schema";
 
-const isDev =
-  typeof process !== "undefined" && process.env.NODE_ENV === "development";
-
 const BOARD_COLUMN_CLASS = "w-[min(92vw,calc(100dvh-14rem))] max-w-[min(100%,40rem)]";
 
-type DebugPuzzleState = "idle" | "checking" | "complete";
+type WorkbenchPuzzleState = "idle" | "checking" | "complete";
 const AUTO_PLAY_STEP_MS = 420;
 
 function applyUciToFen(fen: string, uci: string): string | null {
@@ -39,13 +36,14 @@ function applyUciToFen(fen: string, uci: string): string | null {
   }
 }
 
-export function DebugPuzzlePage() {
+/** Interactive puzzle loader for local IndexedDB data — run inside Storybook (`pnpm storybook`). */
+export function PuzzleWorkbenchPage() {
   const [loading, setLoading] = React.useState(true);
   const [query, setQuery] = React.useState("");
   const [loaded, setLoaded] = React.useState<ExerciseSchema | null>(null);
   const [positionFen, setPositionFen] = React.useState("");
   const [currentSolutionIndex, setCurrentSolutionIndex] = React.useState(0);
-  const [state, setState] = React.useState<DebugPuzzleState>("idle");
+  const [state, setState] = React.useState<WorkbenchPuzzleState>("idle");
   const [message, setMessage] = React.useState<string | null>(null);
   const autoPlayTimersRef = React.useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
@@ -77,14 +75,17 @@ export function DebugPuzzlePage() {
     };
   }, [clearAutoPlayTimers]);
 
-  const resetForExercise = React.useCallback((exercise: ExerciseSchema) => {
-    clearAutoPlayTimers();
-    setLoaded(exercise);
-    setPositionFen(exercise.fen);
-    setCurrentSolutionIndex(0);
-    setState("idle");
-    setMessage(null);
-  }, [clearAutoPlayTimers]);
+  const resetForExercise = React.useCallback(
+    (exercise: ExerciseSchema) => {
+      clearAutoPlayTimers();
+      setLoaded(exercise);
+      setPositionFen(exercise.fen);
+      setCurrentSolutionIndex(0);
+      setState("idle");
+      setMessage(null);
+    },
+    [clearAutoPlayTimers]
+  );
 
   const handleLoadPuzzle = React.useCallback(async () => {
     const n = Number.parseInt(query.trim(), 10);
@@ -227,21 +228,10 @@ export function DebugPuzzlePage() {
     }
   }, [loaded]);
 
-  if (!isDev) {
-    return (
-      <div className="mx-auto max-w-lg py-8">
-        <EmptyState
-          title="Debug page unavailable"
-          description="This route is only available in development."
-        />
-      </div>
-    );
-  }
-
   if (loading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <p className="text-sm text-muted-foreground">Loading debug data…</p>
+        <p className="text-sm text-muted-foreground">Loading puzzle data…</p>
       </div>
     );
   }
@@ -250,7 +240,7 @@ export function DebugPuzzlePage() {
     <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col md:min-h-[calc(100dvh-4rem)]">
       <header className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-semibold text-foreground">Puzzle Debug</h1>
+          <h1 className="text-lg font-semibold text-foreground">Puzzle workbench</h1>
           <p className="text-sm text-muted-foreground">
             Load a puzzle number and play the line with training-style interaction.
           </p>
@@ -260,11 +250,11 @@ export function DebugPuzzlePage() {
 
       <div className="grid gap-3 rounded-md border border-border bg-muted/10 p-4 md:grid-cols-[1fr_auto] md:items-end">
         <div className="space-y-2">
-          <label htmlFor="debug-puzzle-number" className="text-sm font-medium text-foreground">
+          <label htmlFor="playground-puzzle-number" className="text-sm font-medium text-foreground">
             Puzzle number
           </label>
           <Input
-            id="debug-puzzle-number"
+            id="playground-puzzle-number"
             inputMode="numeric"
             placeholder="e.g. 105"
             value={query}
@@ -358,7 +348,7 @@ export function DebugPuzzlePage() {
         <div className="mt-6">
           <EmptyState
             title="No puzzle loaded"
-            description="Enter a puzzle number to start debugging."
+            description="Enter a puzzle number from your local training-set data."
           />
         </div>
       )}
