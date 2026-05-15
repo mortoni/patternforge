@@ -30,15 +30,26 @@ export const LG_PREVIEW_FRAME_STYLE: CSSProperties = {
  * - `md`: tablet (landscape-first, fixed height so content is not clipped)
  * - `lg`: desktop monitor frame (marketing — shorter than full viewport so sections stay compact)
  */
-function previewFrameStyle(screen: PreviewScreenSize, smAspectHeight = PHONE_H): CSSProperties {
+function previewFrameStyle(
+  screen: PreviewScreenSize,
+  smAspectHeight = PHONE_H,
+  smFillContainer = false
+): CSSProperties {
   switch (screen) {
     case "sm":
-      return {
-        aspectRatio: `${PHONE_W} / ${smAspectHeight}`,
-        width: "min(100%, 20rem)",
-        height: "auto",
-        maxWidth: "100%",
-      };
+      return smFillContainer
+        ? {
+            aspectRatio: `${PHONE_W} / ${smAspectHeight}`,
+            width: "100%",
+            height: "auto",
+            maxWidth: "100%",
+          }
+        : {
+            aspectRatio: `${PHONE_W} / ${smAspectHeight}`,
+            width: "min(100%, 20rem)",
+            height: "auto",
+            maxWidth: "100%",
+          };
     case "md":
       return {
         width: "min(100%, 44rem)",
@@ -70,6 +81,15 @@ export interface TrainingPreviewProps {
   shellTone?: MarketingShellTone;
   /** When `screen` is `sm`, override default phone height (defaults to 932 for 430×932). */
   smAspectHeight?: number;
+  /** Stretch `screen="sm"` shell to embedding width (marketing hero). */
+  smFillContainer?: boolean;
+  /** Shorter chrome + margins without hiding Skip / End session (hero). */
+  compactHeroLayout?: boolean;
+  /**
+   * When `true`, do not auto-enable short embed when `smAspectHeight` is below the default.
+   * Use with `compactHeroLayout` for a shorter frame that still shows full training chrome.
+   */
+  preventShortEmbedFrame?: boolean;
 }
 
 function resolveScreen(
@@ -111,6 +131,8 @@ export interface MarketingDeviceFrameProps {
   shellTone?: MarketingShellTone;
   /** Phone portrait height for `screen="sm"` (default 932). */
   smAspectHeight?: number;
+  /** Stretch phone shell horizontally to the embedding column (`TrainingPreview`). */
+  smFillContainer?: boolean;
 }
 
 /** Shared chrome for {@link TrainingPreview} and marketing flow previews (`screen="sm"` phones). */
@@ -121,6 +143,7 @@ export function MarketingDeviceFrame({
   className,
   shellTone = "default",
   smAspectHeight = PHONE_H,
+  smFillContainer = false,
   children,
 }: MarketingDeviceFrameProps) {
   const tone = shellTone;
@@ -186,7 +209,7 @@ export function MarketingDeviceFrame({
       {...(title ? ({ role: "img", "aria-label": title } as const) : {})}
     >
       <div
-        style={previewFrameStyle(screen, smAspectHeight)}
+        style={previewFrameStyle(screen, smAspectHeight, smFillContainer)}
         className={cn(
           "flex min-h-0 flex-col box-border max-w-full border p-2 shadow-xl transition-transform duration-500 ease-out",
           hoverScale,
@@ -256,6 +279,9 @@ export function TrainingPreview({
   className,
   shellTone = "default",
   smAspectHeight,
+  smFillContainer = false,
+  compactHeroLayout = false,
+  preventShortEmbedFrame = false,
 }: TrainingPreviewProps) {
   const screen = resolveScreen(preview, screenProp);
   const p = preview ?? {};
@@ -269,6 +295,12 @@ export function TrainingPreview({
   const boardStyleId: BoardStyleId = p.boardStyle ?? "blueprint";
   const fen = p.fen ?? null;
 
+  const resolvedSmHeight = screen === "sm" ? (smAspectHeight ?? PHONE_H) : PHONE_H;
+  const shortEmbedFrame =
+    screen === "sm" &&
+    !preventShortEmbedFrame &&
+    resolvedSmHeight < PHONE_H;
+
   return (
     <MarketingDeviceFrame
       screen={screen}
@@ -276,11 +308,13 @@ export function TrainingPreview({
       title={title}
       className={className}
       shellTone={shellTone}
-      smAspectHeight={screen === "sm" ? (smAspectHeight ?? PHONE_H) : undefined}
+      smAspectHeight={screen === "sm" ? resolvedSmHeight : undefined}
+      smFillContainer={screen === "sm" ? smFillContainer : false}
     >
       <PreviewTrainingView
         embed
-        shortEmbedFrame={screen === "sm" && (smAspectHeight ?? PHONE_H) < PHONE_H}
+        shortEmbedFrame={shortEmbedFrame}
+        compactHeroLayout={compactHeroLayout}
         previewColorScheme={previewColorScheme}
         screen={screen}
         puzzle={puzzle}

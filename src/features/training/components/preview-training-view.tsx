@@ -58,6 +58,11 @@ export interface PreviewTrainingViewProps {
    * Tightens header/meta padding and hides the skip row so the board fits without clipping.
    */
   shortEmbedFrame?: boolean;
+  /**
+   * Embedded hero (`TrainingPreview`): denser chrome and vertical rhythm — board-forward without
+   * hiding Skip / End session (unlike {@link shortEmbedFrame} alone).
+   */
+  compactHeroLayout?: boolean;
 }
 
 export function PreviewTrainingView({
@@ -71,6 +76,7 @@ export function PreviewTrainingView({
   fen: fenRaw,
   embed = false,
   shortEmbedFrame = false,
+  compactHeroLayout = false,
 }: PreviewTrainingViewProps) {
   const safePuzzle = Number.isFinite(puzzleRaw) && puzzleRaw > 0 ? puzzleRaw : 12;
   const safeTotal = Number.isFinite(totalRaw) && totalRaw > 0 ? totalRaw : 120;
@@ -83,10 +89,13 @@ export function PreviewTrainingView({
   const mainPadTabletDesktop = "px-4 pb-5 pt-2 md:px-7 md:pb-6";
   const mainPad =
     screen === "sm"
-      ? embed && shortEmbedFrame
-        ? mainPadMobileShortEmbed
-        : mainPadMobile
+      ? embed && compactHeroLayout && !shortEmbedFrame
+        ? "min-h-0 px-2.5 pb-3 pt-0.5 sm:px-3 sm:pb-3.5 sm:pt-1"
+        : embed && shortEmbedFrame
+          ? mainPadMobileShortEmbed
+          : mainPadMobile
       : mainPadTabletDesktop;
+
   const metaText =
     "text-[11px] leading-snug text-muted-foreground sm:text-xs";
 
@@ -116,6 +125,7 @@ export function PreviewTrainingView({
   /** Phone-frame embed (`TrainingPreview` sm): bounded height — square board must shrink to fit. */
   const embedSmBoardFit = embed && screen === "sm";
   const shortSmEmbed = embedSmBoardFit && shortEmbedFrame;
+  const heroCompactEmbed = embedSmBoardFit && compactHeroLayout && !shortSmEmbed;
 
   const smEmbedBoardWrapClass =
     screen === "sm"
@@ -125,6 +135,7 @@ export function PreviewTrainingView({
           : /** Match {@link TrainingPage} board column: same width cap + `gap-1` to the board. */
             cn(
               "flex min-h-0 w-full shrink flex-col items-stretch gap-1",
+              heroCompactEmbed && "gap-0.5",
               boardColumnClass
             )
         : boardOuterClass
@@ -135,19 +146,22 @@ export function PreviewTrainingView({
       <div
         className={cn(
           "w-full shrink-0",
-          embedSmBoardFit
-            ? shortSmEmbed
-              ? "min-h-5"
-              : "min-h-7"
-            : shortSmEmbed
-              ? "min-h-5"
-              : "min-h-7"
+          shortSmEmbed && "min-h-5",
+          embedSmBoardFit &&
+            !shortSmEmbed &&
+            (heroCompactEmbed ? "min-h-6" : "min-h-7"),
+          !embedSmBoardFit && !shortSmEmbed && "min-h-7",
+          !embedSmBoardFit && shortSmEmbed && "min-h-5"
         )}
       >
         <SideToMoveIndicator
           sideToMove={sideToMove}
           className={
-            shortSmEmbed ? "text-[11px] leading-none sm:text-[11px]" : undefined
+            shortSmEmbed
+              ? "text-[11px] leading-none sm:text-[11px]"
+              : heroCompactEmbed
+                ? "text-[13px] leading-tight tracking-tight sm:text-sm sm:leading-snug"
+                : undefined
           }
         />
       </div>
@@ -280,23 +294,30 @@ export function PreviewTrainingView({
                 "grid w-full max-w-full items-center",
                 shortSmEmbed
                   ? "h-11 grid-cols-[1.75rem_1fr_1.75rem] gap-1 px-2"
-                  : "h-14 grid-cols-[2.5rem_1fr_2.5rem] gap-2 px-3"
+                  : heroCompactEmbed
+                    ? "h-11 grid-cols-[2rem_1fr_2rem] gap-1.5 px-2 sm:px-2.5"
+                    : "h-14 grid-cols-[2.5rem_1fr_2.5rem] gap-2 px-3"
               )}
             >
               <div
                 className={cn(
                   "flex shrink-0 items-center justify-center justify-self-start",
-                  shortSmEmbed ? "h-8 w-8" : "h-10 w-10"
+                  shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-9 w-9" : "h-10 w-10"
                 )}
               >
                 <span
                   className={cn(
                     "inline-flex items-center justify-center rounded-md text-muted-foreground opacity-80",
-                    shortSmEmbed ? "h-8 w-8" : "h-9 w-9"
+                    shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-9 w-9" : "h-9 w-9"
                   )}
                   aria-hidden
                 >
-                  <Menu className={cn("pointer-events-none", shortSmEmbed ? "h-4 w-4" : "h-5 w-5")} />
+                  <Menu
+                    className={cn(
+                      "pointer-events-none",
+                      shortSmEmbed ? "h-4 w-4" : heroCompactEmbed ? "h-[17px] w-[17px]" : "h-5 w-5"
+                    )}
+                  />
                 </span>
               </div>
               <Link
@@ -304,18 +325,18 @@ export function PreviewTrainingView({
                 aria-label="PatternForge — back to home"
                 className="flex min-w-0 max-w-full items-center justify-center gap-1 justify-self-center text-foreground no-underline transition-opacity hover:opacity-85"
               >
-                <Logo size={shortSmEmbed ? 20 : 24} className="shrink-0" />
+                <Logo size={shortSmEmbed ? 20 : heroCompactEmbed ? 21 : 24} className="shrink-0" />
                 <AppTitle
                   className={cn(
                     "min-w-0 truncate whitespace-nowrap tracking-[0.12em]",
-                    shortSmEmbed ? "text-[10px]" : "text-[11px]"
+                    shortSmEmbed ? "text-[10px]" : heroCompactEmbed ? "text-[10.5px] sm:text-[11px]" : "text-[11px]"
                   )}
                 />
               </Link>
               <div
                 className={cn(
                   "flex shrink-0 items-center justify-center justify-self-end",
-                  shortSmEmbed ? "h-8 w-8" : "h-10 w-10"
+                  shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-9 w-9" : "h-10 w-10"
                 )}
               >
                 <ThemeToggle />
@@ -334,9 +355,10 @@ export function PreviewTrainingView({
               className={cn(
                 "flex w-full max-w-full shrink-0 flex-col",
                 shortSmEmbed ? "mb-1.5 gap-y-1 text-[10px] leading-snug text-muted-foreground" : "gap-y-1.5",
-                !shortSmEmbed && embedSmBoardFit && "mb-2",
-                !shortSmEmbed && !embedSmBoardFit && "mb-3 sm:mb-4",
-                !shortSmEmbed && metaText
+                heroCompactEmbed && "mb-1.5 gap-y-0.5 text-[10px] leading-snug text-muted-foreground",
+                !shortSmEmbed && !heroCompactEmbed && embedSmBoardFit && "mb-2",
+                !shortSmEmbed && !heroCompactEmbed && !embedSmBoardFit && "mb-3 sm:mb-4",
+                !shortSmEmbed && !heroCompactEmbed && metaText
               )}
             >
               <div className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5">
@@ -370,7 +392,10 @@ export function PreviewTrainingView({
                     disabled
                     tabIndex={-1}
                     aria-hidden
-                    className="h-auto shrink-0 px-2 py-1 text-xs text-muted-foreground sm:text-sm"
+                    className={cn(
+                      "h-auto shrink-0 px-2 py-1 text-xs text-muted-foreground sm:text-sm",
+                      heroCompactEmbed && "py-0.5 text-[10px] sm:text-[11px]"
+                    )}
                   >
                     End session
                   </Button>
@@ -384,8 +409,10 @@ export function PreviewTrainingView({
                 embedSmBoardFit
                   ? shortSmEmbed
                     ? "justify-start gap-1 pb-1 pt-0"
-                    : /** Same rhythm as {@link TrainingPage} main board column + Skip. */
-                      "justify-center gap-6 pb-6 pt-1"
+                    : heroCompactEmbed
+                      ? "justify-start gap-2.5 pb-3 pt-0"
+                      : /** Same rhythm as {@link TrainingPage} main board column + Skip. */
+                        "justify-center gap-6 pb-6 pt-1"
                   : "justify-center gap-6 pb-6 pt-1 sm:gap-8 sm:pt-0"
               )}
             >

@@ -86,6 +86,16 @@ const LOOP_MASTERY_INSIGHT = `${Math.round(
     100
 )}% faster than first cycle`;
 
+/** ~26% shorter than 932 — compact workspace silhouette (not ultra-tall phone). */
+const MARKETING_HERO_SM_HEIGHT = 686;
+
+/** Matches {@link MARKETING_HERO_SM_HEIGHT} for outer reserve box. */
+const HERO_PHONE_ASPECT_CLASS = "aspect-[430/686]";
+
+/** Anchors width; shorter frame reads as tactical workspace vs tall mock phone. */
+const HERO_PHONE_SHELL_CLASS =
+  "max-w-[min(100%,20.875rem)] w-full sm:max-w-[21.5rem] md:max-w-[22.25rem] lg:max-w-none lg:w-[22.75rem] xl:w-[24.75rem] 2xl:w-[26rem]";
+
 /** Hero + “Training in action” phone — same puzzle/FEN and shell sizing */
 const MARKETING_HERO_PHONE_PREVIEW = {
   screen: "sm" as const,
@@ -176,10 +186,24 @@ function TrainingIframePair({
   className,
   title,
   preview,
+  phoneShellClassName,
+  phoneAspectClassName,
+  smAspectHeight,
+  smFillContainer,
+  compactHeroLayout,
+  preventShortEmbedFrame,
 }: {
   className?: string;
   title: string;
   preview: Omit<PreviewTrainingParams, "appearance">;
+  /** Overrides the default mobile shell sizing (e.g. hero larger frame). */
+  phoneShellClassName?: string;
+  /** Overrides default `aspect-[430/932]` when using a non-default `smAspectHeight`. */
+  phoneAspectClassName?: string;
+  smAspectHeight?: number;
+  smFillContainer?: boolean;
+  compactHeroLayout?: boolean;
+  preventShortEmbedFrame?: boolean;
 }) {
   const isSm = preview.screen === "sm";
   const isLg = preview.screen === "lg";
@@ -192,12 +216,22 @@ function TrainingIframePair({
       className={positioned}
       title={title}
       preview={preview}
+      smAspectHeight={smAspectHeight}
+      smFillContainer={smFillContainer}
+      compactHeroLayout={compactHeroLayout}
+      preventShortEmbedFrame={preventShortEmbedFrame}
     />
   );
 
   if (isSm) {
     return (
-      <div className="relative isolate mx-auto aspect-[430/932] w-full max-w-[20rem] shrink-0 lg:w-[20rem]">
+      <div
+        className={cn(
+          phoneAspectClassName ?? "aspect-[430/932]",
+          "relative isolate mx-auto w-full shrink-0 max-w-[20rem] lg:w-[20rem]",
+          phoneShellClassName
+        )}
+      >
         {tree}
       </div>
     );
@@ -480,25 +514,45 @@ export default function HomePage() {
       <Header />
       <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden">
         <main className="flex-1">
-        {/* Hero */}
-        <section className="border-b border-border" aria-labelledby="hero-heading">
-          <div className={`${heroContainerClass} py-12 sm:py-16 md:py-20 lg:py-24`}>
-            <div className="mx-auto grid w-full min-w-0 grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-12 xl:gap-x-15 lg:gap-y-0">
-              <FadeIn className="min-w-0 max-w-xl justify-self-center text-center sm:max-w-2xl lg:max-w-none lg:justify-self-stretch lg:text-left">
+        {/* Hero — immersive asymmetric anchor around live training preview */}
+        <section
+          className="relative overflow-x-clip border-b border-border/60 dark:border-white/[0.06]"
+          aria-labelledby="hero-heading"
+        >
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute left-[-8%] top-[14%] h-[46%] w-[58%] max-w-3xl bg-[radial-gradient(ellipse_52%_48%_at_38%_42%,color-mix(in_oklab,var(--muted-foreground)_5%,transparent),transparent_72%)] opacity-40 dark:bg-[radial-gradient(ellipse_52%_48%_at_38%_42%,color-mix(in_oklab,var(--primary)_4%,transparent),transparent_74%)] dark:opacity-55" />
+            <div className="absolute right-[-6%] top-[18%] h-[48%] w-[52%] max-w-3xl bg-[radial-gradient(circle_at_56%_42%,rgba(132,104,232,0.065),rgba(132,104,232,0.022)_46%,transparent_74%)] opacity-65 blur-[28px] dark:bg-[radial-gradient(circle_at_56%_42%,rgba(132,104,232,0.1),rgba(132,104,232,0.032)_46%,transparent_74%)] md:right-0" />
+          </div>
+          {/* Bridges into next section */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[min(13rem,28vh)] bg-gradient-to-b from-transparent via-background/35 to-background dark:via-background/55"
+          />
+
+          <div
+            className={`${heroContainerClass} relative z-[1] py-11 sm:py-14 md:py-16 lg:min-h-[min(76vh,46rem)] lg:py-[clamp(4rem,7vw,5.75rem)] xl:pb-20 xl:pt-[4.375rem]`}
+          >
+            <div
+              className={cn(
+                "mx-auto grid w-full min-w-0 gap-9 sm:gap-11 lg:grid-cols-12 lg:items-center lg:gap-x-6 lg:gap-y-10",
+                "xl:gap-x-10 xl:gap-y-8"
+              )}
+            >
+              <FadeIn className="min-w-0 justify-self-center text-center max-w-xl sm:max-w-2xl lg:col-span-5 lg:max-w-[min(100%,31rem)] lg:justify-self-start lg:self-center lg:text-left xl:col-span-5">
                 <h1
                   id="hero-heading"
-                  className="text-balance text-[1.625rem] font-light leading-[1.16] tracking-tight text-foreground min-[400px]:text-4xl sm:text-5xl lg:text-[3.85rem] xl:text-[4.35rem]"
+                  className="text-balance text-[1.625rem] font-light leading-[1.14] tracking-tight text-foreground min-[400px]:text-4xl sm:text-5xl lg:text-[clamp(2.65rem,3.5vw,3.85rem)] xl:text-[clamp(3.1rem,3.4vw,4.2rem)]"
                 >
                   Train patterns, not just puzzles.
                 </h1>
-                <p className="mx-auto mt-5 max-w-xl text-pretty text-[15px] leading-relaxed text-muted-foreground sm:text-base md:text-lg lg:mx-0 lg:max-w-2xl lg:text-xl xl:max-w-3xl">
+                <p className="mx-auto mt-4 max-w-xl text-pretty text-[15px] leading-relaxed text-muted-foreground sm:text-base md:text-lg lg:mx-0 lg:mt-3.5 lg:max-w-[28rem] lg:text-[1.0625rem] lg:leading-[1.55]">
                   Build tactical recognition through repeated cycles, mistake review, and
                   focused puzzle sets.
                 </p>
-                <p className="mx-auto mt-3 max-w-xl text-sm italic leading-relaxed text-muted-foreground/85 lg:mx-0 lg:max-w-2xl lg:text-base xl:max-w-3xl">
+                <p className="mx-auto mt-2.5 max-w-xl text-sm italic leading-relaxed text-muted-foreground/85 sm:mt-3 lg:mx-0 lg:max-w-[28rem] lg:text-[0.9375rem] lg:leading-relaxed">
                   The goal is not to solve puzzles. The goal is to stop needing to think.
                 </p>
-                <div className="mx-auto mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:mx-0 lg:justify-start">
+                <div className="mx-auto mt-6 flex w-full max-w-md flex-col items-stretch gap-2.5 sm:flex-row sm:items-center sm:justify-center sm:gap-3 lg:mx-0 lg:mt-7 lg:justify-start">
                   <Button
                     asChild
                     size="lg"
@@ -516,24 +570,38 @@ export default function HomePage() {
                   </Button>
                 </div>
               </FadeIn>
+
               <FadeIn
-                className="relative flex w-full min-w-0 max-w-full justify-center justify-self-center lg:justify-self-end"
+                className="relative flex w-full min-w-0 max-w-full justify-center justify-self-center lg:col-span-7 lg:-mr-1 lg:justify-end lg:justify-self-end lg:pl-5 xl:-mr-2 xl:pl-6"
                 delay={0.08}
               >
                 <div
-                  className="pointer-events-none absolute inset-x-0 top-[8%] flex justify-center sm:inset-x-[4%] lg:inset-x-0"
+                  className="pointer-events-none absolute left-1/2 top-[6%] flex w-[104%] max-w-[26rem] -translate-x-1/2 justify-center sm:w-[102%] sm:max-w-[27rem] lg:left-[53%] lg:top-[12%] lg:w-[95%] lg:max-w-[30rem] lg:translate-x-[-50%]"
                   aria-hidden
                 >
-                  <div
-                    className="aspect-[430/932] w-full max-w-[20rem] shrink-0 rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.24)_0%,rgba(120,75,255,0.08)_45%,transparent_75%)] blur-3xl lg:w-[20rem]"
-                  />
+                  <div className="aspect-[430/686] w-full rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.14)_0%,rgba(120,75,255,0.046)_42%,transparent_76%)] blur-[30px] dark:bg-[radial-gradient(circle,rgba(160,120,255,0.18)_0%,rgba(120,75,255,0.055)_42%,transparent_76%)]" />
                 </div>
-                <div className="relative z-10">
-                  <TrainingIframePair
-                    className="absolute inset-0"
-                    title="Pattern Forge training preview"
-                    preview={MARKETING_HERO_PHONE_PREVIEW}
-                  />
+                <div
+                  className="pointer-events-none absolute left-1/2 top-[24%] w-[88%] max-w-[20rem] -translate-x-1/2 lg:left-[52%] lg:top-[30%] lg:w-[82%] lg:max-w-[24rem] lg:-translate-x-1/2"
+                  aria-hidden
+                >
+                  <div className="h-28 w-full rounded-full bg-[radial-gradient(ellipse_80%_52%_at_50%_40%,color-mix(in_oklab,var(--foreground)_4.5%,transparent),transparent_80%)] opacity-32 blur-xl dark:opacity-28" />
+                </div>
+
+                <div className="relative z-10 origin-center max-md:scale-100 lg:origin-right lg:scale-[1.008] xl:scale-[1.015]">
+                  <div className="translate-x-0 sm:translate-x-0.5 lg:translate-x-1 xl:translate-x-2">
+                    <TrainingIframePair
+                      className="absolute inset-0"
+                      title="Pattern Forge training preview"
+                      preview={MARKETING_HERO_PHONE_PREVIEW}
+                      phoneAspectClassName={HERO_PHONE_ASPECT_CLASS}
+                      phoneShellClassName={HERO_PHONE_SHELL_CLASS}
+                      smAspectHeight={MARKETING_HERO_SM_HEIGHT}
+                      smFillContainer
+                      compactHeroLayout
+                      preventShortEmbedFrame
+                    />
+                  </div>
                 </div>
               </FadeIn>
             </div>
@@ -543,7 +611,7 @@ export default function HomePage() {
         {/* Training loop — long-horizon ritual (Track → Solve → Master) */}
         <section
           id="philosophy"
-          className="relative w-full scroll-mt-4 px-3.5 py-20 sm:px-5 md:px-6 md:py-28 lg:px-10"
+          className="relative w-full scroll-mt-4 border-t border-border/30 bg-gradient-to-b from-muted/[0.09] via-background to-background px-3.5 pb-20 pt-14 dark:border-white/[0.04] dark:from-muted/[0.06] sm:px-5 sm:pb-20 md:px-6 md:pb-28 md:pt-16 lg:px-10"
           aria-labelledby="training-in-action-heading"
         >
           <div id="training-in-action" />
