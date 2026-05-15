@@ -7,7 +7,14 @@
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useEffectiveAppColorScheme } from "@/features/settings/hooks/use-effective-app-color-scheme";
 import { useBoardStyle } from "@/features/settings/hooks/use-board-style";
+import {
+  parseBoardStyleId,
+  type AppColorScheme,
+  type BoardStyleId,
+  resolveBoardChessStyles,
+} from "@/lib/chess/board-styles";
 import { PatternBoard } from "./pattern-board";
 
 export interface TrainingBoardCardProps {
@@ -48,6 +55,16 @@ export interface TrainingBoardCardProps {
   boardContainerClassName?: string;
   /** Bumps Chessground sync without full remount; use stable exercise/review ids. */
   positionSyncKey?: string;
+  /**
+   * When set (e.g. marketing iframe preview), overrides persisted board style without
+   * changing settings.
+   */
+  boardStyleId?: BoardStyleId;
+  /**
+   * When set with {@link boardStyleId}, fixes palette resolution for SSR/hydration
+   * (ignores `system` / `matchMedia` until effects run).
+   */
+  previewColorScheme?: AppColorScheme;
 }
 
 export function TrainingBoardCard({
@@ -65,8 +82,20 @@ export function TrainingBoardCard({
   className,
   minimal = false,
   boardContainerClassName,
+  boardStyleId,
+  previewColorScheme,
 }: TrainingBoardCardProps) {
-  const surface = useBoardStyle();
+  const effectiveScheme = useEffectiveAppColorScheme();
+  const colorScheme = previewColorScheme ?? effectiveScheme;
+  const surfaceFromSettings = useBoardStyle();
+  const surface = React.useMemo(() => {
+    if (boardStyleId != null) {
+      return resolveBoardChessStyles(parseBoardStyleId(boardStyleId), {
+        colorScheme,
+      });
+    }
+    return surfaceFromSettings;
+  }, [boardStyleId, colorScheme, surfaceFromSettings]);
 
   const frame = surface.frame;
   const boardShell = (

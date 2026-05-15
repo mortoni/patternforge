@@ -28,6 +28,8 @@ export const ROUTES = {
   /** Legacy path; redirects to {@link ROUTES.progress}. */
   analytics: "/app/analytics",
   settings: "/app/settings",
+  /** Marketing / iframe: static training preview UI, no session / DB. */
+  previewTraining: "/preview/training",
 } as const;
 
 /**

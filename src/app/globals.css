@@ -51,10 +51,15 @@ html.dark {
  * Reserve scrollbar gutter so showing/hiding it (Radix overlays) causes less jump.
  * Pairs with `width-before-scroll-bar` on the app shell — see AppShell + discussion:
  * https://github.com/radix-ui/primitives/discussions/1586
+ *
+ * `overflow-y: scroll` keeps the classic scrollbar track allocated even when content
+ * fits exactly one viewport — otherwise toggling theme (fonts/contrast/shadows) can nudge
+ * total height across the scrollbar threshold and shift centered layouts (`mx-auto`, vw).
  */
 html {
   color-scheme: light dark;
   scrollbar-gutter: stable;
+  overflow-y: scroll;
   min-height: 100%;
   min-height: 100dvh;
   /* Match shell to theme as soon as variables resolve (see layout theme script). */
@@ -69,6 +74,14 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
+/*
+ * Suppress the UA’s default root cross-fade for View Transitions. ThemeToggle drives a circular
+ * ripple on both directions by shrinking clip on `::view-transition-old(root)` after
+ * `transition.ready` (previous theme collapses toward the click; next theme shows through).
+ *
+ * Without `animation: none`, built-in pseudo animations fight programmatic ones and can feel
+ * muddy or uneven.
+ */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;

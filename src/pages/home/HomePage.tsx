@@ -3,7 +3,10 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import AppTitle from "@/components/logo/AppTitle";
 import Logo from "@/components/logo/Logo";
-import TrainingPreview from "@/components/TrainingPreview";
+import {
+  DocumentThemedTrainingPreview,
+  LG_PREVIEW_FRAME_STYLE,
+} from "@/components/shared/training-preview";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import {
   FadeIn,
@@ -13,12 +16,13 @@ import {
 } from "@/components/shared/motion-primitives";
 import { Button } from "@/components/ui/button";
 import { DOCUMENTATION_URL, ROUTES } from "@/lib/constants";
+import type { PreviewTrainingParams } from "@/lib/preview/preview-training-url";
 import { cn } from "@/lib/utils";
 
 const containerClass = "mx-auto w-full max-w-6xl px-3.5 sm:px-5 md:px-6 lg:px-8";
 /** Wider hero on desktop: uses most of the viewport up to a generous cap. */
 const heroContainerClass =
-  "mx-auto w-full max-w-6xl min-w-0 px-3.5 sm:px-5 md:px-6 lg:max-w-[min(95vw,100rem)] lg:px-[clamp(1.75rem,4vw,3.5rem)]";
+  "mx-auto w-full max-w-6xl min-w-0 px-3.5 sm:px-5 md:px-6 lg:max-w-[min(100%,100rem)] lg:px-10 xl:px-14";
 const headerWordmarkClass =
   "text-[11px] tracking-[0.2em] sm:text-xs sm:tracking-[0.28em] md:text-sm md:tracking-[0.35em]";
 const footerWordmarkClass =
@@ -31,35 +35,90 @@ const footerMuted = "text-sm leading-relaxed text-neutral-600 dark:text-neutral-
 const footerHeading =
   "text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-500";
 
-const trainingInActionCards = [
+type TrainingInActionVisual =
+  | {
+      kind: "screenshot";
+      lightSrc: string;
+      darkSrc: string;
+      alt: string;
+    }
+  | {
+      kind: "phone";
+      preview: Omit<PreviewTrainingParams, "appearance">;
+      iframeTitle: string;
+    };
+
+/** Hero + “Training in action” phone — same puzzle/FEN and shell sizing */
+const MARKETING_HERO_PHONE_PREVIEW = {
+  screen: "sm" as const,
+  puzzle: 10,
+  total: 222,
+  cycle: 1,
+  setName: "Woodpecker Day",
+  boardStyle: "blueprint",
+} satisfies Omit<PreviewTrainingParams, "appearance">;
+
+const trainingInActionCards: Array<{
+  step: string;
+  title: string;
+  body: string;
+  mode: "center" | "side";
+  visual: TrainingInActionVisual;
+}> = [
   {
     step: "01 Solve",
     title: "Solve the position",
     body: "Stay with the board and calculate cleanly.",
-    lightSrc: "/images/solve-puzzle-light.png",
-    darkSrc: "/images/solve-puzzle-dark.png",
-    alt: "Solve puzzle screen preview",
     mode: "center",
+    visual: {
+      kind: "phone",
+      iframeTitle: "Training — solve step preview",
+      preview: MARKETING_HERO_PHONE_PREVIEW,
+    },
   },
   {
     step: "02 Review",
     title: "See the mistake",
     body: "Spot the miss and reset the pattern.",
-    lightSrc: "/images/cycle-summary-light.png",
-    darkSrc: "/images/cycle-summary-dark.png",
-    alt: "Review mistake screen preview",
     mode: "side",
+    visual: {
+      kind: "screenshot",
+      lightSrc: "/images/cycle-summary-light.png",
+      darkSrc: "/images/cycle-summary-dark.png",
+      alt: "Review mistake screen preview",
+    },
   },
   {
     step: "03 Improve",
     title: "Lock the pattern",
     body: "Repeat with less effort and less hesitation.",
-    lightSrc: "/images/progress-light.png",
-    darkSrc: "/images/progress-dark.png",
-    alt: "Progress screen preview",
     mode: "side",
+    visual: {
+      kind: "screenshot",
+      lightSrc: "/images/progress-light.png",
+      darkSrc: "/images/progress-dark.png",
+      alt: "Progress screen preview",
+    },
   },
-] as const;
+];
+
+const builtForScreensDesktopPreview = {
+  screen: "lg" as const,
+  puzzle: 2,
+  total: 762,
+  cycle: 1,
+  setName: "Woodpecker Intermediate",
+  boardStyle: "blueprint",
+} satisfies Omit<PreviewTrainingParams, "appearance">;
+
+const builtForScreensMobilePreview = {
+  screen: "sm" as const,
+  puzzle: 2,
+  total: 762,
+  cycle: 1,
+  setName: "Woodpecker Intermediate",
+  boardStyle: "blueprint",
+} satisfies Omit<PreviewTrainingParams, "appearance">;
 
 const methodSteps = [
   { title: "Choose a set", body: "Pick one fixed puzzle set." },
@@ -69,9 +128,54 @@ const methodSteps = [
   { title: "Track faster cycles", body: "Watch recognition become automatic." },
 ] as const;
 
+function TrainingIframePair({
+  className,
+  title,
+  preview,
+}: {
+  className?: string;
+  title: string;
+  preview: Omit<PreviewTrainingParams, "appearance">;
+}) {
+  const isSm = preview.screen === "sm";
+  const isLg = preview.screen === "lg";
+
+  const positioned =
+    isSm || isLg ? cn(className, "absolute inset-0") : className;
+
+  const tree = (
+    <DocumentThemedTrainingPreview
+      className={positioned}
+      title={title}
+      preview={preview}
+    />
+  );
+
+  if (isSm) {
+    return (
+      <div className="relative isolate mx-auto aspect-[430/932] w-full max-w-[min(100%,20rem)] shrink-0">
+        {tree}
+      </div>
+    );
+  }
+
+  if (isLg) {
+    return (
+      <div
+        className="relative isolate mx-auto shrink-0"
+        style={LG_PREVIEW_FRAME_STYLE}
+      >
+        {tree}
+      </div>
+    );
+  }
+
+  return tree;
+}
+
 function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/80">
+    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/80">
       <div
         className={`${containerClass} flex items-center justify-between gap-2 py-3 md:gap-6 md:py-3.5`}
       >
@@ -297,40 +401,42 @@ function ThemedScreenshot({
   className?: string;
 }) {
   return (
-    <>
+    <div
+      className="relative w-full max-w-full overflow-hidden bg-muted/5"
+      style={{ aspectRatio: `${width} / ${height}` }}
+    >
       <Image
         src={lightSrc}
         alt={`${alt} (light mode)`}
-        width={width}
-        height={height}
-        className={cn("h-auto w-full object-cover dark:hidden", className)}
+        fill
         sizes={sizes}
+        className={cn("object-cover dark:hidden", className)}
       />
       <Image
         src={darkSrc}
         alt={`${alt} (dark mode)`}
-        width={width}
-        height={height}
-        className={cn("hidden h-auto w-full object-cover dark:block", className)}
+        fill
         sizes={sizes}
+        className={cn("hidden object-cover dark:block", className)}
       />
-    </>
+    </div>
   );
 }
 
 export default function HomePage() {
   return (
-    <div className="min-h-dvh overflow-x-hidden bg-background text-foreground">
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <Header />
-      <main>
+      <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden">
+        <main className="flex-1">
         {/* Hero */}
         <section className="border-b border-border" aria-labelledby="hero-heading">
           <div className={`${heroContainerClass} py-12 sm:py-16 md:py-20 lg:py-24`}>
-            <div className="mx-auto grid w-full min-w-0 grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-[clamp(2rem,5vw,3.75rem)] lg:gap-y-0">
+            <div className="mx-auto grid w-full min-w-0 grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-12 xl:gap-x-15 lg:gap-y-0">
               <FadeIn className="min-w-0 max-w-xl justify-self-center text-center sm:max-w-2xl lg:max-w-none lg:justify-self-stretch lg:text-left">
                 <h1
                   id="hero-heading"
-                  className="text-balance text-[1.625rem] font-light leading-[1.16] tracking-tight text-foreground min-[400px]:text-4xl sm:text-5xl lg:text-[3.85rem] xl:text-[clamp(3.85rem,calc(3.25rem_+_1.75vw),4.75rem)]"
+                  className="text-balance text-[1.625rem] font-light leading-[1.16] tracking-tight text-foreground min-[400px]:text-4xl sm:text-5xl lg:text-[3.85rem] xl:text-[4.35rem]"
                 >
                   Train patterns, not just puzzles.
                 </h1>
@@ -368,24 +474,16 @@ export default function HomePage() {
                   aria-hidden
                 >
                   <div
-                    className="rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.24)_0%,rgba(120,75,255,0.08)_45%,transparent_75%)] blur-3xl"
-                    style={{
-                      height: "min(60dvh, 48rem)",
-                      width: "min(92vw, calc(min(60dvh, 48rem) * 0.55 + 6rem))",
-                      maxWidth: "48rem",
-                    }}
+                    className="aspect-[430/932] w-full max-w-[20rem] shrink-0 rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.24)_0%,rgba(120,75,255,0.08)_45%,transparent_75%)] blur-3xl lg:w-[20rem]"
                   />
                 </div>
-                <TrainingPreview
-                  theme="light"
-                  className="relative z-10 dark:hidden"
-                  layout="hero"
-                />
-                <TrainingPreview
-                  theme="dark"
-                  className="relative z-10 hidden dark:block"
-                  layout="hero"
-                />
+                <div className="relative z-10 isolate mx-auto aspect-[430/932] w-full max-w-[20rem] shrink-0 lg:w-[20rem]">
+                  <DocumentThemedTrainingPreview
+                    className="absolute inset-0"
+                    title="Pattern Forge training preview"
+                    preview={MARKETING_HERO_PHONE_PREVIEW}
+                  />
+                </div>
               </FadeIn>
             </div>
           </div>
@@ -423,7 +521,7 @@ export default function HomePage() {
                       card.step === "02 Review" && "order-2",
                       card.step === "03 Improve" && "order-3",
                       isCenter
-                        ? "lg:order-2 lg:z-10 lg:scale-110"
+                        ? "lg:order-2 lg:z-10"
                         : "lg:scale-95 lg:opacity-80",
                       card.step === "02 Review" && "lg:order-1 lg:-rotate-2",
                       card.step === "03 Improve" && "lg:order-3",
@@ -433,21 +531,31 @@ export default function HomePage() {
                     <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
                       {card.step}
                     </p>
-                    <ScreenshotFrame className="overflow-hidden rounded-[1.3rem]">
-                      <ThemedScreenshot
-                        lightSrc={card.lightSrc}
-                        darkSrc={card.darkSrc}
-                        alt={card.alt}
-                        width={390}
-                        height={844}
-                        className="h-auto object-contain"
-                        sizes={
-                          isCenter
-                            ? "(min-width: 1024px) 36vw, 92vw"
-                            : "(min-width: 1024px) 25vw, 88vw"
-                        }
-                      />
-                    </ScreenshotFrame>
+                    {card.visual.kind === "phone" ? (
+                      <div className="relative isolate mx-auto aspect-[430/932] w-[min(100%,20rem)] max-w-[20rem] shrink-0">
+                        <DocumentThemedTrainingPreview
+                          title={card.visual.iframeTitle}
+                          className="absolute inset-0"
+                          preview={card.visual.preview}
+                        />
+                      </div>
+                    ) : (
+                      <ScreenshotFrame className="overflow-hidden rounded-[1.3rem]">
+                        <ThemedScreenshot
+                          lightSrc={card.visual.lightSrc}
+                          darkSrc={card.visual.darkSrc}
+                          alt={card.visual.alt}
+                          width={390}
+                          height={844}
+                          className="object-contain"
+                          sizes={
+                            isCenter
+                              ? "(min-width: 1024px) 36vw, 92vw"
+                              : "(min-width: 1024px) 25vw, 88vw"
+                          }
+                        />
+                      </ScreenshotFrame>
+                    )}
                     <div className="space-y-1">
                       <h3 className="text-base font-medium text-foreground">{card.title}</h3>
                       <p className="text-sm leading-relaxed text-muted-foreground">{card.body}</p>
@@ -573,16 +681,13 @@ export default function HomePage() {
               <div className="space-y-5 lg:hidden">
                 <FadeIn>
                   <MotionScreenshot>
-                    <ScreenshotFrame>
-                      <ThemedScreenshot
-                        lightSrc="/images/solve-puzzle-desktop-light.png"
-                        darkSrc="/images/solve-puzzle-desktop-dark.png"
-                        alt="Desktop training view"
-                        width={1365}
-                        height={768}
-                        sizes="96vw"
+                    <div className="w-full min-w-0">
+                      <TrainingIframePair
+                        className="w-full"
+                        title="Training preview — desktop layout"
+                        preview={builtForScreensDesktopPreview}
                       />
-                    </ScreenshotFrame>
+                    </div>
                   </MotionScreenshot>
                 </FadeIn>
                 <div className="relative mx-auto flex justify-center pt-1">
@@ -592,16 +697,13 @@ export default function HomePage() {
                   />
                   <FadeIn delay={0.08}>
                     <MotionScreenshot className="relative z-10">
-                      <ScreenshotFrame className="max-w-56 shadow-2xl">
-                        <ThemedScreenshot
-                          lightSrc="/images/solve-puzzle-light.png"
-                          darkSrc="/images/solve-puzzle-dark.png"
-                          alt="Mobile training view"
-                          width={390}
-                          height={844}
-                          sizes="64vw"
+                      <div className="relative z-10 mx-auto flex w-full min-w-0 max-w-[min(100%,20rem)] justify-center">
+                        <TrainingIframePair
+                          className="w-full"
+                          title="Training preview — mobile layout"
+                          preview={builtForScreensMobilePreview}
                         />
-                      </ScreenshotFrame>
+                      </div>
                     </MotionScreenshot>
                   </FadeIn>
                 </div>
@@ -609,37 +711,34 @@ export default function HomePage() {
 
               <div className="relative hidden lg:block lg:pt-4">
                 <div
-                  className="pointer-events-none absolute right-[10%] top-[8%] h-40 w-44 rounded-full bg-[radial-gradient(circle,rgba(124,82,255,0.2),transparent_70%)] blur-3xl"
+                  className="pointer-events-none absolute left-1/2 top-[12%] h-48 w-[min(90%,48rem)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,82,255,0.2),transparent_70%)] blur-3xl"
                   aria-hidden
                 />
-                <FadeIn>
-                  <MotionScreenshot>
-                    <ScreenshotFrame className="w-[78%]">
-                      <ThemedScreenshot
-                        lightSrc="/images/solve-puzzle-desktop-light.png"
-                        darkSrc="/images/solve-puzzle-desktop-dark.png"
-                        alt="Desktop training view"
-                        width={1365}
-                        height={768}
-                        sizes="(min-width: 1280px) 68vw, 64vw"
+                <div className="relative z-10 mx-auto flex w-full flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-12 xl:gap-14">
+                  <FadeIn className="min-w-0 w-full flex-1 lg:max-w-[min(100%,54rem)]">
+                    <MotionScreenshot>
+                      <div className="w-full min-w-0">
+                        <TrainingIframePair
+                          className="w-full"
+                          title="Training preview — desktop layout"
+                          preview={builtForScreensDesktopPreview}
+                        />
+                      </div>
+                    </MotionScreenshot>
+                  </FadeIn>
+                  <FadeIn
+                    delay={0.08}
+                    className="flex w-full max-w-[min(100%,20rem)] shrink-0 justify-center"
+                  >
+                    <MotionScreenshot className="w-full">
+                      <TrainingIframePair
+                        className="w-full"
+                        title="Training preview — mobile layout"
+                        preview={builtForScreensMobilePreview}
                       />
-                    </ScreenshotFrame>
-                  </MotionScreenshot>
-                </FadeIn>
-                <FadeIn delay={0.08} className="absolute right-[2%] top-[10%] z-10 w-[20%]">
-                  <MotionScreenshot>
-                    <ScreenshotFrame className="shadow-2xl">
-                      <ThemedScreenshot
-                        lightSrc="/images/solve-puzzle-light.png"
-                        darkSrc="/images/solve-puzzle-dark.png"
-                        alt="Mobile training view"
-                        width={390}
-                        height={844}
-                        sizes="(min-width: 1280px) 18vw, 24vw"
-                      />
-                    </ScreenshotFrame>
-                  </MotionScreenshot>
-                </FadeIn>
+                    </MotionScreenshot>
+                  </FadeIn>
+                </div>
               </div>
             </div>
           </div>
@@ -687,6 +786,7 @@ export default function HomePage() {
         </section>
       </main>
       <Footer />
+      </div>
     </div>
   );
 }

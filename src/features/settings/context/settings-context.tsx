@@ -22,11 +22,18 @@ interface SettingsContextValue {
 
 const SettingsContext = React.createContext<SettingsContextValue | null>(null);
 
+function isPreviewDocument(): boolean {
+  return (
+    typeof window !== "undefined" && window.location.pathname.startsWith("/preview")
+  );
+}
+
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const value = useSettings();
   const themeMode = value.settings?.theme;
 
   React.useEffect(() => {
+    if (isPreviewDocument()) return;
     if (typeof document === "undefined" || !value.settings) return;
     const { theme } = value.settings;
     const root = document.documentElement;
@@ -48,6 +55,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }, [value.settings]);
 
   React.useEffect(() => {
+    if (isPreviewDocument()) return;
     if (themeMode !== "system" || typeof window.matchMedia !== "function")
       return;
     const m = window.matchMedia("(prefers-color-scheme: dark)");

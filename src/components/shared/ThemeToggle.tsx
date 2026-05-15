@@ -23,6 +23,25 @@ function getEffectiveTheme(theme: "light" | "dark" | "system" | undefined): Effe
   return "light";
 }
 
+/** Preview routes scope theme on the component tree; skip touching global `html`. */
+function syncDocumentTheme(mode: EffectiveTheme) {
+  if (typeof window !== "undefined" && window.location.pathname.startsWith("/preview")) {
+    return;
+  }
+  const root = document.documentElement;
+  if (mode === "dark") root.classList.add("dark");
+  else root.classList.remove("dark");
+  try {
+    localStorage.setItem("patternforge-theme", mode);
+  } catch {
+    /* ignore */
+  }
+}
+
+const THEME_WIPE_MS = 300;
+/** Short wipe: snappy end so both directions feel equally quick */
+const THEME_WIPE_EASING = "cubic-bezier(0.33, 1, 0.32, 1)";
+
 export function ThemeToggle({ className }: { className?: string }) {
   const { settings, setTheme } = useSettingsContext();
   const [effectiveTheme, setEffectiveTheme] = React.useState<EffectiveTheme>(() =>
@@ -50,12 +69,14 @@ export function ThemeToggle({ className }: { className?: string }) {
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       if (reduceMotion) {
+        syncDocumentTheme(next);
         void setTheme(next);
         return;
       }
 
       const doc = document as DocumentWithViewTransition;
       if (!doc.startViewTransition) {
+        syncDocumentTheme(next);
         void setTheme(next);
         return;
       }
@@ -69,22 +90,36 @@ export function ThemeToggle({ className }: { className?: string }) {
       );
 
       const transition = doc.startViewTransition(() => {
+        /*
+         * View Transition snapshots must run after the DOM reflects the next theme.
+         * `setTheme` persists async (Dexie): previously `html.dark` flipped only in an effect
+         * after `await`, so old/new captures matched — the circular reveal looked absent/laggy,
+         * worse when Chessground slowed the async path.
+         */
+        syncDocumentTheme(next);
         void setTheme(next);
       });
 
       transition.ready.then(() => {
-        const clipPath = [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${endRadius}px at ${x}px ${y}px)`,
-        ];
-        document.documentElement.animate(
-          { clipPath },
-          {
-            duration: 500,
-            easing: "ease-in-out",
-            pseudoElement: "::view-transition-new(root)",
-          }
-        );
+        /*
+         * Circular ripple both ways: shrink clip on ::view-transition-old(root) so the previous
+         * theme collapses toward the click and the next theme shows through (matches light→dark
+         * feel on dark→light, and avoids expanding the heavy dark snapshot when going dark).
+         */
+        requestAnimationFrame(() => {
+          document.documentElement.animate(
+            [
+              { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+              { clipPath: `circle(0px at ${x}px ${y}px)` },
+            ],
+            {
+              duration: THEME_WIPE_MS,
+              easing: THEME_WIPE_EASING,
+              pseudoElement: "::view-transition-old(root)",
+              fill: "forwards",
+            }
+          );
+        });
       });
     },
     [effectiveTheme, setTheme]

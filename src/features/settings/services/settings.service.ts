@@ -57,6 +57,11 @@ export async function getSettingsWithDefaults(): Promise<AppSettingsSchema> {
   return { id: "default", ...DEFAULTS };
 }
 
+/** In-memory defaults for marketing iframe previews (`/preview/*`). Never writes to IndexedDB. */
+export function getStaticPreviewAppSettings(): AppSettingsSchema {
+  return { id: "preview", ...DEFAULTS };
+}
+
 /**
  * Updates theme and persists.
  */

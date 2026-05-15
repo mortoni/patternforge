@@ -1,5 +1,5 @@
 /**
- * Chessground host: board paint (`--pf-cg-board-*`), coords, Blueprint piece rim,
+ * Chessground host: board paint (`--pf-cg-board-*`), coords, dark-mode black-piece rim,
  * interaction chrome (`--foreground` + color-mix), last move (`--pf-board-last-move`).
  */
 
@@ -36,19 +36,15 @@
 }
 
 /*
- * Blueprint / dark app: Cburnett black pieces use a black outer stroke; on the
- * near-black dark squares it vanishes. Very light rim — keep offsets small and
- * use partial opacity so it does not read as a harsh highlight.
+ * Dark app: black Cburnett pieces blend into dark squares. Cardinal drop-shadows
+ * with zero blur read as a sharp ~1px white outline (same idea as mt-model-pieces).
  */
+.dark .pf-cg-host[data-pf-board="classic"] piece.black,
 .dark .pf-cg-host[data-pf-board="blueprint"] piece.black {
-  filter: drop-shadow(0.3px 0 0 rgba(255, 255, 255, 0.42))
-    drop-shadow(-0.3px 0 0 rgba(255, 255, 255, 0.42))
-    drop-shadow(0 0.3px 0 rgba(255, 255, 255, 0.42))
-    drop-shadow(0 -0.3px 0 rgba(255, 255, 255, 0.42))
-    drop-shadow(0.22px 0.22px 0 rgba(255, 255, 255, 0.38))
-    drop-shadow(-0.22px 0.22px 0 rgba(255, 255, 255, 0.38))
-    drop-shadow(0.22px -0.22px 0 rgba(255, 255, 255, 0.38))
-    drop-shadow(-0.22px -0.22px 0 rgba(255, 255, 255, 0.38));
+  filter: drop-shadow(1px 0 0 rgb(255, 255, 255))
+    drop-shadow(-1px 0 0 rgb(255, 255, 255))
+    drop-shadow(0 1px 0 rgb(255, 255, 255))
+    drop-shadow(0 -1px 0 rgb(255, 255, 255));
 }
 
 /*

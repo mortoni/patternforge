@@ -43,9 +43,10 @@ import { completeSession } from "@/services/training-session.service";
 /**
  * Board column width: use the padded main width (`100%`), not `vw`, so the board
  * does not overflow horizontally on mobile (main uses `p-4`).
+ * `self-center` (not stretch) keeps the max-width column centered in wide layouts.
  */
 const BOARD_COLUMN_CLASS =
-  "w-full min-w-0 max-w-[min(100%,calc(100dvh-14rem),40rem)] self-stretch";
+  "w-full min-w-0 max-w-[min(100%,calc(100dvh-14rem),40rem)] self-center";
 
 function parseUciForExecution(
   uci: string

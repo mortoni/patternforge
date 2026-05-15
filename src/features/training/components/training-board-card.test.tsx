@@ -16,6 +16,11 @@ vi.mock("@/features/settings/hooks/use-board-style", () => ({
     classicLightSurface,
 }));
 
+vi.mock("@/features/settings/hooks/use-effective-app-color-scheme", () => ({
+  useEffectiveAppColorScheme: (): import("@/lib/chess/board-styles").AppColorScheme =>
+    "light",
+}));
+
 vi.mock("./pattern-board", () => ({
   PatternBoard: (props: PatternBoardProps) => {
     capturedProps.current = props;
