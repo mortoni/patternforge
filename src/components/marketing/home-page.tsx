@@ -182,6 +182,10 @@ const methodSteps = [
   { title: "Track faster cycles", body: "Watch recognition become automatic." },
 ] as const;
 
+/** Soft horizontal hairline — reads gentler than `border-b` across full width. */
+const sectionHairline =
+  "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:z-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-border/35 after:to-transparent dark:after:via-white/10";
+
 function TrainingIframePair({
   className,
   title,
@@ -253,7 +257,7 @@ function TrainingIframePair({
 
 function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/80">
+    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border/55 bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/80 dark:border-white/8">
       <div
         className={`${containerClass} flex items-center justify-between gap-2 py-3 md:gap-6 md:py-3.5`}
       >
@@ -438,11 +442,11 @@ function SectionHeader({
       ) : null}
       <h2
         id={headingId}
-        className="mt-3 text-balance text-2xl font-medium tracking-tight text-foreground sm:text-3xl"
+        className="mt-3 text-balance text-2xl font-medium tracking-tight text-foreground sm:mt-3.5 sm:text-3xl"
       >
         {title}
       </h2>
-      <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:text-base">
+      <p className="mx-auto mt-3.5 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
         {body}
       </p>
     </div>
@@ -513,10 +517,13 @@ export default function HomePage() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <Header />
       <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden">
-        <main className="flex-1">
+        <main className="relative flex-1 isolate">
         {/* Hero — immersive asymmetric anchor around live training preview */}
         <section
-          className="relative overflow-x-clip border-b border-border/60 dark:border-white/[0.06]"
+          className={cn(
+            "relative overflow-x-clip",
+            sectionHairline
+          )}
           aria-labelledby="hero-heading"
         >
           <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -526,7 +533,7 @@ export default function HomePage() {
           {/* Bridges into next section */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[min(13rem,28vh)] bg-gradient-to-b from-transparent via-background/35 to-background dark:via-background/55"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[min(14rem,30vh)] bg-gradient-to-b from-transparent via-background/42 to-background dark:via-background/58"
           />
 
           <div
@@ -611,12 +618,16 @@ export default function HomePage() {
         {/* Training loop — long-horizon ritual (Track → Solve → Master) */}
         <section
           id="philosophy"
-          className="relative w-full scroll-mt-4 border-t border-border/30 bg-gradient-to-b from-muted/[0.09] via-background to-background px-3.5 pb-20 pt-14 dark:border-white/[0.04] dark:from-muted/[0.06] sm:px-5 sm:pb-20 md:px-6 md:pb-28 md:pt-16 lg:px-10"
+          className={cn(
+            "relative w-full scroll-mt-4 bg-gradient-to-b from-muted/[0.105] via-background via-[42%] to-background px-3.5 pt-11 pb-[4.75rem] dark:from-muted/[0.078] dark:via-background sm:px-5 sm:pt-12 sm:pb-[5rem] md:px-6 md:pt-14 md:pb-28 lg:px-10",
+            /** Bridge from hero veil — faint lift at top centre */
+            "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[min(9rem,20vh)] before:bg-[radial-gradient(ellipse_70%_100%_at_50%_0%,color-mix(in_oklab,var(--muted-foreground)_4%,transparent),transparent_74%)] before:opacity-70 dark:before:opacity-85"
+          )}
           aria-labelledby="training-in-action-heading"
         >
           <div id="training-in-action" />
           <div
-            className="pointer-events-none absolute left-1/2 top-[42%] hidden h-[min(420px,48vh)] w-[min(960px,96vw)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_50%_38%_at_50%_42%,color-mix(in_oklab,var(--primary)_8%,transparent),transparent_70%)] opacity-90 dark:opacity-100 lg:block"
+            className="pointer-events-none absolute left-1/2 top-[48%] hidden h-[min(380px,44vh)] w-[min(880px,92vw)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_48%_36%_at_50%_44%,color-mix(in_oklab,var(--primary)_5.5%,transparent),transparent_72%)] opacity-65 dark:opacity-80 lg:block"
             aria-hidden
           />
           <div className="relative z-[1] mx-auto max-w-[min(100%,88rem)]">
@@ -630,10 +641,10 @@ export default function HomePage() {
               />
             </FadeIn>
 
-            <div className="relative mx-auto mt-14 max-w-[min(100%,86rem)] sm:mt-16 lg:mt-20">
+            <div className="relative mx-auto mt-10 max-w-[min(100%,86rem)] sm:mt-11 md:mt-12 lg:mt-14">
               <StaggerContainer
                 as="ul"
-                className="relative z-10 grid grid-cols-1 gap-12 sm:gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)_minmax(0,0.95fr)] lg:items-start lg:gap-x-6 lg:gap-y-4 xl:gap-x-12"
+                className="relative z-10 grid grid-cols-1 gap-11 sm:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)_minmax(0,0.95fr)] lg:items-start lg:gap-x-6 lg:gap-y-6 xl:gap-x-11 xl:gap-y-5"
               >
                 {trainingInActionCards.map((card) => {
                   const isCenter = card.mode === "center";
@@ -729,12 +740,28 @@ export default function HomePage() {
               </StaggerContainer>
             </div>
           </div>
+
+          {/* Tonal descent + faint hair — bridges into Method */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-40 bg-gradient-to-b from-transparent via-background/25 to-muted/[0.085] dark:via-background/35 dark:to-muted/[0.07]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-[5%] bottom-0 z-[2] mx-auto h-px max-w-[76rem] bg-gradient-to-r from-transparent via-border/30 to-transparent dark:via-white/9"
+          />
         </section>
 
-        {/* Method */}
+        {/* Method — denser “how it works”; mid-page focus */}
         <section
           id="method"
-          className="border-y border-border bg-muted/20 py-16 md:py-24"
+          className={cn(
+            "relative overflow-hidden bg-gradient-to-b from-muted/[0.11] via-background to-muted/[0.05] py-12 dark:from-muted/[0.09] dark:via-background dark:to-muted/[0.04] sm:py-14 md:py-[4.5rem]",
+            /** Ambient tether to training loop upward */
+            "before:pointer-events-none before:absolute before:left-1/2 before:top-0 before:h-28 before:w-[min(112%,56rem)] before:-translate-x-1/2 before:bg-[radial-gradient(ellipse_100%_100%_at_50%_0%,color-mix(in_oklab,var(--muted-foreground)_3%,transparent),transparent_78%)]",
+            /** Soft bleed into Responsive section */
+            "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-28 after:bg-gradient-to-b after:from-transparent after:to-background"
+          )}
           aria-labelledby="method-heading"
         >
           <div className={containerClass}>
@@ -747,14 +774,14 @@ export default function HomePage() {
               />
             </FadeIn>
 
-            <StaggerContainer as="ol" className="mx-auto mt-10 max-w-2xl space-y-3 md:hidden">
+            <StaggerContainer as="ol" className="mx-auto mt-9 max-w-2xl space-y-3 md:hidden">
               {methodSteps.map((step, index) => (
                 <MotionCard
                   as="li"
                   key={step.title}
                   hover={false}
                   staggered
-                  className="flex items-start gap-3 rounded-lg border border-border bg-background/65 p-3.5"
+                  className="flex items-start gap-3 rounded-lg border border-border/90 bg-background/70 p-3.5 dark:border-border dark:bg-background/55"
                 >
                   <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border text-xs font-medium text-foreground">
                     {index + 1}
@@ -769,9 +796,9 @@ export default function HomePage() {
 
             <StaggerContainer
               as="ol"
-              className="relative mx-auto mt-12 hidden max-w-5xl grid-cols-5 gap-4 md:grid"
+              className="relative mx-auto mt-10 hidden max-w-5xl grid-cols-5 gap-4 md:grid lg:mt-11"
             >
-              <div className="absolute left-0 right-0 top-5 h-px bg-border" aria-hidden />
+              <div className="absolute left-0 right-0 top-5 h-px bg-gradient-to-r from-transparent via-border/40 to-transparent opacity-85 dark:via-border/30" aria-hidden />
               {methodSteps.map((step, index) => (
                 <MotionCard
                   as="li"
@@ -789,7 +816,7 @@ export default function HomePage() {
               ))}
             </StaggerContainer>
 
-            <FadeIn className="mx-auto mt-14 max-w-4xl md:mt-16">
+            <FadeIn className="mx-auto mt-11 max-w-4xl md:mt-14">
               <MotionScreenshot>
                 <div className="relative rounded-2xl border border-black/10 bg-black/2 p-4 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.75)] dark:border-white/10 dark:bg-white/2">
                 <div
@@ -824,11 +851,19 @@ export default function HomePage() {
               </MotionScreenshot>
             </FadeIn>
           </div>
+
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-[12%] bottom-0 z-[2] mx-auto h-px max-w-[62rem] bg-gradient-to-r from-transparent via-border/26 to-transparent dark:via-white/8"
+          />
         </section>
 
-        {/* Built for screens */}
+        {/* Built for screens — open breath before CTA; ties device story to readiness */}
         <section
-          className="border-y border-border bg-muted/15 py-16 md:py-24"
+          className={cn(
+            "relative overflow-hidden bg-background py-[3.875rem] sm:py-16 md:py-[5.75rem]",
+            "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[min(10rem,24vh)] before:bg-[radial-gradient(ellipse_75%_100%_at_50%_0%,color-mix(in_oklab,var(--primary)_3.5%,transparent),transparent_76%)] before:opacity-45 dark:before:opacity-55"
+          )}
           aria-labelledby="screens-heading"
         >
           <div className={containerClass}>
@@ -841,7 +876,7 @@ export default function HomePage() {
               />
             </FadeIn>
 
-            <div className="mx-auto mt-14 max-w-6xl">
+            <div className="mx-auto mt-11 max-w-6xl sm:mt-12 lg:mt-14">
               <div className="space-y-5 lg:hidden">
                 <FadeIn>
                   <MotionScreenshot>
@@ -856,7 +891,7 @@ export default function HomePage() {
                 </FadeIn>
                 <div className="relative mx-auto flex justify-center pt-1">
                   <div
-                    className="pointer-events-none absolute top-2 h-20 w-40 rounded-full bg-[radial-gradient(circle,rgba(124,82,255,0.18),transparent_70%)] blur-2xl"
+                    className="pointer-events-none absolute top-2 h-20 w-40 rounded-full bg-[radial-gradient(circle,rgba(124,82,255,0.12),transparent_72%)] blur-2xl"
                     aria-hidden
                   />
                   <FadeIn delay={0.08}>
@@ -875,7 +910,7 @@ export default function HomePage() {
 
               <div className="relative hidden lg:block lg:pt-4">
                 <div
-                  className="pointer-events-none absolute left-1/2 top-[12%] h-48 w-[min(90%,48rem)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,82,255,0.2),transparent_70%)] blur-3xl"
+                  className="pointer-events-none absolute left-1/2 top-[12%] h-48 w-[min(90%,48rem)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,82,255,0.13),transparent_72%)] blur-3xl"
                   aria-hidden
                 />
                 <div className="relative z-10 mx-auto flex w-full flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-12 xl:gap-14">
@@ -906,15 +941,32 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[9.5rem] bg-gradient-to-t from-muted/[0.06] to-transparent dark:from-muted/[0.05]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-[8%] bottom-0 z-[1] mx-auto h-px max-w-[76rem] bg-gradient-to-r from-transparent via-border/28 to-transparent dark:via-white/8"
+          />
         </section>
 
         {/* Final CTA */}
-        <section className={`${containerClass} py-16 md:py-24`} aria-labelledby="cta-heading">
+        {/* Final CTA — quiet resolve; echoes hero without competing */}
+        <section
+          className={cn(
+            containerClass,
+            "relative py-14 md:py-[4.75rem]",
+            "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-24 before:bg-gradient-to-b before:from-muted/[0.05] before:to-transparent dark:before:from-muted/[0.04]"
+          )}
+          aria-labelledby="cta-heading"
+        >
           <div className="mx-auto max-w-5xl">
             <FadeIn>
-              <div className="relative overflow-hidden rounded-2xl border border-border bg-background/75 px-6 py-10 text-center sm:px-10 md:py-12">
+              <div className="relative overflow-hidden rounded-2xl border border-border/85 bg-background/80 px-6 py-10 text-center shadow-[0_1px_0_0] shadow-border/25 sm:px-10 md:py-[2.875rem] dark:border-border dark:bg-background/70 dark:shadow-black/35">
               <div
-                className="pointer-events-none absolute inset-x-8 top-[-35%] h-40 rounded-full bg-[radial-gradient(circle,rgba(138,93,255,0.2),rgba(125,83,255,0.08)_45%,transparent_75%)] blur-3xl"
+                className="pointer-events-none absolute inset-x-8 top-[-32%] h-36 rounded-full bg-[radial-gradient(circle,rgba(138,93,255,0.13),rgba(125,83,255,0.06)_42%,transparent_76%)] blur-3xl opacity-95 dark:opacity-100"
                 aria-hidden
               />
               <h2
