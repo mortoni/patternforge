@@ -38,15 +38,23 @@ function syncDocumentTheme(mode: EffectiveTheme) {
   }
 }
 
-const THEME_WIPE_MS = 300;
+/** Root View Transition wipe (clip old snapshot toward click). */
+const THEME_WIPE_MS = 380;
 /** Short wipe: snappy end so both directions feel equally quick */
 const THEME_WIPE_EASING = "cubic-bezier(0.33, 1, 0.32, 1)";
+
+/** Button-local ripple (CSS keyframes in globals.css). */
+const THEME_BTN_RIPPLE_MS = 480;
+
+type RippleSprout = { key: number; x: number; y: number };
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { settings, setTheme } = useSettingsContext();
   const [effectiveTheme, setEffectiveTheme] = React.useState<EffectiveTheme>(() =>
     getEffectiveTheme(settings?.theme)
   );
+  const [ripples, setRipples] = React.useState<RippleSprout[]>([]);
+  const rippleKeyRef = React.useRef(0);
 
   React.useEffect(() => {
     setEffectiveTheme(getEffectiveTheme(settings?.theme));
@@ -59,6 +67,13 @@ export function ThemeToggle({ className }: { className?: string }) {
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, [settings?.theme]);
+
+  const pushRipple = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const key = ++rippleKeyRef.current;
+    setRipples((prev) => [...prev.slice(-5), { key, x: e.clientX - rect.left, y: e.clientY - rect.top }]);
+  }, []);
 
   const onClick = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,6 +88,8 @@ export function ThemeToggle({ className }: { className?: string }) {
         void setTheme(next);
         return;
       }
+
+      pushRipple(e);
 
       const doc = document as DocumentWithViewTransition;
       if (!doc.startViewTransition) {
@@ -103,26 +120,30 @@ export function ThemeToggle({ className }: { className?: string }) {
       transition.ready.then(() => {
         /*
          * Circular ripple both ways: shrink clip on ::view-transition-old(root) so the previous
-         * theme collapses toward the click and the next theme shows through (matches light→dark
-         * feel on dark→light, and avoids expanding the heavy dark snapshot when going dark).
+         * theme collapses toward the click and the next theme shows through.
+         *
+         * Double rAF: wait until root snapshot pseudos have painted — otherwise the WA API clip
+         * animation can effectively be a no-op in some browsers.
          */
         requestAnimationFrame(() => {
-          document.documentElement.animate(
-            [
-              { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
-              { clipPath: `circle(0px at ${x}px ${y}px)` },
-            ],
-            {
-              duration: THEME_WIPE_MS,
-              easing: THEME_WIPE_EASING,
-              pseudoElement: "::view-transition-old(root)",
-              fill: "forwards",
-            }
-          );
+          requestAnimationFrame(() => {
+            document.documentElement.animate(
+              [
+                { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` },
+                { clipPath: `circle(0px at ${x}px ${y}px)` },
+              ],
+              {
+                duration: THEME_WIPE_MS,
+                easing: THEME_WIPE_EASING,
+                pseudoElement: "::view-transition-old(root)",
+                fill: "forwards",
+              }
+            );
+          });
         });
       });
     },
-    [effectiveTheme, setTheme]
+    [effectiveTheme, pushRipple, setTheme]
   );
 
   return (
@@ -133,6 +154,25 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label="Toggle theme"
       className={cn("relative overflow-hidden", className)}
     >
+      {ripples.map((r) => (
+        <span
+          key={r.key}
+          aria-hidden
+          className="pointer-events-none absolute z-10 rounded-full bg-[color-mix(in_oklch,var(--foreground)_26%,transparent)]"
+          style={{
+            left: r.x,
+            top: r.y,
+            width: 56,
+            height: 56,
+            marginLeft: -28,
+            marginTop: -28,
+            animation: `pf-theme-toggle-ripple ${THEME_BTN_RIPPLE_MS}ms ${THEME_WIPE_EASING} forwards`,
+          }}
+          onAnimationEnd={() => {
+            setRipples((prev) => prev.filter((item) => item.key !== r.key));
+          }}
+        />
+      ))}
       <div className="relative flex h-6 w-6 items-center justify-center">
         <svg
           data-no-icon

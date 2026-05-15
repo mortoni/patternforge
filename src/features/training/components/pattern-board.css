@@ -37,7 +37,7 @@
 
 /*
  * Dark app: black Cburnett pieces blend into dark squares. Cardinal drop-shadows
- * with zero blur read as a sharp ~1px white outline (same idea as mt-model-pieces).
+ * with zero blur read as a sharp ~1px white outline.
  */
 .dark .pf-cg-host[data-pf-board="classic"] piece.black,
 .dark .pf-cg-host[data-pf-board="blueprint"] piece.black {

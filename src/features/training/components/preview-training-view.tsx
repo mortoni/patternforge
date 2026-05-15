@@ -53,6 +53,11 @@ export interface PreviewTrainingViewProps {
    * `false` on `/preview/training` — full viewport height.
    */
   embed?: boolean;
+  /**
+   * Shorter than the default 430×932 marketing phone (e.g. landing “Solve” column).
+   * Tightens header/meta padding and hides the skip row so the board fits without clipping.
+   */
+  shortEmbedFrame?: boolean;
 }
 
 export function PreviewTrainingView({
@@ -65,6 +70,7 @@ export function PreviewTrainingView({
   boardStyleId,
   fen: fenRaw,
   embed = false,
+  shortEmbedFrame = false,
 }: PreviewTrainingViewProps) {
   const safePuzzle = Number.isFinite(puzzleRaw) && puzzleRaw > 0 ? puzzleRaw : 12;
   const safeTotal = Number.isFinite(totalRaw) && totalRaw > 0 ? totalRaw : 120;
@@ -73,8 +79,14 @@ export function PreviewTrainingView({
   const displayFen = resolvePreviewTrainingFen(safePuzzle, fenRaw);
 
   const mainPadMobile = "px-3 pb-5 pt-1 sm:px-4";
+  const mainPadMobileShortEmbed = "px-2 pb-1.5 pt-0 sm:px-2";
   const mainPadTabletDesktop = "px-4 pb-5 pt-2 md:px-7 md:pb-6";
-  const mainPad = screen === "sm" ? mainPadMobile : mainPadTabletDesktop;
+  const mainPad =
+    screen === "sm"
+      ? embed && shortEmbedFrame
+        ? mainPadMobileShortEmbed
+        : mainPadMobile
+      : mainPadTabletDesktop;
   const metaText =
     "text-[11px] leading-snug text-muted-foreground sm:text-xs";
 
@@ -103,39 +115,75 @@ export function PreviewTrainingView({
 
   /** Phone-frame embed (`TrainingPreview` sm): bounded height — square board must shrink to fit. */
   const embedSmBoardFit = embed && screen === "sm";
+  const shortSmEmbed = embedSmBoardFit && shortEmbedFrame;
+
+  const smEmbedBoardWrapClass =
+    screen === "sm"
+      ? embedSmBoardFit
+        ? shortSmEmbed
+          ? "flex min-h-0 w-full min-w-0 max-w-full shrink flex-1 basis-0 flex-col items-stretch gap-0"
+          : /** Match {@link TrainingPage} board column: same width cap + `gap-1` to the board. */
+            cn(
+              "flex min-h-0 w-full shrink flex-col items-stretch gap-1",
+              boardColumnClass
+            )
+        : boardOuterClass
+      : boardOuterClass;
 
   const boardBlock = (
-    <div
-      className={cn(
-        boardOuterClass,
-        embedSmBoardFit && "min-h-0 shrink basis-0 flex-1"
-      )}
-    >
-      <div className="min-h-7 w-full shrink-0">
-        <SideToMoveIndicator sideToMove={sideToMove} />
-      </div>
+    <div className={smEmbedBoardWrapClass}>
       <div
         className={cn(
-          "flex min-h-0 min-w-0 w-full",
-          embedSmBoardFit ? "flex-1 items-center justify-center" : ""
+          "w-full shrink-0",
+          embedSmBoardFit
+            ? shortSmEmbed
+              ? "min-h-5"
+              : "min-h-7"
+            : shortSmEmbed
+              ? "min-h-5"
+              : "min-h-7"
         )}
       >
-        <TrainingBoardCard
-          fen={displayFen}
-          positionSyncKey={`landing-preview-${displayFen}`}
-          boardOrientation={boardOrientation}
-          boardStyleId={boardStyleId}
-          previewColorScheme={previewColorScheme}
-          disabled
-          minimal
-          className={cn("w-full", embedSmBoardFit && "min-h-0 min-w-0")}
-          boardContainerClassName={
-            embedSmBoardFit
-              ? "mx-auto aspect-square max-h-full max-w-full min-h-0 w-full border-border/40 bg-[var(--muted)]/10"
-              : "mx-auto w-full max-w-full border-border/40 bg-[var(--muted)]/10"
+        <SideToMoveIndicator
+          sideToMove={sideToMove}
+          className={
+            shortSmEmbed ? "text-[11px] leading-none sm:text-[11px]" : undefined
           }
         />
       </div>
+      {embedSmBoardFit && shortSmEmbed ? (
+        <div className="flex min-h-0 min-w-0 w-full flex-1 items-start justify-center overflow-visible pb-0.5">
+          <TrainingBoardCard
+            fen={displayFen}
+            positionSyncKey={`landing-preview-${displayFen}`}
+            boardOrientation={boardOrientation}
+            boardStyleId={boardStyleId}
+            previewColorScheme={previewColorScheme}
+            disabled
+            minimal
+            className="min-h-0 min-w-0 w-full justify-start"
+            boardContainerClassName="mx-auto aspect-square max-h-full max-w-full min-h-0 w-full overflow-visible border-border/40 bg-[var(--muted)]/10 pb-px"
+          />
+        </div>
+      ) : (
+        <div className={cn("relative w-full min-h-0", embedSmBoardFit && "shrink-0")}>
+          <TrainingBoardCard
+            fen={displayFen}
+            positionSyncKey={`landing-preview-${displayFen}`}
+            boardOrientation={boardOrientation}
+            boardStyleId={boardStyleId}
+            previewColorScheme={previewColorScheme}
+            disabled
+            minimal
+            className={cn("w-full", embedSmBoardFit && "min-h-0 min-w-0 justify-start")}
+            boardContainerClassName={
+              embedSmBoardFit
+                ? "w-full border-border/40 bg-[var(--muted)]/10"
+                : "mx-auto w-full max-w-full border-border/40 bg-[var(--muted)]/10"
+            }
+          />
+        </div>
+      )}
     </div>
   );
 
@@ -218,7 +266,8 @@ export function PreviewTrainingView({
       ) : (
         <div
           className={cn(
-            "flex flex-col overflow-x-hidden bg-background text-foreground",
+            "flex flex-col bg-background text-foreground",
+            shortSmEmbed ? "overflow-hidden" : "overflow-x-hidden",
             themeScope,
             rootH
           )}
@@ -226,24 +275,49 @@ export function PreviewTrainingView({
           <h1 className="sr-only">Preview training</h1>
 
           <header className="sticky top-0 z-40 w-full max-w-full shrink-0 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="grid h-14 w-full max-w-full grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 px-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center justify-self-start">
+            <div
+              className={cn(
+                "grid w-full max-w-full items-center",
+                shortSmEmbed
+                  ? "h-11 grid-cols-[1.75rem_1fr_1.75rem] gap-1 px-2"
+                  : "h-14 grid-cols-[2.5rem_1fr_2.5rem] gap-2 px-3"
+              )}
+            >
+              <div
+                className={cn(
+                  "flex shrink-0 items-center justify-center justify-self-start",
+                  shortSmEmbed ? "h-8 w-8" : "h-10 w-10"
+                )}
+              >
                 <span
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground opacity-80"
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-md text-muted-foreground opacity-80",
+                    shortSmEmbed ? "h-8 w-8" : "h-9 w-9"
+                  )}
                   aria-hidden
                 >
-                  <Menu className="h-5 w-5 pointer-events-none" />
+                  <Menu className={cn("pointer-events-none", shortSmEmbed ? "h-4 w-4" : "h-5 w-5")} />
                 </span>
               </div>
               <Link
                 href={ROUTES.home}
                 aria-label="PatternForge — back to home"
-                className="flex min-w-0 max-w-full items-center justify-center gap-1.5 justify-self-center text-foreground no-underline transition-opacity hover:opacity-85"
+                className="flex min-w-0 max-w-full items-center justify-center gap-1 justify-self-center text-foreground no-underline transition-opacity hover:opacity-85"
               >
-                <Logo size={24} className="shrink-0" />
-                <AppTitle className="min-w-0 truncate whitespace-nowrap text-[11px] tracking-[0.12em]" />
+                <Logo size={shortSmEmbed ? 20 : 24} className="shrink-0" />
+                <AppTitle
+                  className={cn(
+                    "min-w-0 truncate whitespace-nowrap tracking-[0.12em]",
+                    shortSmEmbed ? "text-[10px]" : "text-[11px]"
+                  )}
+                />
               </Link>
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center justify-self-end">
+              <div
+                className={cn(
+                  "flex shrink-0 items-center justify-center justify-self-end",
+                  shortSmEmbed ? "h-8 w-8" : "h-10 w-10"
+                )}
+              >
                 <ThemeToggle />
               </div>
             </div>
@@ -252,17 +326,20 @@ export function PreviewTrainingView({
           <main
             className={cn(
               "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col items-center",
+              shortSmEmbed && "overflow-hidden",
               mainPad
             )}
           >
             <header
               className={cn(
-                "flex w-full max-w-full shrink-0 flex-col gap-y-1.5",
-                embedSmBoardFit ? "mb-2" : "mb-3 sm:mb-4",
-                metaText
+                "flex w-full max-w-full shrink-0 flex-col",
+                shortSmEmbed ? "mb-1.5 gap-y-1 text-[10px] leading-snug text-muted-foreground" : "gap-y-1.5",
+                !shortSmEmbed && embedSmBoardFit && "mb-2",
+                !shortSmEmbed && !embedSmBoardFit && "mb-3 sm:mb-4",
+                !shortSmEmbed && metaText
               )}
             >
-              <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+              <div className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5">
                 <span
                   className="min-w-0 max-w-full shrink truncate font-medium text-muted-foreground"
                   title={setName}
@@ -276,21 +353,28 @@ export function PreviewTrainingView({
                   Cycle {safeCycle}
                 </span>
               </div>
-              <div className="flex min-w-0 items-center justify-between gap-x-3 gap-y-1">
+              <div
+                className={cn(
+                  "flex min-w-0 items-center gap-x-2 gap-y-0.5",
+                  shortSmEmbed ? "justify-start" : "justify-between"
+                )}
+              >
                 <span className="shrink-0 tabular-nums text-muted-foreground">
                   Exercise {safePuzzle} / {safeTotal}
                 </span>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  disabled
-                  tabIndex={-1}
-                  aria-hidden
-                  className="h-auto shrink-0 px-2 py-1 text-xs text-muted-foreground sm:text-sm"
-                >
-                  End session
-                </Button>
+                {!shortSmEmbed ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    disabled
+                    tabIndex={-1}
+                    aria-hidden
+                    className="h-auto shrink-0 px-2 py-1 text-xs text-muted-foreground sm:text-sm"
+                  >
+                    End session
+                  </Button>
+                ) : null}
               </div>
             </header>
 
@@ -298,12 +382,15 @@ export function PreviewTrainingView({
               className={cn(
                 "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col items-center",
                 embedSmBoardFit
-                  ? "justify-between gap-2 pb-2 pt-0"
+                  ? shortSmEmbed
+                    ? "justify-start gap-1 pb-1 pt-0"
+                    : /** Same rhythm as {@link TrainingPage} main board column + Skip. */
+                      "justify-center gap-6 pb-6 pt-1"
                   : "justify-center gap-6 pb-6 pt-1 sm:gap-8 sm:pt-0"
               )}
             >
               {boardBlock}
-              {skipBlock}
+              {!shortSmEmbed ? skipBlock : null}
             </div>
           </main>
     </div>

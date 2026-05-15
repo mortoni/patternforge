@@ -16,7 +16,7 @@ Local-first chess tactics training web app. Built for desktop and mobile, with f
 - Tailwind CSS, shadcn-style UI (Radix primitives, CVA, `cn` utility)
 - Dexie + dexie-react-hooks
 - Zod (schemas in `src/db/schema.ts`)
-- chess.js, react-chessboard (for future puzzle UI)
+- chess.js, Chessground (`pattern-board.tsx`) for the training UI
 - Recharts, date-fns
 - Vitest, Testing Library, Playwright
 - ESLint, Prettier

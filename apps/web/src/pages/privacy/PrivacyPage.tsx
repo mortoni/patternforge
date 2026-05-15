@@ -1,1 +1,1 @@
-export { default } from "../../../../../src/pages/privacy/PrivacyPage";
+export { default } from "../../../../../src/components/marketing/privacy-page";

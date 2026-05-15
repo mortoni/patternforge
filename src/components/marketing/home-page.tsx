@@ -17,6 +17,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { DOCUMENTATION_URL, ROUTES } from "@/lib/constants";
 import type { PreviewTrainingParams } from "@/lib/preview/preview-training-url";
+import {
+  DocumentThemedProgressMarketingPreview,
+  DocumentThemedMasteryMarketingPreview,
+  type MasteryMarketingPreviewProps,
+  type ProgressMarketingPreviewProps,
+} from "@/features/marketing/components/training-in-action-flow-previews";
 import { cn } from "@/lib/utils";
 
 const containerClass = "mx-auto w-full max-w-6xl px-3.5 sm:px-5 md:px-6 lg:px-8";
@@ -37,16 +43,48 @@ const footerHeading =
 
 type TrainingInActionVisual =
   | {
-      kind: "screenshot";
-      lightSrc: string;
-      darkSrc: string;
-      alt: string;
-    }
-  | {
       kind: "phone";
       preview: Omit<PreviewTrainingParams, "appearance">;
       iframeTitle: string;
+    }
+  | {
+      kind: "progress";
+      iframeTitle: string;
+      preview: ProgressMarketingPreviewProps;
+    }
+  | {
+      kind: "mastery";
+      iframeTitle: string;
+      preview: MasteryMarketingPreviewProps;
     };
+
+/** Training loop — track: active cycle feels lived-in (sessions, streak of work). */
+const MARKETING_LOOP_PROGRESS_PREVIEW = {
+  trainingSetName: "Woodpecker Intermediate",
+  cycleNumber: 3,
+  nextExerciseIndex: 142,
+  totalExercises: 762,
+  exercisesRemaining: 620,
+  sessionCountThisCycle: 4,
+  lastSessionDurationMs: 12 * 60 * 1000,
+  recentSessions: [
+    { dayLabel: "Today", exercisesDone: 24, durationMs: 12 * 60 * 1000 },
+    { dayLabel: "Yesterday", exercisesDone: 31, durationMs: 15 * 60 * 1000 },
+    { dayLabel: "12 May", exercisesDone: 18, durationMs: 9 * 60 * 1000 },
+  ],
+} satisfies ProgressMarketingPreviewProps;
+
+/** Training loop — mastery: three completed cycles, descending time (insight derived below). */
+const MARKETING_LOOP_MASTERY_CYCLES = [
+  { cycleNumber: 1, totalTimeMs: 61 * 60 * 1000 + 45_000 },
+  { cycleNumber: 2, totalTimeMs: 52 * 60 * 1000 },
+  { cycleNumber: 3, totalTimeMs: 41 * 60 * 1000 + 12_000 },
+] as const satisfies ReadonlyArray<MasteryMarketingPreviewProps["cycles"][number]>;
+
+const LOOP_MASTERY_INSIGHT = `${Math.round(
+  (1 - MARKETING_LOOP_MASTERY_CYCLES[2].totalTimeMs / MARKETING_LOOP_MASTERY_CYCLES[0].totalTimeMs) *
+    100
+)}% faster than first cycle`;
 
 /** Hero + “Training in action” phone — same puzzle/FEN and shell sizing */
 const MARKETING_HERO_PHONE_PREVIEW = {
@@ -59,6 +97,7 @@ const MARKETING_HERO_PHONE_PREVIEW = {
 } satisfies Omit<PreviewTrainingParams, "appearance">;
 
 const trainingInActionCards: Array<{
+  role: "track" | "solve" | "master";
   step: string;
   title: string;
   body: string;
@@ -66,38 +105,43 @@ const trainingInActionCards: Array<{
   visual: TrainingInActionVisual;
 }> = [
   {
-    step: "01 Solve",
+    role: "track",
+    step: "01 TRACK",
+    title: "Track the cycle",
+    body: "Pause and resume across multiple sessions without losing the thread.",
+    mode: "side",
+    visual: {
+      kind: "progress",
+      iframeTitle: "Training loop — progress / current cycle preview",
+      preview: MARKETING_LOOP_PROGRESS_PREVIEW,
+    },
+  },
+  {
+    role: "solve",
+    step: "02 SOLVE",
     title: "Solve the position",
-    body: "Stay with the board and calculate cleanly.",
+    body: "Work through tactical exercises with the board as the main focus.",
     mode: "center",
     visual: {
       kind: "phone",
-      iframeTitle: "Training — solve step preview",
+      iframeTitle: "Training loop — active exercise preview",
       preview: MARKETING_HERO_PHONE_PREVIEW,
     },
   },
   {
-    step: "02 Review",
-    title: "See the mistake",
-    body: "Spot the miss and reset the pattern.",
+    role: "master",
+    step: "03 MASTER",
+    title: "Measure mastery",
+    body: "Review completed cycles and compare solving time across repetitions.",
     mode: "side",
     visual: {
-      kind: "screenshot",
-      lightSrc: "/images/cycle-summary-light.png",
-      darkSrc: "/images/cycle-summary-dark.png",
-      alt: "Review mistake screen preview",
-    },
-  },
-  {
-    step: "03 Improve",
-    title: "Lock the pattern",
-    body: "Repeat with less effort and less hesitation.",
-    mode: "side",
-    visual: {
-      kind: "screenshot",
-      lightSrc: "/images/progress-light.png",
-      darkSrc: "/images/progress-dark.png",
-      alt: "Progress screen preview",
+      kind: "mastery",
+      iframeTitle: "Training loop — mastery preview",
+      preview: {
+        trainingSetName: "Woodpecker Intermediate",
+        cycles: [...MARKETING_LOOP_MASTERY_CYCLES],
+        insightLine: LOOP_MASTERY_INSIGHT,
+      },
     },
   },
 ];
@@ -153,7 +197,7 @@ function TrainingIframePair({
 
   if (isSm) {
     return (
-      <div className="relative isolate mx-auto aspect-[430/932] w-full max-w-[min(100%,20rem)] shrink-0">
+      <div className="relative isolate mx-auto aspect-[430/932] w-full max-w-[20rem] shrink-0 lg:w-[20rem]">
         {tree}
       </div>
     );
@@ -337,17 +381,24 @@ function SectionHeader({
   body,
   headingId,
   className,
+  eyebrowClassName,
 }: {
   eyebrow?: string;
   title: string;
   body: string;
   headingId?: string;
   className?: string;
+  eyebrowClassName?: string;
 }) {
   return (
     <div className={cn("mx-auto max-w-2xl text-center", className)}>
       {eyebrow ? (
-        <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground/90">
+        <p
+          className={cn(
+            "text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground/90",
+            eyebrowClassName
+          )}
+        >
           {eyebrow}
         </p>
       ) : null}
@@ -477,8 +528,8 @@ export default function HomePage() {
                     className="aspect-[430/932] w-full max-w-[20rem] shrink-0 rounded-full bg-[radial-gradient(circle,rgba(140,92,255,0.24)_0%,rgba(120,75,255,0.08)_45%,transparent_75%)] blur-3xl lg:w-[20rem]"
                   />
                 </div>
-                <div className="relative z-10 isolate mx-auto aspect-[430/932] w-full max-w-[20rem] shrink-0 lg:w-[20rem]">
-                  <DocumentThemedTrainingPreview
+                <div className="relative z-10">
+                  <TrainingIframePair
                     className="absolute inset-0"
                     title="Pattern Forge training preview"
                     preview={MARKETING_HERO_PHONE_PREVIEW}
@@ -489,81 +540,126 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Training in action */}
+        {/* Training loop — long-horizon ritual (Track → Solve → Master) */}
         <section
           id="philosophy"
-          className={`${containerClass} py-16 md:py-24`}
+          className="relative w-full scroll-mt-4 px-3.5 py-20 sm:px-5 md:px-6 md:py-28 lg:px-10"
           aria-labelledby="training-in-action-heading"
         >
           <div id="training-in-action" />
-          <FadeIn>
-            <SectionHeader
-              headingId="training-in-action-heading"
-              eyebrow="Training flow"
-              title="Training in action"
-              body="A focused loop where solving is primary and each step supports better recognition."
-            />
-          </FadeIn>
-          <div className="relative mx-auto mt-12 max-w-6xl">
-            <StaggerContainer as="ul" className="grid gap-6 lg:grid-cols-3 lg:items-end">
-              {trainingInActionCards.map((card) => {
-                const isCenter = card.mode === "center";
-                return (
-                  <MotionCard
-                    as="li"
-                    key={card.title}
-                    y={isCenter ? 20 : 16}
-                    duration={isCenter ? 0.5 : 0.42}
-                    staggered
-                    className={cn(
-                      "space-y-3",
-                      card.mode === "center" && "order-1",
-                      card.step === "02 Review" && "order-2",
-                      card.step === "03 Improve" && "order-3",
-                      isCenter
-                        ? "lg:order-2 lg:z-10"
-                        : "lg:scale-95 lg:opacity-80",
-                      card.step === "02 Review" && "lg:order-1 lg:-rotate-2",
-                      card.step === "03 Improve" && "lg:order-3",
-                      card.step === "03 Improve" && "lg:rotate-2"
-                    )}
-                  >
-                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                      {card.step}
-                    </p>
-                    {card.visual.kind === "phone" ? (
-                      <div className="relative isolate mx-auto aspect-[430/932] w-[min(100%,20rem)] max-w-[20rem] shrink-0">
-                        <DocumentThemedTrainingPreview
-                          title={card.visual.iframeTitle}
-                          className="absolute inset-0"
-                          preview={card.visual.preview}
-                        />
+          <div
+            className="pointer-events-none absolute left-1/2 top-[42%] hidden h-[min(420px,48vh)] w-[min(960px,96vw)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_50%_38%_at_50%_42%,color-mix(in_oklab,var(--primary)_8%,transparent),transparent_70%)] opacity-90 dark:opacity-100 lg:block"
+            aria-hidden
+          />
+          <div className="relative z-[1] mx-auto max-w-[min(100%,88rem)]">
+            <FadeIn>
+              <SectionHeader
+                headingId="training-in-action-heading"
+                eyebrow="TRAINING LOOP"
+                eyebrowClassName="tracking-[0.11em] text-muted-foreground/55"
+                title="Train. Repeat. Recognize faster."
+                body="PatternForge is built around cycles that can span days or weeks. Train in short sessions, resume later, and watch recognition become faster through repetition."
+              />
+            </FadeIn>
+
+            <div className="relative mx-auto mt-14 max-w-[min(100%,86rem)] sm:mt-16 lg:mt-20">
+              <StaggerContainer
+                as="ul"
+                className="relative z-10 grid grid-cols-1 gap-12 sm:gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)_minmax(0,0.95fr)] lg:items-start lg:gap-x-6 lg:gap-y-4 xl:gap-x-12"
+              >
+                {trainingInActionCards.map((card) => {
+                  const isCenter = card.mode === "center";
+                  const frameWidth =
+                    card.visual.kind === "phone"
+                      ? undefined
+                      : isCenter
+                        ? "w-[min(100%,23rem)] max-w-[23rem]"
+                        : "w-[min(100%,17.75rem)] max-w-[17.75rem]";
+
+                  return (
+                    <MotionCard
+                      as="li"
+                      key={card.role}
+                      y={isCenter ? 20 : 12}
+                      duration={isCenter ? 0.55 : 0.42}
+                      staggered
+                      hover={false}
+                      className={cn(
+                        "flex flex-col",
+                        card.role === "track" &&
+                          "lg:-rotate-[2deg] lg:scale-[0.91] lg:opacity-[0.78] lg:transition-[opacity,transform] lg:duration-500 lg:ease-out lg:hover:opacity-[0.86]",
+                        card.role === "solve" &&
+                          "lg:z-30 lg:translate-y-9 lg:scale-[1.07] lg:opacity-100 lg:transition-[opacity,transform] lg:duration-500 lg:ease-out",
+                        card.role === "master" &&
+                          "lg:rotate-[2deg] lg:scale-[0.91] lg:opacity-[0.78] lg:transition-[opacity,transform] lg:duration-500 lg:ease-out lg:hover:opacity-[0.86]"
+                      )}
+                    >
+                      <div className="space-y-4 sm:space-y-5">
+                        <div className="space-y-1.5">
+                          <h3
+                            className={cn(
+                              "text-base font-medium text-foreground",
+                              isCenter && "text-[17px] sm:text-lg"
+                            )}
+                          >
+                            {card.title}
+                          </h3>
+                          <p
+                            className={cn(
+                              "max-w-prose text-sm leading-relaxed text-muted-foreground",
+                              !isCenter && "lg:text-[13px] lg:leading-relaxed lg:text-muted-foreground/88"
+                            )}
+                          >
+                            {card.body}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1">
+                          <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground/45">
+                            {card.step}
+                          </p>
+                          {card.visual.kind === "phone" ? (
+                            <TrainingIframePair
+                              className="absolute inset-0"
+                              title={card.visual.iframeTitle}
+                              preview={card.visual.preview}
+                            />
+                          ) : card.visual.kind === "progress" ? (
+                            <div
+                              className={cn(
+                                "marketing-loop-frame relative isolate mx-auto aspect-[430/932] shrink-0",
+                                frameWidth
+                              )}
+                            >
+                              <DocumentThemedProgressMarketingPreview
+                                title={card.visual.iframeTitle}
+                                className="absolute inset-0"
+                                shellTone="muted"
+                                {...card.visual.preview}
+                              />
+                            </div>
+                          ) : (
+                            <div
+                              className={cn(
+                                "marketing-loop-frame relative isolate mx-auto aspect-[430/932] shrink-0",
+                                frameWidth
+                              )}
+                            >
+                              <DocumentThemedMasteryMarketingPreview
+                                title={card.visual.iframeTitle}
+                                className="absolute inset-0"
+                                shellTone="muted"
+                                {...card.visual.preview}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    ) : (
-                      <ScreenshotFrame className="overflow-hidden rounded-[1.3rem]">
-                        <ThemedScreenshot
-                          lightSrc={card.visual.lightSrc}
-                          darkSrc={card.visual.darkSrc}
-                          alt={card.visual.alt}
-                          width={390}
-                          height={844}
-                          className="object-contain"
-                          sizes={
-                            isCenter
-                              ? "(min-width: 1024px) 36vw, 92vw"
-                              : "(min-width: 1024px) 25vw, 88vw"
-                          }
-                        />
-                      </ScreenshotFrame>
-                    )}
-                    <div className="space-y-1">
-                      <h3 className="text-base font-medium text-foreground">{card.title}</h3>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{card.body}</p>
-                    </div>
-                  </MotionCard>
-                );
-              })}
-            </StaggerContainer>
+                    </MotionCard>
+                  );
+                })}
+              </StaggerContainer>
+            </div>
           </div>
         </section>
 

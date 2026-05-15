@@ -1,3 +1,3 @@
-import TermsPage from "@/pages/terms/TermsPage";
+import TermsPage from "@/components/marketing/terms-page";
 
 export default TermsPage;

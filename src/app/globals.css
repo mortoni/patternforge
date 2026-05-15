@@ -74,6 +74,18 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
+/* Theme toggle: material-style ripple drawn inside the button (separate from root View Transition). */
+@keyframes pf-theme-toggle-ripple {
+  from {
+    transform: scale(0.12);
+    opacity: 0.48;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
 /*
  * Suppress the UA’s default root cross-fade for View Transitions. ThemeToggle drives a circular
  * ripple on both directions by shrinking clip on `::view-transition-old(root)` after

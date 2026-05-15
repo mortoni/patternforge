@@ -1,1 +1,1 @@
-export { default } from "../../../../../src/pages/terms/TermsPage";
+export { default } from "../../../../../src/components/marketing/terms-page";

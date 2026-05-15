@@ -25,6 +25,7 @@ import {
   continueTraining,
   startNextCycle,
   resetAllAndLoadGenerated,
+  upsertDevWoodpeckerEasyFive,
 } from "../services/training-sets.service";
 import { mapOverviewToTableRow, dedupeTableRows } from "../lib/map-training-set-row";
 import type { TrainingSetOverview } from "../types";
@@ -38,6 +39,7 @@ export function TrainingSetsPage() {
   const [overviews, setOverviews] = React.useState<TrainingSetOverview[] | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [loadingGenerated, setLoadingGenerated] = React.useState(false);
+  const [loadingDevFive, setLoadingDevFive] = React.useState(false);
 
   const loadOverviews = React.useCallback(async () => {
     const list = await getTrainingSetsOverview();
@@ -101,6 +103,23 @@ export function TrainingSetsPage() {
     }
   }, [loadOverviews]);
 
+  const handleUpsertDevWoodpeckerEasyFive = React.useCallback(async () => {
+    if (!isDev) return;
+    setLoadingDevFive(true);
+    try {
+      const result = await upsertDevWoodpeckerEasyFive();
+      await loadOverviews();
+      console.log(
+        `[dev] Upserted Woodpecker Easy (dev · 5): ${result.trainingSets} set, ${result.exercises} exercises`
+      );
+    } catch (e) {
+      console.error("Upsert dev Woodpecker Easy ×5 failed:", e);
+      window.alert(`Failed: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setLoadingDevFive(false);
+    }
+  }, [loadOverviews]);
+
   const tableRows = React.useMemo(() => {
     if (!overviews?.length) return [];
     return dedupeTableRows(overviews.map(mapOverviewToTableRow));
@@ -153,6 +172,16 @@ export function TrainingSetsPage() {
       <div className="mt-6 flex flex-col gap-6">
       {isDev && (
         <div className="flex flex-wrap items-center justify-end gap-3 border-b border-border pb-4">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={loadingDevFive || loadingGenerated}
+            className="border-emerald-500/50 text-emerald-700 dark:text-emerald-400"
+            onClick={() => void handleUpsertDevWoodpeckerEasyFive()}
+          >
+            {loadingDevFive ? "Adding…" : "Upsert Woodpecker Easy (dev · 5)"}
+          </Button>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button

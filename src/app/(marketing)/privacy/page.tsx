@@ -1,3 +1,3 @@
-import PrivacyPage from "@/pages/privacy/PrivacyPage";
+import PrivacyPage from "@/components/marketing/privacy-page";
 
 export default PrivacyPage;
