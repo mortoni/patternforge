@@ -15,6 +15,7 @@ import {
   type BoardStyleId,
   resolveBoardChessStyles,
 } from "@/lib/chess/board-styles";
+import type { BoardHighlight } from "@/lib/chess/board-highlight";
 import { PatternBoard } from "./pattern-board";
 
 export interface TrainingBoardCardProps {
@@ -71,7 +72,10 @@ export interface TrainingBoardCardProps {
   marketingEmbed?: boolean;
   /** Marketing editorial diagrams: glass shell, no frame chrome; enables PatternBoard editorial styling. */
   editorialBoard?: boolean;
-  editorialAccentSquares?: string[];
+  /** Premium square glow overlays (marketing editorial boards). */
+  editorialHighlights?: BoardHighlight[];
+  /** Extra shell classes for editorial boards; merged after defaults (e.g. `rounded-md` to reduce corner radius). */
+  editorialBoardShellClassName?: string;
 }
 
 export function TrainingBoardCard({
@@ -94,7 +98,8 @@ export function TrainingBoardCard({
   showCoordinates = true,
   marketingEmbed = false,
   editorialBoard = false,
-  editorialAccentSquares,
+  editorialHighlights,
+  editorialBoardShellClassName,
 }: TrainingBoardCardProps) {
   const effectiveScheme = useEffectiveAppColorScheme();
   const colorScheme = previewColorScheme ?? effectiveScheme;
@@ -116,7 +121,10 @@ export function TrainingBoardCard({
         boardContainerClassName ??
           "w-full max-w-[min(100%,42rem)]",
         editorialBoard &&
-          "rounded-xl border-0 bg-gradient-to-b from-white/[0.03] to-transparent shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:from-white/[0.035] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+          cn(
+            "rounded-xl border-0 bg-gradient-to-b from-white/[0.03] to-transparent shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:from-white/[0.035] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+            editorialBoardShellClassName
+          ),
         !editorialBoard && !frame && "border-border bg-muted/30",
         !editorialBoard && minimal && !frame && "rounded-sm border-border/50 bg-muted/20",
         !editorialBoard && minimal && frame && "rounded-sm",
@@ -150,7 +158,7 @@ export function TrainingBoardCard({
           showCoordinates={showCoordinates}
           marketingEmbed={marketingEmbed}
           editorialBoard={editorialBoard}
-          editorialAccentSquares={editorialAccentSquares}
+          editorialHighlights={editorialHighlights}
         />
       </div>
     </div>

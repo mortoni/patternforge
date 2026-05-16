@@ -6,6 +6,7 @@
  */
 
 import * as React from "react";
+import { createRoot, type Root } from "react-dom/client";
 import { Chess, type Square } from "chess.js";
 import { Chessground } from "chessground";
 import type { Api } from "chessground/api";
@@ -16,6 +17,7 @@ import "chessground/assets/chessground.base.css";
 import "chessground/assets/chessground.brown.css";
 import "chessground/assets/chessground.cburnett.css";
 import "./pattern-board.css";
+import type { BoardHighlight } from "@/lib/chess/board-highlight";
 import type { ResolvedBoardChessStyles } from "@/lib/chess/board-styles";
 import { getSquaresFromUci } from "@/lib/chess/move-highlights";
 import {
@@ -25,6 +27,49 @@ import {
   uciFromMove,
 } from "@/lib/chess/training-move-helpers";
 import { MOVE_ANIMATION_MS } from "@/features/training/training-board-timing";
+import { EditorialBoardHighlightCells } from "./editorial-board-highlight-layer";
+
+const EDITORIAL_HL_LAYER_SEL = ".pf-cg-editorial-hl-layer";
+
+function reconcileEditorialHighlightLayer(
+  boardEl: HTMLElement,
+  highlights: readonly BoardHighlight[] | undefined,
+  orientation: Color,
+  rootRef: React.MutableRefObject<Root | null>
+) {
+  if (!highlights?.length) {
+    rootRef.current?.unmount();
+    rootRef.current = null;
+    boardEl.querySelector(EDITORIAL_HL_LAYER_SEL)?.remove();
+    return;
+  }
+
+  let layer = boardEl.querySelector<HTMLDivElement>(EDITORIAL_HL_LAYER_SEL);
+  if (!layer) {
+    layer = document.createElement("div");
+    layer.className =
+      "pf-cg-editorial-hl-layer pointer-events-none absolute inset-0 z-[1] m-0 box-border overflow-hidden p-0";
+    layer.setAttribute("aria-hidden", "true");
+  }
+
+  const firstPiece = Array.from(boardEl.children).find(
+    (c) => c.tagName === "PIECE"
+  ) as HTMLElement | undefined;
+
+  if (firstPiece) {
+    if (layer.nextSibling !== firstPiece)
+      boardEl.insertBefore(layer, firstPiece);
+  } else if (!boardEl.contains(layer)) {
+    boardEl.appendChild(layer);
+  }
+
+  const ori: "white" | "black" =
+    orientation === "white" ? "white" : "black";
+  if (!rootRef.current) rootRef.current = createRoot(layer);
+  rootRef.current.render(
+    <EditorialBoardHighlightCells highlights={highlights} orientation={ori} />
+  );
+}
 
 export interface PatternBoardProps {
   fen: string;
@@ -53,10 +98,10 @@ export interface PatternBoardProps {
   marketingEmbed?: boolean;
   /**
    * Editorial / marketing diagrams: refined piece treatment via pattern-board.css.
+   * {@link editorialHighlights} renders as square overlays between the board and pieces.
    */
   editorialBoard?: boolean;
-  /** Squares that receive subtle accent highlight (e.g. mating knight). */
-  editorialAccentSquares?: string[];
+  editorialHighlights?: BoardHighlight[];
 }
 
 function mapSideToCgColor(side: "w" | "b"): Color {
@@ -124,11 +169,12 @@ export function PatternBoard({
   showCoordinates = true,
   marketingEmbed = false,
   editorialBoard = false,
-  editorialAccentSquares,
+  editorialHighlights,
 }: PatternBoardProps) {
   const elRef = React.useRef<HTMLDivElement | null>(null);
   const apiRef = React.useRef<Api | null>(null);
   const prevPositionSyncRef = React.useRef<string | undefined>(undefined);
+  const highlightRootRef = React.useRef<Root | null>(null);
 
   const onMoveRef = React.useRef(onMove);
   const onPreMoveRef = React.useRef(onPreMove);
@@ -152,13 +198,8 @@ export function PatternBoard({
         if (!m.has(sq as Key)) m.set(sq as Key, "pf-hl-attempted");
       }
     }
-    if (editorialAccentSquares?.length) {
-      for (const sq of editorialAccentSquares) {
-        m.set(sq as Key, "pf-hl-editorial-accent");
-      }
-    }
     return m;
-  }, [correctMoveSquares, attemptedMoveSquares, editorialAccentSquares]);
+  }, [correctMoveSquares, attemptedMoveSquares]);
 
   const autoShapes = React.useMemo(() => {
     if (!correctMoveUci) return [] as { orig: Key; dest: Key; brush: string }[];
@@ -297,7 +338,7 @@ export function PatternBoard({
           enabled: !viewOnly,
           distance: 8,
         },
-        selectable: { enabled: true },
+        selectable: { enabled: !editorialBoard },
         drawable: {
           enabled: false,
           visible: true,
@@ -342,6 +383,47 @@ export function PatternBoard({
     if (!apiRef.current) return;
     applyConfig(apiRef.current);
   }, [applyConfig]);
+
+  React.useLayoutEffect(() => {
+    if (!editorialBoard) {
+      highlightRootRef.current?.unmount();
+      highlightRootRef.current = null;
+      elRef.current?.querySelector(EDITORIAL_HL_LAYER_SEL)?.remove();
+      return undefined;
+    }
+
+    const sync = () => {
+      const api = apiRef.current;
+      const boardEl = api?.state?.dom?.elements?.board as HTMLElement | undefined;
+      if (!boardEl) return;
+      reconcileEditorialHighlightLayer(
+        boardEl,
+        editorialHighlights,
+        boardOrientation,
+        highlightRootRef
+      );
+    };
+
+    sync();
+    const raf = requestAnimationFrame(sync);
+    return () => cancelAnimationFrame(raf);
+  }, [
+    editorialBoard,
+    editorialHighlights,
+    boardOrientation,
+    fen,
+    positionSyncKey,
+    applyConfig,
+  ]);
+
+  React.useLayoutEffect(
+    () => () => {
+      highlightRootRef.current?.unmount();
+      highlightRootRef.current = null;
+      elRef.current?.querySelector(EDITORIAL_HL_LAYER_SEL)?.remove();
+    },
+    []
+  );
 
   /**
    * Recompute square/piece translations when the host size changes — same path as Chessground's

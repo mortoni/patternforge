@@ -7,7 +7,7 @@ import {
 } from "@/components/shared/motion-primitives";
 import { cn } from "@/lib/utils";
 import { PatternResurfacingPreview } from "@/components/marketing/components/pattern-resurfacing-preview";
-import { methodSteps } from "@/components/marketing/home-landing-data";
+import { METHOD_SECTION_EDITORIAL_FEN, methodSteps } from "@/components/marketing/home-landing-data";
 import { containerClass } from "@/components/marketing/layout-classes";
 
 export function HomeMethodSection() {
@@ -88,12 +88,15 @@ export function HomeMethodSection() {
         </StaggerContainer>
       </div>
 
-      <FadeIn
-        className="mx-auto mt-14 w-full max-w-[min(100%,56rem)] px-3.5 sm:mt-16 sm:px-5 md:mt-[4.5rem] md:px-6"
-        delay={0.06}
-      >
-        <MotionPreviewFrame emphasis="ambient" className="block">
-          <PatternResurfacingPreview />
+      <FadeIn className={cn(containerClass, "mt-14 sm:mt-16 md:mt-[4.5rem]")} delay={0.06}>
+        <MotionPreviewFrame emphasis="ambient" className="block w-full">
+          <PatternResurfacingPreview
+            diagramFen={METHOD_SECTION_EDITORIAL_FEN}
+            boardOrientation="white"
+            positionSyncKey="method-section-editorial-diagram"
+            diagramAccessibilityDescription="White to move in an illustrative tactical position for pattern resurfacing; the main diagram emphasizes squares g5 and g8, while the three cycle mini-boards show recognition unfolding with highlighted squares."
+            showBoardCoordinates
+          />
         </MotionPreviewFrame>
       </FadeIn>
 

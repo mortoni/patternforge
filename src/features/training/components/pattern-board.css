@@ -128,7 +128,14 @@
   background-color: rgba(239, 68, 68, 0.25) !important;
 }
 
-/* ─── Editorial / marketing diagrams (Pattern Resurfacing, etc.) ─── */
+/* Pattern Resurfacing marketing block: no “clickable board” pointer */
+[data-pf-pattern-resurfacing] .pf-cg-host cg-board {
+  cursor: default !important;
+}
+
+[data-pf-pattern-resurfacing] .pf-cg-host.manipulable cg-board {
+  cursor: default !important;
+}
 
 .pf-cg-host[data-pf-editorial-board="true"] cg-board {
   filter: saturate(0.94);
@@ -140,27 +147,83 @@
 }
 
 .dark .pf-cg-host[data-pf-editorial-board="true"] piece.black {
-  filter: drop-shadow(0.8px 0 0 rgb(255, 255, 255))
-    drop-shadow(-0.8px 0 0 rgb(255, 255, 255))
-    drop-shadow(0 0.8px 0 rgb(255, 255, 255))
-    drop-shadow(0 -0.8px 0 rgb(255, 255, 255))
+  filter: drop-shadow(0.5px 0 0 rgb(255, 255, 255))
+    drop-shadow(-0.5px 0 0 rgb(255, 255, 255))
+    drop-shadow(0 0.5px 0 rgb(255, 255, 255))
+    drop-shadow(0 -0.5px 0 rgb(255, 255, 255))
     drop-shadow(0 0 4px color-mix(in oklab, var(--primary) 18%, transparent));
 }
 
-.pf-cg-host square.pf-hl-editorial-accent {
-  background: radial-gradient(
-    circle at center,
-    color-mix(in oklab, var(--primary) 22%, transparent) 0%,
-    color-mix(in oklab, var(--primary) 8%, transparent) 45%,
-    transparent 72%
-  ) !important;
+/* Editorial overlay — between squares and pieces. Light: amber #C6923B; dark: paper gold #F6D38B */
+:root {
+  --pf-editorial-accent: 198, 146, 59;
 }
 
-.dark .pf-cg-host square.pf-hl-editorial-accent {
+.dark {
+  --pf-editorial-accent: 246, 211, 139;
+}
+
+/* Highlights layer in `pf-cg-editorial-hl-layer` */
+
+.pf-cg-editorial-hl-layer {
+  isolation: isolate;
+  border-radius: inherit;
+}
+
+.pf-cg-editorial-hl-cell {
+  box-sizing: border-box;
+  border-radius: clamp(1px, 5%, 3px);
+}
+
+.pf-cg-editorial-hl-cell--empty {
+  border: 1px solid rgba(var(--pf-editorial-accent), 0.3);
+  box-shadow: 0 0 18px rgba(var(--pf-editorial-accent), 0.22);
+  background: transparent;
+}
+
+.pf-cg-editorial-hl-cell--piece {
+  border: 1px solid rgba(var(--pf-editorial-accent), 0.36);
+  box-shadow:
+    0 0 20px rgba(var(--pf-editorial-accent), 0.25),
+    inset 0 0 18px rgba(var(--pf-editorial-accent), 0.08);
+  background: transparent;
+}
+
+.pf-cg-editorial-hl-cell--focus {
+  border: 1px solid rgba(var(--pf-editorial-accent), 0.65);
+  box-shadow:
+    0 0 28px rgba(var(--pf-editorial-accent), 0.45),
+    0 0 54px rgba(var(--pf-editorial-accent), 0.18),
+    inset 0 0 26px rgba(var(--pf-editorial-accent), 0.2);
   background: radial-gradient(
     circle at center,
-    color-mix(in oklab, var(--primary) 28%, transparent) 0%,
-    color-mix(in oklab, var(--primary) 10%, transparent) 48%,
-    transparent 74%
-  ) !important;
+    rgba(var(--pf-editorial-accent), 0.22),
+    rgba(var(--pf-editorial-accent), 0.04) 48%,
+    transparent 72%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pf-cg-editorial-hl-cell--focus-pulse {
+    animation: pf-editorial-hl-breathe 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes pf-editorial-hl-breathe {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow:
+      0 0 28px rgba(var(--pf-editorial-accent), 0.45),
+      0 0 54px rgba(var(--pf-editorial-accent), 0.18),
+      inset 0 0 26px rgba(var(--pf-editorial-accent), 0.2);
+  }
+
+  50% {
+    opacity: 0.9;
+    box-shadow:
+      0 0 22px rgba(var(--pf-editorial-accent), 0.38),
+      0 0 44px rgba(var(--pf-editorial-accent), 0.14),
+      inset 0 0 22px rgba(var(--pf-editorial-accent), 0.16);
+  }
 }

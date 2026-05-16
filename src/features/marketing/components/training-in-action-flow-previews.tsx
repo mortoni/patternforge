@@ -37,6 +37,8 @@ function ScopedAppearanceShell({
     <div
       className={cn(
         "flex h-full min-h-0 flex-col overflow-y-auto overscroll-contain bg-background text-foreground",
+        /* Marketing phone frames: scroll without OS scrollbar chrome */
+        "[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
         appearance === "dark" && "dark"
       )}
     >

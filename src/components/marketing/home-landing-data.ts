@@ -151,6 +151,10 @@ export const trainingInActionCards: Array<{
   },
 ];
 
+/** Method section — “Built around disciplined repetition” editorial board (white to move). */
+export const METHOD_SECTION_EDITORIAL_FEN =
+  "3r3k/1p1b1Qbp/1n2B1p1/p5N1/Pq6/8/1P4PP/R6K w - - 0 1";
+
 /** How recognition shifts over repeated cycles (psychological arc, not UI steps). */
 export const methodSteps = [
   {
