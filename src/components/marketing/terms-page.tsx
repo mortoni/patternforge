@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MarketingSubpageShell } from "@/components/marketing/marketing-subpage-shell";
+import { MarketingSubpageShell } from "@/components/marketing/components/marketing-subpage-shell";
 import { ROUTES } from "@/lib/constants";
 
 const LEGAL_EMAIL = "legal@patternforge.app";
