@@ -1,6 +1,6 @@
 import { MarketingFooter } from "@/components/marketing/components/marketing-footer";
 import { MarketingHeader } from "@/components/marketing/components/marketing-header";
-import { HomeContinueAnywhereSection } from "@/components/marketing/sections/home-continue-anywhere-section";
+import { HomeLocalFirstTrainingSection } from "@/components/marketing/sections/home-local-first-section";
 import { HomeFinalCtaSection } from "@/components/marketing/sections/home-final-cta-section";
 import { HomeHeroSection } from "@/components/marketing/sections/home-hero-section";
 import { HomeMethodSection } from "@/components/marketing/sections/home-method-section";
@@ -17,7 +17,7 @@ export default function HomePage() {
           <HomeTrainingLoopSection />
           <HomeMethodSection />
           <HomeTimeCompressionSection />
-          <HomeContinueAnywhereSection />
+          <HomeLocalFirstTrainingSection />
           <HomeFinalCtaSection />
         </main>
         <MarketingFooter />

@@ -35,8 +35,8 @@ export function HomeHeroSection() {
       >
         <div
           className={cn(
-            "mx-auto grid w-full min-w-0 gap-9 sm:gap-11 lg:grid-cols-12 lg:items-center lg:gap-x-6 lg:gap-y-10",
-            "xl:gap-x-10 xl:gap-y-8"
+            "mx-auto grid w-full min-w-0 gap-9 sm:gap-11 lg:grid-cols-12 lg:items-center lg:gap-x-3 lg:gap-y-10",
+            "xl:gap-x-5 xl:gap-y-8"
           )}
         >
           <HeroCascade
@@ -82,11 +82,11 @@ export function HomeHeroSection() {
           />
 
           <FadeIn
-            className="relative flex w-full min-w-0 max-w-full justify-center justify-self-center lg:col-span-7 lg:-mr-1 lg:justify-end lg:justify-self-end lg:pl-5 xl:-mr-2 xl:pl-6"
+            className="relative flex min-w-0 w-full max-w-full justify-center justify-self-center lg:col-span-7 lg:max-w-none lg:justify-self-stretch"
             delay={0.08}
           >
             <div
-              className="pointer-events-none absolute left-1/2 top-[6%] flex w-[104%] max-w-[26rem] -translate-x-1/2 justify-center sm:w-[102%] sm:max-w-[27rem] lg:left-[53%] lg:top-[12%] lg:w-[95%] lg:max-w-[30rem] lg:translate-x-[-50%]"
+              className="pointer-events-none absolute left-1/2 top-[6%] flex w-[104%] max-w-[26rem] -translate-x-1/2 justify-center sm:w-[102%] sm:max-w-[27rem] lg:top-[12%] lg:w-[95%] lg:max-w-[30rem]"
               aria-hidden
             >
               <AmbientBreathOrb
@@ -95,7 +95,7 @@ export function HomeHeroSection() {
               />
             </div>
             <div
-              className="pointer-events-none absolute left-1/2 top-[24%] w-[88%] max-w-[20rem] -translate-x-1/2 lg:left-[52%] lg:top-[30%] lg:w-[82%] lg:max-w-[24rem] lg:-translate-x-1/2"
+              className="pointer-events-none absolute left-1/2 top-[24%] w-[88%] max-w-[20rem] -translate-x-1/2 lg:top-[30%] lg:w-[82%] lg:max-w-[24rem]"
               aria-hidden
             >
               <AmbientBreathOrb
@@ -104,8 +104,8 @@ export function HomeHeroSection() {
               />
             </div>
 
-            <div className="relative z-10 w-full max-w-[min(100%,22.5rem)] lg:ml-auto lg:mr-[-0.25rem] lg:max-w-[min(104%,29rem)] xl:mr-[-0.35rem]">
-              <div className="w-full max-lg:mx-auto lg:translate-x-1 xl:translate-x-1.5">
+            <div className="relative z-10 mx-auto w-full max-w-[min(100%,22.5rem)] lg:max-w-[min(104%,29rem)]">
+              <div className="w-full max-lg:mx-auto">
                 <MotionPreviewFrame
                   emphasis="hero"
                   className="relative z-10 w-full max-md:scale-100"

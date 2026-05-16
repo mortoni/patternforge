@@ -112,8 +112,7 @@ export const trainingInActionCards: Array<{
     role: "track",
     step: "01 TRACK",
     title: "Track the cycle",
-    body:
-      "One roster, resumed across weeks: session bookmarks hold your place while repeated exposure compounds recall.",
+    body: "Progress persists across sessions.",
     mode: "side",
     visual: {
       kind: "progress",
@@ -125,8 +124,7 @@ export const trainingInActionCards: Array<{
     role: "solve",
     step: "02 SOLVE",
     title: "Solve the position",
-    body:
-      "A bounded tactical line—not an endless novelty feed—so motifs return often enough for patterns to settle.",
+    body: "Stay with the same tactical line.",
     mode: "center",
     visual: {
       kind: "phone",
@@ -138,8 +136,7 @@ export const trainingInActionCards: Array<{
     role: "master",
     step: "03 MASTER",
     title: "Measure mastery",
-    body:
-      "Full-pass durations trend down cycle to cycle—a quiet chart of recognition accelerating where brute search used to linger.",
+    body: "Recognition becomes faster each pass.",
     mode: "side",
     visual: {
       kind: "mastery",
@@ -153,20 +150,6 @@ export const trainingInActionCards: Array<{
     },
   },
 ];
-
-/**
- * Continue-anywhere section: identical cycle / set / exercise on both previews so live UI reads as
- * one session carried across contexts (continuity cues in meta + board position).
- */
-export const CONTINUE_ANYWHERE_DESKTOP_PREVIEW = {
-  screen: "lg" as const,
-  ...LANDING_TRAINING_CHROME,
-} satisfies Omit<PreviewTrainingParams, "appearance">;
-
-export const CONTINUE_ANYWHERE_MOBILE_PREVIEW = {
-  screen: "sm" as const,
-  ...LANDING_TRAINING_CHROME,
-} satisfies Omit<PreviewTrainingParams, "appearance">;
 
 /** How recognition shifts over repeated cycles (psychological arc, not UI steps). */
 export const methodSteps = [

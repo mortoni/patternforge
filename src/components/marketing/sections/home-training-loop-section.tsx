@@ -34,10 +34,11 @@ export function HomeTrainingLoopSection() {
           eyebrow="TRAINING LOOP"
           eyebrowClassName="tracking-[0.11em] text-muted-foreground/55"
           title="Train. Repeat. Recognize faster."
-          body="PatternForge stages Woodpecker-style cycles you can stretch across days or weeks: short blocks, resumed sessions, the same motifs on loop until recall edges out heavy search—not a treadmill of unrelated positions."
+          body="Repetition turns calculation into recognition."
+          className="max-w-2xl [&_p]:max-w-xl [&_p]:text-pretty [&_p]:text-[0.9375rem] [&_p]:leading-relaxed [&_p]:text-muted-foreground/85 sm:[&_p]:text-base"
         />
 
-        <div className="relative mx-auto mt-10 max-w-[min(100%,86rem)] sm:mt-11 md:mt-12 lg:mt-14">
+        <div className="relative mx-auto mt-9 max-w-[min(100%,86rem)] sm:mt-10 md:mt-11 lg:mt-12">
           <StaggerContainer
             as="ul"
             className="relative z-10 grid grid-cols-1 gap-11 sm:gap-12 lg:grid-cols-3 lg:items-start lg:gap-x-6 lg:gap-y-6 xl:gap-x-8 xl:gap-y-5"
@@ -60,39 +61,39 @@ export function HomeTrainingLoopSection() {
                   staggered
                   hover={false}
                   className={cn(
-                    "flex min-w-0 w-full flex-col lg:overflow-visible",
+                    "flex min-h-0 min-w-0 w-full flex-col lg:overflow-visible",
                     card.role === "track" &&
                       "lg:opacity-[0.78] lg:transition-opacity lg:duration-500 lg:ease-out lg:hover:opacity-[0.86]",
                     card.role === "solve" &&
-                      "lg:z-30 lg:translate-y-9 lg:opacity-100 lg:transition-opacity lg:duration-500 lg:ease-out",
+                      "lg:z-30 lg:opacity-100 lg:transition-opacity lg:duration-500 lg:ease-out",
                     card.role === "master" &&
                       "lg:opacity-[0.78] lg:transition-opacity lg:duration-500 lg:ease-out lg:hover:opacity-[0.86]"
                   )}
                 >
-                  <div className="space-y-4 sm:space-y-5">
-                    <div className="space-y-1.5">
+                  <div className="flex min-h-0 flex-1 flex-col">
+                    <div className="shrink-0 space-y-1 sm:space-y-1.5 lg:min-h-[5.25rem]">
+                      <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground/45">
+                        {card.step}
+                      </p>
                       <h3
                         className={cn(
-                          "text-base font-medium text-foreground",
+                          "text-base font-medium leading-snug tracking-tight text-foreground",
                           isCenter && "text-[17px] sm:text-lg"
                         )}
                       >
                         {card.title}
                       </h3>
-                      <p
-                        className={cn(
-                          "max-w-prose text-sm leading-relaxed text-muted-foreground",
-                          !isCenter && "lg:text-[13px] lg:leading-relaxed lg:text-muted-foreground/88"
-                        )}
-                      >
+                      <p className="max-w-[26rem] text-sm leading-snug text-muted-foreground/82 sm:leading-relaxed lg:max-w-none">
                         {card.body}
                       </p>
                     </div>
 
-                    <div className="space-y-1">
-                      <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground/45">
-                        {card.step}
-                      </p>
+                    <div
+                      className={cn(
+                        "mt-4 flex w-full flex-col sm:mt-5 lg:mt-6",
+                        isCenter && "lg:translate-y-9"
+                      )}
+                    >
                       {card.visual.kind === "phone" ? (
                         <div className="flex w-full justify-center">
                           <MotionPreviewFrame
