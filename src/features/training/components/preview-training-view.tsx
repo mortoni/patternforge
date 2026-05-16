@@ -38,6 +38,10 @@ const BOARD_OUTER_LG_CLASS =
 const BOARD_COLUMN_LG_CLASS =
   "w-full min-w-0 max-w-[min(100%,52rem)] self-center";
 
+const BOARD_COLUMN_SM_HERO_EMBED_CLASS =
+  "w-full min-w-0 max-w-full self-center";
+
+
 export interface PreviewTrainingViewProps {
   previewColorScheme: AppColorScheme;
   screen: PreviewScreenSize;
@@ -90,7 +94,7 @@ export function PreviewTrainingView({
   const mainPad =
     screen === "sm"
       ? embed && compactHeroLayout && !shortEmbedFrame
-        ? "min-h-0 px-2.5 pb-3 pt-0.5 sm:px-3 sm:pb-3.5 sm:pt-1"
+        ? "min-h-0 px-2 pb-2 pt-0 sm:px-2.5 sm:pb-2 sm:pt-0.5"
         : embed && shortEmbedFrame
           ? mainPadMobileShortEmbed
           : mainPadMobile
@@ -101,6 +105,11 @@ export function PreviewTrainingView({
 
   const sideToMove = parseSideToMoveFromFen(displayFen);
   const boardOrientation = getsideToMove(sideToMove);
+
+  /** Phone-frame embed (`TrainingPreview` sm): bounded height — square board must shrink to fit. */
+  const embedSmBoardFit = embed && screen === "sm";
+  const shortSmEmbed = embedSmBoardFit && shortEmbedFrame;
+  const heroCompactEmbed = embedSmBoardFit && compactHeroLayout && !shortSmEmbed;
 
   const boardOuterClass =
     screen === "lg"
@@ -114,7 +123,9 @@ export function PreviewTrainingView({
       ? BOARD_COLUMN_LG_CLASS
       : screen === "md"
         ? BOARD_COLUMN_MD_CLASS
-        : BOARD_COLUMN_CLASS;
+        : heroCompactEmbed
+          ? BOARD_COLUMN_SM_HERO_EMBED_CLASS
+          : BOARD_COLUMN_CLASS;
 
   const rootH = embed
     ? "h-full min-h-0 w-full max-w-full"
@@ -122,86 +133,83 @@ export function PreviewTrainingView({
 
   const themeScope = previewColorScheme === "dark" ? "dark" : "";
 
-  /** Phone-frame embed (`TrainingPreview` sm): bounded height — square board must shrink to fit. */
-  const embedSmBoardFit = embed && screen === "sm";
-  const shortSmEmbed = embedSmBoardFit && shortEmbedFrame;
-  const heroCompactEmbed = embedSmBoardFit && compactHeroLayout && !shortSmEmbed;
+  const embeddedSquareBoardProps = {
+    fen: displayFen,
+    positionSyncKey: `landing-preview-${displayFen}`,
+    boardOrientation,
+    boardStyleId,
+    previewColorScheme,
+    disabled: true as const,
+    minimal: true as const,
+    showCoordinates: false as const,
+    marketingEmbed: embed,
+    boardContainerClassName:
+      "mx-auto aspect-square max-h-full max-w-full min-h-0 w-full overflow-visible border-border/40 bg-[var(--muted)]/10 pb-px",
+  } as const;
 
-  const smEmbedBoardWrapClass =
-    screen === "sm"
-      ? embedSmBoardFit
-        ? shortSmEmbed
-          ? "flex min-h-0 w-full min-w-0 max-w-full shrink flex-1 basis-0 flex-col items-stretch gap-0"
-          : /** Match {@link TrainingPage} board column: same width cap + `gap-1` to the board. */
-            cn(
-              "flex min-h-0 w-full shrink flex-col items-stretch gap-1",
-              heroCompactEmbed && "gap-0.5",
-              boardColumnClass
-            )
-        : boardOuterClass
-      : boardOuterClass;
+  const standaloneBoardProps = {
+    fen: displayFen,
+    positionSyncKey: `landing-preview-${displayFen}`,
+    boardOrientation,
+    boardStyleId,
+    previewColorScheme,
+    disabled: true as const,
+    minimal: true as const,
+    showCoordinates: false as const,
+    marketingEmbed: embed,
+    boardContainerClassName:
+      "mx-auto w-full max-w-full border-border/40 bg-[var(--muted)]/10",
+  } as const;
 
-  const boardBlock = (
-    <div className={smEmbedBoardWrapClass}>
-      <div
-        className={cn(
-          "w-full shrink-0",
-          shortSmEmbed && "min-h-5",
-          embedSmBoardFit &&
-            !shortSmEmbed &&
-            (heroCompactEmbed ? "min-h-6" : "min-h-7"),
-          !embedSmBoardFit && !shortSmEmbed && "min-h-7",
-          !embedSmBoardFit && shortSmEmbed && "min-h-5"
-        )}
-      >
-        <SideToMoveIndicator
-          sideToMove={sideToMove}
-          className={
-            shortSmEmbed
-              ? "text-[11px] leading-none sm:text-[11px]"
-              : heroCompactEmbed
-                ? "text-[13px] leading-tight tracking-tight sm:text-sm sm:leading-snug"
-                : undefined
-          }
-        />
+  const embeddedSquareBoardShort = (
+    <TrainingBoardCard
+      {...embeddedSquareBoardProps}
+      className="min-h-0 min-w-0 w-full justify-start"
+    />
+  );
+
+  const embeddedSquareBoardTightRing = (
+    <TrainingBoardCard
+      {...embeddedSquareBoardProps}
+      className="min-h-0 w-full shrink min-w-0"
+    />
+  );
+
+  /** Full-viewport `/preview/training` mobile (non-embedded) layout. */
+  const nonEmbeddedSmBoardBlock = (
+    <div className={boardOuterClass}>
+      <div className="min-h-[1.75rem] w-full shrink-0">
+        <SideToMoveIndicator sideToMove={sideToMove} />
       </div>
-      {embedSmBoardFit && shortSmEmbed ? (
-        <div className="flex min-h-0 min-w-0 w-full flex-1 items-start justify-center overflow-visible pb-0.5">
-          <TrainingBoardCard
-            fen={displayFen}
-            positionSyncKey={`landing-preview-${displayFen}`}
-            boardOrientation={boardOrientation}
-            boardStyleId={boardStyleId}
-            previewColorScheme={previewColorScheme}
-            disabled
-            minimal
-            className="min-h-0 min-w-0 w-full justify-start"
-            boardContainerClassName="mx-auto aspect-square max-h-full max-w-full min-h-0 w-full overflow-visible border-border/40 bg-[var(--muted)]/10 pb-px"
-          />
-        </div>
-      ) : (
-        <div className={cn("relative w-full min-h-0", embedSmBoardFit && "shrink-0")}>
-          <TrainingBoardCard
-            fen={displayFen}
-            positionSyncKey={`landing-preview-${displayFen}`}
-            boardOrientation={boardOrientation}
-            boardStyleId={boardStyleId}
-            previewColorScheme={previewColorScheme}
-            disabled
-            minimal
-            className={cn("w-full", embedSmBoardFit && "min-h-0 min-w-0 justify-start")}
-            boardContainerClassName={
-              embedSmBoardFit
-                ? "w-full border-border/40 bg-[var(--muted)]/10"
-                : "mx-auto w-full max-w-full border-border/40 bg-[var(--muted)]/10"
-            }
-          />
-        </div>
-      )}
+      <div className="relative min-h-0 w-full">
+        <TrainingBoardCard {...standaloneBoardProps} className="w-full" />
+      </div>
     </div>
   );
 
-  const skipBlock = (
+  const mdLgBoardBlock = (
+    <div className={boardOuterClass}>
+      <div className="min-h-[1.75rem] w-full shrink-0">
+        <SideToMoveIndicator sideToMove={sideToMove} />
+      </div>
+      <div className="relative min-h-0 w-full">
+        <TrainingBoardCard {...standaloneBoardProps} className="w-full" />
+      </div>
+    </div>
+  );
+
+  const shortEmbedBoardBlock = (
+    <div className="flex min-h-0 w-full min-w-0 max-w-full shrink flex-1 basis-0 flex-col items-stretch gap-1">
+      <div className="min-h-[1.75rem] w-full shrink-0">
+        <SideToMoveIndicator sideToMove={sideToMove} />
+      </div>
+      <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col items-stretch justify-start overflow-visible pb-0.5 pt-0">
+        <div className="relative min-h-0 w-full">{embeddedSquareBoardShort}</div>
+      </div>
+    </div>
+  );
+
+  const skipPrimary = (
     <div className={boardColumnClass}>
       <div>
         <Button
@@ -211,11 +219,33 @@ export function PreviewTrainingView({
           disabled
           tabIndex={-1}
           aria-label="Skip this puzzle"
-          className="h-auto px-2 py-1 text-xs text-muted-foreground sm:text-sm"
+          className="h-auto px-2 py-0.5 text-xs text-muted-foreground sm:text-sm"
         >
           Skip
         </Button>
       </div>
+    </div>
+  );
+
+  /** Embedded ≥430×932: vertically center `{ side to move · board · skip }` as a unit. */
+  const embeddedPhoneChromeCentered = (
+    <div
+      className={cn(
+        "flex min-h-0 min-w-0 w-full flex-1 flex-col items-center justify-center gap-1 px-0 pb-1.5 pt-0",
+        heroCompactEmbed && "gap-0.5 pb-1 pt-0",
+        boardColumnClass
+      )}
+    >
+      <div className="w-full shrink-0">
+        <SideToMoveIndicator
+          sideToMove={sideToMove}
+          className={cn(heroCompactEmbed && "text-sm leading-tight sm:text-base")}
+        />
+      </div>
+      <div className="relative w-full shrink min-h-0 min-w-0 overflow-visible px-px">
+        {embeddedSquareBoardTightRing}
+      </div>
+      {skipPrimary}
     </div>
   );
 
@@ -271,9 +301,9 @@ export function PreviewTrainingView({
               </div>
             </header>
 
-            <div className="flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col items-center justify-center gap-3 pb-4 pt-0 sm:gap-4">
-              {boardBlock}
-              {skipBlock}
+            <div className="flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col items-center justify-center gap-2 pb-3 pt-0 sm:gap-2">
+              {mdLgBoardBlock}
+              {skipPrimary}
             </div>
           </main>
         </div>
@@ -295,27 +325,27 @@ export function PreviewTrainingView({
                 shortSmEmbed
                   ? "h-11 grid-cols-[1.75rem_1fr_1.75rem] gap-1 px-2"
                   : heroCompactEmbed
-                    ? "h-11 grid-cols-[2rem_1fr_2rem] gap-1.5 px-2 sm:px-2.5"
+                    ? "h-10 grid-cols-[1.75rem_1fr_1.75rem] gap-1 px-1.5 sm:px-2"
                     : "h-14 grid-cols-[2.5rem_1fr_2.5rem] gap-2 px-3"
               )}
             >
               <div
                 className={cn(
                   "flex shrink-0 items-center justify-center justify-self-start",
-                  shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-9 w-9" : "h-10 w-10"
+                  shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-8 w-8" : "h-10 w-10"
                 )}
               >
                 <span
                   className={cn(
                     "inline-flex items-center justify-center rounded-md text-muted-foreground opacity-80",
-                    shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-9 w-9" : "h-9 w-9"
+                    shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-8 w-8" : "h-9 w-9"
                   )}
                   aria-hidden
                 >
                   <Menu
                     className={cn(
                       "pointer-events-none",
-                      shortSmEmbed ? "h-4 w-4" : heroCompactEmbed ? "h-[17px] w-[17px]" : "h-5 w-5"
+                      shortSmEmbed ? "h-4 w-4" : heroCompactEmbed ? "h-4 w-4" : "h-5 w-5"
                     )}
                   />
                 </span>
@@ -336,7 +366,7 @@ export function PreviewTrainingView({
               <div
                 className={cn(
                   "flex shrink-0 items-center justify-center justify-self-end",
-                  shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-9 w-9" : "h-10 w-10"
+                  shortSmEmbed ? "h-8 w-8" : heroCompactEmbed ? "h-8 w-8" : "h-10 w-10"
                 )}
               >
                 <ThemeToggle />
@@ -355,7 +385,7 @@ export function PreviewTrainingView({
               className={cn(
                 "flex w-full max-w-full shrink-0 flex-col",
                 shortSmEmbed ? "mb-1.5 gap-y-1 text-[10px] leading-snug text-muted-foreground" : "gap-y-1.5",
-                heroCompactEmbed && "mb-1.5 gap-y-0.5 text-[10px] leading-snug text-muted-foreground",
+                heroCompactEmbed && "mb-1 gap-y-0 text-[10px] leading-snug text-muted-foreground",
                 !shortSmEmbed && !heroCompactEmbed && embedSmBoardFit && "mb-2",
                 !shortSmEmbed && !heroCompactEmbed && !embedSmBoardFit && "mb-3 sm:mb-4",
                 !shortSmEmbed && !heroCompactEmbed && metaText
@@ -405,19 +435,17 @@ export function PreviewTrainingView({
 
             <div
               className={cn(
-                "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col items-center",
-                embedSmBoardFit
-                  ? shortSmEmbed
-                    ? "justify-start gap-1 pb-1 pt-0"
-                    : heroCompactEmbed
-                      ? "justify-start gap-2.5 pb-3 pt-0"
-                      : /** Same rhythm as {@link TrainingPage} main board column + Skip. */
-                        "justify-center gap-6 pb-6 pt-1"
-                  : "justify-center gap-6 pb-6 pt-1 sm:gap-8 sm:pt-0"
+                "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col items-center justify-center",
+                embedSmBoardFit && shortSmEmbed && "justify-start",
+                embedSmBoardFit && !shortSmEmbed && "min-h-0"
               )}
             >
-              {boardBlock}
-              {!shortSmEmbed ? skipBlock : null}
+              {embedSmBoardFit
+                ? shortSmEmbed
+                  ? shortEmbedBoardBlock
+                  : embeddedPhoneChromeCentered
+                : nonEmbeddedSmBoardBlock}
+              {embedSmBoardFit && !shortSmEmbed ? null : !shortSmEmbed ? skipPrimary : null}
             </div>
           </main>
     </div>

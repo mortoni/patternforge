@@ -10,6 +10,7 @@ import { Chess, type Square } from "chess.js";
 import { Chessground } from "chessground";
 import type { Api } from "chessground/api";
 import type { Config } from "chessground/config";
+import { renderResized, updateBounds } from "chessground/render";
 import type { Color, Key } from "chessground/types";
 import "chessground/assets/chessground.base.css";
 import "chessground/assets/chessground.brown.css";
@@ -43,6 +44,19 @@ export interface PatternBoardProps {
   attemptedMoveSquares?: string[];
   correctMoveUci?: string;
   surface: ResolvedBoardChessStyles;
+  /** When false, Chessground file/rank labels are hidden (e.g. marketing previews). */
+  showCoordinates?: boolean;
+  /**
+   * Landing marketing iframe only: narrower dark-mode black-piece rim (~0.5px via CSS).
+   * Training app boards omit this attribute and keep the default ~1px outline.
+   */
+  marketingEmbed?: boolean;
+  /**
+   * Editorial / marketing diagrams: refined piece treatment via pattern-board.css.
+   */
+  editorialBoard?: boolean;
+  /** Squares that receive subtle accent highlight (e.g. mating knight). */
+  editorialAccentSquares?: string[];
 }
 
 function mapSideToCgColor(side: "w" | "b"): Color {
@@ -107,6 +121,10 @@ export function PatternBoard({
   attemptedMoveSquares,
   correctMoveUci,
   surface,
+  showCoordinates = true,
+  marketingEmbed = false,
+  editorialBoard = false,
+  editorialAccentSquares,
 }: PatternBoardProps) {
   const elRef = React.useRef<HTMLDivElement | null>(null);
   const apiRef = React.useRef<Api | null>(null);
@@ -134,8 +152,13 @@ export function PatternBoard({
         if (!m.has(sq as Key)) m.set(sq as Key, "pf-hl-attempted");
       }
     }
+    if (editorialAccentSquares?.length) {
+      for (const sq of editorialAccentSquares) {
+        m.set(sq as Key, "pf-hl-editorial-accent");
+      }
+    }
     return m;
-  }, [correctMoveSquares, attemptedMoveSquares]);
+  }, [correctMoveSquares, attemptedMoveSquares, editorialAccentSquares]);
 
   const autoShapes = React.useMemo(() => {
     if (!correctMoveUci) return [] as { orig: Key; dest: Key; brush: string }[];
@@ -246,7 +269,7 @@ export function PatternBoard({
         orientation: boardOrientation,
         turnColor: turn,
         viewOnly,
-        coordinates: true,
+        coordinates: showCoordinates,
         coordinatesOnSquares: false,
         autoCastle: true,
         animation: {
@@ -298,23 +321,53 @@ export function PatternBoard({
       onPreMove,
       highlightCustom,
       autoShapes,
+      showCoordinates,
     ]
   );
 
   React.useLayoutEffect(() => {
     if (!elRef.current) return undefined;
-    const api = Chessground(elRef.current, {});
+    const api = Chessground(elRef.current, {
+      coordinates: showCoordinates,
+      coordinatesOnSquares: false,
+    });
     apiRef.current = api;
     return () => {
       api.destroy();
       apiRef.current = null;
     };
-  }, []);
+  }, [showCoordinates]);
 
   React.useLayoutEffect(() => {
     if (!apiRef.current) return;
     applyConfig(apiRef.current);
   }, [applyConfig]);
+
+  /**
+   * Recompute square/piece translations when the host size changes — same path as Chessground's
+   * internal ResizeObserver, but rerun after hydration so cached bounds aren't stuck on stale layout
+   * (embeds flex/aspect clamps, previews, ancestor transforms finishing one frame later).
+   */
+  React.useEffect(() => {
+    const host = elRef.current;
+    const api = apiRef.current;
+    if (!host || !api || typeof ResizeObserver === "undefined") return undefined;
+    let raf = 0;
+    const sync = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        updateBounds(api.state);
+        renderResized(api.state);
+      });
+    };
+    const ro = new ResizeObserver(sync);
+    ro.observe(host);
+    sync();
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  }, []);
 
   const hostClass = ["pf-cg-host", "pf-cg-board--grid"].join(" ");
 
@@ -323,6 +376,8 @@ export function PatternBoard({
       ref={elRef}
       className={hostClass}
       data-pf-board={surface.boardStyleId}
+      data-pf-marketing-embed={marketingEmbed ? "true" : undefined}
+      data-pf-editorial-board={editorialBoard ? "true" : undefined}
       style={hostStyle}
     />
   );

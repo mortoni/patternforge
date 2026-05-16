@@ -65,6 +65,13 @@ export interface TrainingBoardCardProps {
    * (ignores `system` / `matchMedia` until effects run).
    */
   previewColorScheme?: AppColorScheme;
+  /** When false, hides a–h / 1–8 on the board (marketing previews keep UI quiet). */
+  showCoordinates?: boolean;
+  /** Landing iframe previews: thinner black-piece outline in dark mode (see PatternBoard CSS). */
+  marketingEmbed?: boolean;
+  /** Marketing editorial diagrams: glass shell, no frame chrome; enables PatternBoard editorial styling. */
+  editorialBoard?: boolean;
+  editorialAccentSquares?: string[];
 }
 
 export function TrainingBoardCard({
@@ -84,6 +91,10 @@ export function TrainingBoardCard({
   boardContainerClassName,
   boardStyleId,
   previewColorScheme,
+  showCoordinates = true,
+  marketingEmbed = false,
+  editorialBoard = false,
+  editorialAccentSquares,
 }: TrainingBoardCardProps) {
   const effectiveScheme = useEffectiveAppColorScheme();
   const colorScheme = previewColorScheme ?? effectiveScheme;
@@ -104,18 +115,22 @@ export function TrainingBoardCard({
         "relative aspect-square overflow-hidden rounded-md border",
         boardContainerClassName ??
           "w-full max-w-[min(100%,42rem)]",
-        !frame && "border-border bg-muted/30",
-        minimal && !frame && "rounded-sm border-border/50 bg-muted/20",
-        minimal && frame && "rounded-sm",
-        !minimal && frame && "rounded-md"
+        editorialBoard &&
+          "rounded-xl border-0 bg-gradient-to-b from-white/[0.03] to-transparent shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] dark:from-white/[0.035] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+        !editorialBoard && !frame && "border-border bg-muted/30",
+        !editorialBoard && minimal && !frame && "rounded-sm border-border/50 bg-muted/20",
+        !editorialBoard && minimal && frame && "rounded-sm",
+        !editorialBoard && !minimal && frame && "rounded-md"
       )}
       style={
-        frame
-          ? {
-              backgroundColor: frame.backgroundColor,
-              borderColor: frame.borderColor,
-            }
-          : undefined
+        editorialBoard
+          ? undefined
+          : frame
+            ? {
+                backgroundColor: frame.backgroundColor,
+                borderColor: frame.borderColor,
+              }
+            : undefined
       }
     >
       <div className="h-full w-full min-h-0">
@@ -132,6 +147,10 @@ export function TrainingBoardCard({
           attemptedMoveSquares={attemptedMoveSquares}
           correctMoveUci={correctMoveUci}
           surface={surface}
+          showCoordinates={showCoordinates}
+          marketingEmbed={marketingEmbed}
+          editorialBoard={editorialBoard}
+          editorialAccentSquares={editorialAccentSquares}
         />
       </div>
     </div>

@@ -133,6 +133,8 @@ export interface MarketingDeviceFrameProps {
   smAspectHeight?: number;
   /** Stretch phone shell horizontally to the embedding column (`TrainingPreview`). */
   smFillContainer?: boolean;
+  /** Tighter bezel padding (`sm` marketing hero) — yields a larger board footprint. */
+  compactPhoneShell?: boolean;
 }
 
 /** Shared chrome for {@link TrainingPreview} and marketing flow previews (`screen="sm"` phones). */
@@ -144,9 +146,11 @@ export function MarketingDeviceFrame({
   shellTone = "default",
   smAspectHeight = PHONE_H,
   smFillContainer = false,
+  compactPhoneShell = false,
   children,
 }: MarketingDeviceFrameProps) {
   const tone = shellTone;
+  const bezelPad = compactPhoneShell && screen === "sm" ? "p-1.5" : "p-2";
 
   const frameClassName =
     appearance === "dark"
@@ -193,13 +197,6 @@ export function MarketingDeviceFrame({
           tone === "muted" && "bg-neutral-300/85"
         );
 
-  const hoverScale =
-    tone === "emphasis"
-      ? "hover:scale-[1.02]"
-      : tone === "muted"
-        ? "hover:scale-[1.006]"
-        : "hover:scale-[1.015]";
-
   return (
     <div
       className={cn(
@@ -211,8 +208,8 @@ export function MarketingDeviceFrame({
       <div
         style={previewFrameStyle(screen, smAspectHeight, smFillContainer)}
         className={cn(
-          "flex min-h-0 flex-col box-border max-w-full border p-2 shadow-xl transition-transform duration-500 ease-out",
-          hoverScale,
+          "flex min-h-0 flex-col box-border max-w-full border shadow-xl transition-shadow duration-500 ease-out",
+          bezelPad,
           outerRounded,
           frameClassName
         )}
@@ -310,6 +307,7 @@ export function TrainingPreview({
       shellTone={shellTone}
       smAspectHeight={screen === "sm" ? resolvedSmHeight : undefined}
       smFillContainer={screen === "sm" ? smFillContainer : false}
+      compactPhoneShell={compactHeroLayout && screen === "sm"}
     >
       <PreviewTrainingView
         embed

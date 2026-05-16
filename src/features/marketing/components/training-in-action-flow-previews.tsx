@@ -17,6 +17,7 @@ import {
 import {
   cycleProgressPercentRounded,
   formatCycleProgressLabel,
+  sessionEncouragementLine,
 } from "@/features/session-summary/session-summary-helpers";
 import { formatDurationMs, formatDurationMsChartAxis } from "@/lib/format-duration";
 import { cn } from "@/lib/utils";
@@ -62,6 +63,10 @@ export interface ProgressMarketingPreviewProps {
   lastSessionDurationMs: number;
   /** Most recent first; omit or empty to hide timeline. */
   recentSessions?: ProgressSessionTimelineEntry[];
+  /** Narrative breadcrumb across multi-day cycles. */
+  cycleStartedLabel?: string;
+  /** Continuity cue (streaks, pauses) — optional. */
+  continuityHint?: string;
 }
 
 export function ProgressMarketingPreviewInner({
@@ -74,6 +79,8 @@ export function ProgressMarketingPreviewInner({
   sessionCountThisCycle,
   lastSessionDurationMs,
   recentSessions = [],
+  cycleStartedLabel,
+  continuityHint,
 }: ProgressMarketingPreviewProps & {
   appearance: TrainingPreviewAppearance;
 }) {
@@ -86,14 +93,19 @@ export function ProgressMarketingPreviewInner({
     exercisesRemainingProp ?? Math.max(0, progressTotal - nextExerciseIndex);
 
   const lastShort = formatDurationMsChartAxis(lastSessionDurationMs);
-  const timeline = recentSessions.slice(0, 3);
+  const timeline = recentSessions.slice(0, 4);
+
+  const encouragement =
+    timeline.length > 0
+      ? sessionEncouragementLine(timeline[0].durationMs, timeline[0].exercisesDone)
+      : null;
 
   return (
     <ScopedAppearanceShell appearance={appearance}>
       <div className="border-b border-border/40 px-3 pb-2.5 pt-3">
         <h2 className="text-base font-semibold tracking-tight text-foreground">Progress</h2>
-        <p className="mt-0.5 text-[11px] text-muted-foreground">
-          Track your current cycle across sessions.
+        <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
+          Bookmark a long-run pass—resume the same cycle when you return.
         </p>
       </div>
 
@@ -147,6 +159,23 @@ export function ProgressMarketingPreviewInner({
                 </span>
               </p>
             </div>
+            {cycleStartedLabel || continuityHint ? (
+              <div className="space-y-1 rounded-md border border-border/38 bg-muted/10 px-2.5 py-2">
+                {cycleStartedLabel ? (
+                  <p className="text-[10px] leading-snug text-muted-foreground/95">
+                    <span className="font-semibold uppercase tracking-wide text-muted-foreground/75">
+                      Pass opened
+                    </span>{" "}
+                    · {cycleStartedLabel}
+                  </p>
+                ) : null}
+                {continuityHint ? (
+                  <p className="text-[10px] leading-snug text-muted-foreground/88">
+                    {continuityHint}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
           </CardContent>
         </Card>
 
@@ -180,6 +209,11 @@ export function ProgressMarketingPreviewInner({
                 </li>
               ))}
             </ul>
+            {encouragement ? (
+              <p className="mt-2 border-t border-border/25 pt-2 text-[10px] italic leading-snug text-muted-foreground/90">
+                {encouragement}
+              </p>
+            ) : null}
           </div>
         ) : null}
       </div>
@@ -223,10 +257,6 @@ function MasteryCycleTimeBars({
           </div>
         );
       })}
-      <p className="border-t border-border/30 pt-2.5 text-[10px] leading-snug text-muted-foreground/90">
-        Each row is full-set time across the cycle — shorter bars usually mean faster recognition,
-        not rushed solving.
-      </p>
     </div>
   );
 }
@@ -238,6 +268,8 @@ export interface MasteryMarketingPreviewProps {
   cycles: Array<{ cycleNumber: number; totalTimeMs: number }>;
   /** One-line narrative, e.g. “61% faster than first cycle”. */
   insightLine: string;
+  /** Optional human recognition beat under the quantitative grid. */
+  recognitionLine?: string;
 }
 
 export function MasteryMarketingPreviewInner({
@@ -245,21 +277,38 @@ export function MasteryMarketingPreviewInner({
   trainingSetName,
   cycles,
   insightLine,
+  recognitionLine,
 }: MasteryMarketingPreviewProps & {
   appearance: TrainingPreviewAppearance;
 }) {
   const cyclesChronological = [...cycles].sort((a, b) => a.cycleNumber - b.cycleNumber);
+  const n = cyclesChronological.length;
+  const avgMs =
+    n > 0
+      ? Math.round(cyclesChronological.reduce((a, c) => a + c.totalTimeMs, 0) / n)
+      : 0;
+  const fastest =
+    n > 0
+      ? cyclesChronological.reduce((best, c) =>
+          c.totalTimeMs <= best.totalTimeMs ? c : best
+        )
+      : undefined;
 
   return (
     <ScopedAppearanceShell appearance={appearance}>
       <div className="border-b border-border/40 px-3 pb-2.5 pt-3">
         <h2 className="text-base font-semibold tracking-tight text-foreground">Mastery</h2>
         <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
-          Recognition compounding across repetitions.
+          Full-pass times as fluency builds—cycles, not one-off solves.
         </p>
         <p className="mt-2 truncate text-[10px] text-muted-foreground/90" title={trainingSetName}>
           <span className="font-medium text-foreground/85">{trainingSetName}</span>
         </p>
+        {n > 0 ? (
+          <p className="mt-1 text-[10px] tabular-nums leading-snug text-muted-foreground/82">
+            {n} complete passes · earliest → latest
+          </p>
+        ) : null}
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col space-y-3 px-3 pb-3 pt-3">
@@ -270,9 +319,43 @@ export function MasteryMarketingPreviewInner({
           <MasteryCycleTimeBars cyclesChronological={cyclesChronological} />
         </div>
 
-        <p className="mt-auto rounded-md border border-border/35 bg-muted/12 px-2.5 py-2 text-[11px] leading-snug text-muted-foreground">
+        {n > 0 && fastest != null ? (
+          <div className="grid grid-cols-2 gap-x-2 gap-y-2 rounded-md border border-border/38 bg-muted/10 px-2.5 py-2">
+            <span className="text-[10px] text-muted-foreground/88">Avg full pass</span>
+            <span className="text-right text-[11px] font-semibold tabular-nums text-foreground/90">
+              {formatDurationMs(avgMs)}
+            </span>
+            <span className="text-[10px] text-muted-foreground/88">Fastest</span>
+            <span className="text-right text-[11px] font-medium tabular-nums leading-tight text-foreground/92">
+              C{fastest.cycleNumber}
+              <span className="font-normal text-muted-foreground">
+                {" "}
+                · {formatDurationMs(fastest.totalTimeMs)}
+              </span>
+            </span>
+          </div>
+        ) : null}
+
+        <p className="rounded-md border border-border/35 bg-muted/11 px-2 py-2 text-[10px] leading-snug text-muted-foreground/90">
+          Shorter bars imply less deliberation clearing the{" "}
+          <span className="font-medium text-foreground/82">same</span> exercise batch — tempo, not
+          rushing.
+        </p>
+
+        <p
+          className={cn(
+            "rounded-md border border-border/35 bg-muted/12 px-2.5 py-2 text-[11px] leading-snug text-muted-foreground",
+            !recognitionLine && "mt-auto"
+          )}
+        >
           <span className="font-medium text-foreground/90">{insightLine}</span>
         </p>
+
+        {recognitionLine ? (
+          <p className="mt-auto rounded-md border border-dashed border-border/40 px-2.5 py-2 text-[10px] italic leading-snug text-muted-foreground/92">
+            {recognitionLine}
+          </p>
+        ) : null}
       </div>
     </ScopedAppearanceShell>
   );

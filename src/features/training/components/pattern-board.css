@@ -8,17 +8,6 @@
   height: 100%;
 }
 
-/**
- * Chessground snaps `cg-container` to a multiple of 8 device pixels; it can be
- * slightly smaller than `.cg-wrap`. Default layout is top-aligned, which
- * leaves visible slivers of the host background. Center so the gap splits evenly.
- */
-.pf-cg-host.cg-wrap cg-container {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 /* Custom themes: SVG-painted cg-board */
 .pf-cg-host.pf-cg-board--grid cg-board {
   background-color: var(--pf-cg-board-bg, #f0d9b5) !important;
@@ -45,6 +34,15 @@
     drop-shadow(-1px 0 0 rgb(255, 255, 255))
     drop-shadow(0 1px 0 rgb(255, 255, 255))
     drop-shadow(0 -1px 0 rgb(255, 255, 255));
+}
+
+/* Landing previews: tighter rim so small embeds stay crisp (~0.5px). */
+.dark .pf-cg-host[data-pf-marketing-embed="true"][data-pf-board="classic"] piece.black,
+.dark .pf-cg-host[data-pf-marketing-embed="true"][data-pf-board="blueprint"] piece.black {
+  filter: drop-shadow(0.5px 0 0 rgb(255, 255, 255))
+    drop-shadow(-0.5px 0 0 rgb(255, 255, 255))
+    drop-shadow(0 0.5px 0 rgb(255, 255, 255))
+    drop-shadow(0 -0.5px 0 rgb(255, 255, 255));
 }
 
 /*
@@ -128,4 +126,41 @@
 
 .pf-cg-host square.pf-hl-attempted {
   background-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+/* ─── Editorial / marketing diagrams (Pattern Resurfacing, etc.) ─── */
+
+.pf-cg-host[data-pf-editorial-board="true"] cg-board {
+  filter: saturate(0.94);
+}
+
+.pf-cg-host[data-pf-editorial-board="true"] piece.white {
+  filter: drop-shadow(0 1px 1px color-mix(in oklab, var(--foreground) 22%, transparent))
+    drop-shadow(0 0 0.5px color-mix(in oklab, var(--foreground) 35%, transparent));
+}
+
+.dark .pf-cg-host[data-pf-editorial-board="true"] piece.black {
+  filter: drop-shadow(0.8px 0 0 rgb(255, 255, 255))
+    drop-shadow(-0.8px 0 0 rgb(255, 255, 255))
+    drop-shadow(0 0.8px 0 rgb(255, 255, 255))
+    drop-shadow(0 -0.8px 0 rgb(255, 255, 255))
+    drop-shadow(0 0 4px color-mix(in oklab, var(--primary) 18%, transparent));
+}
+
+.pf-cg-host square.pf-hl-editorial-accent {
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--primary) 22%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 8%, transparent) 45%,
+    transparent 72%
+  ) !important;
+}
+
+.dark .pf-cg-host square.pf-hl-editorial-accent {
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--primary) 28%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 10%, transparent) 48%,
+    transparent 74%
+  ) !important;
 }

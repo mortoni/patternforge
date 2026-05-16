@@ -75,13 +75,14 @@ export function PreviewTraining({
       fallback={
         <div
           className="min-h-dvh w-full max-w-full overflow-x-hidden bg-background"
-          aria-hidden
-        />
+          aria-busy="true"
+          aria-label="Loading preview"
+        >
+          <div className="sr-only">Loading training preview.</div>
+        </div>
       }
     >
       <PreviewTrainingInner previewColorScheme={previewColorScheme} />
     </Suspense>
   );
 }
-
-export { PreviewTrainingView } from "@/features/training/components/preview-training-view";

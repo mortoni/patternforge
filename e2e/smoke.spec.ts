@@ -8,9 +8,9 @@ test("marketing page loads and links to app", async ({ page }) => {
       name: /train patterns, not just puzzles/i,
     })
   ).toBeVisible();
-  // Several sections repeat “Open app” (header, hero, CTA, footer).
+  // Header, hero, and CTA link to the trainer.
   await expect(
-    page.getByRole("link", { name: /^open app$/i }).first()
+    page.getByRole("link", { name: /^start training$/i }).first()
   ).toBeVisible();
 });
 
