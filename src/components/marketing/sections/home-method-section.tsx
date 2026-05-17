@@ -2,10 +2,9 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Brain, Search, Star, Target, TimerReset, Zap, type LucideIcon } from "lucide-react";
-import { FadeIn, MotionPreviewFrame, PREMIUM_EASE, StaggerContainer, StaggeredSectionHeader } from "@/components/shared/motion-primitives";
+import { FadeIn, PREMIUM_EASE, StaggerContainer, StaggeredSectionHeader } from "@/components/shared/motion-primitives";
 import { cn } from "@/lib/utils";
-import { PatternResurfacingPreview } from "@/components/marketing/components/pattern-resurfacing-preview";
-import { METHOD_SECTION_EDITORIAL_FEN } from "@/components/marketing/home-landing-data";
+import { SmotheredMatePatternBlock } from "@/components/marketing/sections/home-smothered-mate-section";
 import { containerClass } from "@/components/marketing/layout-classes";
 
 const METHOD_BG = "#f6f8fa";
@@ -226,20 +225,7 @@ export function HomeMethodSection() {
         </StaggerContainer>
       </div>
 
-      <FadeIn
-        className={cn(containerClass, "relative z-[1] mt-14 max-w-7xl sm:mt-16 md:mt-[4.5rem] lg:mt-16")}
-        delay={0.06}
-      >
-        <MotionPreviewFrame emphasis="ambient" className="block w-full">
-          <PatternResurfacingPreview
-            diagramFen={METHOD_SECTION_EDITORIAL_FEN}
-            boardOrientation="white"
-            positionSyncKey="method-section-editorial-diagram"
-            diagramAccessibilityDescription="White to move in an illustrative tactical position for pattern resurfacing; the main diagram emphasizes squares g5 and g8, while the three cycle mini-boards show recognition unfolding with highlighted squares."
-            showBoardCoordinates
-          />
-        </MotionPreviewFrame>
-      </FadeIn>
+      <SmotheredMatePatternBlock className="mt-14 sm:mt-16 md:mt-[4.5rem] lg:mt-16" />
 
       <FadeIn className={cn(containerClass, "relative z-[1] mx-auto mt-12 max-w-[760px] sm:mt-14 md:mt-16 lg:mt-20")}>
         <div
