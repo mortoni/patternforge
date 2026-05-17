@@ -369,6 +369,7 @@ export function PatternBoard({
       highlightCustom,
       autoShapes,
       showCoordinates,
+      editorialBoard,
     ]
   );
 

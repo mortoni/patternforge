@@ -33,11 +33,15 @@ export const ROUTES = {
 } as const;
 
 /**
- * Hosted Storybook (product docs + tooling). Sidebar “Documentation” opens this URL in a new tab.
+ * Hosted Storybook on Chromatic (product docs + workbench).
+ * Sidebar “Documentation” and marketing “Documentation” open this URL in a new tab.
  *
- * Prefer `NEXT_PUBLIC_DOCUMENTATION_URL` for production. `NEXT_PUBLIC_STORYBOOK_URL` is still read for compatibility.
+ * Override with `NEXT_PUBLIC_DOCUMENTATION_URL` or `NEXT_PUBLIC_STORYBOOK_URL` when needed.
  * In development, defaults to `http://localhost:6006` when neither env var is set.
  */
+const DEFAULT_PRODUCTION_DOCUMENTATION_URL =
+  "https://6a09a2c2e687bd342f4777e5-zhyaitpeyo.chromatic.com/";
+
 function resolveDocumentationUrl(): string {
   const fromEnv =
     (typeof process !== "undefined" &&
@@ -51,7 +55,7 @@ function resolveDocumentationUrl(): string {
   ) {
     return "http://localhost:6006";
   }
-  return "";
+  return DEFAULT_PRODUCTION_DOCUMENTATION_URL;
 }
 
 export const DOCUMENTATION_URL = resolveDocumentationUrl();

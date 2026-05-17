@@ -1,0 +1,50 @@
+# Publish Storybook to Chromatic when docs / stories / Storybook config change.
+# Repo: add GitHub Actions secret CHROMATIC_PROJECT_TOKEN (Chromatic → Manage → Configure → Project token).
+# Do not commit project tokens; rotate any token that was pasted in chat or logs.
+name: Deploy Storybook
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - ".storybook/**"
+      - "src/stories/**"
+      - "src/**/*.mdx"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: storybook-chromatic
+  cancel-in-progress: false
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v16.10.1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          # Finish after upload so CI passes while Chromatic runs visual tests in the product UI.
+          exitOnceUploaded: true
+          # Optional: enable TurboSnap for faster runs on Storybook 7+ / Vite
+          # onlyChanged: true

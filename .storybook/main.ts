@@ -25,6 +25,11 @@ const config = {
       "process.env.STORYBOOK_APP_ORIGIN":
         JSON.stringify(STORYBOOK_APP_ORIGIN_RAW),
     };
+    /** Subpath for static hosting (e.g. GitHub Pages project site). Set in CI via STORYBOOK_BASE_PATH. */
+    const basePath = process.env.STORYBOOK_BASE_PATH?.trim();
+    if (basePath) {
+      viteConfig.base = basePath.endsWith("/") ? basePath : `${basePath}/`;
+    }
     return viteConfig;
   },
 } satisfies StorybookConfig;

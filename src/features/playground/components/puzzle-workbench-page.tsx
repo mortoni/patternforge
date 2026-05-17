@@ -231,14 +231,14 @@ export function PuzzleWorkbenchPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-[50vh] items-center justify-center">
+      <div className="mx-auto flex min-h-[50vh] w-full max-w-5xl items-center justify-center px-4 sm:px-6">
         <p className="text-sm text-muted-foreground">Loading puzzle data…</p>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col md:min-h-[calc(100dvh-4rem)]">
+    <div className="mx-auto flex min-h-[calc(100dvh-5.5rem)] w-full max-w-5xl flex-col px-4 sm:px-6 md:min-h-[calc(100dvh-4rem)] lg:px-8">
       <header className="mb-4 flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold text-foreground">Puzzle workbench</h1>
