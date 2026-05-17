@@ -151,33 +151,9 @@ export const trainingInActionCards: Array<{
   },
 ];
 
-/** Method section — “Built around disciplined repetition” editorial board (white to move). */
+/** Method / marketing diagram — “Built around disciplined repetition” (white to move). */
 export const METHOD_SECTION_EDITORIAL_FEN =
   "3r3k/1p1b1Qbp/1n2B1p1/p5N1/Pq6/8/1P4PP/R6K w - - 0 1";
-
-/** How recognition shifts over repeated cycles (psychological arc, not UI steps). */
-export const methodSteps = [
-  {
-    title: "Choose a line",
-    body: "Commit to a small tactical set you will revisit again and again.",
-  },
-  {
-    title: "Recognition slows calculation",
-    body: "The first passes feel effortful. Each move still asks for deliberate, conscious calculation.",
-  },
-  {
-    title: "Patterns start resurfacing",
-    body: "Positions begin to feel familiar before the full calculation has finished.",
-  },
-  {
-    title: "Recall becomes immediate",
-    body: "The right ideas show up faster, with less conscious effort holding the thread.",
-  },
-  {
-    title: "Time begins collapsing",
-    body: "The same cycle needs a fraction of the wall-clock and attention it once did.",
-  },
-] as const;
 
 export const TIME_COMPRESSION_CYCLES = MARKETING_LANDING_COMPLETED_PASSES_MS.map((c) => ({
   cycle: c.cycleNumber,

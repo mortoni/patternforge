@@ -1,94 +1,235 @@
-import {
-  FadeIn,
-  MotionCard,
-  MotionPreviewFrame,
-  StaggerContainer,
-  StaggeredSectionHeader,
-} from "@/components/shared/motion-primitives";
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { Brain, Search, Star, Target, TimerReset, Zap, type LucideIcon } from "lucide-react";
+import { FadeIn, MotionPreviewFrame, PREMIUM_EASE, StaggerContainer, StaggeredSectionHeader } from "@/components/shared/motion-primitives";
 import { cn } from "@/lib/utils";
 import { PatternResurfacingPreview } from "@/components/marketing/components/pattern-resurfacing-preview";
-import { METHOD_SECTION_EDITORIAL_FEN, methodSteps } from "@/components/marketing/home-landing-data";
+import { METHOD_SECTION_EDITORIAL_FEN } from "@/components/marketing/home-landing-data";
 import { containerClass } from "@/components/marketing/layout-classes";
 
+const METHOD_BG = "#f6f8fa";
+
+const methodFlowSteps: Array<{
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}> = [
+  {
+    title: "Choose a line",
+    description: "Pick a puzzle line and commit to working it cycle by cycle.",
+    icon: Target,
+  },
+  {
+    title: "Recognize motifs",
+    description: "Repeated solves train your eyes to spot the key patterns instantly.",
+    icon: Search,
+  },
+  {
+    title: "Recall becomes automatic",
+    description: "What once required calculation starts to happen without thinking.",
+    icon: Brain,
+  },
+  {
+    title: "Time begins collapsing",
+    description: "Each cycle takes less time as recognition speed improves.",
+    icon: TimerReset,
+  },
+  {
+    title: "Pattern becomes instinct",
+    description: "The pattern is now part of you — ready in any position, any time.",
+    icon: Zap,
+  },
+];
+
+function stepCardVariants(prefersReducedMotion: boolean | null) {
+  return {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 16 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: prefersReducedMotion ? 0.2 : 0.48, ease: PREMIUM_EASE },
+    },
+  };
+}
+
+function connectorVariants(prefersReducedMotion: boolean | null) {
+  return {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { duration: prefersReducedMotion ? 0.15 : 0.35, ease: PREMIUM_EASE },
+    },
+  };
+}
+
+function HorizontalConnector() {
+  return (
+    <div className="flex w-full min-w-0 items-center pt-[2.35rem]" aria-hidden>
+      <div className="h-px flex-1 border-t-2 border-dashed border-slate-300 dark:border-white/20" />
+      <svg
+        width="11"
+        height="9"
+        viewBox="0 0 10 8"
+        className="-ml-0.5 shrink-0 text-slate-400 dark:text-white/35"
+        aria-hidden
+      >
+        <path d="M0 4h7l-1.5 2.5L9 4 5.5 1.5 7 4H0z" fill="currentColor" />
+      </svg>
+    </div>
+  );
+}
+
+function StepIconCircle({
+  size = "md",
+  prefersReducedMotion,
+  children,
+}: {
+  size?: "md" | "lg";
+  prefersReducedMotion: boolean | null;
+  children: React.ReactNode;
+}) {
+  const isLg = size === "lg";
+  return (
+    <motion.div
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-full bg-white text-primary",
+        "shadow-[0_12px_40px_-14px_rgba(15,23,42,0.14),0_0_0_1px_rgba(124,58,237,0.1)]",
+        "ring-2 ring-primary/[0.12] dark:bg-card",
+        isLg ? "size-[4.75rem]" : "size-[4.25rem]"
+      )}
+      whileHover={
+        prefersReducedMotion ? undefined : { y: -4, transition: { duration: 0.22, ease: PREMIUM_EASE } }
+      }
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function HomeMethodSection() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       id="method"
       className={cn(
-        "relative overflow-hidden bg-gradient-to-b from-muted/[0.11] via-background to-muted/[0.05] py-12 dark:from-muted/[0.09] dark:via-background dark:to-muted/[0.04] sm:py-14 md:py-[4.5rem]",
-        "before:pointer-events-none before:absolute before:left-1/2 before:top-0 before:h-28 before:w-[min(112%,56rem)] before:-translate-x-1/2 before:bg-[radial-gradient(ellipse_100%_100%_at_50%_0%,color-mix(in_oklab,var(--muted-foreground)_3%,transparent),transparent_78%)]",
-        "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-28 after:bg-gradient-to-b after:from-transparent after:to-background"
+        "relative overflow-x-hidden py-14 sm:py-16 md:py-20 lg:py-[5.25rem]",
+        "bg-[var(--method-section-bg)] text-foreground dark:bg-background",
+        "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-border/30 after:to-transparent dark:after:via-white/10"
       )}
+      style={{ ["--method-section-bg" as string]: METHOD_BG }}
       aria-labelledby="method-heading"
     >
-      <div className={containerClass}>
+      <div className={cn(containerClass, "relative z-[1] max-w-7xl")}>
         <StaggeredSectionHeader
           headingId="method-heading"
-          eyebrow="WOODPECKER METHOD"
+          eyebrow="THE METHOD"
           title="Built around disciplined repetition"
-          body="Repeated exposure changes what recognition feels like. The work favors familiarity and steadier recall—not an endless stream of novelty."
-          className="max-w-2xl sm:max-w-3xl [&_p]:max-w-2xl [&_p]:text-pretty"
+          body="Repeated exposure changes what recognition feels like. The work turns familiarity into instinct — cycle by cycle."
+          className={cn(
+            "mx-auto max-w-3xl",
+            "[&_h2]:mt-4 [&_h2]:text-balance [&_h2]:font-bold [&_h2]:tracking-tight",
+            "[&_h2]:text-[clamp(1.65rem,4vw,2.4rem)] [&_h2]:text-slate-900 dark:[&_h2]:text-foreground",
+            "[&_p]:mx-auto [&_p]:max-w-[720px] [&_p]:text-pretty [&_p]:text-muted-foreground"
+          )}
+          eyebrowClassName="font-semibold tracking-[0.14em] text-primary"
         />
+      </div>
 
-        <StaggerContainer as="ol" className="mx-auto mt-10 max-w-2xl list-none space-y-4 pl-0 md:hidden">
-          {methodSteps.map((step, index) => (
-            <MotionCard
-              as="li"
-              key={step.title}
-              hover={false}
-              staggered
-              className="flex items-start gap-3.5 rounded-xl border border-border/45 bg-background/50 px-4 py-4 dark:border-white/[0.08] dark:bg-background/35"
-            >
-              <span
-                className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border/55 bg-background/70 text-[10px] font-medium tabular-nums text-muted-foreground dark:border-white/12 dark:bg-background/45"
-                aria-hidden
-              >
-                {index + 1}
-              </span>
-              <div className="min-w-0 space-y-2">
-                <h3 className="text-sm font-medium leading-snug tracking-tight text-foreground">
-                  {step.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{step.body}</p>
-              </div>
-            </MotionCard>
-          ))}
-        </StaggerContainer>
-
+      {/* Mobile + tablet: vertical stack / 2-col grid */}
+      <div className={cn(containerClass, "relative z-[1] mt-12 max-w-7xl lg:hidden")}>
         <StaggerContainer
           as="ol"
-          className="relative mx-auto mt-11 hidden max-w-5xl list-none grid-cols-5 gap-x-5 gap-y-6 pl-0 md:grid lg:mt-12 lg:gap-x-6"
+          className="mx-auto grid list-none gap-10 max-md:max-w-lg max-md:grid-cols-1 max-md:pl-0 md:grid-cols-2 md:gap-x-10 md:gap-y-14 sm:max-w-xl md:max-w-none"
+          staggerChildren={0.07}
         >
-          <div
-            className="pointer-events-none absolute left-[3%] right-[3%] top-4 h-px bg-gradient-to-r from-transparent via-border/22 to-transparent opacity-80 dark:via-white/[0.055]"
-            aria-hidden
-          />
-          {methodSteps.map((step, index) => (
-            <MotionCard
-              as="li"
-              key={step.title}
-              hover={false}
-              staggered
-              className="relative z-[1] flex flex-col gap-3.5"
-            >
-              <span
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/65 text-[11px] font-medium tabular-nums text-muted-foreground dark:border-white/[0.1] dark:bg-background/40"
-                aria-hidden
+          {methodFlowSteps.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <motion.li
+                key={step.title}
+                variants={stepCardVariants(prefersReducedMotion)}
+                className="flex gap-4 sm:gap-5 md:flex-col md:items-center md:text-center"
               >
-                {index + 1}
-              </span>
-              <h3 className="text-[13px] font-medium leading-snug tracking-tight text-foreground lg:text-sm">
-                {step.title}
-              </h3>
-              <p className="text-[13px] leading-[1.55] text-muted-foreground lg:text-sm lg:leading-relaxed">
-                {step.body}
-              </p>
-            </MotionCard>
-          ))}
+                <div className="flex flex-col items-center md:items-center">
+                  <StepIconCircle size="md" prefersReducedMotion={prefersReducedMotion}>
+                    <Icon className="size-6" strokeWidth={1.45} aria-hidden />
+                  </StepIconCircle>
+                  {index < methodFlowSteps.length - 1 ? (
+                    <div
+                      className="mt-4 h-12 w-px border-l-2 border-dashed border-slate-300 max-md:block md:hidden dark:border-white/20"
+                      aria-hidden
+                    />
+                  ) : null}
+                </div>
+                <div className="min-w-0 flex-1 pt-0.5 md:pt-0">
+                  <p className="inline-flex rounded-full border border-primary/35 bg-primary/[0.08] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-primary md:mt-4">
+                    Step {index + 1}
+                  </p>
+                  <h3 className="mt-3 text-base font-semibold tracking-tight text-slate-900 dark:text-foreground sm:text-[17px]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+                    {step.description}
+                  </p>
+                </div>
+              </motion.li>
+            );
+          })}
         </StaggerContainer>
       </div>
 
-      <FadeIn className={cn(containerClass, "mt-14 sm:mt-16 md:mt-[4.5rem]")} delay={0.06}>
+      {/* Desktop: single row + dotted arrows */}
+      <div className={cn(containerClass, "relative z-[1] mt-14 hidden max-w-7xl lg:block lg:mt-16")}>
+        <StaggerContainer
+          as="ol"
+          className="flex w-full list-none items-start justify-center gap-0 pl-0"
+          staggerChildren={0.08}
+        >
+          {methodFlowSteps.flatMap((step, index) => {
+            const Icon = step.icon;
+            const nodes = [
+              <motion.li
+                key={step.title}
+                variants={stepCardVariants(prefersReducedMotion)}
+                className="flex min-w-0 max-w-[min(100%,13.5rem)] flex-1 flex-col items-center text-center"
+              >
+                <StepIconCircle size="lg" prefersReducedMotion={prefersReducedMotion}>
+                  <Icon className="size-[1.65rem]" strokeWidth={1.45} aria-hidden />
+                </StepIconCircle>
+                <p className="mt-5 inline-flex rounded-full border border-primary/35 bg-primary/[0.08] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-primary">
+                  Step {index + 1}
+                </p>
+                <h3 className="mt-3 text-[15px] font-semibold leading-snug tracking-tight text-slate-900 dark:text-foreground xl:text-base">
+                  {step.title}
+                </h3>
+                <p className="mt-2 max-w-[13rem] text-[13px] leading-relaxed text-muted-foreground xl:text-[14px]">
+                  {step.description}
+                </p>
+              </motion.li>,
+            ];
+            if (index < methodFlowSteps.length - 1) {
+              nodes.push(
+                <motion.li
+                  key={`${step.title}-connector`}
+                  aria-hidden
+                  variants={connectorVariants(prefersReducedMotion)}
+                  className="flex w-[min(3.5vw,2.5rem)] shrink-0 list-none justify-center xl:w-[min(4vw,3rem)]"
+                >
+                  <HorizontalConnector />
+                </motion.li>
+              );
+            }
+            return nodes;
+          })}
+        </StaggerContainer>
+      </div>
+
+      <FadeIn
+        className={cn(containerClass, "relative z-[1] mt-14 max-w-7xl sm:mt-16 md:mt-[4.5rem] lg:mt-16")}
+        delay={0.06}
+      >
         <MotionPreviewFrame emphasis="ambient" className="block w-full">
           <PatternResurfacingPreview
             diagramFen={METHOD_SECTION_EDITORIAL_FEN}
@@ -100,10 +241,28 @@ export function HomeMethodSection() {
         </MotionPreviewFrame>
       </FadeIn>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-[12%] bottom-0 z-[2] mx-auto h-px max-w-[62rem] bg-gradient-to-r from-transparent via-border/26 to-transparent dark:via-white/8"
-      />
+      <FadeIn className={cn(containerClass, "relative z-[1] mx-auto mt-12 max-w-[760px] sm:mt-14 md:mt-16 lg:mt-20")}>
+        <div
+          className={cn(
+            "flex gap-4 rounded-2xl border border-primary/20 bg-white/95 p-5 sm:gap-5 sm:p-6",
+            "shadow-[0_0_52px_-22px_rgba(124,58,237,0.38)]",
+            "dark:border-primary/25 dark:bg-card/85 dark:shadow-[0_0_40px_-16px_rgba(124,58,237,0.22)]"
+          )}
+        >
+          <div
+            className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md sm:size-12"
+            aria-hidden
+          >
+            <Star className="size-5 fill-current sm:size-[1.35rem]" strokeWidth={1.5} />
+          </div>
+          <div className="min-w-0 flex-1 pt-0.5">
+            <p className="text-base font-semibold text-primary sm:text-lg">Discipline today. Instinct forever.</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+              Repetition isn&apos;t just practice — it&apos;s how patterns become part of your game.
+            </p>
+          </div>
+        </div>
+      </FadeIn>
     </section>
   );
 }
