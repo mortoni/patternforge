@@ -8,11 +8,8 @@ import {
   type MarketingShellTone,
 } from "@/components/shared/training-preview";
 import { Progress } from "@/components/ui/progress";
-import { METHOD_SECTION_EDITORIAL_FEN } from "@/components/marketing/home-landing-data";
+import { MARKETING_HERO_PHONE_PREVIEW } from "@/components/marketing/home-landing-data";
 import { cn } from "@/lib/utils";
-
-const LOOP_SET = "Woodpecker Intermediate";
-const LOOP_CYCLE = 3;
 
 function PhoneChrome({
   title,
@@ -48,7 +45,7 @@ function PhoneChrome({
   );
 }
 
-/** Centre “Solve” — live-styled training chrome + board; keep upright (no rotated parents). */
+/** Centre “Solve” — same training chrome + board as the landing hero phone preview. */
 export function TrainingLoopSolveDevicePreview({
   className,
   title,
@@ -63,18 +60,8 @@ export function TrainingLoopSolveDevicePreview({
       appearance={appearance}
       title={title}
       className={className}
-      shellTone="emphasis"
       smFillContainer
-      compactHeroLayout
-      preview={{
-        screen: "sm",
-        puzzle: 14,
-        total: 20,
-        cycle: LOOP_CYCLE,
-        setName: LOOP_SET,
-        boardStyle: "blueprint",
-        fen: METHOD_SECTION_EDITORIAL_FEN,
-      }}
+      preview={MARKETING_HERO_PHONE_PREVIEW}
     />
   );
 }

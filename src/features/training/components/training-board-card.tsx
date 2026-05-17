@@ -76,6 +76,8 @@ export interface TrainingBoardCardProps {
   editorialHighlights?: BoardHighlight[];
   /** Extra shell classes for editorial boards; merged after defaults (e.g. `rounded-md` to reduce corner radius). */
   editorialBoardShellClassName?: string;
+  /** @see {@link PatternBoardProps.editorialHighlightTone} */
+  editorialHighlightTone?: "default" | "smotheredHero";
 }
 
 export function TrainingBoardCard({
@@ -100,6 +102,7 @@ export function TrainingBoardCard({
   editorialBoard = false,
   editorialHighlights,
   editorialBoardShellClassName,
+  editorialHighlightTone = "default",
 }: TrainingBoardCardProps) {
   const effectiveScheme = useEffectiveAppColorScheme();
   const colorScheme = previewColorScheme ?? effectiveScheme;
@@ -159,6 +162,7 @@ export function TrainingBoardCard({
           marketingEmbed={marketingEmbed}
           editorialBoard={editorialBoard}
           editorialHighlights={editorialHighlights}
+          editorialHighlightTone={editorialHighlightTone}
         />
       </div>
     </div>

@@ -102,6 +102,11 @@ export interface PatternBoardProps {
    */
   editorialBoard?: boolean;
   editorialHighlights?: BoardHighlight[];
+  /**
+   * Optional editorial glow tuning (see pattern-board.css).
+   * `smotheredHero` — softer amber in light mode, warmer cinematic glow in dark.
+   */
+  editorialHighlightTone?: "default" | "smotheredHero";
 }
 
 function mapSideToCgColor(side: "w" | "b"): Color {
@@ -170,6 +175,7 @@ export function PatternBoard({
   marketingEmbed = false,
   editorialBoard = false,
   editorialHighlights,
+  editorialHighlightTone = "default",
 }: PatternBoardProps) {
   const elRef = React.useRef<HTMLDivElement | null>(null);
   const apiRef = React.useRef<Api | null>(null);
@@ -460,6 +466,9 @@ export function PatternBoard({
       data-pf-board={surface.boardStyleId}
       data-pf-marketing-embed={marketingEmbed ? "true" : undefined}
       data-pf-editorial-board={editorialBoard ? "true" : undefined}
+      data-pf-editorial-highlight={
+        editorialHighlightTone === "smotheredHero" ? "smothered-hero" : undefined
+      }
       style={hostStyle}
     />
   );

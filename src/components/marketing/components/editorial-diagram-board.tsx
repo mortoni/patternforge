@@ -33,7 +33,9 @@ export type EditorialDiagramBoardProps = {
   showCoordinates?: boolean;
   /** Passed to {@link TrainingBoardCard} editorial shell (e.g. tighter `rounded-md`). */
   editorialBoardShellClassName?: string;
-};
+  /** Richer golden highlights on the hero smothered-mate diagram. */
+  editorialHighlightTone?: "default" | "smotheredHero";
+}
 
 /**
  * Marketing / editorial chess diagram: themed board, optional premium square highlights, non-interactive.
@@ -48,6 +50,7 @@ export function EditorialDiagramBoard({
   boardContainerClassName = "aspect-square w-full",
   showCoordinates = false,
   editorialBoardShellClassName,
+  editorialHighlightTone = "default",
 }: EditorialDiagramBoardProps) {
   const documentAppearance = useDocumentAppearance();
   const previewColorScheme: AppColorScheme =
@@ -76,6 +79,7 @@ export function EditorialDiagramBoard({
       editorialBoard
       editorialHighlights={normalized.length ? normalized : undefined}
       editorialBoardShellClassName={editorialBoardShellClassName}
+      editorialHighlightTone={editorialHighlightTone}
       boardContainerClassName={boardContainerClassName}
       className={cn("w-full", className)}
     />

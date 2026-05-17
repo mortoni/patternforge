@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { EditorialDiagramBoard } from "@/components/marketing/components/editorial-diagram-board";
+import { MarketingFlowArrow } from "@/components/marketing/components/marketing-flow-arrow";
 import type { BoardHighlight } from "@/lib/chess/board-highlight";
 
 /**
@@ -76,78 +76,6 @@ const RESURFACING = {
 
 /** Tighter corners on mini cycle boards vs. main editorial diagram. */
 const CYCLE_EDITORIAL_SHELL_CLASS = "rounded-md";
-
-/** User-provided cycle arrow (stroke + chevron + SVG soft glow). */
-function CycleBoardArrow() {
-  const uid = React.useId().replace(/:/g, "");
-  const arrowGlowId = `pf-arrowGlow-${uid}`;
-  const softGlowId = `pf-softGlow-${uid}`;
-
-  return (
-    <svg
-      width={30}
-      height={7}
-      viewBox="0 0 72 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-      className="block h-[7px] w-[1.875rem] shrink-0 text-[#C6923B] dark:text-[#F6D38B]"
-    >
-      <defs>
-        <linearGradient
-          id={arrowGlowId}
-          x1="0"
-          y1="8"
-          x2="72"
-          y2="8"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="currentColor" stopOpacity={0} />
-          <stop offset="0.45" stopColor="currentColor" stopOpacity={0.45} />
-          <stop offset="1" stopColor="currentColor" stopOpacity={0.95} />
-        </linearGradient>
-
-        <filter
-          id={softGlowId}
-          x="-20"
-          y="-20"
-          width="112"
-          height="56"
-          filterUnits="userSpaceOnUse"
-        >
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feColorMatrix
-            in="blur"
-            type="matrix"
-            values="1 0 0 0 0.96  0 1 0 0 0.69  0 0 1 0 0.30  0 0 0 0.75 0"
-            result="glow"
-          />
-          <feMerge>
-            <feMergeNode in="glow" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      <path
-        d="M4 8H64"
-        stroke={`url(#${arrowGlowId})`}
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        filter={`url(#${softGlowId})`}
-      />
-
-      <path
-        d="M58 3L65 8L58 13"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        filter={`url(#${softGlowId})`}
-      />
-    </svg>
-  );
-}
 
 function progressionTone(i: number) {
   return cn(
@@ -449,13 +377,13 @@ export function PatternResurfacingPreview({
                 className="mx-0.5 w-[1.875rem] md:col-start-2 md:row-start-2 md:flex md:self-stretch md:items-center md:justify-center"
                 aria-hidden
               >
-                <CycleBoardArrow />
+                <MarketingFlowArrow />
               </div>
               <div
                 className="mx-0.5 w-[1.875rem] md:col-start-4 md:row-start-2 md:flex md:self-stretch md:items-center md:justify-center"
                 aria-hidden
               >
-                <CycleBoardArrow />
+                <MarketingFlowArrow />
               </div>
               {RESURFACING.cycles.map((c, i) => (
                 <motion.div

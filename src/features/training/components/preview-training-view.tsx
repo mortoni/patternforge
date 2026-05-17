@@ -94,10 +94,10 @@ export function PreviewTrainingView({
   const mainPad =
     screen === "sm"
       ? embed && compactHeroLayout && !shortEmbedFrame
-        ? "min-h-0 px-2 pb-2 pt-0 sm:px-2.5 sm:pb-2 sm:pt-0.5"
+        ? "min-h-0 px-2 pb-2 pt-1 sm:px-2.5 sm:pb-2 sm:pt-1.5"
         : embed && shortEmbedFrame
           ? mainPadMobileShortEmbed
-          : mainPadMobile
+          : cn(mainPadMobile, embed && !shortEmbedFrame && "pt-1.5 sm:pt-2")
       : mainPadTabletDesktop;
 
   const metaText =
@@ -239,7 +239,9 @@ export function PreviewTrainingView({
       <div className="w-full shrink-0">
         <SideToMoveIndicator
           sideToMove={sideToMove}
-          className={cn(heroCompactEmbed && "text-sm leading-tight sm:text-base")}
+          className={cn(
+            heroCompactEmbed && "text-lg font-medium leading-snug sm:text-xl"
+          )}
         />
       </div>
       <div className="relative w-full shrink min-h-0 min-w-0 overflow-visible px-px">
@@ -385,7 +387,8 @@ export function PreviewTrainingView({
               className={cn(
                 "flex w-full max-w-full shrink-0 flex-col",
                 shortSmEmbed ? "mb-1.5 gap-y-1 text-[10px] leading-snug text-muted-foreground" : "gap-y-1.5",
-                heroCompactEmbed && "mb-1 gap-y-0 text-[10px] leading-snug text-muted-foreground",
+                heroCompactEmbed &&
+                  "mb-1.5 gap-y-1 text-[11px] leading-snug text-muted-foreground sm:text-[12px]",
                 !shortSmEmbed && !heroCompactEmbed && embedSmBoardFit && "mb-2",
                 !shortSmEmbed && !heroCompactEmbed && !embedSmBoardFit && "mb-3 sm:mb-4",
                 !shortSmEmbed && !heroCompactEmbed && metaText
@@ -393,7 +396,10 @@ export function PreviewTrainingView({
             >
               <div className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5">
                 <span
-                  className="min-w-0 max-w-full shrink truncate font-medium text-muted-foreground"
+                  className={cn(
+                    "min-w-0 max-w-full shrink truncate font-medium text-muted-foreground",
+                    heroCompactEmbed && "sm:font-semibold"
+                  )}
                   title={setName}
                 >
                   {setName}
@@ -401,7 +407,12 @@ export function PreviewTrainingView({
                 <span className="text-muted-foreground" aria-hidden>
                   ·
                 </span>
-                <span className="shrink-0 tabular-nums font-medium text-muted-foreground">
+                <span
+                  className={cn(
+                    "shrink-0 tabular-nums font-medium text-muted-foreground",
+                    heroCompactEmbed && "sm:font-semibold"
+                  )}
+                >
                   Cycle {safeCycle}
                 </span>
               </div>
@@ -411,7 +422,13 @@ export function PreviewTrainingView({
                   shortSmEmbed ? "justify-start" : "justify-between"
                 )}
               >
-                <span className="shrink-0 tabular-nums text-muted-foreground">
+                <span
+                  className={cn(
+                    "shrink-0 tabular-nums text-muted-foreground",
+                    heroCompactEmbed &&
+                      "text-[12px] font-semibold text-foreground/95 dark:text-slate-100 sm:text-[13px]"
+                  )}
+                >
                   Exercise {safePuzzle} / {safeTotal}
                 </span>
                 {!shortSmEmbed ? (
@@ -424,7 +441,7 @@ export function PreviewTrainingView({
                     aria-hidden
                     className={cn(
                       "h-auto shrink-0 px-2 py-1 text-xs text-muted-foreground sm:text-sm",
-                      heroCompactEmbed && "py-0.5 text-[10px] sm:text-[11px]"
+                      heroCompactEmbed && "py-0.5 text-[11px] sm:text-[12px]"
                     )}
                   >
                     End session

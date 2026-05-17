@@ -6,6 +6,7 @@ import { FadeIn, PREMIUM_EASE, StaggerContainer, StaggeredSectionHeader } from "
 import { cn } from "@/lib/utils";
 import { SmotheredMatePatternBlock } from "@/components/marketing/sections/home-smothered-mate-section";
 import { containerClass } from "@/components/marketing/layout-classes";
+import { MarketingFlowArrow } from "@/components/marketing/components/marketing-flow-arrow";
 
 const METHOD_BG = "#f6f8fa";
 
@@ -64,17 +65,8 @@ function connectorVariants(prefersReducedMotion: boolean | null) {
 
 function HorizontalConnector() {
   return (
-    <div className="flex w-full min-w-0 items-center pt-[2.35rem]" aria-hidden>
-      <div className="h-px flex-1 border-t-2 border-dashed border-slate-300 dark:border-white/20" />
-      <svg
-        width="11"
-        height="9"
-        viewBox="0 0 10 8"
-        className="-ml-0.5 shrink-0 text-slate-400 dark:text-white/35"
-        aria-hidden
-      >
-        <path d="M0 4h7l-1.5 2.5L9 4 5.5 1.5 7 4H0z" fill="currentColor" />
-      </svg>
+    <div className="flex w-full min-w-0 items-center justify-center pt-[2.35rem]" aria-hidden>
+      <MarketingFlowArrow />
     </div>
   );
 }
@@ -143,24 +135,18 @@ export function HomeMethodSection() {
           className="mx-auto grid list-none gap-10 max-md:max-w-lg max-md:grid-cols-1 max-md:pl-0 md:grid-cols-2 md:gap-x-10 md:gap-y-14 sm:max-w-xl md:max-w-none"
           staggerChildren={0.07}
         >
-          {methodFlowSteps.map((step, index) => {
+          {methodFlowSteps.flatMap((step, index) => {
             const Icon = step.icon;
-            return (
+            const stepItem = (
               <motion.li
                 key={step.title}
                 variants={stepCardVariants(prefersReducedMotion)}
-                className="flex gap-4 sm:gap-5 md:flex-col md:items-center md:text-center"
+                className="flex items-center gap-4 sm:gap-5 md:flex-col md:items-center md:text-center"
               >
-                <div className="flex flex-col items-center md:items-center">
+                <div className="flex shrink-0 flex-col items-center md:items-center">
                   <StepIconCircle size="md" prefersReducedMotion={prefersReducedMotion}>
                     <Icon className="size-6" strokeWidth={1.45} aria-hidden />
                   </StepIconCircle>
-                  {index < methodFlowSteps.length - 1 ? (
-                    <div
-                      className="mt-4 h-12 w-px border-l-2 border-dashed border-slate-300 max-md:block md:hidden dark:border-white/20"
-                      aria-hidden
-                    />
-                  ) : null}
                 </div>
                 <div className="min-w-0 flex-1 pt-0.5 md:pt-0">
                   <p className="inline-flex rounded-full border border-primary/35 bg-primary/[0.08] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-primary md:mt-4">
@@ -175,11 +161,26 @@ export function HomeMethodSection() {
                 </div>
               </motion.li>
             );
+
+            if (index < methodFlowSteps.length - 1) {
+              return [
+                stepItem,
+                <li
+                  key={`${step.title}-mobile-arrow`}
+                  aria-hidden
+                  className="col-span-full flex list-none justify-center py-2"
+                >
+                  <MarketingFlowArrow orientation="vertical" className="shrink-0" />
+                </li>,
+              ];
+            }
+
+            return [stepItem];
           })}
         </StaggerContainer>
       </div>
 
-      {/* Desktop: single row + dotted arrows */}
+      {/* Desktop: single row + flow arrows */}
       <div className={cn(containerClass, "relative z-[1] mt-14 hidden max-w-7xl lg:block lg:mt-16")}>
         <StaggerContainer
           as="ol"
