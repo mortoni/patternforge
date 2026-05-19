@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AppTitle from "@/components/logo/AppTitle";
 import Logo from "@/components/logo/Logo";
+import { TrackedSupportLink } from "@/components/shared/TrackedSupportLink";
 import { DOCUMENTATION_URL, ROUTES } from "@/lib/constants";
 import {
   footerHeading,
@@ -88,6 +89,11 @@ export function MarketingFooter() {
             <p className={`mt-4 md:mt-5 ${footerMuted}`}>
               Rooted in Axel Smith and Hans Tikkanen&apos;s Woodpecker Method: fixed sets, iterative passes,
               deliberate practice—not endless random puzzles.
+            </p>
+            <p className="mt-4">
+              <TrackedSupportLink href={ROUTES.support} source="footer" className={footerLinkClass}>
+                Support PatternForge
+              </TrackedSupportLink>
             </p>
           </div>
         </div>

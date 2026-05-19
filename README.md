@@ -128,13 +128,60 @@ Open [http://localhost:3000](http://localhost:3000). Use “Get started” / “
 - `pnpm run test:watch` – Vitest watch mode
 - `pnpm run ci` – `lint` → `test` → `typecheck` → `build` (same sequence as GitHub Actions)
 - `pnpm run test:e2e` – Playwright E2E (starts dev server if needed). **Browsers are not installed by `pnpm install`.** Before the first run (or after upgrading `@playwright/test`), run **`pnpm run test:e2e:install`** (Chromium only) or `pnpm exec playwright install`.
+- Donation E2E: `pnpm run test:e2e e2e/support-donation.spec.ts` — support page, success return, prompts, suppression, mobile layout checks.
 - `pnpm run validate:woodpecker` – Validate Woodpecker bundle JSON in `public/data/woodpecker/`
 - `pnpm run generate:icons` – Regenerate icon assets
+
+## Support donations (Stripe Payment Links)
+
+PatternForge uses **Stripe-hosted Payment Links** only—no backend, secret keys, webhooks, or Checkout Session API.
+
+Donation tiers and URLs live in `src/lib/stripe-donation-links.ts`. Override per tier in `.env` with **full** Payment Link URLs from the Stripe Dashboard (do not copy the `...` placeholder literally):
+
+```bash
+NEXT_PUBLIC_STRIPE_DONATION_LINK_FIVE=https://buy.stripe.com/test_YOUR_LINK_ID
+NEXT_PUBLIC_STRIPE_DONATION_LINK_TEN=https://buy.stripe.com/test_YOUR_LINK_ID
+NEXT_PUBLIC_STRIPE_DONATION_LINK_TWENTY_FIVE=https://buy.stripe.com/test_YOUR_LINK_ID
+NEXT_PUBLIC_STRIPE_DONATION_LINK_FIFTY=https://buy.stripe.com/test_YOUR_LINK_ID
+```
+
+**No Stripe secret or publishable keys are required** for this flow—the app only links to hosted checkout. API keys are only needed if you later add server-side Checkout Sessions or webhooks.
+
+When unset, all tiers use the shared test link in code until real Payment Links are created.
+
+### Stripe Dashboard redirect URLs
+
+For each Payment Link in Stripe, set:
+
+| Outcome | URL |
+|--------|-----|
+| **Success** | `{ORIGIN}/support/success` (e.g. `https://chessforge.app/support/success`) |
+| **Cancel** | `{ORIGIN}/support` (e.g. `https://chessforge.app/support`) |
+
+Use the same origin as `NEXT_PUBLIC_SITE_URL` in production. For local testing, use `http://localhost:3000/support/success` and `http://localhost:3000/support`.
+
+### Crypto wallet addresses
+
+Static addresses live in `src/lib/crypto-donation-options.ts`. Override in `.env`:
+
+```bash
+NEXT_PUBLIC_CRYPTO_DONATION_BTC=...
+NEXT_PUBLIC_CRYPTO_DONATION_LIGHTNING=...
+NEXT_PUBLIC_CRYPTO_DONATION_ETH=...
+NEXT_PUBLIC_CRYPTO_DONATION_SOL=...
+NEXT_PUBLIC_CRYPTO_DONATION_USDT_ERC20=...
+NEXT_PUBLIC_CRYPTO_DONATION_USDT_TRC20=...
+```
+
+No wallet connect, backend, or transaction tracking—donors copy an address or scan a QR code on `/support`.
+
+**Mobile & PWA QA:** see [docs/support-mobile-qa.md](docs/support-mobile-qa.md) for a manual checklist (Safari, Chrome, installed PWA, Stripe return flow).
 
 ## Routes
 
 - `/` – Marketing landing
 - `/privacy`, `/terms` – Placeholder pages
+- `/support` – Optional support page with Stripe Payment Links (one-time card donations; no backend). `/support/success` – thank-you page after Stripe checkout (configure redirect URLs in the Stripe Dashboard; see **Support donations** below).
 - `/app` – **Dashboard (Phase 5)** – Shows real active training state when `lastTrainingSetId` has an active cycle: set name, cycle number, solved/total, progress bar, "Continue Training" and "View set" (links to set detail). **Quick stats** and **Recent sessions** list come from Dexie. If there are mistakes to review, a "Mistakes Remaining" card with "Review Mistakes" link is shown.
 - `/app/training` – **Training page (Phase 3+5)** – **Execution mode** for the current set in settings. When an **active** cycle exists: loads the current exercise and gets/creates an active session; first-move solving; attempt timing and cycle advancement as above; ending a session can go to session summary. When **no active cycle**: empty state (“No active cycle”) with primary action to **Training Sets** and secondary link to **Progress**; optional subtle line for last completed cycle time/sessions. Does **not** redirect to the last cycle summary on entry.
 - `/app/training/session-summary` – **Session summary** after a completed cycle; query `?sessionId=`. Legacy URLs **`/app/training-2`** and **`/app/training-2/session-summary`** are **301 redirected** in `next.config.mjs` to `/app/training` and `/app/training/session-summary` (query string preserved).

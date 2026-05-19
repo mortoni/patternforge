@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { SupportPatternForgePrompt } from "@/components/shared/SupportPatternForgePrompt";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ROUTES } from "@/lib/constants";
@@ -298,6 +299,8 @@ export function CycleSummaryPage({ cycleId }: CycleSummaryPageProps) {
           )}
         </div>
       </section>
+
+      <SupportPatternForgePrompt source="cycle_completion" />
     </div>
   );
 }

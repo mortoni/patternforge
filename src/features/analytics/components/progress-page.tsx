@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { SupportPatternForgePrompt } from "@/components/shared/SupportPatternForgePrompt";
 import {
   Card,
   CardContent,
@@ -378,6 +379,8 @@ export function ProgressPage() {
           </Card>
         )}
       </section>
+
+      <SupportPatternForgePrompt className="mt-10" source="reflection" />
     </div>
   );
 }

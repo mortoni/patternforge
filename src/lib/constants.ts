@@ -17,6 +17,8 @@ export const ROUTES = {
   home: "/",
   privacy: "/privacy",
   terms: "/terms",
+  support: "/support",
+  supportSuccess: "/support/success",
   app: "/app",
   training: "/app/training",
   /** Post–end-session checkpoint; query: `?sessionId=` */

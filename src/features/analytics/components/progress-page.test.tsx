@@ -20,6 +20,20 @@ vi.mock("./reflection-cycles-time-chart", () => ({
   ),
 }));
 
+const mockCanShow = vi.fn();
+const mockMeetsMilestone = vi.fn();
+
+vi.mock("@/lib/support-prompt-storage", () => ({
+  canShowSupportPrompt: () => mockCanShow(),
+  dismissSupportPrompt: vi.fn(),
+  markUserAsSupported: vi.fn(),
+  recordSupportPromptShown: vi.fn(),
+}));
+
+vi.mock("@/services/support-prompt-eligibility.service", () => ({
+  meetsSupportPromptMilestone: () => mockMeetsMilestone(),
+}));
+
 const baseActiveCycle = {
   cycleId: "c1",
   trainingSetId: "t1",
@@ -47,6 +61,8 @@ const baseActiveCycle = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  mockCanShow.mockReturnValue(true);
+  mockMeetsMilestone.mockResolvedValue(true);
   mockGetProgressPageData.mockResolvedValue({
     currentCycle: baseActiveCycle,
     cycleHistory: [
@@ -81,6 +97,9 @@ describe("ProgressPage", () => {
     expect(
       screen.queryByText(/completed cycles/i)
     ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("support-patternforge-prompt")
+    ).not.toBeInTheDocument();
   });
 
   it("shows skipped-for-now line when cycle has skips", async () => {
@@ -103,6 +122,9 @@ describe("ProgressPage", () => {
     expect(screen.getByText("Completed cycles")).toBeInTheDocument();
     expect(screen.queryByRole("group", { name: /completed cycles view/i })).not.toBeInTheDocument();
     expect(screen.queryByText("Session activity")).not.toBeInTheDocument();
+    expect(
+      await screen.findByTestId("support-patternforge-prompt")
+    ).toBeInTheDocument();
   });
 
   it("shows table/chart toggle and chart when Chart is selected", async () => {

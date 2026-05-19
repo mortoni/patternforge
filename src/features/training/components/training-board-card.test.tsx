@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { TrainingBoardCard } from "./training-board-card";
 import type { PatternBoardProps } from "./pattern-board";
 
@@ -112,5 +112,18 @@ describe("TrainingBoardCard", () => {
       />
     );
     expect(capturedProps.current!.disabled).toBe(true);
+  });
+
+  it("does not render a support donation prompt over the board", () => {
+    render(
+      <TrainingBoardCard
+        fen={defaultFen}
+        boardOrientation="white"
+        onMove={vi.fn()}
+      />
+    );
+    expect(
+      screen.queryByTestId("support-patternforge-prompt")
+    ).not.toBeInTheDocument();
   });
 });

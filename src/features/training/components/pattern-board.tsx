@@ -31,6 +31,24 @@ import { EditorialBoardHighlightCells } from "./editorial-board-highlight-layer"
 
 const EDITORIAL_HL_LAYER_SEL = ".pf-cg-editorial-hl-layer";
 
+/** Avoid synchronous `root.unmount()` during React commit/layout (React 19 race). */
+function disposeEditorialHighlightRoot(
+  rootRef: React.MutableRefObject<Root | null>,
+  boardEl?: ParentNode | null
+) {
+  const root = rootRef.current;
+  rootRef.current = null;
+  const layer = boardEl?.querySelector(EDITORIAL_HL_LAYER_SEL) ?? null;
+  if (!root) {
+    layer?.remove();
+    return;
+  }
+  queueMicrotask(() => {
+    root.unmount();
+    layer?.remove();
+  });
+}
+
 function reconcileEditorialHighlightLayer(
   boardEl: HTMLElement,
   highlights: readonly BoardHighlight[] | undefined,
@@ -38,9 +56,7 @@ function reconcileEditorialHighlightLayer(
   rootRef: React.MutableRefObject<Root | null>
 ) {
   if (!highlights?.length) {
-    rootRef.current?.unmount();
-    rootRef.current = null;
-    boardEl.querySelector(EDITORIAL_HL_LAYER_SEL)?.remove();
+    disposeEditorialHighlightRoot(rootRef, boardEl);
     return;
   }
 
@@ -393,9 +409,7 @@ export function PatternBoard({
 
   React.useLayoutEffect(() => {
     if (!editorialBoard) {
-      highlightRootRef.current?.unmount();
-      highlightRootRef.current = null;
-      elRef.current?.querySelector(EDITORIAL_HL_LAYER_SEL)?.remove();
+      disposeEditorialHighlightRoot(highlightRootRef, elRef.current);
       return undefined;
     }
 
@@ -423,11 +437,9 @@ export function PatternBoard({
     applyConfig,
   ]);
 
-  React.useLayoutEffect(
+  React.useEffect(
     () => () => {
-      highlightRootRef.current?.unmount();
-      highlightRootRef.current = null;
-      elRef.current?.querySelector(EDITORIAL_HL_LAYER_SEL)?.remove();
+      disposeEditorialHighlightRoot(highlightRootRef, elRef.current);
     },
     []
   );
