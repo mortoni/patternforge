@@ -4,7 +4,7 @@ Train patterns. Build recognition.
 
 A local-first tactical chess training system built around repetition and pattern recognition.
 
-[Live App](https://chessforge.app) • [Documentation](https://6a09a2c2e687bd342f4777e5-zhyaitpeyo.chromatic.com/?path=/docs/introduction--docs) • [License](./LICENSE)
+[Live App](https://chessforge.app) • [Documentation](https://main--6a09a2c2e687bd342f4777e5.chromatic.com/?path=/docs/introduction--docs) • [License](./LICENSE)
 
 ## What Is PatternForge?
 
@@ -66,11 +66,11 @@ PatternForge is designed as a local-first web application with a strong focus on
 
 ## Documentation
 
-Handbook and UI docs live in Storybook (Chromatic):
+Handbook and UI docs live in Storybook on Chromatic ([branch permalinks](https://www.chromatic.com/docs/permalinks/) — always the latest publish on `main`):
 
-- [Introduction](https://6a09a2c2e687bd342f4777e5-zhyaitpeyo.chromatic.com/?path=/docs/introduction--docs)
-- [Development Guides](https://6a09a2c2e687bd342f4777e5-zhyaitpeyo.chromatic.com/?path=/docs/development-guides-getting-started--docs)
-- [Architecture](https://6a09a2c2e687bd342f4777e5-zhyaitpeyo.chromatic.com/?path=/docs/architecture-overview--docs)
+- [Introduction](https://main--6a09a2c2e687bd342f4777e5.chromatic.com/?path=/docs/introduction--docs)
+- [Development Guides](https://main--6a09a2c2e687bd342f4777e5.chromatic.com/?path=/docs/development-guides-getting-started--docs)
+- [Architecture](https://main--6a09a2c2e687bd342f4777e5.chromatic.com/?path=/docs/architecture-overview--docs)
 
 ---
 

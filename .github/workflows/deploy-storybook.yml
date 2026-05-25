@@ -1,6 +1,9 @@
 # Publish Storybook to Chromatic when docs / stories / Storybook config change.
 # Repo: add GitHub Actions secret CHROMATIC_PROJECT_TOKEN (Chromatic → Manage → Configure → Project token).
 # Do not commit project tokens; rotate any token that was pasted in chat or logs.
+#
+# In-app documentation links use Chromatic branch permalinks (see CHROMATIC_APP_ID in src/lib/constants.ts),
+# e.g. https://main--{appId}.chromatic.com — stable across builds; no URL updates after each publish.
 name: Deploy Storybook
 
 on:
@@ -40,6 +43,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Publish to Chromatic
+        id: chromatic
         uses: chromaui/action@v16.10.1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
@@ -48,3 +52,10 @@ jobs:
           exitOnceUploaded: true
           # Optional: enable TurboSnap for faster runs on Storybook 7+ / Vite
           # onlyChanged: true
+
+      - name: Log stable documentation URL
+        run: |
+          echo "Branch permalink (used by the app): https://main--${CHROMATIC_APP_ID}.chromatic.com/?path=/docs/introduction--docs"
+          echo "Chromatic action storybookUrl: ${{ steps.chromatic.outputs.storybookUrl }}"
+        env:
+          CHROMATIC_APP_ID: 6a09a2c2e687bd342f4777e5
