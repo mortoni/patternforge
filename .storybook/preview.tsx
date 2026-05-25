@@ -1,23 +1,44 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import * as React from "react";
+import { cn } from "../src/lib/utils";
 import "../src/app/globals.css";
 import { SettingsProvider } from "../src/features/settings/context/settings-context";
 import { DocsMdxAnchor } from "./docs-mdx-anchor";
 
 const preview: Preview = {
   decorators: [
-    (Story) => (
-      <SettingsProvider>
-        <div className="min-h-screen bg-background p-4 text-foreground">
-          <Story />
-        </div>
-      </SettingsProvider>
-    ),
+    (Story, context) => {
+      const isFullscreen = context.parameters.layout === "fullscreen";
+      const isDocs = context.viewMode === "docs";
+
+      return (
+        <SettingsProvider>
+          <div
+            className={cn(
+              "min-h-screen bg-background text-foreground",
+              !isFullscreen && !isDocs && "p-4"
+            )}
+          >
+            {isDocs && !isFullscreen ? (
+              <div className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 sm:py-10 md:py-12">
+                <Story />
+              </div>
+            ) : (
+              <Story />
+            )}
+          </div>
+        </SettingsProvider>
+      );
+    },
   ],
   parameters: {
     docs: {
       components: {
         a: DocsMdxAnchor,
+      },
+      toc: {
+        headingSelector: "h2, h3",
+        title: "On this page",
       },
     },
 
@@ -30,22 +51,47 @@ const preview: Preview = {
 
     options: {
       storySort: {
-        // Sidebar: Introduction (src/docs/introduction via Stories entry) → Docs/* → Workbench
         order: [
           "Introduction",
           [
-            "Docs",
+            "Product",
+            ["Philosophy", "Woodpecker Method", "Roadmap"],
+          ],
+          [
+            "Architecture",
             [
-              "Philosophy",
-              "Woodpecker Method",
-              "Lifecycle",
-              "Architecture",
+              "Overview",
+              "Local-First",
+              "State & Persistence",
               "Data Model",
               "Design Decisions",
-              "Roadmap & TODOs",
             ],
           ],
-          ["Workbench", ["Puzzle Inspector"]],
+          [
+            "Training System",
+            [
+              "Training Cycles",
+              "Training Lifecycle",
+              "Reflection",
+              "UX Continuity",
+              "Puzzle Inspector",
+            ],
+          ],
+          [
+            "Development Guides",
+            [
+              "Getting Started",
+              "Project Structure",
+              "Running Storybook",
+              "Running Tests",
+              "Adding Training Sets",
+              "Engineering Conventions",
+            ],
+          ],
+          [
+            "Foundations",
+            ["Design Tokens", "Accessibility"],
+          ],
         ],
       },
     },

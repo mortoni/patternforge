@@ -1,0 +1,43 @@
+# Engineering Conventions
+
+**Why this exists:** Practical defaults for contributing — aligned with how the codebase already works, not a separate process layer.
+
+## Local-first by default
+
+Training data, progress, and settings live in IndexedDB. Features should work offline. Static puzzle JSON is fetched once; runtime state stays on the device.
+
+## Preserve UX continuity
+
+Training is a flow. Transitions between board, feedback, and navigation should feel connected — no jarring layout shifts or one-off interaction patterns.
+
+See [UX Continuity](/docs/training/ux-continuity).
+
+## Explicit domain language
+
+Name after the training domain: cycles, sets, exercises, attempts, mistakes, reflection. Prefer readable service names over generic abstractions.
+
+## Traceable state transitions
+
+Training moves through defined phases — loading, solving, feedback, completion. One hook or service should own each transition.
+
+## No abstraction for its own sake
+
+Extract when duplication is real and the boundary is stable. Do not indirection-hop for hypothetical futures.
+
+## Accessible and mobile-aware
+
+Test touch targets, keyboard navigation, and screen reader labels. Use Storybook's a11y addon when changing components.
+
+## TypeScript intentionally
+
+Reflect persisted schemas from `src/db/schema.ts`. Prefer Zod-inferred types at persistence boundaries. Avoid `any`.
+
+## Testing expectations
+
+Co-locate tests with source. Cover behavior that matters — training logic, persistence edge cases, user-visible state.
+
+## Related
+
+- [Architecture Overview](/docs/architecture)
+- [Running Tests](/docs/dev/running-tests)
+- [Design Decisions](/docs/decisions)

@@ -1,34 +1,122 @@
-# Introduction
+import { DocCallout, DocCard, DocGrid, DocSection } from "@/components/docs";
 
-PatternForge is a chess tactics training application built around structured repetition and pattern recognition. This documentation explains the philosophy, method, and architecture behind the system.
+# PatternForge
 
-## What is PatternForge?
+Train patterns. Build recognition.
 
-PatternForge helps chess players build fast, reliable pattern recognition through disciplined repetition inspired by the Woodpecker Method. Unlike puzzle apps that encourage endless novelty, PatternForge focuses on returning to the same ideas until recognition becomes automatic.
+PatternForge is a **local-first tactical chess training system** built around repetition cycles and pattern recognition. This handbook covers the product, architecture, and how to work on the codebase.
 
-## Core Principles
+<DocCallout title="Why this handbook exists">
+  Storybook is the curated documentation surface for PatternForge — product intent, system design,
+  UI review, and contributor guides in one place. The README stays short; details live here.
+</DocCallout>
 
-- **Deliberate repetition** over novelty
-- **Pattern memory** over calculation support
-- **Structured cycles** over random practice
-- **Real board vision** over puzzle streaks
+<DocSection title="Product overview" description="What PatternForge is and how training is structured.">
+  <DocGrid>
+    <DocCard
+      href="/docs/philosophy"
+      title="Philosophy"
+      description="Repetition over novelty. Recognition over calculation support."
+    />
+    <DocCard
+      href="/docs/woodpecker-method"
+      title="Woodpecker Method"
+      description="Fixed sets, repeated cycles, faster recognition over time."
+    />
+    <DocCard
+      href="/docs/training/lifecycle"
+      title="Training Lifecycle"
+      description="Sets, cycles, sessions, and how progress is tracked."
+    />
+  </DocGrid>
+</DocSection>
 
-## Getting Started
+<DocSection title="Architecture" description="Local-first design, persistence, and engineering shape.">
+  <DocGrid>
+    <DocCard
+      href="/docs/architecture"
+      title="System Overview"
+      description="Stack, folders, and how the app is organized."
+    />
+    <DocCard
+      href="/docs/architecture/local-first"
+      title="Local-First"
+      description="IndexedDB, offline training, and privacy by default."
+    />
+    <DocCard
+      href="/docs/architecture/persistence"
+      title="State & Persistence"
+      description="What lives in the browser and how it flows."
+    />
+    <DocCard
+      href="/docs/data-model"
+      title="Data Model"
+      description="Entities, relationships, and schema reference."
+    />
+  </DocGrid>
+</DocSection>
 
-If you're new to PatternForge, start with:
+<DocSection title="Training system" description="Execution, reflection, and continuity across flows.">
+  <DocGrid>
+    <DocCard
+      href="/docs/training/lifecycle"
+      title="Training Lifecycle"
+      description="End-to-end flow — sets, cycles, sessions, attempts, and review."
+    />
+    <DocCard
+      href="/docs/training/cycles"
+      title="Training Cycles"
+      description="Repeated passes through a set and what each cycle tracks."
+    />
+    <DocCard
+      href="/docs/training/reflection"
+      title="Reflection"
+      description="Reviewing completed cycles per set — table and chart views."
+    />
+    <DocCard
+      href="/docs/training/ux-continuity"
+      title="UX Continuity"
+      description="Keeping training, feedback, and navigation coherent."
+    />
+  </DocGrid>
+</DocSection>
 
-- [Philosophy](/docs/philosophy) — The thinking behind the approach
-- [Woodpecker Method](/docs/woodpecker-method) — How the training method works
-- [Lifecycle](/docs/lifecycle) — Understanding cycles, sessions, and progress
-- [Exercise verification policy](/docs/exercise-verification-policy) — Dataset pipeline, statuses, and manual review (developers)
+<DocSection title="Development guides" description="Setup, tests, conventions — for contributors and reviewers.">
+  <DocGrid>
+    <DocCard
+      href="/docs/dev/getting-started"
+      title="Getting Started"
+      description="Install, run the app, and run your first checks."
+    />
+    <DocCard
+      href="/docs/dev/engineering-conventions"
+      title="Engineering Conventions"
+      description="TypeScript-first patterns, UX continuity, and testing expectations."
+    />
+    <DocCard
+      href="/docs/dev/running-tests"
+      title="Running Tests"
+      description="Lint, typecheck, Vitest, Playwright, and CI."
+    />
+  </DocGrid>
+</DocSection>
 
-_Links starting with `/docs/…` open the mirrored **Docs** pages in Storybook when you browse here. Paths that aren’t mirrored (yet) open the Next.js app instead (default **`http://localhost:3000`**; set **`STORYBOOK_APP_ORIGIN`** when your app runs elsewhere)._
+<DocSection title="Foundations" description="Shared design and accessibility conventions.">
+  <DocGrid>
+    <DocCard
+      href="/docs/foundations/design-tokens"
+      title="Design Tokens"
+      description="Color, typography, and spacing conventions."
+    />
+    <DocCard
+      href="/docs/foundations/accessibility"
+      title="Accessibility"
+      description="Keyboard paths, contrast, and mobile-aware interaction."
+    />
+  </DocGrid>
+</DocSection>
 
-## Local Storybook & contributors
-
-The repo includes a **Storybook** instance for living UI/docs and tools such as **Workbench** (Puzzle Inspector):
-
-- From the repo root: `pnpm storybook` — opens the dev server at [http://localhost:6006/](http://localhost:6006/)
-- The main app sidebar links to **Workbench** in development.
-
-Handbook-style pages for this introduction live in `src/stories/docs/Introduction.mdx` (Storybook entry only). Long-form product docs are authored in `src/docs` and mirrored into Storybook under **Docs** via small wrappers in `src/stories/docs/product/`.
+<DocCallout variant="note">
+  **Local Storybook:** `pnpm storybook` → [http://localhost:6006](http://localhost:6006).
+  Training Lifecycle: [open in Storybook](?path=/docs/training-system-training-lifecycle--docs).
+</DocCallout>

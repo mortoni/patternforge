@@ -1,0 +1,74 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# Training Cycles
+
+**Why this exists:** Woodpecker-style training is organized as repeated **cycles** through the same set — each cycle is a measurable pass with its own timing and progress.
+
+## Core concepts
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Term</DocTh>
+      <DocTh>Meaning</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd>Training set</DocTd>
+      <DocTd>
+        Fixed collection of exercises (<code>exerciseIds</code> defines order)
+      </DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Cycle run</DocTd>
+      <DocTd>One full pass through that set</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Session</DocTd>
+      <DocTd>A training period within a cycle (may span multiple visits)</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Attempt</DocTd>
+      <DocTd>Single puzzle try — correct, incorrect, or skipped</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+## Cycle lifecycle
+
+```
+Start cycle → active cycleRun
+    → open/continue session
+    → solve exercises (attempts recorded)
+    → complete cycle → status: completed
+    → start next cycle (cycleNumber + 1)
+```
+
+Each **active** set typically has at most one **active** cycle run. Completing a cycle closes it before the next begins.
+
+## What gets tracked
+
+- **`totalTimeMs`** — cycle duration
+- **`solvedCount`**, **`nextExerciseIndex`** — progress through the set
+- **`cycleNumber`** — which repetition (1, 2, 3…)
+- Per-attempt **`durationMs`** and **`userMoves`** (UCI)
+
+## Training route behavior
+
+**`/app/training`** is execution mode:
+
+- Active cycle → load current exercise and session flow
+- No active cycle → empty state with links to **Training Sets** or **Progress**
+- Completing the last exercise → cycle summary for that run
+
+Training does not auto-open old summaries when you meant to start fresh work.
+
+See [Training Lifecycle](/docs/training/lifecycle) for the full end-to-end flow including sessions and attempts.

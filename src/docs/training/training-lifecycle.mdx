@@ -1,0 +1,191 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# Training Lifecycle
+
+**Why this exists:** PatternForge training is a sequence of connected states — not a flat list of puzzles. This page describes the full path from choosing a set to completing cycles and reviewing progress.
+
+## At a glance
+
+```
+Training Set
+    └── Cycle 1 (active → completed)
+            └── Session(s)
+                    └── Exercise attempts
+    └── Cycle 2 …
+    └── Reflection (Progress) reviews completed cycles
+```
+
+Woodpecker-style training repeats the **same set** across cycles. Each cycle is a measurable pass; recognition improves as cycle time drops.
+
+## Phase 1 — Choose a set
+
+A **training set** is a fixed collection of exercises loaded from static JSON into IndexedDB.
+
+- Ordered by `exerciseIds` on the set record
+- Difficulty: `easy`, `intermediate`, `advanced`, or `custom`
+- Set size = length of `exerciseIds`
+
+**Route:** `/app/sets` — browse sets, view history, start a new cycle.
+
+## Phase 2 — Start a cycle
+
+A **cycle run** is one full pass through the set.
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Field</DocTh>
+      <DocTh>Meaning</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd><code>cycleNumber</code></DocTd>
+      <DocTd>Which repetition (1, 2, 3…)</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>status</code></DocTd>
+      <DocTd><code>active</code> while in progress, <code>completed</code> when done</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>nextExerciseIndex</code></DocTd>
+      <DocTd>Current position in the set</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>totalTimeMs</code></DocTd>
+      <DocTd>Elapsed time for the cycle</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+Only one **active** cycle per set in normal use. Starting a new cycle after completion increments `cycleNumber`.
+
+## Phase 3 — Train (session)
+
+A **session** is a training visit within a cycle. You may have multiple sessions before finishing a cycle.
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Field</DocTh>
+      <DocTh>Meaning</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd><code>status</code></DocTd>
+      <DocTd><code>active</code>, <code>completed</code>, or <code>abandoned</code></DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>activeTimeMs</code></DocTd>
+      <DocTd>Active training time (not wall-clock idle)</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>puzzlesAttempted</code>, <code>correctCount</code>, <code>skippedCount</code></DocTd>
+      <DocTd>Session totals</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+**Route:** `/app/training` — execution mode. Loads the current exercise when an active cycle exists. No active cycle → empty state with links to **Training Sets** or **Progress**.
+
+## Phase 4 — Solve exercises (attempts)
+
+Each **exercise** is one puzzle (FEN, side to move, solution line).
+
+Each **attempt** records a single try:
+
+- **Result** — `correct`, `incorrect`, or `skipped`
+- **Duration** — `durationMs`
+- **Moves** — `userMoves` in UCI (first-move mode stores one move)
+
+Training compares your move to the expected **first move** — not the full variation. See [Design Decisions](/docs/decisions).
+
+Failed positions can enter the **mistake review** queue for focused re-practice.
+
+## Phase 5 — Complete the cycle
+
+When the last exercise is solved (or the cycle flow finishes):
+
+1. Cycle run status → **`completed`**
+2. `totalTimeMs` and progress fields are finalized
+3. Optional redirect to **cycle summary** for that run
+
+The app does **not** auto-open an old summary when you return to Training without an active cycle — execution and review stay separate.
+
+## Phase 6 — Reflect and repeat
+
+**Progress** (`/app/progress`) shows either:
+
+- Your **current active cycle**, or
+- **Reflection** — completed cycles per set (table or chart)
+
+Reflection is scoped **per training set** so trends are not mixed across unrelated sets. See [Reflection](/docs/training/reflection).
+
+When ready, start **cycle N+1** on the same set and aim to reduce total time while keeping quality high.
+
+## End-to-end flow
+
+```
+1. Open Training Sets → pick a set
+2. Start cycle → cycleRun (active)
+3. Enter Training → session (active)
+4. Solve puzzles → exerciseAttempts recorded
+5. Leave or finish → session closed
+6. Complete last exercise → cycleRun (completed)
+7. Review in Progress → Reflection
+8. Start next cycle → cycleNumber + 1
+```
+
+## Routes summary
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Route</DocTh>
+      <DocTh>Mode</DocTh>
+      <DocTh>When</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd><code>/app/sets</code></DocTd>
+      <DocTd>Browse</DocTd>
+      <DocTd>Choose set, start cycle, view set detail</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>/app/training</code></DocTd>
+      <DocTd>Execute</DocTd>
+      <DocTd>Active cycle → current puzzle</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>/app/progress</code></DocTd>
+      <DocTd>Review</DocTd>
+      <DocTd>Active cycle overview or reflection</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Cycle summary</DocTd>
+      <DocTd>Detail</DocTd>
+      <DocTd>One completed run (opt-in)</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>/app/mistakes</code></DocTd>
+      <DocTd>Review</DocTd>
+      <DocTd>Re-practice failed positions</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+## Related docs
+
+- [Training Cycles](/docs/training/cycles) — cycle mechanics and timing focus
+- [Reflection](/docs/training/reflection) — progress and history views
+- [UX Continuity](/docs/training/ux-continuity) — how execution and review stay separate
+- [Data Model](/docs/data-model) — schema reference

@@ -1,60 +1,77 @@
-# Architecture
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
 
-PatternForge is built as a local-first application using modern web technologies.
+# System Overview
 
-## Technology Stack
+**Why this exists:** PatternForge is a local-first web app where training state lives in the browser and UI flows stay coherent across routes.
 
-- **Next.js 16** — React framework with the App Router
-- **React 19** — UI library
-- **Dexie** — IndexedDB wrapper for browser storage
-- **Zod** — Runtime validation and schema types for persisted entities
-- **TypeScript** — Type safety
-- **Tailwind CSS** — Styling
-- **chess.js** — Chess logic where needed in tooling and validation
+## Stack
 
-## Local-First Design
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Layer</DocTh>
+      <DocTh>Choice</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd>Framework</DocTd>
+      <DocTd>Next.js 16 (App Router)</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>UI</DocTd>
+      <DocTd>React 19, Tailwind CSS, shadcn/ui</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Persistence</DocTd>
+      <DocTd>Dexie (IndexedDB), Zod schemas</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Chess</DocTd>
+      <DocTd>chess.js, Chessground</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Quality</DocTd>
+      <DocTd>TypeScript (strict), Vitest, Playwright, Storybook</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
 
-PatternForge stores training data in the browser using IndexedDB. This means:
+## Folder map
 
-- **No backend required** for core training flows
-- **Fast access** — No network round-trips for reads/writes
-- **Privacy** — Data stays on your device
-- **Persistence** — Data survives browser restarts (same origin)
+```
+src/
+├── app/           # Routes and layouts
+├── features/      # Domain UI (training, sets, mistakes, progress)
+├── components/    # Shared UI and marketing
+├── db/            # Dexie setup, schemas, seed
+├── repositories/  # IndexedDB access
+├── services/      # Cross-cutting orchestration
+├── lib/           # Pure helpers
+└── domain/        # Conceptual types and import schemas
+```
 
-Static assets (e.g. generated puzzle JSON) may still be fetched over the network when the app loads.
+Prefer **`src/db/schema.ts`** types when touching persisted data. See [State & Persistence](/docs/architecture/persistence).
 
-## Data Storage
+## State management
 
-The Dexie database (`PatternForgeDB`) defines these tables, aligned with `src/db/schema.ts`:
+No global Redux store. PatternForge uses:
 
-- **appInstance** — One row per install (installation id, timestamps)
-- **settings** — App preferences (theme, board orientation/style, last training set)
-- **trainingSets** — Set metadata and `exerciseIds` ordering
-- **exercises** — Positions, solution moves, first-move hint, tags, etc.
-- **cycleRuns** — Cycle state and progress for a set
-- **sessions** — Training sessions within a cycle (counts, active time, status)
-- **exerciseAttempts** — Individual puzzle attempts (result, duration, `userMoves`)
-- **mistakeEntries** — Mistake review queue and mastery progression
+- **Component state** — `useState` / `useReducer` for local UI
+- **Context** — settings, theme, shell layout
+- **Repositories + hooks** — read/write Dexie on the client
 
-## Domain models vs. persistence schema
+State transitions in training should stay traceable — one owner per phase beats scattered effects.
 
-- **`src/db/schema.ts`** (Zod) is the **canonical shape** for rows stored in IndexedDB. Repositories and services read/write these types.
-- **`src/domain/**`** holds conceptual entities and rules that predate or complement the DB layer. Prefer **`schema.ts` types** when implementing new features that touch Dexie; use **`domain`** when you need pure naming or documentation separation without duplicating fields. If both exist for the same concept, treat the **Zod-inferred type** as the source of truth for persisted data.
+## Related pages
 
-## Component Structure
-
-- **`src/features/*`** — Domain UI and flows (training, training-sets, mistakes, analytics/progress UI, settings)
-- **`src/components/*`** — Shared UI (including `ui/` primitives)
-- **`src/repositories/*`** — Dexie table access
-- **`src/services/*`** — Orchestration and cross-cutting logic
-- **`src/app/*`** — Next.js App Router routes and layouts
-
-## State Management
-
-PatternForge uses React hooks and context:
-
-- **Local state** — `useState` / `useReducer` in components
-- **Shared UI state** — Context (e.g. settings, sidebar)
-- **Data** — Repositories and hooks that read/write Dexie on the client
-
-There is no separate global store (e.g. Redux) for the current scope.
+- [Local-First](/docs/architecture/local-first) — offline, privacy, static assets
+- [Data Model](/docs/data-model) — entity reference
+- [Design Decisions](/docs/decisions) — recorded trade-offs

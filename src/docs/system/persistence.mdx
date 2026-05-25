@@ -1,0 +1,86 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# State & Persistence
+
+**Why this exists:** Training progress is durable state, not ephemeral UI. This page summarizes what persists and how entities connect.
+
+## Database
+
+**`PatternForgeDB`** (Dexie) — defined in `src/db/schema.ts`.
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Table</DocTh>
+      <DocTh>Purpose</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd><code>appInstance</code></DocTd>
+      <DocTd>One row per install</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>settings</code></DocTd>
+      <DocTd>Theme, board style, last training set</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>trainingSets</code></DocTd>
+      <DocTd>
+        Set metadata + <code>exerciseIds</code> order
+      </DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>exercises</code></DocTd>
+      <DocTd>Positions, solutions, tags</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>cycleRuns</code></DocTd>
+      <DocTd>Active/completed passes through a set</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>sessions</code></DocTd>
+      <DocTd>Training periods within a cycle</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>exerciseAttempts</code></DocTd>
+      <DocTd>Per-puzzle results and timing</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>mistakeEntries</code></DocTd>
+      <DocTd>Review queue and mastery progression</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+## Flow (simplified)
+
+```
+Training Set
+    └── exercises (ordered)
+    └── cycleRuns
+            └── sessions
+                    └── exerciseAttempts → exercise
+            └── exerciseAttempts (may omit sessionId)
+    └── mistakeEntries → exercise
+```
+
+## Canonical types
+
+Use **Zod-inferred types from `schema.ts`** as the source of truth for persisted rows. The `src/domain/` folder holds complementary naming and import schemas — not a second persistence layer.
+
+## Writes worth understanding
+
+- **Seed** — `ensureGeneratedPuzzlesInDbIfEmpty()` loads JSON bundles when empty
+- **Start cycle** — creates `cycleRun`, may open `session`
+- **Solve / skip** — appends `exerciseAttempt`, advances cycle progress
+- **Complete cycle** — marks run completed, enables reflection data
+
+Full field reference: [Data Model](/docs/data-model).

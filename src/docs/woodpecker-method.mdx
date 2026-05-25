@@ -1,30 +1,59 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
 # The Woodpecker Method
 
-PatternForge draws on the training philosophy of solving a fixed set of exercises repeatedly, reducing total time each cycle, until motifs become increasingly automatic.
+**Why this exists:** PatternForge adapts a well-known repetition method — fixed positions, repeated cycles, decreasing total time — into a structured local-first training flow.
 
-## The Method
+## The method
 
-The Woodpecker Method, popularized by Axel Smith and Hans Tikkanen, involves:
+1. **Choose a set** — Curated exercises sized to your level and schedule
+2. **Complete cycle 1** — Solve the full set carefully
+3. **Rest briefly** — Reset before the next pass
+4. **Repeat faster** — Same positions, less total time, same quality bar
+5. **Build automaticity** — Motifs surface with less friction each cycle
 
-1. **Choose a set** — Start with a curated training set sized to your level and available time
-2. **Complete Cycle 1** — Solve the full set carefully over your initial training window
-3. **Rest briefly** — Step away, reset, and prepare for the next pass
-4. **Repeat faster** — Solve the same set again, aiming to reduce the total time while maintaining quality
-5. **Build automaticity** — Over repeated cycles, patterns surface faster and with less mental friction
+## The point is recognition
 
-## The Point is Recognition
+Not novelty. Recognition.
 
-The point is not novelty. The point is recognition.
+Returning to the same positions shifts effort from calculation to pattern memory. What once required analysis becomes immediate sight.
 
-By returning to the same positions, you shift from calculation to pattern memory. What once required careful analysis becomes immediate recognition. This is the foundation of strong tactical vision.
+## How PatternForge implements it
 
-## PatternForge Implementation
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Concept</DocTh>
+      <DocTh>In the app</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd>Fixed collection</DocTd>
+      <DocTd>Training set with ordered exercises</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Repeated pass</DocTd>
+      <DocTd>Cycle run with timing and progress</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Training period</DocTd>
+      <DocTd>Session within a cycle</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Improvement signal</DocTd>
+      <DocTd>Cycle time, accuracy, attempt history</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
 
-PatternForge structures the Woodpecker Method through:
+Each cycle builds on the last. Recognition improves. Speed increases. Patterns become automatic.
 
-- **Training sets** — Fixed collections of exercises
-- **Cycles** — Repeated passes through a set
-- **Sessions** — Individual training periods within a cycle
-- **Progress tracking** — Time, accuracy, and cycle completion
-
-Each cycle builds on the previous one. Recognition improves. Speed increases. Patterns become automatic.
+See [Training Cycles](/docs/training/cycles) for the runtime model.

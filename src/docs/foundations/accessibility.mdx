@@ -1,0 +1,28 @@
+# Accessibility
+
+**Why this exists:** Training happens under time pressure on varied devices. Accessibility is part of usable training, not a checkbox.
+
+## Current approach
+
+- **Keyboard** — Focusable controls in shell, dialogs, and settings; Radix primitives handle focus traps
+- **Contrast** — Theme tokens tuned for light and dark boards/surfaces
+- **Touch** — Minimum practical tap targets on mobile training flows
+- **Motion** — Board and UI animations should respect `prefers-reduced-motion` (ongoing hardening)
+
+## Storybook
+
+The **a11y addon** is enabled in Storybook. Use it when reviewing training UI changes in the app or Puzzle Inspector.
+
+## Testing
+
+- **Vitest + Testing Library** — component behavior and labels where critical
+- **Playwright** — smoke flows in `e2e/` against the running app
+- Manual passes with VoiceOver / TalkBack recommended for training and progress routes
+
+## When you change UI
+
+1. Can you reach it with keyboard only?
+2. Does feedback make sense without color alone (copy + structure)?
+3. Does layout hold on a narrow viewport?
+
+See [UX Continuity](/docs/training/ux-continuity) for flow-level guidance.

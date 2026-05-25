@@ -8,6 +8,10 @@ const config = {
   stories: [
     "../src/stories/docs/Introduction.mdx",
     "../src/stories/docs/product/**/*.mdx",
+    "../src/stories/docs/architecture/**/*.mdx",
+    "../src/stories/docs/training/**/*.mdx",
+    "../src/stories/docs/development/**/*.mdx",
+    "../src/stories/docs/foundations/**/*.mdx",
     "../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   "addons": [

@@ -1,0 +1,64 @@
+# Project Structure
+
+PatternForge is organized around domain features, local persistence, and clear separation between routes, UI, and data access. This is a map of the major folders — not a file-by-file inventory.
+
+## App routes
+
+**`src/app/`** — Next.js App Router entry points.
+
+- **`app/`** — authenticated training app (`/app/training`, `/app/session`, etc.)
+- **`preview/`** — isolated UI previews for development
+- Marketing and legal pages at the root level
+
+## Features (domain UI)
+
+**`src/features/`** — feature modules that own screens, hooks, and feature-specific services.
+
+Notable areas:
+
+- **`training/`** — active training session, board, feedback
+- **`training-sets/`** — set list, detail, cycle history
+- **`mistakes/`** — mistake review queue
+- **`analytics/`**, **`dashboard/`**, **`settings/`**, **`session/`**
+
+Each feature typically contains `components/`, `hooks/`, and `services/` as needed.
+
+## Shared components
+
+**`src/components/`** — reusable UI used across features.
+
+- **`ui/`** — shadcn-style primitives (Button, Card, etc.)
+- **`shared/`** — app chrome (sidebar, theme toggle)
+- **`marketing/`** — public landing pages
+
+## Training logic
+
+**`src/lib/training/`** — pure helpers for exercise ordering, validation, and progress math.
+
+**`src/domain/training/`** — domain types, entities, and import schemas.
+
+**`src/services/`** — orchestration across repositories (cycles, sessions, analytics).
+
+## Data and persistence
+
+**`src/db/`** — Dexie database setup, Zod schemas, and seed logic.
+
+**`src/repositories/`** — IndexedDB table access (training sets, exercises, sessions, attempts).
+
+**`public/data/woodpecker/`** — static training set JSON bundles loaded into the browser.
+
+## Tests
+
+- **`src/**/*.test.ts(x)`** — Vitest unit and component tests (co-located with source)
+- **`e2e/`** — Playwright end-to-end specs
+- **`src/test/`** — shared test setup
+
+## Documentation
+
+- **`src/docs/`** — product and developer documentation (MDX source)
+- **`src/stories/`** — Storybook stories and doc wrappers
+- **`.storybook/`** — Storybook configuration
+
+## Scripts
+
+**`scripts/`** — CLI utilities (Woodpecker JSON validation, icon generation).

@@ -1,0 +1,39 @@
+# UX Continuity
+
+**Why this exists:** Tactical training is a flow — board, feedback, navigation, and timing should feel like one system, not a stack of unrelated screens.
+
+## Principles in practice
+
+### One training rhythm
+
+Board interaction, feedback panels, and session progress use consistent spacing, motion, and copy tone. Correct/incorrect feedback is immediate and instructive without breaking focus.
+
+### Execution vs reflection
+
+Training routes stay in **do** mode. Progress and cycle summaries handle **review**. Avoid surprising redirects when the user intended to train.
+
+See [Reflection](/docs/training/reflection).
+
+### Mobile-aware layout
+
+Training is used on phones and tablets. Touch targets, sidebar behavior, and board sizing are first-class — not desktop layouts shrunk down.
+
+### Theme continuity
+
+Light/dark theme syncs across app shell, board, and docs. CSS variables in `globals.css` drive surfaces; `html.dark` matches stored settings.
+
+### Accessible interaction
+
+Keyboard focus, dialog focus traps, and readable contrast are part of continuity — not a separate audit pass. Storybook includes the a11y addon when reviewing UI.
+
+## Implementation habits
+
+- Prefer shared primitives in `src/components/ui/` over one-off styling
+- Keep state transitions owned by a hook or service — traceable phases
+- Use domain language in UI copy: cycle, set, attempt, reflection
+- Test training flows in the app and with Playwright — not isolated placeholder UI
+
+## Related
+
+- [Engineering Conventions](/docs/dev/engineering-conventions)
+- [Accessibility](/docs/foundations/accessibility)

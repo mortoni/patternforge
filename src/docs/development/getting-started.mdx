@@ -1,0 +1,59 @@
+# Getting Started
+
+PatternForge is a local-first tactical chess training system. This page covers the minimum setup to run the app locally.
+
+For product context and positioning, see the [README on GitHub](https://github.com/mortoni/patternforge#readme).
+
+## Prerequisites
+
+- **Node.js** 20 or later
+- **pnpm** (recommended package manager for this repo)
+
+## Install
+
+From the repo root:
+
+```bash
+pnpm install
+```
+
+## Run the app
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). On first visit, the app loads training sets from static JSON into IndexedDB if the local database is empty.
+
+## Storybook
+
+Component docs and developer guides live in Storybook:
+
+```bash
+pnpm storybook
+```
+
+Opens at [http://localhost:6006](http://localhost:6006).
+
+## Checks before you commit
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+```
+
+Run the full CI sequence locally:
+
+```bash
+pnpm ci
+```
+
+This runs lint, unit tests, typecheck, and a production build.
+
+## Where to go next
+
+- [Project Structure](/docs/dev/project-structure) — where code lives
+- [Running Tests](/docs/dev/running-tests) — test types and commands
+- [Philosophy](/docs/philosophy) — training approach and product intent
+- [Training Lifecycle](/docs/training/lifecycle) — sets, cycles, and sessions

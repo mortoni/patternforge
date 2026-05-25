@@ -1,95 +1,59 @@
 # Design Decisions
 
-Key architectural and design choices in PatternForge.
+**Why this exists:** Recorded trade-offs — what we chose, why, and what we gave up. Not a process doc; a memory aid for contributors.
 
-## Local-First Architecture
+## Local-first architecture
 
-**Decision**: Store all data locally in IndexedDB, no backend required.
+**Decision:** IndexedDB for all training data. No backend required.
 
-**Rationale**: 
-- Faster access, no network latency
-- Works offline
-- Privacy by default
-- Simpler deployment
+**Why:** Fast access, offline training, privacy, simpler deployment.
 
-**Trade-offs**:
-- No cloud sync (future consideration)
-- Data tied to browser/device
-- No multi-device access
+**Trade-off:** No sync or multi-device backup today.
 
-## First-Move Verification
+## First-move verification
 
-**Decision**: Training and mistake review compare your move to the expected **first move** (UCI), using `Exercise.firstMove` or the first entry in `solutionMoves`. The full solution line is not verified interactively in the UI.
+**Decision:** Compare the user's move to the expected **first move** (UCI). Full solution lines are not verified interactively.
 
-**Rationale**:
-- Focuses on pattern recognition and the critical idea, not deep calculation in-app
-- Faster feedback loop
-- Aligns with Woodpecker-style emphasis on recognition
+**Why:** Emphasizes pattern recognition and faster feedback — aligned with Woodpecker-style training.
 
-**Trade-offs**:
-- Does not prove you would find the entire continuation
-- May miss nuance that appears only later in the line
+**Trade-off:** Does not prove full-line calculation.
 
-## Cycle-Based Organization
+## Cycle-based organization
 
-**Decision**: Structure training around cycles (repeated passes) rather than linear progression.
+**Decision:** Training organized as repeated **cycles** through fixed sets.
 
-**Rationale**:
-- Core to Woodpecker Method
-- Enables time reduction tracking
-- Builds pattern memory through repetition
+**Why:** Core to the method; enables time-reduction tracking and pattern memory.
 
-**Trade-offs**:
-- Less variety than random puzzles
-- Requires discipline to repeat sets
+**Trade-off:** Less variety than random puzzle feeds.
 
-## Training vs. reflection (routes)
+## Training vs reflection (routes)
 
-**Decision**: **`/app/training`** stays in **execution mode**. If there is no active cycle, show an empty state and links to start a new cycle (Training Sets) or review history (**Progress**), instead of auto-opening the last **cycle summary**.
+**Decision:** `/app/training` stays in execution mode. No active cycle → empty state, not auto-redirect to last summary.
 
-**Rationale**:
-- Avoids surprising redirects when the user meant to train
-- Keeps “do puzzles here” and “look back there” mentally separate
-- Summary remains available after completing a cycle from the solve flow and from **Progress → Reflection**
+**Why:** Separates doing from reviewing; avoids surprise navigation.
 
-**Reflection charts**: Progress over time is scoped **per training set** (cycle number vs. total time for that set only), so trends are not mixed across unrelated sets.
+**Reflection charts:** Scoped **per training set** — cycle number vs time for one set only.
 
-## Mistake Review System
+## Mistake review
 
-**Decision**: Track failed positions separately and allow focused review.
+**Decision:** Failed positions enter a review queue with mastery progression.
 
-**Rationale**:
-- Converts failures into learning opportunities
-- Enables targeted improvement
-- Prevents repeated mistakes
+**Why:** Turns failures into targeted practice.
 
-**Trade-offs**:
-- Additional complexity
-- Requires maintenance of mistake state
+**Trade-off:** Additional state to maintain.
 
-## No Authentication
+## No authentication
 
-**Decision**: No user accounts or authentication system.
+**Decision:** No user accounts.
 
-**Rationale**:
-- Simpler architecture
-- Privacy-focused (local data)
-- Faster development
+**Why:** Simpler architecture; data stays local.
 
-**Trade-offs**:
-- No multi-device sync
-- No data backup/restore
-- No sharing or collaboration
+**Trade-off:** No sync, sharing, or cloud backup.
 
-## TypeScript Throughout
+## TypeScript throughout
 
-**Decision**: Use TypeScript for all code, strict mode enabled.
+**Decision:** Strict TypeScript for all application code.
 
-**Rationale**:
-- Type safety catches errors early
-- Better IDE support
-- Self-documenting code
+**Why:** Catch errors early; schemas self-document persistence boundaries.
 
-**Trade-offs**:
-- Slightly more verbose
-- Learning curve for contributors
+**Trade-off:** Slightly more ceremony for contributors.

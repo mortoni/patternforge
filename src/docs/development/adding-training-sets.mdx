@@ -1,0 +1,60 @@
+# Adding Training Sets
+
+Training set data ships as static JSON bundles. The app loads them into IndexedDB on first visit (or via dev-only reload actions).
+
+## Where data lives
+
+**`public/data/woodpecker/`** — bundled training sets served at `/data/woodpecker/`.
+
+Current sets:
+
+- `woodpecker-easy.json`
+- `woodpecker-intermediate.json`
+- `woodpecker-advanced.json`
+
+Seed logic: `src/db/seed-puzzles.ts`.
+
+## Bundle structure
+
+Each JSON file is a bundle with a top-level shape:
+
+```json
+{
+  "trainingSetId": "woodpecker-easy",
+  "puzzles": [ /* ... */ ]
+}
+```
+
+Each puzzle includes:
+
+- **`id`** — stable exercise identifier
+- **`puzzleNumber`** — order within the set
+- **`fen`**, **`sideToMove`**, **`difficulty`**
+- **`solution`** — `mainLine`, `uci`, and `fullLine` move objects
+- **`metadata`** — motif tags, game source, optional comment
+- **`validation`** — verification status (see existing bundles for the current shape)
+
+See `woodpecker-easy.json` for a complete example. Schema validation lives in `scripts/validate-woodpecker-json.ts`.
+
+## Validate before committing
+
+```bash
+pnpm validate:woodpecker
+```
+
+This checks Zod schema compliance, move legality via chess.js, and consistency across sets. A report can be written to `public/data/reports/woodpecker-validation-report.json`.
+
+## Loading into the app
+
+**Production / first visit:** `ensureGeneratedPuzzlesInDbIfEmpty()` fetches bundles when IndexedDB has no training sets.
+
+**Development:** use dev actions on the Training Sets page to reload from JSON after editing bundles. See `training-sets.service.ts` for `loadGeneratedSetsIntoDb` and `resetAllAndLoadGenerated`.
+
+## CSV import (future-facing)
+
+`src/domain/training/entities/puzzle-import.schema.ts` defines CSV row validation for a normalized puzzle format. This supports tooling paths separate from the Woodpecker JSON bundles.
+
+## Related docs
+
+- [Architecture — Data Storage](/docs/architecture) — IndexedDB tables and persistence
+- [Data Model](/docs/data-model) — entity relationships

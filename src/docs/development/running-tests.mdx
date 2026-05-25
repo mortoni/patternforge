@@ -1,0 +1,69 @@
+# Running Tests
+
+PatternForge uses a layered test setup: lint and typecheck for static correctness, Vitest for unit and component tests, Playwright for end-to-end smoke checks.
+
+## Lint
+
+```bash
+pnpm lint
+```
+
+Runs ESLint across the project.
+
+## Typecheck
+
+```bash
+pnpm typecheck
+```
+
+Runs `tsc --noEmit` — catches type errors without building.
+
+## Unit and component tests
+
+```bash
+pnpm test
+```
+
+Runs Vitest once. Tests live in `src/**/*.{test,spec}.{ts,tsx}` and use jsdom.
+
+Watch mode during development:
+
+```bash
+pnpm test:watch
+```
+
+Vitest config: `vitest.config.ts`. Shared setup: `src/test/setup.ts`.
+
+## End-to-end tests
+
+First-time setup (installs Chromium):
+
+```bash
+pnpm test:e2e:install
+```
+
+Run e2e specs:
+
+```bash
+pnpm test:e2e
+```
+
+Playwright starts the Next.js dev server automatically (`playwright.config.ts`). Specs live in `e2e/`.
+
+## Full CI locally
+
+```bash
+pnpm ci
+```
+
+Runs lint → test → typecheck → build in sequence. Use this before opening a PR.
+
+## Training data validation
+
+Validate Woodpecker JSON bundles separately:
+
+```bash
+pnpm validate:woodpecker
+```
+
+Optional flags for custom paths and report output — see `scripts/validate-woodpecker-json.ts`.

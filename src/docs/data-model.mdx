@@ -1,26 +1,25 @@
 # Data Model
 
-Core entities match the Zod schemas in `src/db/schema.ts` (types are inferred with `z.infer`). Below is a concise reference; the source file is authoritative.
+**Why this exists:** Quick reference for persisted entities. **`src/db/schema.ts`** is authoritative — types are Zod-inferred.
 
-## Training set (`TrainingSetSchema`)
+## Training set
 
 ```typescript
-// difficulty: "easy" | "intermediate" | "advanced" | "custom"
 interface TrainingSet {
   id: string;
   name: string;
-  description?: string;
-  difficulty: Difficulty;
+  difficulty: "easy" | "intermediate" | "advanced" | "custom";
   exerciseIds: string[];
   createdAt: string;
+  description?: string;
   source?: string;
   tags?: string[];
 }
 ```
 
-Set size is `exerciseIds.length` (there is no separate `exerciseCount` field).
+Set size = `exerciseIds.length`.
 
-## Exercise (`ExerciseSchema`)
+## Exercise
 
 ```typescript
 interface Exercise {
@@ -28,61 +27,53 @@ interface Exercise {
   trainingSetId: string;
   fen: string;
   sideToMove: "w" | "b";
-  solutionMoves: string[]; // typically UCI after import/normalization
-  firstMove?: string; // expected first move (UCI); often derived from solutionMoves[0]
-  source?: string;
-  motifTags?: string[];
-  createdAt: string;
+  solutionMoves: string[]; // UCI after import
+  firstMove?: string;      // expected first move (UCI)
   puzzleNumber?: number;
-  difficulty?: Difficulty;
+  motifTags?: string[];
   comment?: string;
 }
 ```
 
-First-move checking in training compares your move to `firstMove` / the first solution move — not the entire variation.
+Training compares your move to **`firstMove`** / first solution move — not the full line.
 
-## Cycle run (`CycleRunSchema`)
+## Cycle run
 
 ```typescript
-// status in DB: "active" | "completed" only
 interface CycleRun {
   id: string;
   trainingSetId: string;
   cycleNumber: number;
   status: "active" | "completed";
-  startedAt: string;
-  completedAt?: string;
   totalTimeMs: number;
   solvedCount: number;
   totalExercises: number;
   nextExerciseIndex: number;
+  startedAt: string;
+  completedAt?: string;
 }
 ```
 
-## Session (`SessionSchema`)
+## Session
 
 ```typescript
-// status: "active" | "completed" | "abandoned"
 interface Session {
   id: string;
   trainingSetId: string;
   cycleRunId: string;
-  targetPuzzleCount?: number;
-  startedAt: string;
-  endedAt?: string;
+  status: "active" | "completed" | "abandoned";
   activeTimeMs: number;
   puzzlesAttempted: number;
   correctCount: number;
   skippedCount: number;
-  status: SessionStatus;
+  startedAt: string;
+  endedAt?: string;
 }
 ```
 
-Active training time is tracked as **`activeTimeMs`**, not a single optional `totalDurationMs`.
+## Exercise attempt
 
-## Exercise attempt (`ExerciseAttemptSchema`)
-
-Stored in the **`exerciseAttempts`** table.
+Table: **`exerciseAttempts`**
 
 ```typescript
 interface ExerciseAttempt {
@@ -90,41 +81,34 @@ interface ExerciseAttempt {
   exerciseId: string;
   cycleRunId: string;
   sessionId?: string;
-  startedAt: string;
-  finishedAt?: string;
-  durationMs: number;
   result: "correct" | "incorrect" | "skipped";
-  userMoves: string[]; // UCI; first-move mode stores one move
+  durationMs: number;
+  userMoves: string[];
 }
 ```
 
-## Mistake entry (`MistakeEntrySchema`)
+## Mistake entry
 
-Stored in the **`mistakeEntries`** table.
+Table: **`mistakeEntries`**
 
 ```typescript
 interface MistakeEntry {
   id: string;
   exerciseId: string;
   trainingSetId: string;
-  createdAt: string;
-  lastReviewedAt?: string;
+  status: "needs_review" | "solved_once" | "solved_twice" | "mastered";
   failedAttempts: number;
   solvedReviewCount: number;
-  status: "needs_review" | "solved_once" | "solved_twice" | "mastered";
 }
 ```
 
 ## Relationships
 
-- **Training set** → ordered **exercises** via `exerciseIds`
-- **Training set** → many **cycle runs**
-- **Cycle run** → many **sessions**
-- **Session** → many **exercise attempts** (when `sessionId` is set)
-- **Exercise attempt** → one **exercise**, one **cycle run**
-- **Mistake entry** → one **exercise** and one **training set** (compound index for uniqueness)
+- Set → exercises via `exerciseIds`
+- Set → many cycle runs
+- Cycle run → many sessions → many attempts
+- Mistake entry → one exercise + one set
 
-## App metadata
+App metadata: **`appInstance`**, **`settings`** (theme, board, last set).
 
-- **`AppInstanceSchema`** — installation id and open timestamps
-- **`AppSettingsSchema`** — theme, board orientation, optional `boardStyle`, optional `lastTrainingSetId`
+See [State & Persistence](/docs/architecture/persistence) for the storage overview.

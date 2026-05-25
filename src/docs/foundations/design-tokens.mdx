@@ -1,0 +1,75 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# Design Tokens
+
+**Why this exists:** PatternForge uses a small, intentional token set — calm surfaces, readable type, board-aware accents.
+
+## Color
+
+Defined in `src/app/globals.css` as CSS variables:
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Token</DocTh>
+      <DocTh>Role</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd>
+        <code>--background</code> / <code>--foreground</code>
+      </DocTd>
+      <DocTd>Page surface and text</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>
+        <code>--card</code> / <code>--card-foreground</code>
+      </DocTd>
+      <DocTd>Elevated panels</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>
+        <code>--muted</code> / <code>--muted-foreground</code>
+      </DocTd>
+      <DocTd>Secondary text and fills</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>--border</code></DocTd>
+      <DocTd>Dividers and outlines</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>--primary</code></DocTd>
+      <DocTd>Primary actions</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>--pf-board-last-move</code></DocTd>
+      <DocTd>Chessground last-move highlight</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+Dark mode applies via **`html.dark`** (synced with app settings), not OS preference alone.
+
+## Typography
+
+- **UI:** Inter / system sans (`--font-inter`)
+- **Docs:** Slightly relaxed line height (`leading-[1.7]`) for long-form readability
+- **Code:** Geist Mono for commands and schema snippets
+
+## Spacing & shape
+
+- **Radius:** `rounded-lg` / `rounded-xl` for cards and callouts
+- **Docs rhythm:** Section gaps ~`mt-14`, paragraph `mb-5` — see `src/mdx-components.tsx`
+- **Training panels:** Compact vertical padding; board gets visual priority
+
+## Components
+
+Built on shadcn/ui patterns in `src/components/ui/`. Variants use `class-variance-authority` — extend variants rather than one-off classes when a pattern repeats.

@@ -1,0 +1,61 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# Reflection
+
+**Why this exists:** After cycles complete, PatternForge separates **doing** (`/app/training`) from **looking back** (`/app/progress`) so review never hijacks execution.
+
+## When reflection appears
+
+**Progress** shows:
+
+- **Current cycle** — when an active cycle exists for your context
+- **Reflection** — when no active cycle (browsing completed work)
+
+## Per-set history
+
+Reflection is scoped **per training set**, not mixed across unrelated sets.
+
+1. Choose a set from the selector
+2. View completed cycles as a **table** or **line chart**
+3. Chart plots **cycle number vs total time** (needs ≥ 2 completed cycles)
+4. A **median** line is computed from that set’s data only
+
+## Drill-down
+
+Table rows link to **cycle summary** for a specific run — timing, counts, and session detail. Summary is opt-in from Progress; it is not forced when opening Training.
+
+## Design intent
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Route</DocTh>
+      <DocTh>Mode</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd><code>/app/training</code></DocTd>
+      <DocTd>Execute — solve the current puzzle</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd><code>/app/progress</code></DocTd>
+      <DocTd>Reflect — compare cycles over time</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Cycle summary</DocTd>
+      <DocTd>Detail — one completed run</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+This split supports UX continuity: training stays focused; reflection stays deliberate.
+
+See [Design Decisions — Training vs reflection](/docs/decisions).

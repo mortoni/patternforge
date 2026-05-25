@@ -1,0 +1,77 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# Running Storybook
+
+**Why this exists:** Storybook is PatternForge's curated docs surface — UI review, product handbook, and developer guides.
+
+## What it covers
+
+- **Product & architecture** — training philosophy and system design
+- **Development guides** — setup, tests, conventions
+- **Puzzle Inspector** — internal puzzle validation tool
+
+## Run locally
+
+```bash
+pnpm storybook
+```
+
+Opens at [http://localhost:6006](http://localhost:6006).
+
+Static build (Chromatic CI):
+
+```bash
+pnpm build-storybook
+```
+
+Output: `storybook-static/`.
+
+## Sidebar groups
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Group</DocTh>
+      <DocTh>Contents</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd>Introduction</DocTd>
+      <DocTd>Landing and navigation</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Product</DocTd>
+      <DocTd>Philosophy, method, roadmap</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Architecture</DocTd>
+      <DocTd>Stack, local-first, persistence, data model</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Training System</DocTd>
+      <DocTd>Cycles, reflection, continuity, inspector</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Development Guides</DocTd>
+      <DocTd>Contributor orientation</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Foundations</DocTd>
+      <DocTd>Tokens, accessibility</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+Use Storybook when reviewing UI changes or reading docs without starting Next.js.
+
+## Chromatic
+
+Published builds are linked from the README for external readers.

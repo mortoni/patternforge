@@ -1,0 +1,70 @@
+import {
+  DocTable,
+  DocTableBody,
+  DocTableHead,
+  DocTableRow,
+  DocTd,
+  DocTh,
+} from "@/components/docs";
+
+# Local-First Architecture
+
+**Why this exists:** Core training should work without a backend, survive offline use, and keep user data on the device.
+
+## What local-first means here
+
+- **IndexedDB** stores sets, cycles, sessions, attempts, mistakes, and settings
+- **No account required** for training flows
+- **Fast reads/writes** — no network round-trip for progress
+- **Privacy by default** — data stays in the browser (same origin)
+
+Static puzzle bundles in `public/data/woodpecker/` are fetched when the app loads, then upserted into Dexie. After seeding, training runs against local data.
+
+## Trade-offs (accepted)
+
+<DocTable>
+  <DocTableHead>
+    <DocTableRow>
+      <DocTh>Benefit</DocTh>
+      <DocTh>Cost</DocTh>
+    </DocTableRow>
+  </DocTableHead>
+  <DocTableBody>
+    <DocTableRow>
+      <DocTd>Simple deployment</DocTd>
+      <DocTd>No built-in multi-device sync</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>Offline-capable training</DocTd>
+      <DocTd>Data tied to browser/device</DocTd>
+    </DocTableRow>
+    <DocTableRow>
+      <DocTd>No auth complexity</DocTd>
+      <DocTd>No cloud backup today</DocTd>
+    </DocTableRow>
+  </DocTableBody>
+</DocTable>
+
+## Engineering implications
+
+- Repositories in `src/repositories/` are the persistence boundary
+- Zod schemas in `src/db/schema.ts` validate rows at write time
+- Services orchestrate multi-table updates (cycle completion, session close)
+- Tests use Vitest with jsdom; Dexie can be exercised in unit tests
+
+## Diagram
+
+```
+┌─────────────────┐     fetch once      ┌──────────────────────┐
+│  Static JSON    │ ──────────────────► │  IndexedDB (Dexie)   │
+│  /data/woodpecker│                    │  sets · cycles · etc │
+└─────────────────┘                     └──────────┬───────────┘
+                                                   │
+                                                   ▼
+                                        ┌──────────────────────┐
+                                        │  React features      │
+                                        │  training · progress │
+                                        └──────────────────────┘
+```
+
+See [State & Persistence](/docs/architecture/persistence) for table-level detail.
