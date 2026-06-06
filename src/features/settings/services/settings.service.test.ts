@@ -36,7 +36,7 @@ describe("settings.service", () => {
 
       expect(result).toEqual({
         ...existing,
-        boardStyle: "classic",
+        boardStyle: "blueprint",
       });
       expect(mockPutSettings).not.toHaveBeenCalled();
     });
@@ -58,7 +58,7 @@ describe("settings.service", () => {
       );
       expect(result.theme).toBe("system");
       expect(result.boardOrientation).toBe("white");
-      expect(result.boardStyle).toBe("classic");
+      expect(result.boardStyle).toBe("blueprint");
     });
   });
 
@@ -69,7 +69,7 @@ describe("settings.service", () => {
         id: "default",
         theme: "dark",
         boardOrientation: "white",
-        boardStyle: "classic",
+        boardStyle: "blueprint",
       });
 
       const result = await updateTheme("dark");

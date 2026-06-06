@@ -25,7 +25,7 @@ const defaultSettings = {
   id: "default" as const,
   theme: "system" as const,
   boardOrientation: "white" as const,
-  boardStyle: "classic" as const,
+  boardStyle: "blueprint" as const,
   lastTrainingSetId: undefined as string | undefined,
 };
 

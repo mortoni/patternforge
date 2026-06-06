@@ -19,7 +19,7 @@ export async function putSettings(
     id,
     theme: data.theme ?? "system",
     boardOrientation: data.boardOrientation ?? "white",
-    boardStyle: data.boardStyle ?? "classic",
+    boardStyle: data.boardStyle ?? "blueprint",
     lastTrainingSetId: data.lastTrainingSetId,
     autoBoardOrientation: data.autoBoardOrientation ?? false,
   });

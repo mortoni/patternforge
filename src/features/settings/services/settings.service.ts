@@ -21,7 +21,7 @@ const DEFAULTS: Pick<
 > = {
   theme: "system",
   boardOrientation: "white",
-  boardStyle: "classic",
+  boardStyle: "blueprint",
   lastTrainingSetId: undefined,
   autoBoardOrientation: false,
 };

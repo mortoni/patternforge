@@ -161,7 +161,7 @@ export function parseBoardStyleId(value: unknown): BoardStyleId {
   ) {
     return value as BoardStyleId;
   }
-  return "classic";
+  return "blueprint";
 }
 
 export interface ResolvedBoardChessStyles {
