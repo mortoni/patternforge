@@ -75,6 +75,8 @@ const preview: Preview = {
               "Reflection",
               "UX Continuity",
               "Puzzle Inspector",
+              ["Easy", ["Default", "Play and check"]],
+              ["Intermediate", "Advanced"],
             ],
           ],
           [

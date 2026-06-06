@@ -66,4 +66,10 @@ Validate Woodpecker JSON bundles separately:
 pnpm validate:woodpecker
 ```
 
-Optional flags for custom paths and report output — see `scripts/validate-woodpecker-json.ts`.
+CI-style check (changed files; full easy set when `woodpecker-easy.json` changes):
+
+```bash
+pnpm validate:woodpecker:ci -- --changed-from origin/main
+```
+
+Optional flags for custom paths and report output — see `scripts/validate-woodpecker-json.ts` and [Validating Woodpecker Puzzles](/docs/dev/validating-woodpecker-puzzles).

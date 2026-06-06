@@ -9,8 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
 import { advanceThroughSolutionLine } from "@/lib/training/puzzle-line-validator";
-import { getExercisesByPuzzleNumber } from "@/repositories/exercise.repository";
-import { ensureGeneratedPuzzlesInDbIfEmpty } from "@/features/training-sets/services/training-sets.service";
+import {
+  findExercisesByPuzzleNumberInWoodpeckerJson,
+  WOODPECKER_SET_IDS,
+  type WoodpeckerSetId,
+} from "@/db/seed-puzzles";
 import { TrainingBoardCard } from "@/features/training/components/training-board-card";
 import type { ExerciseSchema } from "@/db/schema";
 
@@ -37,9 +40,19 @@ function applyUciToFen(fen: string, uci: string): string | null {
   }
 }
 
-/** Interactive puzzle loader for local IndexedDB data — run inside Storybook (`pnpm storybook`). */
-export function PuzzleWorkbenchPage() {
-  const [loading, setLoading] = React.useState(true);
+export type PuzzleWorkbenchPageProps = {
+  /** Which bundle files to fetch; defaults to easy only for faster Storybook iteration. */
+  woodpeckerSetIds?: readonly WoodpeckerSetId[];
+  /** Optional heading override (Storybook sets one per difficulty). */
+  workbenchTitle?: string;
+};
+
+/** Interactive puzzle loader — reads Woodpecker JSON from `/data/woodpecker/` (Storybook / dev). */
+export function PuzzleWorkbenchPage({
+  woodpeckerSetIds = ["woodpecker-easy"],
+  workbenchTitle = "Puzzle workbench",
+}: PuzzleWorkbenchPageProps = {}) {
+  const [loadingPuzzle, setLoadingPuzzle] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [loaded, setLoaded] = React.useState<ExerciseSchema | null>(null);
   const [positionFen, setPositionFen] = React.useState("");
@@ -53,21 +66,6 @@ export function PuzzleWorkbenchPage() {
       clearTimeout(timer);
     }
     autoPlayTimersRef.current = [];
-  }, []);
-
-  React.useEffect(() => {
-    let cancelled = false;
-    async function boot() {
-      try {
-        await ensureGeneratedPuzzlesInDbIfEmpty();
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    void boot();
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   React.useEffect(() => {
@@ -94,19 +92,32 @@ export function PuzzleWorkbenchPage() {
       setMessage("Enter a valid puzzle number.");
       return;
     }
-    const matches = await getExercisesByPuzzleNumber(n);
-    if (matches.length === 0) {
+    setLoadingPuzzle(true);
+    setMessage(null);
+    try {
+      const matches = await findExercisesByPuzzleNumberInWoodpeckerJson(n, {
+        setIds: woodpeckerSetIds,
+      });
+      if (matches.length === 0) {
+        setLoaded(null);
+        setMessage(`Puzzle ${n} not found in public/data/woodpecker/*.json.`);
+        return;
+      }
+      if (matches.length > 1) {
+        setMessage(
+          `Puzzle ${n} exists in multiple sets. Loaded ${matches[0].trainingSetId} (${matches[0].id}).`
+        );
+      }
+      resetForExercise(matches[0]);
+    } catch (err) {
       setLoaded(null);
-      setMessage(`Puzzle ${n} not found in the loaded training sets.`);
-      return;
-    }
-    if (matches.length > 1) {
       setMessage(
-        `Puzzle ${n} exists in multiple sets. Loaded ${matches[0].trainingSetId} (${matches[0].id}).`
+        err instanceof Error ? err.message : "Failed to load Woodpecker JSON bundles."
       );
+    } finally {
+      setLoadingPuzzle(false);
     }
-    resetForExercise(matches[0]);
-  }, [query, resetForExercise]);
+  }, [query, resetForExercise, woodpeckerSetIds]);
 
   const handleBoardMove = React.useCallback(
     async (uci: string, newFen: string) => {
@@ -229,21 +240,19 @@ export function PuzzleWorkbenchPage() {
     }
   }, [loaded]);
 
-  if (loading) {
-    return (
-      <div className="mx-auto flex min-h-[50vh] w-full max-w-5xl items-center justify-center px-4 sm:px-6">
-        <p className="text-sm text-muted-foreground">Loading puzzle data…</p>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-5.5rem)] w-full max-w-5xl flex-col px-4 sm:px-6 md:min-h-[calc(100dvh-4rem)] lg:px-8">
       <header className="mb-4 flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-semibold text-foreground">Puzzle workbench</h1>
+          <h1 className="text-lg font-semibold text-foreground">{workbenchTitle}</h1>
           <p className="text-sm text-muted-foreground">
-            Load a puzzle number and play the line with training-style interaction.
+            Loads from{" "}
+            <code className="text-xs">
+              {woodpeckerSetIds.length === WOODPECKER_SET_IDS.length
+                ? "public/data/woodpecker/*.json"
+                : woodpeckerSetIds.map((id) => `${id}.json`).join(", ")}
+            </code>{" "}
+            on each load — save edits, then click Load puzzle again.
           </p>
         </div>
         <ThemeToggle className="hidden md:inline-flex" />
@@ -267,8 +276,8 @@ export function PuzzleWorkbenchPage() {
             }}
           />
         </div>
-        <Button type="button" onClick={() => void handleLoadPuzzle()}>
-          Load puzzle
+        <Button type="button" disabled={loadingPuzzle} onClick={() => void handleLoadPuzzle()}>
+          {loadingPuzzle ? "Loading…" : "Load puzzle"}
         </Button>
       </div>
 
@@ -349,7 +358,7 @@ export function PuzzleWorkbenchPage() {
         <div className="mt-6">
           <EmptyState
             title="No puzzle loaded"
-            description="Enter a puzzle number from your local training-set data."
+            description="Enter a puzzle number from the Woodpecker JSON bundles."
           />
         </div>
       )}

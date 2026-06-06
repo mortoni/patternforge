@@ -27,6 +27,9 @@
 .DS_Store
 *.pem
 
+# generated woodpecker repair dry-run output (regenerate with repair:woodpecker)
+public/data/reports/*-repair-report.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

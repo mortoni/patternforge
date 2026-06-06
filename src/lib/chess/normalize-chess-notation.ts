@@ -30,11 +30,19 @@ export const CHESS_NOTATION_CORRUPTED_CHAR_MAP: Readonly<Record<string, string>>
 /**
  * Replaces known corrupted chess notation characters with standard SAN letters
  * (and "+" for dagger-check). Does not alter move numbers, !?, #, ×, en-dash, etc.
+ *
+ * Also normalizes common Unicode punctuation from PDF/book sources to ASCII
+ * where it does not change chess meaning (curly quotes).
  */
 export function normalizeChessNotation(text: string): string {
   let out = "";
   for (const ch of text) {
     out += CHESS_NOTATION_CORRUPTED_CHAR_MAP[ch] ?? ch;
   }
-  return out;
+  return out.replace(/[\u2018\u2019]/g, "'");
+}
+
+/** ASCII-friendly game headers: curly quotes and Unicode dashes between players. */
+export function normalizeGameSource(text: string): string {
+  return normalizeChessNotation(text).replace(/[\u2013\u2014\u2212]/g, "-");
 }

@@ -17,6 +17,10 @@
     "test:e2e": "node node_modules/@playwright/test/cli.js test",
     "test:e2e:install": "node node_modules/@playwright/test/cli.js install chromium",
     "validate:woodpecker": "tsx scripts/validate-woodpecker-json.ts",
+    "validate:woodpecker:ci": "tsx scripts/validate-woodpecker-json.ts --ci --fail-on-issues",
+    "repair:woodpecker": "tsx scripts/repair-woodpecker-from-comments.ts",
+    "normalize:woodpecker-comments": "tsx scripts/normalize-woodpecker-comments.ts",
+    "fill:missing-easy-comments": "tsx scripts/fill-missing-easy-comments.ts",
     "generate:icons": "tsx scripts/generate-icons.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

@@ -5,22 +5,32 @@
  *   pnpm run validate:woodpecker
  *   pnpm run validate:woodpecker -- --dir public/data/woodpecker
  *   pnpm run validate:woodpecker -- --report public/data/reports/woodpecker-validation-report.json
+ *   pnpm run validate:woodpecker -- --fail-on-issues
+ *   pnpm run validate:woodpecker -- --changed-from origin/main --fail-on-issues
+ *   pnpm run validate:woodpecker -- --set woodpecker-easy --fail-on-issues
+ *   pnpm run validate:woodpecker:ci -- --changed-from origin/main
  */
 
+import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import { Chess } from "chess.js";
 import { z } from "zod";
 
-const SET_IDS = [
+export const WOODPECKER_SET_IDS = [
   "woodpecker-easy",
   "woodpecker-intermediate",
   "woodpecker-advanced",
 ] as const;
 
+const SET_IDS = WOODPECKER_SET_IDS;
+
+/** Sets that must pass full-bundle validation when their JSON file changes in CI. */
+export const CI_FULL_VALIDATE_SETS = new Set<(typeof SET_IDS)[number]>(["woodpecker-easy"]);
+
 const uciMoveSchema = z.string().regex(/^[a-h][1-8][a-h][1-8][qrbn]?$/i);
 
-const woodpeckerPuzzleSchema = z.object({
+export const woodpeckerPuzzleSchema = z.object({
   id: z.string().min(1),
   puzzleNumber: z.number().int().positive(),
   fen: z.string().min(1),
@@ -48,17 +58,19 @@ const woodpeckerPuzzleSchema = z.object({
   }),
 });
 
-const woodpeckerBundleSchema = z.object({
+export const woodpeckerBundleSchema = z.object({
   trainingSetId: z.enum(SET_IDS),
   puzzles: z.array(woodpeckerPuzzleSchema),
 });
 
-type ValidationIssue = {
+export type WoodpeckerBundle = z.infer<typeof woodpeckerBundleSchema>;
+
+export type ValidationIssue = {
   file: string;
   message: string;
 };
 
-type PuzzleIssueReport = {
+export type PuzzleIssueReport = {
   file: string;
   trainingSetId: (typeof SET_IDS)[number];
   puzzleId: string;
@@ -77,22 +89,38 @@ type ValidationReport = {
   puzzlesBySet: Record<(typeof SET_IDS)[number], PuzzleIssueReport[]>;
 };
 
+export type ValidateBundleOptions = {
+  /** When set, only run per-puzzle replay/metadata checks for these puzzle numbers. */
+  onlyPuzzleNumbers?: ReadonlySet<number>;
+};
+
+type BundleValidationResult = {
+  issues: ValidationIssue[];
+  puzzleReports: PuzzleIssueReport[];
+  counts: Record<string, number>;
+  changedPuzzleNumbers: number[];
+};
+
+function argValue(flag: string): string | undefined {
+  const argIndex = process.argv.indexOf(flag);
+  if (argIndex >= 0 && process.argv[argIndex + 1] && !process.argv[argIndex + 1].startsWith("--")) {
+    return process.argv[argIndex + 1];
+  }
+  return undefined;
+}
+
+function hasFlag(flag: string): boolean {
+  return process.argv.includes(flag);
+}
+
 function resolveBaseDir(): string {
-  const argIndex = process.argv.indexOf("--dir");
-  const argPath =
-    argIndex >= 0 && process.argv[argIndex + 1] && !process.argv[argIndex + 1].startsWith("--")
-      ? process.argv[argIndex + 1]
-      : undefined;
+  const argPath = argValue("--dir");
   const selected = argPath ?? path.join(process.cwd(), "public", "data", "woodpecker");
   return path.isAbsolute(selected) ? selected : path.join(process.cwd(), selected);
 }
 
 function resolveReportPath(): string {
-  const argIndex = process.argv.indexOf("--report");
-  const argPath =
-    argIndex >= 0 && process.argv[argIndex + 1] && !process.argv[argIndex + 1].startsWith("--")
-      ? process.argv[argIndex + 1]
-      : undefined;
+  const argPath = argValue("--report");
   const selected =
     argPath ??
     path.join(
@@ -105,10 +133,23 @@ function resolveReportPath(): string {
   return path.isAbsolute(selected) ? selected : path.join(process.cwd(), selected);
 }
 
-function loadBundle(filePath: string) {
-  const text = fs.readFileSync(filePath, "utf-8");
-  const json = JSON.parse(text) as unknown;
+function resolveSetFilter(): (typeof SET_IDS)[number][] {
+  const setArg = argValue("--set");
+  if (!setArg) return [...SET_IDS];
+  if ((SET_IDS as readonly string[]).includes(setArg)) {
+    return [setArg as (typeof SET_IDS)[number]];
+  }
+  console.error(`Unknown --set value "${setArg}". Expected one of: ${SET_IDS.join(", ")}`);
+  process.exit(1);
+}
+
+export function parseBundleJson(json: unknown): WoodpeckerBundle {
   return woodpeckerBundleSchema.parse(json);
+}
+
+export function loadBundleFromFile(filePath: string): WoodpeckerBundle {
+  const text = fs.readFileSync(filePath, "utf-8");
+  return parseBundleJson(JSON.parse(text) as unknown);
 }
 
 function parseUci(
@@ -144,11 +185,13 @@ function tryApplySanMove(chess: Chess, san: string) {
   }
 }
 
-function validateBundle(
+export function validateBundle(
   fileName: string,
   expectedSetId: (typeof SET_IDS)[number],
-  bundle: z.infer<typeof woodpeckerBundleSchema>
+  bundle: WoodpeckerBundle,
+  options: ValidateBundleOptions = {}
 ): { issues: ValidationIssue[]; puzzleReports: PuzzleIssueReport[] } {
+  const { onlyPuzzleNumbers } = options;
   const issues: ValidationIssue[] = [];
   const puzzleReports: PuzzleIssueReport[] = [];
 
@@ -163,6 +206,8 @@ function validateBundle(
   const seenPuzzleNumbers = new Set<number>();
 
   bundle.puzzles.forEach((puzzle, idx) => {
+    const validateThisPuzzle =
+      onlyPuzzleNumbers == null || onlyPuzzleNumbers.has(puzzle.puzzleNumber);
     const puzzleIssues: string[] = [];
     const row = `puzzle[${idx}] (${puzzle.id})`;
 
@@ -179,6 +224,10 @@ function validateBundle(
       puzzleIssues.push("duplicate puzzleNumber");
     }
     seenPuzzleNumbers.add(puzzle.puzzleNumber);
+
+    if (!validateThisPuzzle) {
+      return;
+    }
 
     let fenValid = true;
     try {
@@ -293,19 +342,72 @@ function writeReport(filePath: string, report: ValidationReport): void {
   fs.writeFileSync(filePath, JSON.stringify(report, null, 2), "utf-8");
 }
 
-function main() {
-  const baseDir = resolveBaseDir();
-  const reportPath = resolveReportPath();
+function setIdFromRepoPath(repoPath: string): (typeof SET_IDS)[number] | null {
+  const fileName = path.basename(repoPath);
+  const setId = fileName.replace(/\.json$/, "");
+  if ((SET_IDS as readonly string[]).includes(setId)) {
+    return setId as (typeof SET_IDS)[number];
+  }
+  return null;
+}
+
+function getChangedWoodpeckerJsonPaths(baseRef: string): string[] {
+  try {
+    const output = execSync(`git diff --name-only ${baseRef} HEAD -- public/data/woodpecker`, {
+      encoding: "utf-8",
+    }).trim();
+    if (!output) return [];
+    return output
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.endsWith(".json"));
+  } catch {
+    return [];
+  }
+}
+
+function loadBundleFromGitRef(baseRef: string, repoPath: string): WoodpeckerBundle | null {
+  try {
+    const text = execSync(`git show ${baseRef}:${repoPath}`, { encoding: "utf-8" });
+    return parseBundleJson(JSON.parse(text) as unknown);
+  } catch {
+    return null;
+  }
+}
+
+export function findChangedPuzzleNumbers(
+  baseBundle: WoodpeckerBundle | null,
+  headBundle: WoodpeckerBundle
+): number[] {
+  if (baseBundle == null) {
+    return headBundle.puzzles.map((puzzle) => puzzle.puzzleNumber);
+  }
+
+  const baseByNumber = new Map(
+    baseBundle.puzzles.map((puzzle) => [puzzle.puzzleNumber, JSON.stringify(puzzle)])
+  );
+  const changed: number[] = [];
+
+  for (const puzzle of headBundle.puzzles) {
+    const previous = baseByNumber.get(puzzle.puzzleNumber);
+    if (previous !== JSON.stringify(puzzle)) {
+      changed.push(puzzle.puzzleNumber);
+    }
+  }
+
+  return changed;
+}
+
+function validateAllBundles(
+  baseDir: string,
+  setFilter: (typeof SET_IDS)[number][],
+  options: ValidateBundleOptions
+): BundleValidationResult {
   const issues: ValidationIssue[] = [];
   const puzzleReports: PuzzleIssueReport[] = [];
   const counts: Record<string, number> = {};
 
-  if (!fs.existsSync(baseDir)) {
-    console.error(`Directory not found: ${baseDir}`);
-    process.exit(1);
-  }
-
-  for (const setId of SET_IDS) {
+  for (const setId of setFilter) {
     const fileName = `${setId}.json`;
     const filePath = path.join(baseDir, fileName);
 
@@ -315,9 +417,9 @@ function main() {
     }
 
     try {
-      const bundle = loadBundle(filePath);
+      const bundle = loadBundleFromFile(filePath);
       counts[setId] = bundle.puzzles.length;
-      const result = validateBundle(fileName, setId, bundle);
+      const result = validateBundle(fileName, setId, bundle, options);
       issues.push(...result.issues);
       puzzleReports.push(...result.puzzleReports);
     } catch (error) {
@@ -327,10 +429,177 @@ function main() {
     }
   }
 
+  return { issues, puzzleReports, counts, changedPuzzleNumbers: [] };
+}
+
+function validateChangedBundles(
+  baseDir: string,
+  baseRef: string,
+  setFilter: (typeof SET_IDS)[number][]
+): BundleValidationResult {
+  const changedPaths = getChangedWoodpeckerJsonPaths(baseRef);
+  if (changedPaths.length === 0) {
+    console.log(`No Woodpecker JSON changes since ${baseRef}. Skipping validation.`);
+    return { issues: [], puzzleReports: [], counts: {}, changedPuzzleNumbers: [] };
+  }
+
+  const issues: ValidationIssue[] = [];
+  const puzzleReports: PuzzleIssueReport[] = [];
+  const counts: Record<string, number> = {};
+  const changedPuzzleNumbers: number[] = [];
+
+  console.log(`Changed Woodpecker files since ${baseRef}:`);
+  for (const repoPath of changedPaths) {
+    console.log(`  - ${repoPath}`);
+  }
+  console.log("");
+
+  for (const repoPath of changedPaths) {
+    const setId = setIdFromRepoPath(repoPath);
+    if (setId == null) continue;
+    if (!setFilter.includes(setId)) continue;
+
+    const fileName = path.basename(repoPath);
+    const filePath = path.join(baseDir, fileName);
+
+    if (!fs.existsSync(filePath)) {
+      issues.push({ file: fileName, message: "changed file missing on disk" });
+      continue;
+    }
+
+    try {
+      const headBundle = loadBundleFromFile(filePath);
+      const baseBundle = loadBundleFromGitRef(baseRef, repoPath);
+      const changedNumbers = findChangedPuzzleNumbers(baseBundle, headBundle);
+      changedPuzzleNumbers.push(...changedNumbers);
+      counts[setId] = headBundle.puzzles.length;
+
+      console.log(
+        `${fileName}: validating ${changedNumbers.length} changed puzzle(s)` +
+          (changedNumbers.length > 0 ? ` [${changedNumbers.join(", ")}]` : "")
+      );
+
+      const result = validateBundle(fileName, setId, headBundle, {
+        onlyPuzzleNumbers: new Set(changedNumbers),
+      });
+      issues.push(...result.issues);
+      puzzleReports.push(...result.puzzleReports);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : `unknown parse error: ${String(error)}`;
+      issues.push({ file: fileName, message: `invalid JSON/schema: ${message}` });
+    }
+  }
+
+  return { issues, puzzleReports, counts, changedPuzzleNumbers };
+}
+
+function validateCiBundles(baseDir: string, baseRef: string): BundleValidationResult {
+  const changedPaths = getChangedWoodpeckerJsonPaths(baseRef);
+  if (changedPaths.length === 0) {
+    console.log(`No Woodpecker JSON changes since ${baseRef}. Skipping validation.`);
+    return { issues: [], puzzleReports: [], counts: {}, changedPuzzleNumbers: [] };
+  }
+
+  const issues: ValidationIssue[] = [];
+  const puzzleReports: PuzzleIssueReport[] = [];
+  const counts: Record<string, number> = {};
+  const changedPuzzleNumbers: number[] = [];
+
+  console.log(`Changed Woodpecker files since ${baseRef}:`);
+  for (const repoPath of changedPaths) {
+    console.log(`  - ${repoPath}`);
+  }
+  console.log("");
+
+  for (const repoPath of changedPaths) {
+    const setId = setIdFromRepoPath(repoPath);
+    if (setId == null) continue;
+
+    const fileName = path.basename(repoPath);
+    const filePath = path.join(baseDir, fileName);
+
+    if (!fs.existsSync(filePath)) {
+      issues.push({ file: fileName, message: "changed file missing on disk" });
+      continue;
+    }
+
+    try {
+      const headBundle = loadBundleFromFile(filePath);
+      counts[setId] = headBundle.puzzles.length;
+
+      if (CI_FULL_VALIDATE_SETS.has(setId)) {
+        console.log(
+          `${fileName}: CI full-set validation (${headBundle.puzzles.length} puzzles)`
+        );
+        const result = validateBundle(fileName, setId, headBundle);
+        issues.push(...result.issues);
+        puzzleReports.push(...result.puzzleReports);
+        continue;
+      }
+
+      const baseBundle = loadBundleFromGitRef(baseRef, repoPath);
+      const changedNumbers = findChangedPuzzleNumbers(baseBundle, headBundle);
+      changedPuzzleNumbers.push(...changedNumbers);
+
+      console.log(
+        `${fileName}: CI changed-puzzle validation (${changedNumbers.length} puzzle(s)` +
+          (changedNumbers.length > 0 ? `: ${changedNumbers.join(", ")}` : "") +
+          ")"
+      );
+
+      const result = validateBundle(fileName, setId, headBundle, {
+        onlyPuzzleNumbers: new Set(changedNumbers),
+      });
+      issues.push(...result.issues);
+      puzzleReports.push(...result.puzzleReports);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : `unknown parse error: ${String(error)}`;
+      issues.push({ file: fileName, message: `invalid JSON/schema: ${message}` });
+    }
+  }
+
+  return { issues, puzzleReports, counts, changedPuzzleNumbers };
+}
+
+function main() {
+  const baseDir = resolveBaseDir();
+  const reportPath = resolveReportPath();
+  const setFilter = resolveSetFilter();
+  const failOnIssues = hasFlag("--fail-on-issues");
+  const ciMode = hasFlag("--ci");
+  const changedFrom = argValue("--changed-from");
+
+  if (ciMode && changedFrom == null) {
+    console.error("--ci requires --changed-from <git-ref>");
+    process.exit(1);
+  }
+
+  if (!fs.existsSync(baseDir)) {
+    console.error(`Directory not found: ${baseDir}`);
+    process.exit(1);
+  }
+
+  const result = ciMode
+    ? validateCiBundles(baseDir, changedFrom!)
+    : changedFrom != null
+      ? validateChangedBundles(baseDir, changedFrom, setFilter)
+      : validateAllBundles(baseDir, setFilter, {});
+
+  const { issues, puzzleReports, counts } = result;
+
   console.log(`Validating Woodpecker bundles in: ${baseDir}`);
+  if (ciMode) {
+    console.log(
+      "Mode: CI (full set for clean bundles; changed puzzles only for intermediate/advanced)"
+    );
+  } else if (changedFrom != null) {
+    console.log(`Mode: changed puzzles only (base ref ${changedFrom})`);
+  }
   console.log("");
   console.log("Counts:");
-  for (const setId of SET_IDS) {
+  for (const setId of setFilter) {
     console.log(`  ${setId}: ${counts[setId] ?? 0}`);
   }
 
@@ -362,11 +631,20 @@ function main() {
   const total = report.summary.totalPuzzles;
   if (issues.length > 0) {
     console.log(
-      `Completed with issues: ${report.summary.puzzlesWithIssues}/${total} puzzles.`
+      `Completed with issues: ${report.summary.puzzlesWithIssues}/${total} puzzles checked.`
     );
+    if (failOnIssues) {
+      process.exit(1);
+    }
     return;
   }
-  console.log(`OK: ${total} puzzles validated across ${SET_IDS.length} bundles.`);
+
+  if (changedFrom != null && result.changedPuzzleNumbers.length === 0) {
+    console.log("OK: no Woodpecker JSON changes to validate.");
+    return;
+  }
+
+  console.log(`OK: ${total} puzzles validated across ${setFilter.length} bundle(s).`);
 }
 
 main();

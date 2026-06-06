@@ -11,12 +11,12 @@ import type { TrainingSetSchema } from "@/db/schema";
 import type { ExerciseSchema } from "@/db/schema";
 
 const BASE = "/data/woodpecker";
-const WOODPECKER_SET_IDS = [
+export const WOODPECKER_SET_IDS = [
   "woodpecker-easy",
   "woodpecker-intermediate",
   "woodpecker-advanced",
 ] as const;
-type WoodpeckerSetId = (typeof WOODPECKER_SET_IDS)[number];
+export type WoodpeckerSetId = (typeof WOODPECKER_SET_IDS)[number];
 
 interface WoodpeckerPuzzle {
   id: string;
@@ -114,6 +114,36 @@ function exerciseFromWoodpeckerPuzzle(
 
 function toExercise(setId: WoodpeckerSetId, p: WoodpeckerPuzzle): ExerciseSchema {
   return exerciseFromWoodpeckerPuzzle(setId, p.id, p);
+}
+
+/**
+ * Load all Woodpecker exercises from public JSON bundles (browser fetch, cache-busted).
+ * Use for Storybook Puzzle Inspector so edits to JSON appear on the next load without IndexedDB.
+ */
+export async function loadExercisesFromWoodpeckerJson(
+  baseUrl: string = BASE,
+  setIds: readonly WoodpeckerSetId[] = WOODPECKER_SET_IDS
+): Promise<ExerciseSchema[]> {
+  const bundles = await Promise.all(
+    setIds.map((setId) => fetchJson<WoodpeckerSetBundle>(`${baseUrl}/${setId}.json`))
+  );
+  return bundles.flatMap((bundle) =>
+    bundle.puzzles.map((p) => toExercise(bundle.trainingSetId, p))
+  );
+}
+
+/** Find exercises by puzzleNumber across Woodpecker JSON bundles (fresh fetch each call). */
+export async function findExercisesByPuzzleNumberInWoodpeckerJson(
+  puzzleNumber: number,
+  options?: { baseUrl?: string; setIds?: readonly WoodpeckerSetId[] }
+): Promise<ExerciseSchema[]> {
+  const exercises = await loadExercisesFromWoodpeckerJson(
+    options?.baseUrl,
+    options?.setIds
+  );
+  return exercises
+    .filter((e) => e.puzzleNumber === puzzleNumber)
+    .sort((a, b) => a.trainingSetId.localeCompare(b.trainingSetId));
 }
 
 /**
