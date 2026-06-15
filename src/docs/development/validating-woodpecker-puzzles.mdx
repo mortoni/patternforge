@@ -1,6 +1,8 @@
 # Validating Woodpecker Puzzles
 
-**Why this exists:** Puzzle bundles in `public/data/woodpecker/` were imported from the book (and related sources). Some batches have wrong FENs, swapped solutions, or comments that do not replay on the diagram. This guide records **what we check**, **in what order**, and **which tools to run** — without assuming every puzzle in a set is bad when one range fails.
+**Why this exists:** Puzzle bundles in `public/data/woodpecker/` were imported from the book (and related sources). Some batches had wrong FENs, swapped solutions, or comments that do not replay on the diagram. This guide records **what we check**, **in what order**, and **which tools to run** — without assuming every puzzle in a set is bad when one range fails.
+
+**Current Tier 1 status (replay validation):** all **1,128** puzzles pass `pnpm validate:woodpecker` (easy, intermediate, advanced). That means every `mainLine` replays legally on its FEN with matching UCI — not that every diagram, comment, or header is perfect yet.
 
 ## What “valid” means
 
@@ -65,9 +67,6 @@ pnpm run repair:woodpecker -- --set woodpecker-easy --relaxed --write
 
 # Normalize book glyphs in comments / ASCII hyphens in gameSource
 pnpm run normalize:woodpecker-comments -- --set woodpecker-easy --write
-
-# Fill move-only comments (easy puzzles that had no comment field)
-pnpm run fill:missing-easy-comments -- --write
 ```
 
 **Interpretation:**
@@ -151,17 +150,14 @@ Do **not** re-fix the entire **1,128** set unless Tier 1 or Tier 2 shows problem
 | `pnpm run repair:woodpecker -- --set <set>` | Infer/fix `mainLine` from comments (trusted sources only) |
 | `pnpm run repair:woodpecker -- --set <set> --relaxed --write` | Also allow 1-ply checkmark-segment lines (easy) |
 | `pnpm run normalize:woodpecker-comments -- --set <set> --write` | Book glyphs in comments; ASCII `-` in `gameSource` |
-| `pnpm run fill:missing-easy-comments -- --write` | Move-only comments for easy puzzles missing `comment` |
 
 **Code:**
 
 - `scripts/validate-woodpecker-json.ts`
 - `scripts/repair-woodpecker-from-comments.ts`
 - `scripts/normalize-woodpecker-comments.ts`
-- `scripts/fill-missing-easy-comments.ts`
 - `src/lib/chess/parse-comment-moves.ts` — comment → `mainLine`
 - `src/lib/chess/normalize-chess-notation.ts` — book font → SAN
-- `src/lib/chess/format-move-only-comment.ts` — `mainLine` → move-only comment
 
 ## Reports
 
@@ -172,10 +168,160 @@ Do **not** re-fix the entire **1,128** set unless Tier 1 or Tier 2 shows problem
 
 ## Known data notes
 
-- **PDF:** `public/easy-pdf.pdf` (and equivalents for other difficulties) are image scans — no reliable full-text extract.
-- **Comments:** Some puzzles have **move-only** comments (no prose); use `fill:missing-easy-comments` or copy from PDF.
+- **PDF:** `public/easy-pdf.pdf` is an image scan — no reliable full-text extract; use **screenshots** for easy/intermediate/advanced solution pages. `public/woodpecker-intermediate.pdf` remains a reference copy but is not synced automatically.
+- **Comments:** Some puzzles have **move-only** comments (no prose); copy from PDF/screenshots manually when missing.
 - **Easy 51–100:** Historically high Tier 1 failure rate; validate headers (Tier 2) before assuming other ranges are affected.
 - **`validation.status`:** Bundles use `"unverified"` until engine or manual sign-off; Tier 1 is the minimum bar for merge.
+
+## Lessons from fixing the corpus (especially advanced 985–1128)
+
+Tier 1 failures clustered around a small set of **import mistakes**, not random chess errors. When fixing a batch, look for these patterns first.
+
+### 1. Side variations pasted into `mainLine`
+
+The most common bug: book commentary (refutations, “also winning is…”, game continuations) stored as one long `mainLine`.
+
+**Fix:** Keep only the **bold / ✓** winning sequence. Everything else stays in `metadata.comment`.
+
+**Red flags:** duplicate moves for the same side, lines that read like prose, or sequences that branch mid-way.
+
+### 2. Wrong `sideToMove` / FEN turn
+
+Many puzzles had Black’s first move in `mainLine` while FEN and `sideToMove` said White (or the reverse).
+
+**Checklist:**
+
+- First SAN must be legal for `sideToMove`.
+- FEN field 2 (`w` / `b`) must match `sideToMove`.
+
+Common in puzzles where the book labels the solution `22...` or `29...`.
+
+### 3. Replay beats notation
+
+Always derive UCI from a replayed line — do not hand-edit `uci` / `fullLine`.
+
+```bash
+# After setting mainLine from the book
+pnpm validate:woodpecker -- --set woodpecker-advanced --puzzle 1105
+```
+
+Use `buildSolutionFromMainLine` in `src/lib/chess/woodpecker-solution-utils.ts` when patching JSON in a script. If replay fails at ply *N*, the book text or FEN is wrong at that point — even when the SAN “looks” right.
+
+### 4. Notation ambiguities (OCR, scans, similar pieces)
+
+Repeated “book says X, board needs Y” cases from the advanced audit:
+
+| Book / OCR | Often meant on the diagram |
+|------------|----------------------------|
+| `Nb5` | `Bb5` |
+| `Nh5` | `Qh5` |
+| `Kg7` | `Rg7` |
+| `Rxc2` | `Qxc2` |
+| `Rxd8` / `Rxd8+` | `Qxd8` / `Qxd8+` |
+| `Qxf8` | `Kh7`, `Qxf6`, or another recapture |
+
+When ply 1 fails, check **piece type and source square**, not just the move text.
+
+### 5. SAN disambiguation required
+
+When multiple pieces can reach the same square, use file/rank prefixes: `R2c5`, `R7d6`, `R7e4`, `Qg4xe6+`, `R1xd8+`, etc. Without them, validation may pass today but fail after a FEN tweak, or the app may accept the wrong branch.
+
+### 6. Wrong FEN (copy/paste between neighbors)
+
+Tier 1 only checks **internal** consistency. We still found FENs copied from adjacent puzzles (e.g. off-by-one puzzle numbers), wrong starting side, or positions that only replay after a small FEN correction.
+
+**Signal:** header and comment match the game, but the “obvious” main line never replays — verify the **diagram**, not only the solution text.
+
+### 7. Solution length: key move vs full game
+
+Some Woodpecker entries stop at the **idea** (one key move or the line marked ✓), not mate or resignation.
+
+**Rule:** End `mainLine` where the book awards full points (✓ / `+-` / `#`), not where the game ended in the notes.
+
+### 8. Use `metadata.comment` carefully
+
+Comments are good for: disambiguation (`Qxc2` vs `Rxc2`), move-order hints (`22...`), and finding the ✓ branch when `mainLine` is garbage.
+
+Comments mislead when: several ✓ lines exist (pick the one that **replays on this FEN**), or game continuation is mixed with the puzzle solution.
+
+### 9. Batch workflow that scaled
+
+For each PDF/screenshot range:
+
+1. Read bold / ✓ main line from the book (+ comment if needed).
+2. Patch via script using `buildSolutionFromMainLine` (avoid hand-editing UCI).
+3. `pnpm validate:woodpecker -- --set <set>` for progress; `--puzzle N` to debug one entry.
+4. Do not commit until the range is clean in the validation report.
+
+**One-line rule:** book bold ✓ → replay on FEN → set `sideToMove` → disambiguate SAN → validate.
+
+## Next validation work (beyond Tier 1)
+
+Tier 1 clean means **legal replay**, not **book-perfect data**. Prioritize the following in order.
+
+### Phase A — Metadata and headers (Tier 2)
+
+**Goal:** Every puzzle number matches the right game header and comment source.
+
+| Task | How |
+|------|-----|
+| Spot-check headers vs book | Screenshots / PDF pages vs `metadata.gameSource` (batch ranges) |
+| Spot-check easy headers | Especially historically bad ranges (e.g. 51–100) |
+| Spot-check advanced headers | Ranges fixed manually from screenshots (985–1128) |
+| Normalize typography | `pnpm run normalize:woodpecker-comments -- --write` on each set |
+
+**Exit criteria:** No known header mismatch for a puzzle number; `gameSource` matches the book line for sampled ranges.
+
+### Phase B — Position truth (Tier 3)
+
+**Goal:** FEN matches the **diagram** in the book, not only a line that happens to replay.
+
+| Task | How |
+|------|-----|
+| Sample audit | Per set, verify diagram + main line for ~5–10% of puzzles (focus on manually fixed ranges) |
+| Adjacent-puzzle FEN check | Flag duplicate or near-duplicate FENs in the same set (script or grep) |
+| Side-to-move triangle | Confirm diagram triangle matches `sideToMove` on samples |
+| Puzzle Inspector | Storybook workbench — visual replay vs screenshot |
+
+**Exit criteria:** Sampled puzzles match diagram + solution page; no duplicate FENs without explanation.
+
+### Phase C — Comment ↔ mainLine alignment
+
+**Goal:** Comments contain variations; `mainLine` contains only the canonical line.
+
+| Task | How |
+|------|-----|
+| Copy comments from book | Manual from PDF/screenshots where `metadata.comment` is missing or wrong |
+| Easy move-only comments | Copy from PDF/screenshots where prose is absent |
+| Repair dry-run audit | `repair:woodpecker` (no `--write`) — puzzles where inferred line ≠ current `mainLine` deserve human review |
+
+**Exit criteria:** `mainLine` matches the ✓ branch in `comment` for audited samples; repair dry-run shows no surprises in fixed ranges.
+
+### Phase D — Product / schema quality (optional)
+
+| Task | Notes |
+|------|--------|
+| `validation.status` | Move from `"unverified"` to `"verified"` per set or batch after Tier 2–3 sign-off |
+| `validation.alternativeFirstMoves` | Populate where the book lists equal first moves (`Or` lines) |
+| `motifTags` | Tag motifs from book section headers if you add taxonomy |
+| Engine spot-check | Optional engine pass on key positions (not yet in pipeline) |
+| Structured `variations` | Only if the app needs machine-readable side lines (see schema sketch below) |
+
+### Phase E — CI and regression
+
+| Task | Command / action |
+|------|------------------|
+| Keep Tier 1 green | `pnpm validate:woodpecker -- --fail-on-issues` before merge |
+| Extend full-set CI | Consider adding `woodpecker-advanced` to `CI_FULL_VALIDATE_SETS` now that advanced is clean |
+| PR scope | `validate:woodpecker:ci -- --changed-from origin/main` on JSON edits |
+
+### Suggested order for the next session
+
+1. **Intermediate:** Tier 2 header pass on any ranges still flagged during spot checks.
+2. **Easy:** Tier 2 header pass on historically bad ranges (51–100).
+3. **All sets:** Phase B sample (diagram vs FEN) on puzzles we had to fix manually (advanced 985–1128, any intermediate outliers).
+4. **Repair dry-run** on intermediate/easy — reconcile comment inference vs current `mainLine`.
+5. **Product fields** (`validation.status`, alternative first moves) once positions are trusted.
 
 ## Main line vs variations (two “lines” in the book)
 
@@ -188,6 +334,10 @@ Woodpecker solutions often show **more than one line of moves** in the comment. 
 | **Prose** | `metadata.comment` | “Highlighting the usefulness of the active d4-rook.” |
 
 **Rule:** `mainLine` must be a **single legal sequence** from the puzzle FEN — one move after another. Do **not** splice a side variation into `mainLine` (e.g. `Qg3` then `Qxg2` as alternatives for the same turn).
+
+**Woodpecker `N...` notation:** `23.Rxe6+ Kxe6 23...fxe6 24.Bh6+` means Black's **alternative** at move 23 (`fxe6` instead of `Kxe6`), not the next ply after `Kxe6`. The repair parser (`extractWoodpeckerBranchLines` in `parse-comment-moves.ts`) treats these as sibling branches; `inferMainLineFromComment` picks the **first ✓** branch (shortest refutation).
+
+**Woodpecker `Or` notation:** `34.f3 Or 34.fxe3 Rg6 … 34...Rg6 ✓` means White's **alternative** at move 34 (`fxe3` instead of `f3`). The main line uses `f3` then `34...Rg6`, not `fxe3`. Same parser handles `N.SAN Or N.SAN` and `N...SAN Or N...SAN`.
 
 ```text
 WRONG mainLine:  Bxg2 → Qg3 → Qxg2 → Rg4   (Qxg2 replaces Qg3; not legal as a sequence)
