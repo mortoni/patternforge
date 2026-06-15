@@ -36,6 +36,10 @@ vi.mock("@/services/cycle-progress.service", () => ({
   advanceAfterIncorrect: (...args: unknown[]) => mockAdvanceAfterIncorrect(...args),
   advanceAfterSkip: (...args: unknown[]) => mockAdvanceAfterSkip(...args),
 }));
+vi.mock("@/services/puzzle-telemetry.service", () => ({
+  trackPuzzleCompleted: vi.fn(),
+  trackPuzzleSkipped: vi.fn(),
+}));
 
 const mockValidatePuzzleMove = vi.fn();
 const mockApplyCanonicalAutoMoves = vi.fn();
@@ -281,13 +285,13 @@ describe("training-solver.service", () => {
       });
       const startedAt = 1000000000000;
       vi.setSystemTime(startedAt + 3000);
-      const skipResult = await skipPuzzle(
-        "ex-1",
-        "c1",
-        "set-1",
-        "s1",
-        startedAt
-      );
+      const skipResult = await skipPuzzle({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        attemptStartedAt: startedAt,
+      });
       expect(skipResult.cycleComplete).toBe(false);
       vi.useRealTimers();
       expect(mockAddExerciseAttempt).toHaveBeenCalledWith(
@@ -312,13 +316,13 @@ describe("training-solver.service", () => {
         solvedCount: 0,
         totalExercises: 5,
       });
-      const skipResult = await skipPuzzle(
-        "ex-1",
-        "c1",
-        "set-1",
-        "s1",
-        Date.now()
-      );
+      const skipResult = await skipPuzzle({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        attemptStartedAt: Date.now(),
+      });
       expect(skipResult.cycleComplete).toBe(true);
       expect(mockCompleteSession).toHaveBeenCalledWith("s1");
     });

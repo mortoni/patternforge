@@ -1,0 +1,119 @@
+# Puzzle Telemetry
+
+PatternForge emits **anonymous puzzle and session events** for content quality and Woodpecker progression analytics. Events are designed for aggregate analysis — not user profiling.
+
+## Privacy
+
+**We emit**
+
+- Training set id, puzzle id, puzzle number, difficulty, cycle number
+- Anonymous session id (UUID per training session in IndexedDB)
+- Timing: time on puzzle, time to first move, session active time
+- Outcome: solved / skipped, attempt count
+
+**We do not emit**
+
+- Individual move sequences or UCI lines
+- FEN / board positions after each move
+- Names, emails, accounts, or device fingerprints
+- Anything that identifies a person beyond anonymous session UUIDs
+
+Telemetry failures are swallowed — gameplay is never blocked.
+
+## Event schema
+
+```ts
+interface PuzzleTelemetryEvent {
+  event:
+    | "puzzle_started"
+    | "puzzle_completed"
+    | "puzzle_skipped"
+    | "training_session_started"
+    | "training_session_completed"
+    | "pattern_recall";
+  timestamp: string; // ISO-8601
+  sessionId: string;
+  trainingSetId: string;
+  puzzleId?: string;
+  puzzleNumber?: number;
+  difficulty?: string;
+  cycleNumber?: number;
+  solved?: boolean;
+  attempts?: number;
+  timeMs?: number;
+  timeToFirstMoveMs?: number; // pattern_recall only
+}
+```
+
+## Events
+
+| Event | When | Key fields |
+| ----- | ---- | ---------- |
+| `puzzle_started` | Puzzle becomes active for the user | `puzzleId`, `puzzleNumber`, `cycleNumber` |
+| `puzzle_completed` | Puzzle resolves (solved or failed) | `solved`, `attempts`, `timeMs` |
+| `puzzle_skipped` | User skips the puzzle | `timeMs` on puzzle |
+| `training_session_started` | New IndexedDB session created for a cycle | `cycleNumber` |
+| `training_session_completed` | Session marked completed (cycle end) | `timeMs` (active time) |
+| `pattern_recall` | Emitted with terminal puzzle resolution when the user moved | `timeToFirstMoveMs`, `solved`, `cycleNumber` |
+
+### `pattern_recall`
+
+Woodpecker training is about **recognition speed across cycles**. This event captures ms from puzzle shown → first user move on that presentation.
+
+Example analysis (future):
+
+> Puzzle #37 — cycle 1: 45s to first move; cycle 3: 12s; cycle 6: 4s.
+
+`pattern_recall` is **not** emitted on skip (no first move).
+
+## Service API
+
+Implementation: `src/services/puzzle-telemetry.service.ts`
+
+```ts
+trackPuzzleStarted(ctx);
+trackPuzzleCompleted({ ...ctx, solved, attempts, timeMs, timeToFirstMoveMs? });
+trackPuzzleSkipped({ ...ctx, timeMs });
+trackTrainingSessionStarted(ctx);
+trackTrainingSessionCompleted({ ...ctx, timeMs? });
+```
+
+**Wiring (not in UI components)**
+
+| Hook / service | Telemetry |
+| -------------- | --------- |
+| `training-puzzle-lifecycle.service` → `notifyPuzzleActivated` | `puzzle_started` |
+| `training-solver.service` → `submitAttempt` / `skipPuzzle` | `puzzle_completed`, `pattern_recall`, `puzzle_skipped` |
+| `training-session.service` → `getOrCreateActiveSession` / `completeSession` | session started / completed |
+
+## Provider
+
+Default: [Vercel Analytics](https://vercel.com/docs/analytics) (`@vercel/analytics`), same stack as donation UX telemetry.
+
+- Set `NEXT_PUBLIC_PUZZLE_TELEMETRY=off` to disable sends (noop provider).
+- Provider interface: `src/lib/puzzle-telemetry/provider.ts` — swap in PostHog, GA4, Plausible, or a custom backend later without changing training code.
+
+In development / tests, inject a provider with `setPuzzleTelemetryProviderForTests`. Events also append to `window.__puzzleTelemetryEvents` when present (mirrors donation telemetry).
+
+## Questions this supports
+
+**Puzzle quality**
+
+- Which puzzles are skipped most often?
+- Which have the highest failure rate?
+- Which take longest to solve?
+
+**Set quality**
+
+- Where do users abandon a set (drop-off by puzzle number)?
+- Completion rate per difficulty / set.
+
+**Woodpecker progression**
+
+- `pattern_recall` by `puzzleNumber` × `cycleNumber`
+- Session duration and puzzles per session (`training_session_completed.timeMs`)
+
+## Related
+
+- [Training lifecycle](/docs/training/training-lifecycle) — sessions, cycles, attempts
+- [Persistence](/docs/system/persistence) — local-first IndexedDB model

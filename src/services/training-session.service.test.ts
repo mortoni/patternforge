@@ -9,6 +9,9 @@ const mockGetActiveByCycleRunId = vi.fn();
 const mockAddSession = vi.fn();
 const mockGetSessionById = vi.fn();
 const mockUpdateSession = vi.fn();
+const mockGetCycleRunById = vi.fn();
+const mockTrackTrainingSessionStarted = vi.fn();
+const mockTrackTrainingSessionCompleted = vi.fn();
 
 vi.mock("@/repositories/session.repository", () => ({
   getActiveByCycleRunId: (id: string) => mockGetActiveByCycleRunId(id),
@@ -17,8 +20,20 @@ vi.mock("@/repositories/session.repository", () => ({
   updateSession: (id: string, patch: unknown) => mockUpdateSession(id, patch),
 }));
 
+vi.mock("@/repositories/cycle-run.repository", () => ({
+  getCycleRunById: (id: string) => mockGetCycleRunById(id),
+}));
+
+vi.mock("@/services/puzzle-telemetry.service", () => ({
+  trackTrainingSessionStarted: (...args: unknown[]) =>
+    mockTrackTrainingSessionStarted(...args),
+  trackTrainingSessionCompleted: (...args: unknown[]) =>
+    mockTrackTrainingSessionCompleted(...args),
+}));
+
 beforeEach(() => {
   vi.clearAllMocks();
+  mockGetCycleRunById.mockResolvedValue({ id: "cycle-1", cycleNumber: 2 });
 });
 
 const existingSession = {
@@ -61,6 +76,11 @@ describe("training-session.service", () => {
           skippedCount: 0,
         })
       );
+      expect(mockTrackTrainingSessionStarted).toHaveBeenCalledWith({
+        sessionId: "new-session-id",
+        trainingSetId: "set-1",
+        cycleNumber: 2,
+      });
     });
 
     it("dedupes concurrent creators into one addSession", async () => {
@@ -143,12 +163,20 @@ describe("training-session.service", () => {
 
   describe("completeSession", () => {
     it("sets status completed and endedAt", async () => {
+      mockGetSessionById.mockResolvedValue(existingSession);
       await completeSession("existing-1");
       expect(mockUpdateSession).toHaveBeenCalledWith(
         "existing-1",
         expect.objectContaining({
           status: "completed",
           endedAt: expect.any(String),
+        })
+      );
+      expect(mockTrackTrainingSessionCompleted).toHaveBeenCalledWith(
+        expect.objectContaining({
+          sessionId: "existing-1",
+          trainingSetId: "set-1",
+          cycleNumber: 2,
         })
       );
     });

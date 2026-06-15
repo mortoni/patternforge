@@ -29,6 +29,7 @@ export const SB_DOCS_IDS: Record<string, string> = {
   "dev/adding-training-sets": "development-guides-adding-training-sets--docs",
   "dev/validating-woodpecker-puzzles":
     "development-guides-validating-woodpecker-puzzles--docs",
+  "dev/puzzle-telemetry": "development-guides-puzzle-telemetry--docs",
   "dev/engineering-conventions": "development-guides-engineering-conventions--docs",
 
   "foundations/design-tokens": "foundations-design-tokens--docs",

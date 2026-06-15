@@ -9,6 +9,11 @@ import {
   updateSession,
   getSessionById,
 } from "@/repositories/session.repository";
+import { getCycleRunById } from "@/repositories/cycle-run.repository";
+import {
+  trackTrainingSessionCompleted,
+  trackTrainingSessionStarted,
+} from "@/services/puzzle-telemetry.service";
 
 /** Serialize creation per cycle so concurrent getOrCreate cannot insert two actives. */
 const creatingSessionByCycleRunId = new Map<string, Promise<ActiveSession>>();
@@ -81,6 +86,12 @@ export async function getOrCreateActiveSession(
         skippedCount: 0,
         status: "active",
       });
+      const cycle = await getCycleRunById(cycleRunId);
+      trackTrainingSessionStarted({
+        sessionId: id,
+        trainingSetId,
+        cycleNumber: cycle?.cycleNumber,
+      });
       return {
         id,
         trainingSetId,
@@ -132,9 +143,22 @@ export async function recordAttemptOnSession(
  * Mark session completed (e.g. when cycle ends).
  */
 export async function completeSession(sessionId: string): Promise<void> {
+  const session = await getSessionById(sessionId);
   const now = new Date().toISOString();
   await updateSession(sessionId, {
     status: "completed",
     endedAt: now,
+  });
+  if (!session) return;
+
+  const cycle = await getCycleRunById(session.cycleRunId);
+  trackTrainingSessionCompleted({
+    sessionId,
+    trainingSetId: session.trainingSetId,
+    cycleNumber: cycle?.cycleNumber,
+    timeMs: session.activeTimeMs ?? 0,
+    puzzlesAttempted: session.puzzlesAttempted ?? 0,
+    correctCount: session.correctCount ?? 0,
+    skippedCount: session.skippedCount ?? 0,
   });
 }

@@ -69,6 +69,7 @@ export function TrainingPage() {
   const [accumulatedUserMoves, setAccumulatedUserMoves] = React.useState<string[]>([]);
   /** Seeded by `useSyncPuzzleFromReadyState` when the active puzzle is known. */
   const attemptStartedAtRef = React.useRef(0);
+  const firstUserMoveAtRef = React.useRef<number | null>(null);
   const autoPlayTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const opponentRevealTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const exerciseTransitionTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
@@ -108,6 +109,7 @@ export function TrainingPage() {
       accumulatedUserMovesRef,
       currentFenRef,
       attemptStartedAtRef,
+      firstUserMoveAtRef,
     },
     {
       setPositionFen,
@@ -130,6 +132,7 @@ export function TrainingPage() {
       solvingSideRef,
       boardMoveInFlightRef,
       attemptStartedAtRef,
+      firstUserMoveAtRef,
       autoPlayTimerRef,
       opponentRevealTimerRef,
       exerciseTransitionTimerRef,

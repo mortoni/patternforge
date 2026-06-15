@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { getPuzzleProgress } from "../services/puzzle-progress-storage";
+import { notifyPuzzleActivated } from "@/services/training-puzzle-lifecycle.service";
 import type { ActiveTrainingState } from "../types";
 
 export type ReadyTrainingState = Extract<
@@ -27,6 +28,8 @@ export interface SyncPuzzleRefs {
   accumulatedUserMovesRef: React.MutableRefObject<string[]>;
   currentFenRef: React.MutableRefObject<string>;
   attemptStartedAtRef: React.MutableRefObject<number>;
+  /** First user move timestamp (ms) on the current puzzle presentation. */
+  firstUserMoveAtRef: React.MutableRefObject<number | null>;
 }
 
 export interface SyncPuzzleSetters {
@@ -54,6 +57,7 @@ export function useSyncPuzzleFromReadyState(
     accumulatedUserMovesRef,
     currentFenRef,
     attemptStartedAtRef,
+    firstUserMoveAtRef,
   } = refs;
   const {
     setPositionFen,
@@ -99,6 +103,17 @@ export function useSyncPuzzleFromReadyState(
       currentFenRef.current = readyState.exercise.fen ?? "";
     }
     attemptStartedAtRef.current = Date.now();
+    firstUserMoveAtRef.current = null;
+    if (readyState.sessionId) {
+      notifyPuzzleActivated({
+        sessionId: readyState.sessionId,
+        trainingSetId: readyState.trainingSet.id,
+        puzzleId: readyState.exercise.id,
+        puzzleNumber: readyState.exercise.puzzleNumber,
+        difficulty: readyState.exercise.difficulty,
+        cycleNumber: readyState.cycleRun.cycleNumber,
+      });
+    }
     return () => {
       if (autoPlayTimerRef.current) clearTimeout(autoPlayTimerRef.current);
       if (opponentRevealTimerRef.current) {

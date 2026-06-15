@@ -20,6 +20,10 @@ import {
   advanceAfterSkip,
 } from "@/services/cycle-progress.service";
 import { addExerciseAttempt } from "@/repositories/exercise-attempt.repository";
+import {
+  trackPuzzleCompleted,
+  trackPuzzleSkipped,
+} from "@/services/puzzle-telemetry.service";
 
 export interface SubmitAttemptParams {
   exerciseId: string;
@@ -39,6 +43,58 @@ export interface SubmitAttemptParams {
   currentSolutionIndex?: number;
   /** User moves played so far in this puzzle (UCI). Used when failing to record full attempt. */
   accumulatedUserMoves?: string[];
+  puzzleNumber?: number;
+  difficulty?: string;
+  cycleNumber?: number;
+  /** Ms from puzzle shown to first user move on this presentation. */
+  timeToFirstMoveMs?: number;
+}
+
+export interface SkipPuzzleParams {
+  exerciseId: string;
+  cycleRunId: string;
+  trainingSetId: string;
+  sessionId: string;
+  attemptStartedAt: number;
+  puzzleNumber?: number;
+  difficulty?: string;
+  cycleNumber?: number;
+}
+
+function puzzleTelemetryContext(
+  params: Pick<
+    SubmitAttemptParams,
+    | "sessionId"
+    | "trainingSetId"
+    | "exerciseId"
+    | "puzzleNumber"
+    | "difficulty"
+    | "cycleNumber"
+  >
+) {
+  return {
+    sessionId: params.sessionId,
+    trainingSetId: params.trainingSetId,
+    puzzleId: params.exerciseId,
+    puzzleNumber: params.puzzleNumber,
+    difficulty: params.difficulty,
+    cycleNumber: params.cycleNumber,
+  };
+}
+
+function emitPuzzleResolved(
+  params: SubmitAttemptParams,
+  resolved: {
+    solved: boolean;
+    attempts: number;
+    timeMs: number;
+    timeToFirstMoveMs?: number;
+  }
+): void {
+  trackPuzzleCompleted({
+    ...puzzleTelemetryContext(params),
+    ...resolved,
+  });
 }
 
 export interface SubmitAttemptResult {
@@ -129,6 +185,12 @@ export async function submitAttempt(
       if (advanceResult.status === "cycle-complete") {
         await completeSession(sessionId);
       }
+      emitPuzzleResolved(params, {
+        solved: false,
+        attempts: userMoves.length,
+        timeMs: durationMs,
+        timeToFirstMoveMs: params.timeToFirstMoveMs,
+      });
       return {
         isCorrect: false,
         normalizedAttemptedMove: validation.normalizedAttemptedMove,
@@ -185,6 +247,12 @@ export async function submitAttempt(
     if (advanceResult.status === "cycle-complete") {
       await completeSession(sessionId);
     }
+    emitPuzzleResolved(params, {
+      solved: true,
+      attempts: allUserMoves.length,
+      timeMs: durationMs,
+      timeToFirstMoveMs: params.timeToFirstMoveMs,
+    });
     return {
       isCorrect: true,
       normalizedAttemptedMove: validation.normalizedAttemptedMove,
@@ -231,6 +299,13 @@ export async function submitAttempt(
     await completeSession(sessionId);
   }
 
+  emitPuzzleResolved(params, {
+    solved: evaluation.isCorrect,
+    attempts: 1,
+    timeMs: durationMs,
+    timeToFirstMoveMs: params.timeToFirstMoveMs,
+  });
+
   return {
     isCorrect: evaluation.isCorrect,
     normalizedAttemptedMove: evaluation.normalizedAttemptedMove,
@@ -245,12 +320,18 @@ export async function submitAttempt(
  * Record skip: persist attempt with timing, record mistake, update session, advance cycle (and complete if at end).
  */
 export async function skipPuzzle(
-  exerciseId: string,
-  cycleRunId: string,
-  trainingSetId: string,
-  sessionId: string,
-  attemptStartedAt: number
+  params: SkipPuzzleParams
 ): Promise<{ cycleComplete: boolean }> {
+  const {
+    exerciseId,
+    cycleRunId,
+    trainingSetId,
+    sessionId,
+    attemptStartedAt,
+    puzzleNumber,
+    difficulty,
+    cycleNumber,
+  } = params;
   const finishedAtMs = Date.now();
   const startedAtIso = new Date(attemptStartedAt).toISOString();
   const nowIso = new Date(finishedAtMs).toISOString();
@@ -274,6 +355,15 @@ export async function skipPuzzle(
   if (result.status === "cycle-complete") {
     await completeSession(sessionId);
   }
+  trackPuzzleSkipped({
+    sessionId,
+    trainingSetId,
+    puzzleId: exerciseId,
+    puzzleNumber,
+    difficulty,
+    cycleNumber,
+    timeMs: durationMs,
+  });
   return { cycleComplete: result.status === "cycle-complete" };
 }
 

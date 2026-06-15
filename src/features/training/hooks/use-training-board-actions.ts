@@ -27,6 +27,7 @@ export interface TrainingBoardRefs {
   solvingSideRef: React.MutableRefObject<"w" | "b">;
   boardMoveInFlightRef: React.MutableRefObject<boolean>;
   attemptStartedAtRef: React.MutableRefObject<number>;
+  firstUserMoveAtRef: React.MutableRefObject<number | null>;
   autoPlayTimerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
   opponentRevealTimerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
   exerciseTransitionTimerRef: React.MutableRefObject<
@@ -70,6 +71,7 @@ export function useTrainingBoardActions(
     solvingSideRef,
     boardMoveInFlightRef,
     attemptStartedAtRef,
+    firstUserMoveAtRef,
     autoPlayTimerRef,
     opponentRevealTimerRef,
     exerciseTransitionTimerRef,
@@ -109,6 +111,18 @@ export function useTrainingBoardActions(
       const indexToUse = currentSolutionIndexRef.current;
       const accumulatedToUse = [...accumulatedUserMovesRef.current];
       const fenToUse = fenBefore || baseFen;
+      if (indexToUse === 0 && firstUserMoveAtRef.current == null) {
+        firstUserMoveAtRef.current = Date.now();
+      }
+      const timeToFirstMoveMs =
+        firstUserMoveAtRef.current != null
+          ? Math.max(0, firstUserMoveAtRef.current - attemptStartedAtRef.current)
+          : undefined;
+      const puzzleMeta = {
+        puzzleNumber: readyState.exercise.puzzleNumber,
+        difficulty: readyState.exercise.difficulty,
+        cycleNumber: readyState.cycleRun.cycleNumber,
+      };
 
       const scheduleEndOfExercise = (cycleRunId: string, cycleComplete: boolean) => {
         if (exerciseTransitionTimerRef.current) {
@@ -144,6 +158,8 @@ export function useTrainingBoardActions(
           sideToMove: readyState.exercise.sideToMove,
           currentSolutionIndex: indexToUse,
           accumulatedUserMoves: accumulatedToUse,
+          timeToFirstMoveMs,
+          ...puzzleMeta,
         });
 
         if (!result.isCorrect) {
@@ -225,13 +241,16 @@ export function useTrainingBoardActions(
     setPuzzleState("checking");
     clearPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id);
     try {
-      const { cycleComplete } = await skipPuzzle(
-        readyState.exercise.id,
-        readyState.cycleRun.id,
-        readyState.trainingSet.id,
-        readyState.sessionId,
-        attemptStartedAtRef.current
-      );
+      const { cycleComplete } = await skipPuzzle({
+        exerciseId: readyState.exercise.id,
+        cycleRunId: readyState.cycleRun.id,
+        trainingSetId: readyState.trainingSet.id,
+        sessionId: readyState.sessionId,
+        attemptStartedAt: attemptStartedAtRef.current,
+        puzzleNumber: readyState.exercise.puzzleNumber,
+        difficulty: readyState.exercise.difficulty,
+        cycleNumber: readyState.cycleRun.cycleNumber,
+      });
       if (cycleComplete) {
         router.replace(cycleSummaryRoute(readyState.cycleRun.id));
       } else {
