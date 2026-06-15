@@ -23,11 +23,14 @@ import {
 } from "@/db/seed-training-sets";
 import {
   clearAllTrainingSetsForDevelopment,
+  purgeLegacyDevTrainingSet,
   seedPuzzlesFromGeneratedJson,
-  upsertWoodpeckerEasyDevFive,
 } from "@/db/seed-puzzles";
 
-export { ensureGeneratedPuzzlesInDbIfEmpty } from "@/db/seed-puzzles";
+export {
+  ensureGeneratedPuzzlesInDbIfEmpty,
+  purgeLegacyDevTrainingSet,
+} from "@/db/seed-puzzles";
 import { resetUserProgressPreserveLibrary } from "@/services/reset-user-progress.service";
 import type { TrainingSetOverview } from "../types";
 import type { ContinueTrainingResult, StartNextCycleResult } from "../types";
@@ -97,20 +100,6 @@ export async function resetAllAndLoadGenerated(): Promise<{
     console.log("[resetAllAndLoadGenerated] Done.", result);
   }
   return result;
-}
-
-/**
- * Dev only: upsert a 5-puzzle training set cloned from the start of Woodpecker Easy.
- * Safe to call repeatedly; refreshes exercises from JSON.
- */
-export async function upsertDevWoodpeckerEasyFive(): Promise<{
-  trainingSets: number;
-  exercises: number;
-}> {
-  if (process.env.NODE_ENV === "production") {
-    throw new Error("upsertDevWoodpeckerEasyFive is development only");
-  }
-  return upsertWoodpeckerEasyDevFive();
 }
 
 /**

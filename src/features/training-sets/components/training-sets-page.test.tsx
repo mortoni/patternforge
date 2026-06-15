@@ -8,6 +8,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("../services/training-sets.service", () => ({
+  purgeLegacyDevTrainingSet: vi.fn().mockResolvedValue(undefined),
   ensureGeneratedPuzzlesInDbIfEmpty: vi.fn().mockResolvedValue(false),
   ensureSeededForDevelopment: vi.fn().mockResolvedValue(false),
   getTrainingSetsOverview: vi.fn(),

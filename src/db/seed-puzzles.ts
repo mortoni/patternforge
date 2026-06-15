@@ -193,48 +193,50 @@ export async function seedPuzzlesFromGeneratedJson(
   return { trainingSets: sets.length, exercises: exercises.length };
 }
 
-/** Stable id for the dev-only subset set (distinct exercise ids — safe beside full Woodpecker Easy). */
-export const WOODPECKER_EASY_DEV_FIVE_SET_ID = "woodpecker-easy-dev-5";
-
-const WOODPECKER_EASY_FIRST_N = 5;
+/** Legacy dev-only set — must not ship to production users' IndexedDB. */
+export const LEGACY_DEV_TRAINING_SET_ID = "woodpecker-easy-dev-5";
 
 /**
- * Development only: upsert a tiny training set cloned from the first {@link WOODPECKER_EASY_FIRST_N}
- * puzzles in `woodpecker-easy.json`. Uses dedicated exercise ids so it never clashes with the full Easy set.
+ * Remove the old 5-puzzle dev test set from IndexedDB (production only).
+ * Safe to call on every Training Sets page load.
  */
-export async function upsertWoodpeckerEasyDevFive(
-  baseUrl: string = BASE
-): Promise<{ trainingSets: number; exercises: number }> {
-  if (process.env.NODE_ENV === "production") {
-    throw new Error("upsertWoodpeckerEasyDevFive is development only");
-  }
+export async function purgeLegacyDevTrainingSet(): Promise<void> {
+  if (process.env.NODE_ENV !== "production") return;
 
-  const bundle = await fetchJson<WoodpeckerSetBundle>(`${baseUrl}/woodpecker-easy.json`);
-  const sorted = [...bundle.puzzles].sort((a, b) => a.puzzleNumber - b.puzzleNumber);
-  const picked = sorted.slice(0, WOODPECKER_EASY_FIRST_N);
+  const legacy = await db.trainingSets.get(LEGACY_DEV_TRAINING_SET_ID);
+  if (!legacy) return;
 
-  const devSetId = WOODPECKER_EASY_DEV_FIVE_SET_ID;
-  const exercises: ExerciseSchema[] = picked.map((p) =>
-    exerciseFromWoodpeckerPuzzle(devSetId, `${devSetId}-${p.id}`, p)
+  const setIds = [LEGACY_DEV_TRAINING_SET_ID];
+  const cycleRuns = await db.cycleRuns.where("trainingSetId").anyOf(setIds).toArray();
+  const cycleRunIds = cycleRuns.map((c) => c.id);
+
+  await db.transaction(
+    "rw",
+    [
+      db.exerciseAttempts,
+      db.sessions,
+      db.cycleRuns,
+      db.mistakeEntries,
+      db.exercises,
+      db.trainingSets,
+      db.settings,
+    ],
+    async () => {
+      if (cycleRunIds.length > 0) {
+        await db.exerciseAttempts.where("cycleRunId").anyOf(cycleRunIds).delete();
+      }
+      await db.sessions.where("trainingSetId").anyOf(setIds).delete();
+      await db.cycleRuns.where("trainingSetId").anyOf(setIds).delete();
+      await db.mistakeEntries.where("trainingSetId").anyOf(setIds).delete();
+      await db.exercises.where("trainingSetId").anyOf(setIds).delete();
+      await db.trainingSets.bulkDelete(setIds);
+
+      const settings = await db.settings.get("default");
+      if (settings?.lastTrainingSetId === LEGACY_DEV_TRAINING_SET_ID) {
+        await db.settings.put({ ...settings, lastTrainingSetId: undefined });
+      }
+    }
   );
-  const exerciseIds = exercises.map((e) => e.id);
-
-  const trainingSet: TrainingSetSchema = {
-    id: devSetId,
-    name: "Woodpecker Easy (dev · 5)",
-    description:
-      "Development only — first five puzzles from Woodpecker Easy for fast full-cycle testing.",
-    difficulty: "easy",
-    exerciseIds,
-    createdAt: new Date().toISOString(),
-    source: "Woodpecker",
-    tags: ["dev", "woodpecker"],
-  };
-
-  await upsertManyTrainingSets([trainingSet]);
-  await upsertManyExercises(exercises);
-
-  return { trainingSets: 1, exercises: exercises.length };
 }
 
 /**
