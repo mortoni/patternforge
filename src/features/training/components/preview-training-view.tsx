@@ -144,7 +144,7 @@ export function PreviewTrainingView({
     showCoordinates: false as const,
     marketingEmbed: embed,
     boardContainerClassName:
-      "mx-auto aspect-square max-h-full max-w-full min-h-0 w-full overflow-visible border-border/40 bg-[var(--muted)]/10 pb-px",
+      "mx-auto aspect-square max-h-full max-w-full min-h-0 w-full overflow-visible border-border/40 bg-[var(--muted)]/10",
   } as const;
 
   const standaloneBoardProps = {

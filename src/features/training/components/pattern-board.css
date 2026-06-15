@@ -8,6 +8,12 @@
   height: 100%;
 }
 
+/* Chessground updateBounds can shrink cg-container by a few px — fill the shell. */
+.pf-cg-host.cg-wrap cg-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* Custom themes: SVG-painted cg-board */
 .pf-cg-host.pf-cg-board--grid cg-board {
   background-color: var(--pf-cg-board-bg, #f0d9b5) !important;
@@ -20,7 +26,9 @@
 /* Classic + Blueprint: themed coord labels via --pf-cg-coords */
 
 .pf-cg-host[data-pf-board="classic"] coords coord,
-.pf-cg-host[data-pf-board="blueprint"] coords coord {
+.pf-cg-host[data-pf-board="blueprint"] coords coord,
+.pf-cg-host[data-pf-board="classic"] coords.squares coord,
+.pf-cg-host[data-pf-board="blueprint"] coords.squares coord {
   color: var(--pf-cg-coords, inherit) !important;
 }
 
