@@ -333,7 +333,7 @@ export function PatternBoard({
         turnColor: turn,
         viewOnly,
         coordinates: showCoordinates,
-        coordinatesOnSquares: showCoordinates,
+        coordinatesOnSquares: false,
         autoCastle: true,
         animation: {
           enabled: true,
@@ -393,7 +393,7 @@ export function PatternBoard({
     if (!elRef.current) return undefined;
     const api = Chessground(elRef.current, {
       coordinates: showCoordinates,
-      coordinatesOnSquares: showCoordinates,
+      coordinatesOnSquares: false,
     });
     apiRef.current = api;
     return () => {
