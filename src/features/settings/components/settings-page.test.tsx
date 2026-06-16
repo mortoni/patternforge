@@ -107,24 +107,26 @@ describe("SettingsPage", () => {
     const styleGroup = await screen.findByRole("radiogroup", {
       name: /board style/i,
     });
-    const blueprintRadio = within(styleGroup).getByRole("radio", {
-      name: /^blueprint\./i,
+    expect(within(styleGroup).getAllByRole("radio")).toHaveLength(3);
+
+    const lichessRadio = within(styleGroup).getByRole("radio", {
+      name: /classic \(lichess\)/i,
     });
     await waitFor(() => {
-      expect(blueprintRadio).not.toBeDisabled();
+      expect(lichessRadio).not.toBeDisabled();
     });
     mockGetSettings.mockResolvedValue({
       ...defaultSettings,
-      boardStyle: "blueprint",
+      boardStyle: "classic-lichess",
     });
 
     await act(async () => {
-      fireEvent.click(blueprintRadio);
+      fireEvent.click(lichessRadio);
     });
 
     await vi.waitFor(() => {
       expect(mockUpdateSettings).toHaveBeenCalledWith({
-        boardStyle: "blueprint",
+        boardStyle: "classic-lichess",
       });
     });
   });

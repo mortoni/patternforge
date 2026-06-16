@@ -102,6 +102,27 @@ describe("TrainingBoardCard", () => {
     expect(capturedProps.current!.attemptedMoveSquares).toEqual(["e2", "e3"]);
   });
 
+  it("applies classic-lichess board style when boardStyleId is set", () => {
+    const lichessSurface = resolveBoardChessStyles("classic-lichess", {
+      colorScheme: "light",
+    });
+    render(
+      <TrainingBoardCard
+        fen={defaultFen}
+        boardOrientation="white"
+        boardStyleId="classic-lichess"
+        previewColorScheme="light"
+      />
+    );
+    expect(capturedProps.current!.surface.boardStyleId).toBe("classic-lichess");
+    expect(capturedProps.current!.surface.lightSquareStyle).toEqual(
+      lichessSurface.lightSquareStyle
+    );
+    expect(capturedProps.current!.surface.darkSquareStyle).toEqual(
+      lichessSurface.darkSquareStyle
+    );
+  });
+
   it("sets disabled on PatternBoard when disabled", () => {
     render(
       <TrainingBoardCard

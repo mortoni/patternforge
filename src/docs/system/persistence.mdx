@@ -84,3 +84,15 @@ Use **Zod-inferred types from `schema.ts`** as the source of truth for persisted
 - **Complete cycle** — marks run completed, enables reflection data
 
 Full field reference: [Data Model](/docs/data-model).
+
+## Board style (`settings.boardStyle`)
+
+Persisted in the settings row; resolved via `BOARD_STYLE_IDS` in `src/lib/chess/board-styles.ts`.
+
+| Value | Label | Notes |
+| --- | --- | --- |
+| `classic` | Classic | App-themed lilac/violet squares |
+| `classic-lichess` | Classic (Lichess) | Lichess brown board (`#f0d9b5` / `#b58863`) with the built-in Cburnett piece set — intended for readability and familiar piece recognition, especially on mobile |
+| `blueprint` | Blueprint | Diagonal hatching on dark squares |
+
+Unknown stored values fall back to `classic-lichess`. Missing `boardStyle` backfills to `blueprint` (the install default).

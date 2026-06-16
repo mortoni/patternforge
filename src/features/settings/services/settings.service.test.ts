@@ -41,6 +41,19 @@ describe("settings.service", () => {
       expect(mockPutSettings).not.toHaveBeenCalled();
     });
 
+    it("normalizes unknown boardStyle to classic-lichess", async () => {
+      mockGetSettings.mockResolvedValue({
+        id: "default",
+        theme: "system",
+        boardOrientation: "white",
+        boardStyle: "retro",
+      });
+
+      const result = await getSettingsWithDefaults();
+
+      expect(result.boardStyle).toBe("classic-lichess");
+    });
+
     it("creates defaults and returns them when settings missing", async () => {
       mockGetSettings.mockResolvedValue(undefined);
       mockPutSettings.mockResolvedValue(undefined);
@@ -105,15 +118,15 @@ describe("settings.service", () => {
         id: "default",
         theme: "system",
         boardOrientation: "white",
-        boardStyle: "blueprint",
+        boardStyle: "classic-lichess",
       });
 
-      const result = await updateBoardStyle("blueprint");
+      const result = await updateBoardStyle("classic-lichess");
 
       expect(mockUpdateSettings).toHaveBeenCalledWith({
-        boardStyle: "blueprint",
+        boardStyle: "classic-lichess",
       });
-      expect(result.boardStyle).toBe("blueprint");
+      expect(result.boardStyle).toBe("classic-lichess");
     });
   });
 });

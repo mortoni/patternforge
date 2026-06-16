@@ -1,15 +1,23 @@
 /**
  * Board themes: each id maps to definitions; non-solid-checker themes use
  * extra fields (e.g. hatch). Resolve with app shell mode for light/dark pairs.
+ *
+ * `classic-lichess` uses Lichess default square colours with the built-in
+ * Cburnett piece set (chessground) for familiar, high-readability training boards.
  */
 
 import type { CSSProperties } from "react";
 
 export type AppColorScheme = "light" | "dark";
 
-export const BOARD_STYLE_IDS = ["classic", "blueprint"] as const;
+export const BOARD_STYLE_IDS = ["classic", "classic-lichess", "blueprint"] as const;
 
 export type BoardStyleId = (typeof BOARD_STYLE_IDS)[number];
+
+export type SolidCheckerBoardStyleId = Extract<
+  BoardStyleId,
+  "classic" | "classic-lichess"
+>;
 
 /** Default board: soft lilac (light shell) vs deep violet (dark shell). */
 const CLASSIC_APP_LIGHT = {
@@ -28,6 +36,28 @@ const CLASSIC_APP_DARK = {
   frameBackground: "rgba(26, 24, 36, 0.94)",
   frameBorder: "rgba(190, 180, 235, 0.14)",
   coordColor: "rgba(205, 200, 232, 0.66)",
+} as const;
+
+/** Lichess default brown board — same chess squares in light and dark app shells. */
+const CLASSIC_LICHESS_CHESS_LIGHT = "#f0d9b5";
+const CLASSIC_LICHESS_CHESS_DARK = "#b58863";
+
+const CLASSIC_LICHESS_APP_LIGHT = {
+  lightSquare: CLASSIC_LICHESS_CHESS_LIGHT,
+  darkSquare: CLASSIC_LICHESS_CHESS_DARK,
+  boardBackground: "#ecd9b8",
+  frameBackground: "rgba(252, 249, 245, 0.96)",
+  frameBorder: "rgba(120, 95, 70, 0.18)",
+  coordColor: "rgba(72, 54, 36, 0.62)",
+} as const;
+
+const CLASSIC_LICHESS_APP_DARK = {
+  lightSquare: CLASSIC_LICHESS_CHESS_LIGHT,
+  darkSquare: CLASSIC_LICHESS_CHESS_DARK,
+  boardBackground: "#a67c52",
+  frameBackground: "rgba(28, 26, 24, 0.94)",
+  frameBorder: "rgba(200, 180, 150, 0.14)",
+  coordColor: "rgba(72, 54, 36, 0.68)",
 } as const;
 
 export interface SolidBoardVariant {
@@ -54,7 +84,7 @@ export interface BoardThemeVariant {
 export type BoardStyleDefinition =
   | {
       kind: "solid-checker";
-      id: "classic";
+      id: SolidCheckerBoardStyleId;
       label: string;
       description?: string;
       /** Settings preview — app-light pair */
@@ -139,6 +169,19 @@ export const BOARD_STYLE_MAP: Record<BoardStyleId, BoardStyleDefinition> = {
       dark: { ...CLASSIC_APP_DARK },
     },
   },
+  "classic-lichess": {
+    kind: "solid-checker",
+    id: "classic-lichess",
+    label: "Classic (Lichess)",
+    description:
+      "Familiar Lichess-style board and pieces for maximum readability",
+    lightSquare: CLASSIC_LICHESS_APP_LIGHT.lightSquare,
+    darkSquare: CLASSIC_LICHESS_APP_LIGHT.darkSquare,
+    variants: {
+      light: { ...CLASSIC_LICHESS_APP_LIGHT },
+      dark: { ...CLASSIC_LICHESS_APP_DARK },
+    },
+  },
   blueprint: {
     kind: "blueprint-grid",
     id: "blueprint",
@@ -161,7 +204,10 @@ export function parseBoardStyleId(value: unknown): BoardStyleId {
   ) {
     return value as BoardStyleId;
   }
-  return "blueprint";
+  if (value === undefined || value === null || value === "") {
+    return "blueprint";
+  }
+  return "classic-lichess";
 }
 
 export interface ResolvedBoardChessStyles {

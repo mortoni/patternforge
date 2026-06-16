@@ -8,7 +8,8 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import type { AppColorScheme, BoardStyleId } from "@/lib/chess/board-styles";
+import type { AppColorScheme } from "@/lib/chess/board-styles";
+import { parseBoardStyleId } from "@/lib/chess/board-styles";
 import type { PreviewScreenSize } from "@/lib/preview/preview-training-url";
 import { PreviewTrainingView } from "@/features/training/components/preview-training-view";
 
@@ -18,9 +19,8 @@ function parsePreviewScreen(value: string | null): PreviewScreenSize {
   return "sm";
 }
 
-function parseBoardStyleParam(raw: string | null): BoardStyleId {
-  if (raw === "classic" || raw === "blueprint") return raw;
-  return "blueprint";
+function parseBoardStyleParam(raw: string | null) {
+  return parseBoardStyleId(raw);
 }
 
 function PreviewTrainingInner({
