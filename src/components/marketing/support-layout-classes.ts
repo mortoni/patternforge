@@ -1,7 +1,6 @@
 /** Shared layout tokens for /support and /support/success on mobile and PWA. */
 
-export const supportPageArticleClass =
-  "min-w-0 overflow-x-hidden pb-[max(4rem,env(safe-area-inset-bottom))]";
+export const supportPageArticleClass = "min-w-0 overflow-x-hidden";
 
 export const supportSectionStackClass = "mt-12 space-y-10 sm:mt-14 sm:space-y-12";
 

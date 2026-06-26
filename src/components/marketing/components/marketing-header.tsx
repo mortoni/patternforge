@@ -12,7 +12,7 @@ import {
 
 export function MarketingHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border/55 bg-background/90 backdrop-blur-md supports-backdrop-filter:bg-background/80 dark:border-white/8">
+    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-border/55 bg-background backdrop-blur-md supports-backdrop-filter:bg-background/95 dark:border-white/8 pf-site-header md:bg-background/90 md:supports-backdrop-filter:bg-background/80">
       <div
         className={`${containerClass} flex items-center justify-between gap-2 py-3 md:gap-6 md:py-3.5`}
       >

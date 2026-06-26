@@ -16,6 +16,15 @@
   --card-foreground: hsl(220 35% 12%);
   /* Chessground last-move: soft sky blue on light boards */
   --pf-board-last-move: hsl(214 88% 48% / 0.13);
+  /*
+   * PWA viewport height: `100dvh` in browser, overridden to `100vh` in standalone
+   * by `PWA_VIEWPORT_BOOTSTRAP` in root layout (see src/lib/pwa-viewport-bootstrap.ts).
+   */
+  --app-height: 100dvh;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
 }
 
 @theme inline {
@@ -60,18 +69,60 @@ html {
   color-scheme: light dark;
   scrollbar-gutter: stable;
   overflow-y: scroll;
-  min-height: 100%;
-  min-height: 100dvh;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  min-height: var(--app-height);
   /* Match shell to theme as soon as variables resolve (see layout theme script). */
   background-color: var(--background);
 }
 
 body {
-  min-height: 100%;
-  min-height: 100dvh;
+  min-height: var(--app-height);
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/*
+ * iOS PWA / standalone (`viewport-fit=cover` + `black-translucent`):
+ * - `--app-height` avoids the standalone `100dvh` cold-start bug (WebKit #254868).
+ * - `--safe-area-*` keeps interactive chrome below the status bar / home indicator.
+ */
+@layer utilities {
+  .pf-app-height {
+    height: var(--app-height);
+  }
+
+  .pf-min-app-height {
+    min-height: var(--app-height);
+  }
+
+  /** Fixed full-viewport shells (AppShell): pad top + sides, use full `--app-height`. */
+  .pf-app-shell-root {
+    box-sizing: border-box;
+    height: var(--app-height);
+    padding-top: var(--safe-area-top);
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
+  }
+
+  /** Sticky site headers on document-scrolling pages (marketing home, etc.). */
+  .pf-site-header {
+    padding-top: var(--safe-area-top);
+  }
+
+  .pf-safe-area-top {
+    padding-top: var(--safe-area-top);
+  }
+
+  .pf-safe-area-bottom {
+    padding-bottom: var(--safe-area-bottom);
+  }
+
+  .pf-safe-area-x {
+    padding-left: var(--safe-area-left);
+    padding-right: var(--safe-area-right);
+  }
 }
 
 /* Theme toggle: material-style ripple drawn inside the button (separate from root View Transition). */

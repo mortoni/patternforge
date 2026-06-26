@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SettingsProvider } from "@/features/settings/context/settings-context";
+import { PWA_VIEWPORT_BOOTSTRAP } from "@/lib/pwa-viewport-bootstrap";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://chessforge.app";
@@ -14,6 +15,8 @@ const SITE_URL =
  * - iPhone home screen icon: `src/app/apple-icon.png` + `appleWebApp` + manifest icons
  * - Standalone (no Safari URL bar): `public/manifest.json` display "standalone" +
  *   `appleWebApp.capable` + theme-color / viewport-fit
+ * - Standalone viewport height: `PWA_VIEWPORT_BOOTSTRAP` in `<head>` (see
+ *   `src/lib/pwa-viewport-bootstrap.ts`) — `100dvh` is wrong on iOS cold start.
  *
  * Regenerate raster icons: `pnpm run generate:icons`
  */
@@ -83,6 +86,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: PWA_VIEWPORT_BOOTSTRAP,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: THEME_BOOTSTRAP,

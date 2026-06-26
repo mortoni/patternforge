@@ -9,7 +9,7 @@ import { HomeTrainingLoopSection } from "@/components/marketing/sections/home-tr
 
 export default function HomePage() {
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+    <div className="flex pf-min-app-height flex-col bg-background text-foreground">
       <MarketingHeader />
       <div className="flex min-h-0 flex-1 flex-col overflow-x-hidden">
         <main className="relative flex-1 isolate">

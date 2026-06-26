@@ -23,6 +23,9 @@ describe("board-styles", () => {
     it("Classic (Lichess) uses Lichess default square colours in both app modes", () => {
       const def = BOARD_STYLE_MAP["classic-lichess"];
       expect(def.kind).toBe("solid-checker");
+      if (def.kind !== "solid-checker") {
+        throw new Error("expected solid-checker board style");
+      }
 
       const light = def.variants.light;
       const dark = def.variants.dark;
