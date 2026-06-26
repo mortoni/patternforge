@@ -183,15 +183,15 @@ function AppShellInner({
           type="button"
           onClick={openOverlay}
           aria-label="Open navigation menu"
-          className="pointer-events-none fixed left-6 top-6 z-50 hidden h-10 w-10 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)]/90 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)] md:pointer-events-auto md:inline-flex"
+          className="pointer-events-none fixed left-[max(1.5rem,env(safe-area-inset-left))] top-[max(1.5rem,env(safe-area-inset-top))] z-50 hidden h-10 w-10 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)]/90 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)] md:pointer-events-auto md:inline-flex"
         >
           <Menu className="h-5 w-5 pointer-events-none" aria-hidden />
         </button>
       )}
 
       <div className="flex min-h-0 w-full min-w-0 max-w-full flex-1 flex-col overflow-hidden transition-all duration-200">
-        <header className="sticky top-0 z-40 shrink-0 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/60 md:hidden">
-          <div className="grid h-14 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 px-3">
+        <header className="sticky top-0 z-40 shrink-0 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/60 supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)] md:hidden">
+          <div className="grid h-14 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 px-3 supports-[padding:max(0px)]:pl-[max(0.75rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(0.75rem,env(safe-area-inset-right))]">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center justify-self-start">
               <button
                 type="button"
@@ -215,12 +215,12 @@ function AppShellInner({
             </div>
           </div>
         </header>
-        <main className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-y-auto p-4 md:p-6 transition-all duration-200">
+        <main className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))] transition-all duration-200 supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))] md:p-6">
           {children}
         </main>
       </div>
       {!isTrainingFocus && (
-        <ThemeToggle className="fixed right-6 top-5 z-50 hidden border border-[var(--border)] bg-[var(--background)]/90 backdrop-blur transition-colors hover:bg-[var(--muted)] md:inline-flex" />
+        <ThemeToggle className="fixed right-[max(1.5rem,env(safe-area-inset-right))] top-[max(1.25rem,env(safe-area-inset-top))] z-50 hidden border border-[var(--border)] bg-[var(--background)]/90 backdrop-blur transition-colors hover:bg-[var(--muted)] md:inline-flex" />
       )}
     </div>
   );
@@ -257,7 +257,7 @@ function OverlaySidebar({
 
       <aside
         className={cn(
-          "absolute left-0 top-0 flex h-full min-h-0 flex-col overflow-hidden border-r border-[var(--border)] bg-[var(--background)] transition-[width,transform] duration-200",
+          "absolute left-0 top-0 flex h-full min-h-0 flex-col overflow-hidden border-r border-[var(--border)] bg-[var(--background)] transition-[width,transform] duration-200 supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]",
           overlayMode === "expanded" ? "w-[240px]" : "w-[64px]",
           entered ? "translate-x-0" : "-translate-x-full"
         )}

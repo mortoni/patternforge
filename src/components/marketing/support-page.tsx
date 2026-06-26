@@ -1,21 +1,15 @@
-import Link from "next/link";
 import { CreditCard } from "lucide-react";
 import { DonationPageTelemetry } from "@/components/shared/DonationPageTelemetry";
-import { MarketingSubpageShell } from "@/components/marketing/components/marketing-subpage-shell";
 import { SupportDonationOptions } from "@/components/marketing/components/support-donation-options";
 import { SupportCryptoDonations } from "@/components/marketing/components/support-crypto-donations";
-import {
-  supportInlineLinkClass,
-  supportPageArticleClass,
-} from "@/components/marketing/support-layout-classes";
-import { ROUTES } from "@/lib/constants";
+import { supportPageArticleClass } from "@/components/marketing/support-layout-classes";
 
 const body = "text-[15px] leading-relaxed text-muted-foreground";
 const sectionTitle = "text-sm font-medium uppercase tracking-[0.12em] text-muted-foreground/75";
 
 export default function SupportPage() {
   return (
-    <MarketingSubpageShell>
+    <>
       <DonationPageTelemetry variant="support_page" />
       <article
         className={supportPageArticleClass}
@@ -84,21 +78,7 @@ export default function SupportPage() {
 
           <SupportCryptoDonations />
         </section>
-
-        <footer className="mt-14 pt-2 sm:mt-16">
-          <p className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-sm ${body}`}>
-            <Link href={ROUTES.home} className={supportInlineLinkClass}>
-              Back to home
-            </Link>
-            <span className="text-muted-foreground" aria-hidden>
-              ·
-            </span>
-            <Link href={ROUTES.app} className={supportInlineLinkClass}>
-              Open app
-            </Link>
-          </p>
-        </footer>
       </article>
-    </MarketingSubpageShell>
+    </>
   );
 }

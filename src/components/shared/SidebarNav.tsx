@@ -38,6 +38,11 @@ const secondaryLinkLabelClass = (collapsed: boolean) =>
   );
 
 function SidebarSecondaryLinks({ collapsed }: { collapsed: boolean }) {
+  const pathname = usePathname();
+  const path = pathname ?? "";
+  const isSupportActive =
+    path === ROUTES.support || path.startsWith(`${ROUTES.support}/`);
+
   return (
     <div
       className={cn(
@@ -48,7 +53,10 @@ function SidebarSecondaryLinks({ collapsed }: { collapsed: boolean }) {
       <TrackedSupportLink
         href={ROUTES.support}
         source="sidebar"
-        className={secondaryLinkClass(collapsed)}
+        className={cn(
+          secondaryLinkClass(collapsed),
+          isSupportActive && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
+        )}
         title="Support PatternForge"
         aria-label={collapsed ? "Support PatternForge" : undefined}
       >

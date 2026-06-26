@@ -9,9 +9,7 @@
 import Link from "next/link";
 import { CircleCheck } from "lucide-react";
 import { DonationPageTelemetry } from "@/components/shared/DonationPageTelemetry";
-import { MarketingSubpageShell } from "@/components/marketing/components/marketing-subpage-shell";
 import {
-  supportInlineLinkClass,
   supportPageArticleClass,
   supportSuccessActionsClass,
   supportTouchTargetClass,
@@ -26,7 +24,7 @@ const sectionTitle =
 
 export default function SupportSuccessPage() {
   return (
-    <MarketingSubpageShell>
+    <>
       <DonationPageTelemetry variant="stripe_success" />
       <article
         className={supportPageArticleClass}
@@ -74,15 +72,7 @@ export default function SupportSuccessPage() {
             <Link href={ROUTES.support}>Back to support</Link>
           </Button>
         </nav>
-
-        <footer className="mt-14 pt-2 sm:mt-16">
-          <p className={`text-sm ${body}`}>
-            <Link href={ROUTES.home} className={supportInlineLinkClass}>
-              Back to home
-            </Link>
-          </p>
-        </footer>
       </article>
-    </MarketingSubpageShell>
+    </>
   );
 }
