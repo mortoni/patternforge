@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLiveQuery } from "dexie-react-hooks";
 import { TrackedSupportLink } from "@/components/shared/TrackedSupportLink";
 import { cn } from "@/lib/utils";
 import { DOCUMENTATION_URL, ROUTES } from "@/lib/constants";
+import { countActive } from "@/repositories/mistake-entry.repository";
 import {
   Dumbbell,
   Library,
+  Target,
   TrendingUp,
   Settings,
   BookOpen,
@@ -17,9 +20,44 @@ import {
 const navItems = [
   { href: ROUTES.training, label: "Training", icon: Dumbbell },
   { href: ROUTES.sets, label: "Training Sets", icon: Library },
+  { href: ROUTES.mistakes, label: "Mistakes", icon: Target },
   { href: ROUTES.progress, label: "Progress", icon: TrendingUp },
   { href: ROUTES.settings, label: "Settings", icon: Settings },
 ] as const;
+
+/**
+ * Live count of mistakes still in the review ladder (non-mastered), matching
+ * the "Mistakes Remaining" stat on /app/mistakes. Undefined during SSR and
+ * the first client render, so no badge is rendered until Dexie resolves —
+ * markup stays identical across server and client.
+ */
+function usePendingMistakeCount(): number | undefined {
+  return useLiveQuery(() => countActive(), []);
+}
+
+function MistakeCountBadge({
+  count,
+  collapsed,
+}: {
+  count: number | undefined;
+  collapsed: boolean;
+}) {
+  if (!count) return null;
+  const display = count > 99 ? "99+" : String(count);
+  return (
+    <span
+      aria-label={`${count} mistakes to review`}
+      className={cn(
+        "pointer-events-none flex items-center justify-center rounded-full bg-amber-500/15 text-[10px] font-semibold leading-none text-amber-600 dark:text-amber-400",
+        collapsed
+          ? "absolute right-0.5 top-0.5 h-4 min-w-4 px-1"
+          : "ml-auto h-5 min-w-5 shrink-0 px-1.5"
+      )}
+    >
+      {display}
+    </span>
+  );
+}
 
 const showDocumentationLink = Boolean(DOCUMENTATION_URL);
 
@@ -91,6 +129,7 @@ function SidebarSecondaryLinks({ collapsed }: { collapsed: boolean }) {
 export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
   const path = pathname ?? "";
+  const pendingMistakes = usePendingMistakeCount();
 
   return (
     <nav
@@ -110,7 +149,7 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
             key={href}
             href={href}
             className={cn(
-              "flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
+              "relative flex h-10 w-full min-w-0 shrink-0 items-center rounded-md text-sm font-medium transition-colors",
               collapsed ? "justify-center px-2" : "gap-3 px-3",
               isActive
                 ? "bg-primary text-primary-foreground"
@@ -130,6 +169,9 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
             >
               {label}
             </span>
+            {href === ROUTES.mistakes ? (
+              <MistakeCountBadge count={pendingMistakes} collapsed={collapsed} />
+            ) : null}
           </Link>
         );
       })}
