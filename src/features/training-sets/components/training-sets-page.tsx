@@ -19,13 +19,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  ensureGeneratedPuzzlesInDbIfEmpty,
-  ensureSeededForDevelopment,
+  ensureTrainingLibraryReady,
   getTrainingSetsOverview,
   continueTraining,
   startNextCycle,
   resetAllAndLoadGenerated,
-  purgeLegacyDevTrainingSet,
 } from "../services/training-sets.service";
 import { mapOverviewToTableRow, dedupeTableRows } from "../lib/map-training-set-row";
 import type { TrainingSetOverview } from "../types";
@@ -51,11 +49,7 @@ export function TrainingSetsPage() {
 
     async function load() {
       try {
-        await purgeLegacyDevTrainingSet();
-        if (cancelled) return;
-        await ensureGeneratedPuzzlesInDbIfEmpty();
-        if (cancelled) return;
-        await ensureSeededForDevelopment();
+        await ensureTrainingLibraryReady();
         if (cancelled) return;
         await loadOverviews();
       } catch {

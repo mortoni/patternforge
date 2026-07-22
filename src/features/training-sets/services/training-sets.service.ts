@@ -23,14 +23,12 @@ import {
 } from "@/db/seed-training-sets";
 import {
   clearAllTrainingSetsForDevelopment,
+  ensureGeneratedPuzzlesInDbIfEmpty,
   purgeLegacyDevTrainingSet,
   seedPuzzlesFromGeneratedJson,
 } from "@/db/seed-puzzles";
 
-export {
-  ensureGeneratedPuzzlesInDbIfEmpty,
-  purgeLegacyDevTrainingSet,
-} from "@/db/seed-puzzles";
+export { ensureGeneratedPuzzlesInDbIfEmpty, purgeLegacyDevTrainingSet };
 import { resetUserProgressPreserveLibrary } from "@/services/reset-user-progress.service";
 import type { TrainingSetOverview } from "../types";
 import type { ContinueTrainingResult, StartNextCycleResult } from "../types";
@@ -56,6 +54,30 @@ export async function ensureSeededForDevelopment(): Promise<boolean> {
   if (process.env.NODE_ENV === "production") return false;
   await seedDefaultSettingsIfMissing();
   return seedTrainingSetsIfEmpty();
+}
+
+let trainingLibraryReady: Promise<void> | null = null;
+
+/**
+ * Ensure the training library exists in IndexedDB (purge legacy dev set, load
+ * the Woodpecker bundles on first run, seed dev samples in development).
+ *
+ * Deduped to a single run per app load so it is safe to call from both the app
+ * shell — covering deep-links straight to /app/progress, /app/mistakes, etc. —
+ * and the Training Sets page. Resets on failure so the next mount can retry.
+ */
+export function ensureTrainingLibraryReady(): Promise<void> {
+  if (!trainingLibraryReady) {
+    trainingLibraryReady = (async () => {
+      await purgeLegacyDevTrainingSet();
+      await ensureGeneratedPuzzlesInDbIfEmpty();
+      await ensureSeededForDevelopment();
+    })().catch((err) => {
+      trainingLibraryReady = null;
+      throw err;
+    });
+  }
+  return trainingLibraryReady;
 }
 
 /**

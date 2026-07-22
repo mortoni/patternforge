@@ -11,6 +11,7 @@ import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { runMigrations } from "@/db/migrations";
+import { ensureTrainingLibraryReady } from "@/features/training-sets/services/training-sets.service";
 import { SidebarProvider, useSidebar } from "@/components/shared/sidebar/sidebar-context";
 
 /**
@@ -42,8 +43,12 @@ function AppShellInner({
   children: React.ReactNode;
   className?: string;
 }) {
+  // Migrate then seed the training library once for the whole app, so entering
+  // via any deep-link (e.g. /app/progress) has data — not only the Sets page.
   React.useEffect(() => {
-    runMigrations().catch(() => {});
+    runMigrations()
+      .then(() => ensureTrainingLibraryReady())
+      .catch(() => {});
   }, []);
 
   const pathname = usePathname();

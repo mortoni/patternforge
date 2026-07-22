@@ -8,9 +8,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("../services/training-sets.service", () => ({
-  purgeLegacyDevTrainingSet: vi.fn().mockResolvedValue(undefined),
-  ensureGeneratedPuzzlesInDbIfEmpty: vi.fn().mockResolvedValue(false),
-  ensureSeededForDevelopment: vi.fn().mockResolvedValue(false),
+  ensureTrainingLibraryReady: vi.fn().mockResolvedValue(undefined),
   getTrainingSetsOverview: vi.fn(),
   continueTraining: vi.fn().mockResolvedValue({ success: true, route: "/app/training" }),
   startNextCycle: vi.fn().mockResolvedValue({ success: true, cycleRunId: "c1", route: "/app/training" }),
