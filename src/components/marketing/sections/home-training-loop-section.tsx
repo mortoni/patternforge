@@ -96,7 +96,7 @@ export function HomeTrainingLoopSection() {
                 >
                   <div
                     className={cn(
-                      "[transform-style:preserve-3d] will-change-transform [transform:perspective(1000px)_rotateY(20deg)_rotateX(15deg)]",
+                      "[transform-style:preserve-3d] [transform:perspective(1000px)_rotateY(20deg)_rotateX(15deg)]",
                       "rounded-[2.1rem] shadow-lg shadow-black/10 ring-1 ring-black/[0.06] dark:shadow-[0_18px_50px_-24px_rgba(0,0,0,0.75)] dark:ring-white/15 dark:backdrop-blur-[1.5px]"
                     )}
                   >
@@ -156,7 +156,7 @@ export function HomeTrainingLoopSection() {
                 >
                   <div
                     className={cn(
-                      "[transform-style:preserve-3d] will-change-transform [transform:perspective(1000px)_rotateY(-20deg)_rotateX(15deg)]",
+                      "[transform-style:preserve-3d] [transform:perspective(1000px)_rotateY(-20deg)_rotateX(15deg)]",
                       "rounded-[2.1rem] shadow-lg shadow-black/10 ring-1 ring-black/[0.06] dark:shadow-[0_18px_50px_-24px_rgba(0,0,0,0.75)] dark:ring-white/15 dark:backdrop-blur-[1.5px]"
                     )}
                   >

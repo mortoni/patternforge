@@ -346,7 +346,10 @@ export function MotionPreviewFrame({
 
   return (
     <motion.div
-      className={cn("will-change-transform", className)}
+      // Only hint the compositor while a float is actually running; under
+      // reduced motion the element is static, so a permanent promoted layer
+      // would be wasted memory/GPU.
+      className={cn(!prefersReducedMotion && "will-change-transform", className)}
       initial={false}
       animate={
         prefersReducedMotion
