@@ -67,6 +67,8 @@ export function TrainingPage() {
   const [puzzleState, setPuzzleState] = React.useState<TrainingPuzzleUiState>("idle");
   const [currentSolutionIndex, setCurrentSolutionIndex] = React.useState(0);
   const [accumulatedUserMoves, setAccumulatedUserMoves] = React.useState<string[]>([]);
+  /** Inline error when persisting a move/skip fails; cleared on retry or next exercise. */
+  const [saveError, setSaveError] = React.useState<string | null>(null);
   /** Seeded by `useSyncPuzzleFromReadyState` when the active puzzle is known. */
   const attemptStartedAtRef = React.useRef(0);
   const firstUserMoveAtRef = React.useRef<number | null>(null);
@@ -142,11 +144,13 @@ export function TrainingPage() {
       setPuzzleState,
       setCurrentSolutionIndex,
       setAccumulatedUserMoves,
+      setError: setSaveError,
     }
   );
 
   React.useEffect(() => {
     queuedPreMoveUciRef.current = null;
+    setSaveError(null);
   }, [readyState?.cycleRun.id, readyState?.exercise.id]);
 
   const handleQueuePreMove = React.useCallback((uci: string) => {
@@ -372,7 +376,23 @@ export function TrainingPage() {
           </span>
         </div>
 
-        <div className={BOARD_COLUMN_CLASS}>
+        <div className={cn("flex flex-col gap-2", BOARD_COLUMN_CLASS)}>
+          {saveError ? (
+            <div
+              role="alert"
+              className="flex items-start gap-2 rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs text-red-600 dark:text-red-400"
+            >
+              <span className="min-w-0 flex-1">{saveError}</span>
+              <button
+                type="button"
+                onClick={() => setSaveError(null)}
+                aria-label="Dismiss error"
+                className="shrink-0 font-medium underline-offset-2 hover:underline"
+              >
+                Dismiss
+              </button>
+            </div>
+          ) : null}
           <div>
             <Button
               type="button"

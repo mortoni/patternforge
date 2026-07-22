@@ -20,6 +20,16 @@ import {
 
 type AppRouter = ReturnType<typeof useRouter>;
 
+/**
+ * Shown when persisting an attempt/skip throws (e.g. IndexedDB write blocked by
+ * private-browsing or storage quota). The move is rolled back to the pre-attempt
+ * position, so the user can retry rather than silently losing the move.
+ */
+export const MOVE_SAVE_ERROR_MESSAGE =
+  "Couldn't save your move — it wasn't recorded. This can happen in private browsing or when storage is full. Try again.";
+export const SKIP_SAVE_ERROR_MESSAGE =
+  "Couldn't skip this puzzle — try again.";
+
 export interface TrainingBoardRefs {
   currentFenRef: React.MutableRefObject<string>;
   currentSolutionIndexRef: React.MutableRefObject<number>;
@@ -62,6 +72,7 @@ export function useTrainingBoardActions(
     setPuzzleState: React.Dispatch<React.SetStateAction<TrainingPuzzleUiState>>;
     setCurrentSolutionIndex: React.Dispatch<React.SetStateAction<number>>;
     setAccumulatedUserMoves: React.Dispatch<React.SetStateAction<string[]>>;
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
   }
 ): { handleBoardMove: (uci: string, newFen: string) => Promise<void>; handleSkip: () => Promise<void> } {
   const {
@@ -81,6 +92,7 @@ export function useTrainingBoardActions(
     setPuzzleState,
     setCurrentSolutionIndex,
     setAccumulatedUserMoves,
+    setError,
   } = setters;
 
   useClearExerciseTransitionTimerOnUnmount(exerciseTransitionTimerRef);
@@ -104,6 +116,7 @@ export function useTrainingBoardActions(
       }
 
       boardMoveInFlightRef.current = true;
+      setError(null);
       const fenBefore = currentFenRef.current;
       solvingSideRef.current = parseSideToMoveFromFen(fenBefore);
       setPositionFen(newFen);
@@ -224,6 +237,7 @@ export function useTrainingBoardActions(
       } catch {
         setPuzzleState("idle");
         setPositionFen(fenBefore || baseFen);
+        setError(MOVE_SAVE_ERROR_MESSAGE);
       } finally {
         if (!opponentRevealTimerRef.current) {
           boardMoveInFlightRef.current = false;
@@ -239,6 +253,7 @@ export function useTrainingBoardActions(
     if (!readyState || !readyState.sessionId) return;
     if (puzzleState === "checking" || puzzleState === "transitioning") return;
     setPuzzleState("checking");
+    setError(null);
     clearPuzzleProgress(readyState.cycleRun.id, readyState.exercise.id);
     try {
       const { cycleComplete } = await skipPuzzle({
@@ -258,6 +273,7 @@ export function useTrainingBoardActions(
       }
     } catch {
       setPuzzleState("idle");
+      setError(SKIP_SAVE_ERROR_MESSAGE);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [readyState, puzzleState, reload, router]);
