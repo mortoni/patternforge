@@ -3,22 +3,44 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useEffectiveAppColorScheme } from "../hooks/use-effective-app-color-scheme";
 import {
   BOARD_STYLE_IDS,
   BOARD_STYLE_MAP,
   getBoardStylePreviewCellStyles,
   parseBoardStyleId,
+  type BoardStyleDefinition,
   type BoardStyleId,
 } from "@/lib/chess/board-styles";
 
-function MiniBoardPreview({
-  light,
-  dark,
-}: {
-  light: CSSProperties;
-  dark: CSSProperties;
-}) {
+/**
+ * Both color-scheme variants of a preview cell as CSS custom properties.
+ * The inline style is identical on server and client (no theme read in JS);
+ * the `dark:` utilities on the cell pick the variant via `html.dark`, which
+ * the theme bootstrap script sets before hydration. Reading the theme in JS
+ * here previously caused a hydration mismatch (server rendered light-mode
+ * colors, client rendered dark-mode ones).
+ */
+function previewCellVars(
+  lightScheme: CSSProperties,
+  darkScheme: CSSProperties
+): CSSProperties {
+  return {
+    "--pv-bg": lightScheme.backgroundColor ?? "transparent",
+    "--pv-bg-image": lightScheme.backgroundImage ?? "none",
+    "--pv-bg-dark": darkScheme.backgroundColor ?? "transparent",
+    "--pv-bg-image-dark": darkScheme.backgroundImage ?? "none",
+  } as CSSProperties;
+}
+
+const PREVIEW_CELL_CLASS =
+  "aspect-square bg-[var(--pv-bg)] [background-image:var(--pv-bg-image)] dark:bg-[var(--pv-bg-dark)] dark:[background-image:var(--pv-bg-image-dark)]";
+
+function MiniBoardPreview({ def }: { def: BoardStyleDefinition }) {
+  const inLightMode = getBoardStylePreviewCellStyles(def, "light");
+  const inDarkMode = getBoardStylePreviewCellStyles(def, "dark");
+  const lightSquare = previewCellVars(inLightMode.light, inDarkMode.light);
+  const darkSquare = previewCellVars(inLightMode.dark, inDarkMode.dark);
+
   const cells: ReactNode[] = [];
   for (let r = 0; r < 4; r++) {
     for (let c = 0; c < 4; c++) {
@@ -26,8 +48,8 @@ function MiniBoardPreview({
       cells.push(
         <div
           key={`preview-${r * 4 + c}`}
-          className="aspect-square"
-          style={isLight ? light : dark}
+          className={PREVIEW_CELL_CLASS}
+          style={isLight ? lightSquare : darkSquare}
         />
       );
     }
@@ -51,7 +73,6 @@ export function BoardStyleCard({
   onChange: (boardStyle: BoardStyleId) => void;
   disabled?: boolean;
 }) {
-  const scheme = useEffectiveAppColorScheme();
   const selected = parseBoardStyleId(value);
 
   return (
@@ -70,7 +91,6 @@ export function BoardStyleCard({
         >
           {BOARD_STYLE_IDS.map((id) => {
             const def = BOARD_STYLE_MAP[id];
-            const preview = getBoardStylePreviewCellStyles(def, scheme);
             const isSelected = selected === id;
             const ariaLabel = def.description
               ? `${def.label}. ${def.description}`
@@ -92,7 +112,7 @@ export function BoardStyleCard({
                     "border-[var(--primary)] bg-[var(--primary)]/8 ring-1 ring-[var(--primary)]/40"
                 )}
               >
-                <MiniBoardPreview light={preview.light} dark={preview.dark} />
+                <MiniBoardPreview def={def} />
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                   <span className="text-sm font-medium text-foreground">
                     {def.label}
