@@ -24,7 +24,6 @@ describe("PWA_VIEWPORT_BOOTSTRAP", () => {
       configurable: true,
       value: { ...originalNavigator, standalone },
     });
-    // eslint-disable-next-line no-eval -- bootstrap is an inline IIFE string for `<head>`
     eval(PWA_VIEWPORT_BOOTSTRAP);
   }
 

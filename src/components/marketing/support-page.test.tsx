@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import SupportPage from "./support-page";
 import { STRIPE_DONATION_OPTIONS } from "@/lib/stripe-donation-links";
 import {

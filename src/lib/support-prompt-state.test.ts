@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   parseSupportPromptState,
   DEFAULT_SUPPORT_PROMPT_STATE,
