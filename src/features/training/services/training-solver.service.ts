@@ -20,10 +20,29 @@ import {
   advanceAfterSkip,
 } from "@/services/cycle-progress.service";
 import { addExerciseAttempt } from "@/repositories/exercise-attempt.repository";
+import { db } from "@/db/dexie";
 import {
   trackPuzzleCompleted,
   trackPuzzleSkipped,
 } from "@/services/puzzle-telemetry.service";
+
+/**
+ * Runs the writes that resolve one attempt/skip atomically: attempt row,
+ * mistake entry, session counters, cycle advance, and (at cycle end) session
+ * completion. Without this, a tab close or crash mid-sequence leaves the DB
+ * inconsistent — e.g. an attempt recorded but the cycle never advanced, so
+ * the user replays a puzzle that is already counted.
+ *
+ * The callback must only perform Dexie work (awaiting non-Dexie promises
+ * would end the transaction), so telemetry and chess.js imports stay outside.
+ */
+function inAttemptTransaction<T>(fn: () => Promise<T>): Promise<T> {
+  return db.transaction(
+    "rw",
+    [db.exerciseAttempts, db.mistakeEntries, db.sessions, db.cycleRuns],
+    fn
+  );
+}
 
 export interface SubmitAttemptParams {
   exerciseId: string;
@@ -168,23 +187,26 @@ export async function submitAttempt(
 
     if (!validation.isCorrect) {
       const userMoves = [...accumulatedUserMoves, validation.normalizedAttemptedMove];
-      await addExerciseAttempt({
-        id: crypto.randomUUID(),
-        exerciseId,
-        cycleRunId,
-        sessionId,
-        startedAt: startedAtIso,
-        finishedAt: nowIso,
-        durationMs,
-        result: "incorrect",
-        userMoves,
+      const advanceResult = await inAttemptTransaction(async () => {
+        await addExerciseAttempt({
+          id: crypto.randomUUID(),
+          exerciseId,
+          cycleRunId,
+          sessionId,
+          startedAt: startedAtIso,
+          finishedAt: nowIso,
+          durationMs,
+          result: "incorrect",
+          userMoves,
+        });
+        await recordFailure(exerciseId, trainingSetId);
+        await recordAttemptOnSession(sessionId, "incorrect", durationMs);
+        const result = await advanceAfterIncorrect(cycleRunId);
+        if (result.status === "cycle-complete") {
+          await completeSession(sessionId);
+        }
+        return result;
       });
-      await recordFailure(exerciseId, trainingSetId);
-      await recordAttemptOnSession(sessionId, "incorrect", durationMs);
-      const advanceResult = await advanceAfterIncorrect(cycleRunId);
-      if (advanceResult.status === "cycle-complete") {
-        await completeSession(sessionId);
-      }
       emitPuzzleResolved(params, {
         solved: false,
         attempts: userMoves.length,
@@ -231,22 +253,25 @@ export async function submitAttempt(
     }
 
     const allUserMoves = [...accumulatedUserMoves, validation.normalizedAttemptedMove];
-    await addExerciseAttempt({
-      id: crypto.randomUUID(),
-      exerciseId,
-      cycleRunId,
-      sessionId,
-      startedAt: startedAtIso,
-      finishedAt: nowIso,
-      durationMs,
-      result: "correct",
-      userMoves: allUserMoves,
+    const advanceResult = await inAttemptTransaction(async () => {
+      await addExerciseAttempt({
+        id: crypto.randomUUID(),
+        exerciseId,
+        cycleRunId,
+        sessionId,
+        startedAt: startedAtIso,
+        finishedAt: nowIso,
+        durationMs,
+        result: "correct",
+        userMoves: allUserMoves,
+      });
+      await recordAttemptOnSession(sessionId, "correct", durationMs);
+      const result = await advanceAfterCorrect(cycleRunId);
+      if (result.status === "cycle-complete") {
+        await completeSession(sessionId);
+      }
+      return result;
     });
-    await recordAttemptOnSession(sessionId, "correct", durationMs);
-    const advanceResult = await advanceAfterCorrect(cycleRunId);
-    if (advanceResult.status === "cycle-complete") {
-      await completeSession(sessionId);
-    }
     emitPuzzleResolved(params, {
       solved: true,
       attempts: allUserMoves.length,
@@ -269,35 +294,38 @@ export async function submitAttempt(
     attemptedMove: attemptedMoveUci,
   });
 
-  await addExerciseAttempt({
-    id: crypto.randomUUID(),
-    exerciseId,
-    cycleRunId,
-    sessionId,
-    startedAt: startedAtIso,
-    finishedAt: nowIso,
-    durationMs,
-    result: evaluation.isCorrect ? "correct" : "incorrect",
-    userMoves: [evaluation.normalizedAttemptedMove],
+  const advanceResult = await inAttemptTransaction(async () => {
+    await addExerciseAttempt({
+      id: crypto.randomUUID(),
+      exerciseId,
+      cycleRunId,
+      sessionId,
+      startedAt: startedAtIso,
+      finishedAt: nowIso,
+      durationMs,
+      result: evaluation.isCorrect ? "correct" : "incorrect",
+      userMoves: [evaluation.normalizedAttemptedMove],
+    });
+
+    if (!evaluation.isCorrect) {
+      await recordFailure(exerciseId, trainingSetId);
+    }
+
+    await recordAttemptOnSession(
+      sessionId,
+      evaluation.isCorrect ? "correct" : "incorrect",
+      durationMs
+    );
+
+    const result = evaluation.isCorrect
+      ? await advanceAfterCorrect(cycleRunId)
+      : await advanceAfterIncorrect(cycleRunId);
+
+    if (result.status === "cycle-complete") {
+      await completeSession(sessionId);
+    }
+    return result;
   });
-
-  if (!evaluation.isCorrect) {
-    await recordFailure(exerciseId, trainingSetId);
-  }
-
-  await recordAttemptOnSession(
-    sessionId,
-    evaluation.isCorrect ? "correct" : "incorrect",
-    durationMs
-  );
-
-  const advanceResult = evaluation.isCorrect
-    ? await advanceAfterCorrect(cycleRunId)
-    : await advanceAfterIncorrect(cycleRunId);
-
-  if (advanceResult.status === "cycle-complete") {
-    await completeSession(sessionId);
-  }
 
   emitPuzzleResolved(params, {
     solved: evaluation.isCorrect,
@@ -337,24 +365,27 @@ export async function skipPuzzle(
   const nowIso = new Date(finishedAtMs).toISOString();
   const durationMs = Math.max(0, finishedAtMs - attemptStartedAt);
 
-  await addExerciseAttempt({
-    id: crypto.randomUUID(),
-    exerciseId,
-    cycleRunId,
-    sessionId,
-    startedAt: startedAtIso,
-    finishedAt: nowIso,
-    durationMs,
-    result: "skipped",
-    userMoves: [],
-  });
-  await recordSkip(exerciseId, trainingSetId);
-  await recordAttemptOnSession(sessionId, "skipped", durationMs);
+  const result = await inAttemptTransaction(async () => {
+    await addExerciseAttempt({
+      id: crypto.randomUUID(),
+      exerciseId,
+      cycleRunId,
+      sessionId,
+      startedAt: startedAtIso,
+      finishedAt: nowIso,
+      durationMs,
+      result: "skipped",
+      userMoves: [],
+    });
+    await recordSkip(exerciseId, trainingSetId);
+    await recordAttemptOnSession(sessionId, "skipped", durationMs);
 
-  const result = await advanceAfterSkip(cycleRunId);
-  if (result.status === "cycle-complete") {
-    await completeSession(sessionId);
-  }
+    const advanceResult = await advanceAfterSkip(cycleRunId);
+    if (advanceResult.status === "cycle-complete") {
+      await completeSession(sessionId);
+    }
+    return advanceResult;
+  });
   trackPuzzleSkipped({
     sessionId,
     trainingSetId,
@@ -378,19 +409,22 @@ export async function goToNextPuzzle(
   sessionId: string,
   durationMs: number = 0
 ): Promise<{ status: "advanced" | "cycle-complete" }> {
-  await recordAttemptOnSession(
-    sessionId,
-    wasCorrect ? "correct" : "incorrect",
-    durationMs
-  );
+  const result = await inAttemptTransaction(async () => {
+    await recordAttemptOnSession(
+      sessionId,
+      wasCorrect ? "correct" : "incorrect",
+      durationMs
+    );
 
-  const result = wasCorrect
-    ? await advanceAfterCorrect(cycleRunId)
-    : await advanceAfterIncorrect(cycleRunId);
+    const advanceResult = wasCorrect
+      ? await advanceAfterCorrect(cycleRunId)
+      : await advanceAfterIncorrect(cycleRunId);
 
-  if (result.status === "cycle-complete") {
-    await completeSession(sessionId);
-  }
+    if (advanceResult.status === "cycle-complete") {
+      await completeSession(sessionId);
+    }
+    return advanceResult;
+  });
 
   return { status: result.status };
 }

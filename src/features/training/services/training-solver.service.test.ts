@@ -41,6 +41,25 @@ vi.mock("@/services/puzzle-telemetry.service", () => ({
   trackPuzzleSkipped: vi.fn(),
 }));
 
+/** Transaction passthrough: runs the callback so write ordering stays observable. */
+const mockTransaction = vi.fn();
+vi.mock("@/db/dexie", () => ({
+  db: {
+    transaction: (
+      mode: "r" | "rw",
+      tables: unknown[],
+      callback: () => Promise<unknown>
+    ) => {
+      mockTransaction(mode, tables);
+      return callback();
+    },
+    exerciseAttempts: {},
+    mistakeEntries: {},
+    sessions: {},
+    cycleRuns: {},
+  },
+}));
+
 const mockValidatePuzzleMove = vi.fn();
 const mockApplyCanonicalAutoMoves = vi.fn();
 const mockIsUserMoveAtIndex = vi.fn();
@@ -366,6 +385,49 @@ describe("training-solver.service", () => {
       });
       await goToNextPuzzle("c1", true, "s1", 0);
       expect(mockCompleteSession).toHaveBeenCalledWith("s1");
+    });
+  });
+
+  describe("write atomicity", () => {
+    it("submitAttempt wraps all writes in one rw transaction over the four tables", async () => {
+      mockAdvanceAfterCorrect.mockResolvedValue({
+        status: "advanced",
+        nextExerciseIndex: 1,
+        solvedCount: 1,
+        totalExercises: 5,
+      });
+      await submitAttempt({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        expectedFirstMove: "e2e4",
+        attemptedMoveUci: "e2e4",
+        attemptStartedAt: Date.now(),
+      });
+      expect(mockTransaction).toHaveBeenCalledTimes(1);
+      const [mode, tables] = mockTransaction.mock.calls[0];
+      expect(mode).toBe("rw");
+      expect(tables).toHaveLength(4);
+    });
+
+    it("skipPuzzle wraps all writes in one rw transaction", async () => {
+      mockAdvanceAfterSkip.mockResolvedValue({
+        status: "advanced",
+        nextExerciseIndex: 1,
+        solvedCount: 0,
+        totalExercises: 5,
+      });
+      await skipPuzzle({
+        exerciseId: "ex-1",
+        cycleRunId: "c1",
+        trainingSetId: "set-1",
+        sessionId: "s1",
+        attemptStartedAt: Date.now(),
+      });
+      expect(mockTransaction).toHaveBeenCalledTimes(1);
+      expect(mockTransaction.mock.calls[0][0]).toBe("rw");
     });
   });
 });
