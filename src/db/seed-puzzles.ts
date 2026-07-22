@@ -67,8 +67,14 @@ const WOODPECKER_SET_META: Record<
   },
 };
 
-/** Cache-bust so we always load the latest bundle JSON in development. */
+/**
+ * Cache-bust so we always load the latest bundle JSON in development.
+ * Production must fetch the plain URL: the service worker precaches these
+ * bundles by exact path (see src/app/sw.ts), which makes first-run seeding
+ * work offline — a random query param would bypass that cache.
+ */
 function cacheBust(url: string): string {
+  if (process.env.NODE_ENV === "production") return url;
   const sep = url.includes("?") ? "&" : "?";
   return `${url}${sep}_t=${Date.now()}`;
 }

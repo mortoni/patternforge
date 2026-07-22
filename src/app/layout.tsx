@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { SerwistProvider } from "@serwist/turbopack/react";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SettingsProvider } from "@/features/settings/context/settings-context";
@@ -100,7 +101,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
       >
-        <SettingsProvider>{children}</SettingsProvider>
+        {/* Registers /serwist/sw.js for offline support; disabled in dev so
+            stale caches never mask live edits. */}
+        <SerwistProvider
+          swUrl="/serwist/sw.js"
+          disable={process.env.NODE_ENV !== "production"}
+        >
+          <SettingsProvider>{children}</SettingsProvider>
+        </SerwistProvider>
         <Analytics />
       </body>
     </html>

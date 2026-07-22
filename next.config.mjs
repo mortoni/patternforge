@@ -1,4 +1,5 @@
 import createMDX from "@next/mdx";
+import { withSerwist } from "@serwist/turbopack";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -29,4 +30,4 @@ const withMDX = createMDX({
   },
 });
 
-export default withMDX(nextConfig);
+export default withSerwist(withMDX(nextConfig));

@@ -15,6 +15,7 @@
     "ci": "pnpm run lint && pnpm run test && pnpm run typecheck && pnpm run build",
     "test:watch": "vitest",
     "test:e2e": "node node_modules/@playwright/test/cli.js test",
+    "test:e2e:offline": "node node_modules/@playwright/test/cli.js test --config playwright.offline.config.ts",
     "test:e2e:install": "node node_modules/@playwright/test/cli.js install chromium",
     "validate:woodpecker": "tsx scripts/validate-woodpecker-json.ts",
     "validate:woodpecker:ci": "tsx scripts/validate-woodpecker-json.ts --ci --fail-on-issues",
@@ -54,6 +55,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
     "@playwright/test": "^1.58.2",
+    "@serwist/turbopack": "^9.5.11",
     "@storybook/addon-a11y": "^10.4.0",
     "@storybook/addon-docs": "^10.4.0",
     "@storybook/addon-mcp": "^0.6.0",
@@ -68,12 +70,14 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.4",
     "chromatic": "^16.10.1",
+    "esbuild": "^0.28.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
     "jsdom": "^28.1.0",
     "png-to-ico": "^3.0.1",
     "prettier": "^3.8.1",
+    "serwist": "^9.5.11",
     "sharp": "^0.34.5",
     "storybook": "^10.4.0",
     "tailwindcss": "^4",
@@ -81,5 +85,11 @@
     "typescript": "^5",
     "vite": "^8.0.12",
     "vitest": "^4.0.18"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }
