@@ -63,7 +63,7 @@ describe("reset-user-progress", () => {
         id: "default",
         theme: "system",
         boardOrientation: "white",
-        boardStyle: "blueprint",
+        boardStyle: "classic-lichess",
         lastTrainingSetId: undefined,
       })
     );

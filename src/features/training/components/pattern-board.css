@@ -224,6 +224,72 @@
   background-color: rgba(20, 30, 85, 0.38) !important;
 }
 
+/*
+ * Blueprint: the base move chrome mixes with --foreground, which washes out on
+ * the near-black dark-mode squares (dots and selection read as "is this even
+ * clickable?"). Use a fixed blueprint-blue that stays legible on both the
+ * light-grey and near-black square sets, matching the technical aesthetic.
+ */
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.move-dest:not(.oc) {
+  background: radial-gradient(
+    circle at center,
+    rgba(70, 156, 246, 0.98) 0%,
+    rgba(70, 156, 246, 0.98) 9%,
+    transparent 13%
+  ) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.move-dest:not(.oc):hover {
+  background: rgba(70, 156, 246, 0.32) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.oc.move-dest {
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 54%,
+    rgba(70, 156, 246, 0.82) 56%,
+    rgba(70, 156, 246, 0.82) 66%,
+    transparent 69%
+  ) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.oc.move-dest:hover {
+  background: rgba(70, 156, 246, 0.28) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.selected {
+  background-color: rgba(70, 156, 246, 0.5) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.premove-dest:not(.oc) {
+  background: radial-gradient(
+    circle at center,
+    rgba(150, 190, 240, 0.85) 0%,
+    rgba(150, 190, 240, 0.85) 9%,
+    transparent 13%
+  ) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.premove-dest:not(.oc):hover {
+  background: rgba(150, 190, 240, 0.3) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.oc.premove-dest {
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 54%,
+    rgba(150, 190, 240, 0.68) 56%,
+    rgba(150, 190, 240, 0.68) 66%,
+    transparent 69%
+  ) !important;
+}
+
+.pf-cg-host[data-pf-board="blueprint"] cg-board square.current-premove {
+  background-color: rgba(150, 190, 240, 0.44) !important;
+}
+
 /* Feedback highlights (highlight.custom) */
 .pf-cg-host square.pf-hl-correct {
   background-color: rgba(34, 197, 94, 0.35) !important;

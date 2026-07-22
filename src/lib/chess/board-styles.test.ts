@@ -46,10 +46,10 @@ describe("board-styles", () => {
       expect(parseBoardStyleId(42)).toBe("classic-lichess");
     });
 
-    it("falls back to blueprint when boardStyle is missing", () => {
-      expect(parseBoardStyleId(undefined)).toBe("blueprint");
-      expect(parseBoardStyleId(null)).toBe("blueprint");
-      expect(parseBoardStyleId("")).toBe("blueprint");
+    it("falls back to classic-lichess when boardStyle is missing", () => {
+      expect(parseBoardStyleId(undefined)).toBe("classic-lichess");
+      expect(parseBoardStyleId(null)).toBe("classic-lichess");
+      expect(parseBoardStyleId("")).toBe("classic-lichess");
     });
   });
 

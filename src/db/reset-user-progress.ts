@@ -16,7 +16,7 @@ const DEFAULT_SETTINGS = {
   id: DEFAULT_SETTINGS_ID,
   theme: "system" as const,
   boardOrientation: "white" as const,
-  boardStyle: "blueprint" as const,
+  boardStyle: "classic-lichess" as const,
   lastTrainingSetId: undefined as string | undefined,
   autoBoardOrientation: false as const
 };

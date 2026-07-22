@@ -187,7 +187,7 @@ export async function seedDefaultSettingsIfMissing(): Promise<void> {
     id: "default",
     theme: "system",
     boardOrientation: "white",
-    boardStyle: "blueprint",
+    boardStyle: "classic-lichess",
     lastTrainingSetId: undefined,
     autoBoardOrientation: false,
   });

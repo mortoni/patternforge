@@ -36,7 +36,7 @@ describe("settings.service", () => {
 
       expect(result).toEqual({
         ...existing,
-        boardStyle: "blueprint",
+        boardStyle: "classic-lichess",
       });
       expect(mockPutSettings).not.toHaveBeenCalled();
     });
@@ -71,7 +71,7 @@ describe("settings.service", () => {
       );
       expect(result.theme).toBe("system");
       expect(result.boardOrientation).toBe("white");
-      expect(result.boardStyle).toBe("blueprint");
+      expect(result.boardStyle).toBe("classic-lichess");
     });
   });
 

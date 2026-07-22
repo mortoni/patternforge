@@ -141,19 +141,22 @@ const BLUEPRINT_APP_LIGHT: BoardThemeVariant = {
   boardBackground: "#eaeaea",
   frameBackground: "rgba(248, 248, 248, 0.94)",
   frameBorder: "rgba(120, 120, 135, 0.2)",
-  coordColor: "rgba(100, 105, 115, 0.75)",
+  // Darker + more opaque so file/rank labels read on the light-grey frame.
+  coordColor: "rgba(52, 58, 70, 0.92)",
 };
 
 const BLUEPRINT_APP_DARK: BoardThemeVariant = {
-  chessLightSquare: "#3a3a3a",
-  chessDarkSquare: "#121212",
-  hatchBase: "#121212",
-  hatchLine: "rgba(255,255,255,0.17)",
+  // Lifted off near-black so pieces and move chrome have something to read
+  // against, while keeping the dark "blueprint" character.
+  chessLightSquare: "#454545",
+  chessDarkSquare: "#232323",
+  hatchBase: "#232323",
+  hatchLine: "rgba(255,255,255,0.18)",
   hatchOnLightChessSquares: false,
-  boardBackground: "#1a1a1a",
+  boardBackground: "#1e1e1e",
   frameBackground: "rgba(24, 24, 26, 0.92)",
   frameBorder: "rgba(240, 240, 248, 0.12)",
-  coordColor: "rgba(215, 218, 225, 0.72)",
+  coordColor: "rgba(224, 228, 236, 0.92)",
 };
 
 export const BOARD_STYLE_MAP: Record<BoardStyleId, BoardStyleDefinition> = {
@@ -204,9 +207,8 @@ export function parseBoardStyleId(value: unknown): BoardStyleId {
   ) {
     return value as BoardStyleId;
   }
-  if (value === undefined || value === null || value === "") {
-    return "blueprint";
-  }
+  // Default (and any unrecognized value): the high-readability Lichess board.
+  // Blueprint is the brand aesthetic, available as an explicit opt-in.
   return "classic-lichess";
 }
 
