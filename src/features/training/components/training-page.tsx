@@ -2,8 +2,9 @@
 
 /**
  * Training — minimal Woodpecker solving surface.
- * Uses the loader, session, submitAttempt/skipPuzzle, and TrainingBoardCard;
- * post-move UX: no feedback panels, no “next” — wrong or solved single-step advances via silent reload().
+ * Puzzle interaction (moves, skips, pre-moves, timers) lives in
+ * `useTrainingPuzzleMachine`; this component owns loading/empty states,
+ * session exit, and layout only.
  */
 
 import * as React from "react";
@@ -26,16 +27,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { SideToMoveIndicator } from "@/components/shared/SideToMoveIndicator";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
-import { getsideToMove, parseSideToMoveFromFen } from "@/lib/chess/side-to-move";
-import { Chess } from "chess.js";
+import { getsideToMove } from "@/lib/chess/side-to-move";
 import { cn } from "@/lib/utils";
 import { useActiveTraining } from "../hooks/use-active-training";
 import { useCycleCompleteRedirect } from "../hooks/use-cycle-complete-redirect";
-import {
-  useSyncPuzzleFromReadyState,
-  type TrainingPuzzleUiState,
-} from "../hooks/use-sync-puzzle-from-ready-state";
-import { useTrainingBoardActions } from "../hooks/use-training-board-actions";
+import { useTrainingPuzzleMachine } from "../hooks/use-training-puzzle-machine";
 import { TrainingEmptyState } from "./training-empty-state";
 import { TrainingBoardCard } from "./training-board-card";
 import { completeSession } from "@/services/training-session.service";
@@ -48,145 +44,26 @@ import { completeSession } from "@/services/training-session.service";
 const BOARD_COLUMN_CLASS =
   "w-full min-w-0 max-w-[min(100%,calc(100dvh-14rem),40rem)] self-center";
 
-function parseUciForExecution(
-  uci: string
-): { from: string; to: string; promotion?: string } | null {
-  const t = uci.trim().toLowerCase();
-  if (t.length === 4) return { from: t.slice(0, 2), to: t.slice(2, 4) };
-  if (t.length === 5 && /^[a-h][1-8][a-h][1-8][qnrb]$/.test(t)) {
-    return { from: t.slice(0, 2), to: t.slice(2, 4), promotion: t[4] };
-  }
-  return null;
-}
-
 export function TrainingPage() {
   const router = useRouter();
   const { state, loading, error, reload } = useActiveTraining();
 
-  const [positionFen, setPositionFen] = React.useState<string | null>(null);
-  const [puzzleState, setPuzzleState] = React.useState<TrainingPuzzleUiState>("idle");
-  const [currentSolutionIndex, setCurrentSolutionIndex] = React.useState(0);
-  const [accumulatedUserMoves, setAccumulatedUserMoves] = React.useState<string[]>([]);
-  /** Inline error when persisting a move/skip fails; cleared on retry or next exercise. */
-  const [saveError, setSaveError] = React.useState<string | null>(null);
-  /** Seeded by `useSyncPuzzleFromReadyState` when the active puzzle is known. */
-  const attemptStartedAtRef = React.useRef(0);
-  const firstUserMoveAtRef = React.useRef<number | null>(null);
-  const autoPlayTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const opponentRevealTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-  const exerciseTransitionTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
-  const currentSolutionIndexRef = React.useRef(0);
-  const accumulatedUserMovesRef = React.useRef<string[]>([]);
-  const currentFenRef = React.useRef<string>("");
-  const solvingSideRef = React.useRef<"w" | "b">("w");
-  /**
-   * Prevents duplicate submitAttempt / cycle advance when the chessboard fires twice
-   * for one gesture (e.g. drop + synthetic click) before React disables interaction.
-   */
-  const boardMoveInFlightRef = React.useRef(false);
-  const queuedPreMoveUciRef = React.useRef<string | null>(null);
-
   useCycleCompleteRedirect(state);
 
   const readyState = state?.status === "ready" ? state : null;
-  const baseFen = readyState?.exercise.fen ?? "";
-  const displayFen = positionFen ?? baseFen;
 
-  React.useLayoutEffect(() => {
-    currentFenRef.current = displayFen;
-    currentSolutionIndexRef.current = currentSolutionIndex;
-    accumulatedUserMovesRef.current = accumulatedUserMoves;
-  }, [displayFen, currentSolutionIndex, accumulatedUserMoves]);
-
-  useSyncPuzzleFromReadyState(
-    readyState,
-    {
-      boardMoveInFlightRef,
-      autoPlayTimerRef,
-      opponentRevealTimerRef,
-      exerciseTransitionTimerRef,
-      currentSolutionIndexRef,
-      accumulatedUserMovesRef,
-      currentFenRef,
-      attemptStartedAtRef,
-      firstUserMoveAtRef,
-    },
-    {
-      setPositionFen,
-      setCurrentSolutionIndex,
-      setAccumulatedUserMoves,
-      setPuzzleState,
-    }
-  );
-
-  const { handleBoardMove, handleSkip } = useTrainingBoardActions(
-    readyState,
-    baseFen,
-    puzzleState,
-    reload,
-    router,
-    {
-      currentFenRef,
-      currentSolutionIndexRef,
-      accumulatedUserMovesRef,
-      solvingSideRef,
-      boardMoveInFlightRef,
-      attemptStartedAtRef,
-      firstUserMoveAtRef,
-      autoPlayTimerRef,
-      opponentRevealTimerRef,
-      exerciseTransitionTimerRef,
-    },
-    {
-      setPositionFen,
-      setPuzzleState,
-      setCurrentSolutionIndex,
-      setAccumulatedUserMoves,
-      setError: setSaveError,
-    }
-  );
-
-  React.useEffect(() => {
-    queuedPreMoveUciRef.current = null;
-    setSaveError(null);
-  }, [readyState?.cycleRun.id, readyState?.exercise.id]);
-
-  const handleQueuePreMove = React.useCallback((uci: string) => {
-    if (!readyState || puzzleState !== "checking") return;
-    queuedPreMoveUciRef.current = uci;
-  }, [readyState, puzzleState]);
-
-  /**
-   * Execute one queued pre-move as soon as the board returns to the trainee side.
-   * Invalid queued moves are silently discarded.
-   */
-  React.useEffect(() => {
-    const queued = queuedPreMoveUciRef.current;
-    if (!readyState || !queued) return;
-    if (puzzleState === "checking" || puzzleState === "transitioning") return;
-    if (boardMoveInFlightRef.current) return;
-    const sideToMove = parseSideToMoveFromFen(displayFen);
-    if (sideToMove !== readyState.exercise.sideToMove) return;
-    try {
-      const chess = new Chess(displayFen);
-      const parsed = parseUciForExecution(queued);
-      const made = parsed ? chess.move(parsed) : chess.move(queued);
-      queuedPreMoveUciRef.current = null;
-      if (!made) return;
-      const m = made as { from: string; to: string; promotion?: string };
-      const normalizedUci = `${m.from}${m.to}${m.promotion ?? ""}`;
-      void handleBoardMove(normalizedUci, chess.fen());
-    } catch {
-      queuedPreMoveUciRef.current = null;
-    }
-  }, [readyState, puzzleState, displayFen, handleBoardMove]);
-
-  const handleSkipWithPreMoveReset = React.useCallback(async () => {
-    queuedPreMoveUciRef.current = null;
-    await handleSkip();
-  }, [handleSkip]);
+  const {
+    phase,
+    displayFen,
+    turnForLabel,
+    boardDisabled,
+    preMoveEnabled,
+    saveError,
+    dismissError,
+    handleBoardMove,
+    handleQueuePreMove,
+    handleSkip,
+  } = useTrainingPuzzleMachine({ readyState, reload, router });
 
   const handleEndSession = React.useCallback(async () => {
     const sid = readyState?.sessionId;
@@ -295,19 +172,6 @@ export function TrainingPage() {
     );
   }
 
-  const sideToMoveFromFen = parseSideToMoveFromFen(displayFen);
-  // Set in `handleBoardMove` before `checking`; ref read ties indicator to pre-submit side.
-  const turnForLabel =
-    puzzleState === "checking"
-      ? // eslint-disable-next-line react-hooks/refs -- paired write in move handler before this render
-        solvingSideRef.current
-      : sideToMoveFromFen;
-
-  const boardDisabled =
-    puzzleState === "checking" ||
-    puzzleState === "correct_so_far" ||
-    puzzleState === "transitioning";
-
   return (
     <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col pt-0.5 md:min-h-[calc(100dvh-4rem)] md:pt-0">
       <h1 className="sr-only">Training</h1>
@@ -355,7 +219,7 @@ export function TrainingPage() {
               onMove={handleBoardMove}
               onPreMove={handleQueuePreMove}
               disabled={boardDisabled}
-              preMoveEnabled={puzzleState === "checking"}
+              preMoveEnabled={preMoveEnabled}
               preMoveSide={readyState!.exercise.sideToMove}
               minimal
               boardContainerClassName="w-full border-border/40 bg-[var(--muted)]/10"
@@ -364,7 +228,7 @@ export function TrainingPage() {
               className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
               aria-hidden="true"
             >
-              {puzzleState === "transitioning" ? (
+              {phase === "transitioning" ? (
                 <div className="rounded-md bg-black/70 px-4 py-2 text-sm font-medium text-white shadow-sm">
                   Exercise complete
                 </div>
@@ -372,7 +236,7 @@ export function TrainingPage() {
             </div>
           </div>
           <span className="sr-only" aria-live="polite">
-            {puzzleState === "transitioning" ? "Exercise complete" : ""}
+            {phase === "transitioning" ? "Exercise complete" : ""}
           </span>
         </div>
 
@@ -385,7 +249,7 @@ export function TrainingPage() {
               <span className="min-w-0 flex-1">{saveError}</span>
               <button
                 type="button"
-                onClick={() => setSaveError(null)}
+                onClick={dismissError}
                 aria-label="Dismiss error"
                 className="shrink-0 font-medium underline-offset-2 hover:underline"
               >
@@ -398,7 +262,7 @@ export function TrainingPage() {
               type="button"
               variant="ghost"
               size="sm"
-              onClick={handleSkipWithPreMoveReset}
+              onClick={handleSkip}
               disabled={boardDisabled}
               aria-label="Skip this puzzle"
               className="h-auto px-2 py-1 text-xs text-muted-foreground sm:text-sm"
