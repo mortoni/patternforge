@@ -1,6 +1,12 @@
 /**
  * Zod schemas and inferred types for all DB entities.
- * Use for validation when reading from IndexedDB or external sources.
+ *
+ * These are primarily the source of truth for entity *types* (via `z.infer`).
+ * IndexedDB rows are written only through this app's own repositories, so
+ * reads are not re-validated. Runtime parsing is applied at trust boundaries
+ * where data originates outside the app — see
+ * `@/lib/woodpecker/bundle-schema` for the Woodpecker JSON bundles, and add a
+ * `.parse()` here if a future import path ingests externally-authored rows.
  */
 
 import { z } from "zod";

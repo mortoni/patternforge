@@ -16,12 +16,22 @@ import * as fs from "fs";
 import * as path from "path";
 import { Chess } from "chess.js";
 import { z } from "zod";
+import {
+  WOODPECKER_SET_IDS,
+  woodpeckerBundleSchema,
+  woodpeckerPuzzleSchema,
+  type WoodpeckerBundle,
+} from "../src/lib/woodpecker/bundle-schema";
 
-export const WOODPECKER_SET_IDS = [
-  "woodpecker-easy",
-  "woodpecker-intermediate",
-  "woodpecker-advanced",
-] as const;
+// Shared bundle schema lives in src so the runtime seeding path validates
+// against the exact same shape this CLI checks. Re-exported for callers that
+// previously imported these from this script.
+export {
+  WOODPECKER_SET_IDS,
+  woodpeckerBundleSchema,
+  woodpeckerPuzzleSchema,
+  type WoodpeckerBundle,
+};
 
 const SET_IDS = WOODPECKER_SET_IDS;
 
@@ -29,41 +39,6 @@ const SET_IDS = WOODPECKER_SET_IDS;
 export const CI_FULL_VALIDATE_SETS = new Set<(typeof SET_IDS)[number]>(["woodpecker-easy"]);
 
 const uciMoveSchema = z.string().regex(/^[a-h][1-8][a-h][1-8][qrbn]?$/i);
-
-export const woodpeckerPuzzleSchema = z.object({
-  id: z.string().min(1),
-  puzzleNumber: z.number().int().positive(),
-  fen: z.string().min(1),
-  sideToMove: z.enum(["w", "b"]),
-  difficulty: z.enum(["easy", "intermediate", "advanced"]),
-  solution: z.object({
-    mainLine: z.array(z.string().min(1)),
-    uci: z.array(z.string()),
-    fullLine: z.array(
-      z.object({
-        move: z.string().min(1),
-        uci: z.string(),
-      })
-    ),
-  }),
-  metadata: z.object({
-    motifTags: z.array(z.string()),
-    gameSource: z.string(),
-    comment: z.string().optional(),
-  }),
-  validation: z.object({
-    status: z.literal("unverified"),
-    engineScore: z.null(),
-    alternativeFirstMoves: z.array(z.string()),
-  }),
-});
-
-export const woodpeckerBundleSchema = z.object({
-  trainingSetId: z.enum(SET_IDS),
-  puzzles: z.array(woodpeckerPuzzleSchema),
-});
-
-export type WoodpeckerBundle = z.infer<typeof woodpeckerBundleSchema>;
 
 export type ValidationIssue = {
   file: string;

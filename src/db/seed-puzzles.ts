@@ -9,42 +9,18 @@ import { upsertManyTrainingSets } from "@/repositories/training-set.repository";
 import { upsertManyExercises } from "@/repositories/exercise.repository";
 import type { TrainingSetSchema } from "@/db/schema";
 import type { ExerciseSchema } from "@/db/schema";
+import {
+  WOODPECKER_SET_IDS,
+  woodpeckerBundleSchema,
+  type WoodpeckerPuzzle,
+  type WoodpeckerSetId,
+} from "@/lib/woodpecker/bundle-schema";
 
 const BASE = "/data/woodpecker";
-export const WOODPECKER_SET_IDS = [
-  "woodpecker-easy",
-  "woodpecker-intermediate",
-  "woodpecker-advanced",
-] as const;
-export type WoodpeckerSetId = (typeof WOODPECKER_SET_IDS)[number];
 
-interface WoodpeckerPuzzle {
-  id: string;
-  puzzleNumber: number;
-  fen: string;
-  sideToMove: "w" | "b";
-  difficulty: "easy" | "intermediate" | "advanced";
-  solution: {
-    mainLine: string[];
-    uci: string[];
-    fullLine: Array<{ move: string; uci: string }>;
-  };
-  metadata: {
-    motifTags: string[];
-    gameSource: string;
-    comment?: string;
-  };
-  validation: {
-    status: "unverified";
-    engineScore: null;
-    alternativeFirstMoves: string[];
-  };
-}
-
-interface WoodpeckerSetBundle {
-  trainingSetId: WoodpeckerSetId;
-  puzzles: WoodpeckerPuzzle[];
-}
+// Re-exported for existing consumers that import these from this module.
+export { WOODPECKER_SET_IDS };
+export type { WoodpeckerSetId };
 
 const WOODPECKER_SET_META: Record<
   WoodpeckerSetId,
@@ -79,7 +55,12 @@ function cacheBust(url: string): string {
   return `${url}${sep}_t=${Date.now()}`;
 }
 
-async function fetchJson<T>(path: string): Promise<T> {
+/**
+ * Fetch and validate one Woodpecker bundle before it reaches IndexedDB.
+ * Zod parsing is the trust boundary for external JSON: a malformed or
+ * truncated bundle fails loudly here instead of seeding corrupt exercises.
+ */
+async function fetchWoodpeckerBundle(path: string) {
   const url = cacheBust(path);
   const res = await fetch(url);
   if (!res.ok) {
@@ -87,7 +68,16 @@ async function fetchJson<T>(path: string): Promise<T> {
       `Failed to fetch ${path}: ${res.status} ${res.statusText}. Check that public/data/woodpecker/ exists and run pnpm run validate:woodpecker.`
     );
   }
-  return res.json();
+  const json: unknown = await res.json();
+  const parsed = woodpeckerBundleSchema.safeParse(json);
+  if (!parsed.success) {
+    const first = parsed.error.issues[0];
+    const where = first ? `${first.path.join(".")}: ${first.message}` : "unknown";
+    throw new Error(
+      `Invalid Woodpecker bundle ${path} (${where}). Run pnpm run validate:woodpecker to inspect.`
+    );
+  }
+  return parsed.data;
 }
 
 /**
@@ -131,7 +121,7 @@ export async function loadExercisesFromWoodpeckerJson(
   setIds: readonly WoodpeckerSetId[] = WOODPECKER_SET_IDS
 ): Promise<ExerciseSchema[]> {
   const bundles = await Promise.all(
-    setIds.map((setId) => fetchJson<WoodpeckerSetBundle>(`${baseUrl}/${setId}.json`))
+    setIds.map((setId) => fetchWoodpeckerBundle(`${baseUrl}/${setId}.json`))
   );
   return bundles.flatMap((bundle) =>
     bundle.puzzles.map((p) => toExercise(bundle.trainingSetId, p))
@@ -176,7 +166,7 @@ export async function seedPuzzlesFromGeneratedJson(
 ): Promise<{ trainingSets: number; exercises: number }> {
   const bundles = await Promise.all(
     WOODPECKER_SET_IDS.map((setId) =>
-      fetchJson<WoodpeckerSetBundle>(`${baseUrl}/${setId}.json`)
+      fetchWoodpeckerBundle(`${baseUrl}/${setId}.json`)
     )
   );
 

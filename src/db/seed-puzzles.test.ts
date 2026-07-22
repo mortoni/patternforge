@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { seedPuzzlesFromGeneratedJson, WOODPECKER_SET_IDS } from "./seed-puzzles";
+import { upsertManyTrainingSets } from "@/repositories/training-set.repository";
+import { upsertManyExercises } from "@/repositories/exercise.repository";
 
 vi.mock("./dexie", () => ({ db: {} }));
 vi.mock("@/repositories/training-set.repository", () => ({
@@ -36,6 +38,7 @@ function stubFetchCapturingUrls(urls: string[]) {
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.unstubAllEnvs();
+  vi.clearAllMocks();
 });
 
 describe("seedPuzzlesFromGeneratedJson fetch URLs", () => {
@@ -62,5 +65,52 @@ describe("seedPuzzlesFromGeneratedJson fetch URLs", () => {
     for (const url of urls) {
       expect(url).toMatch(/\/data\/woodpecker\/[a-z-]+\.json\?_t=\d+/);
     }
+  });
+});
+
+describe("seedPuzzlesFromGeneratedJson zod validation", () => {
+  function stubFetchReturning(json: unknown) {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: true, json: async () => json }) as unknown as Response)
+    );
+  }
+
+  it("rejects a bundle whose shape is invalid and writes nothing", async () => {
+    // Missing `puzzles` and unknown trainingSetId — must fail the schema.
+    stubFetchReturning({ trainingSetId: "not-a-real-set" });
+
+    await expect(seedPuzzlesFromGeneratedJson()).rejects.toThrow(
+      /Invalid Woodpecker bundle/
+    );
+    expect(upsertManyTrainingSets).not.toHaveBeenCalled();
+    expect(upsertManyExercises).not.toHaveBeenCalled();
+  });
+
+  it("rejects a bundle with a malformed puzzle (bad puzzleNumber)", async () => {
+    stubFetchReturning({
+      trainingSetId: "woodpecker-easy",
+      puzzles: [
+        {
+          id: "exercise-0001",
+          puzzleNumber: -3, // must be a positive int
+          fen: "8/8/8/8/8/8/8/8 w - - 0 1",
+          sideToMove: "w",
+          difficulty: "easy",
+          solution: { mainLine: ["e4"], uci: ["e2e4"], fullLine: [] },
+          metadata: { motifTags: [], gameSource: "x" },
+          validation: {
+            status: "unverified",
+            engineScore: null,
+            alternativeFirstMoves: [],
+          },
+        },
+      ],
+    });
+
+    await expect(seedPuzzlesFromGeneratedJson()).rejects.toThrow(
+      /Invalid Woodpecker bundle/
+    );
+    expect(upsertManyExercises).not.toHaveBeenCalled();
   });
 });
