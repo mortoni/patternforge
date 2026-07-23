@@ -265,7 +265,9 @@ export function TrainingPage() {
               onClick={handleSkip}
               disabled={boardDisabled}
               aria-label="Skip this puzzle"
-              className="h-auto px-2 py-1 text-xs text-muted-foreground sm:text-sm"
+              // Ghost button, so the roomier mobile hit area (44px) costs
+              // nothing visually; desktop keeps the original compact size.
+              className="h-auto min-h-11 px-3 py-2 text-xs text-muted-foreground sm:min-h-0 sm:px-2 sm:py-1 sm:text-sm"
             >
               Skip
             </Button>

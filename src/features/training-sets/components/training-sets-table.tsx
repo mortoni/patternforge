@@ -60,7 +60,6 @@ export function TrainingSetsTable({
           <TableHead>Name</TableHead>
           <TableHead className="hidden md:table-cell">Source</TableHead>
           <TableHead>Difficulty</TableHead>
-          <TableHead className="hidden lg:table-cell">Tags</TableHead>
           <TableHead className="text-right">Exercises</TableHead>
           <TableHead className="hidden sm:table-cell">Status</TableHead>
           <TableHead className="hidden md:table-cell">Current Cycle</TableHead>
@@ -98,9 +97,6 @@ export function TrainingSetsTable({
               >
                 {row.difficulty}
               </span>
-            </TableCell>
-            <TableCell className="hidden lg:table-cell text-sm text-[var(--muted-foreground)]">
-              {row.tags.length > 0 ? row.tags.join(", ") : "—"}
             </TableCell>
             <TableCell className="text-right">{row.exerciseCount}</TableCell>
             <TableCell className="hidden sm:table-cell">{row.status}</TableCell>

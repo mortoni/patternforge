@@ -9,6 +9,20 @@
 - **Touch** — Minimum practical tap targets on mobile training flows
 - **Motion** — Board and UI animations should respect `prefers-reduced-motion` (ongoing hardening)
 
+## Known gap: the board is pointer-only
+
+Chessground is driven by pointer events, so **there is no keyboard path to
+make a move**. Everything around the board — skip, end session, navigation,
+settings — is reachable by keyboard, but solving a puzzle currently is not,
+which makes the core training loop unusable for keyboard-only and switch
+users.
+
+Closing it means adding a keyboard move affordance (square-by-square focus,
+or typing moves in algebraic notation) on top of Chessground rather than
+configuring something it already ships. Until then, treat this as a known
+limitation rather than an oversight, and do not describe training as fully
+keyboard accessible.
+
 ## Storybook
 
 The **a11y addon** is enabled in Storybook. Use it when reviewing training UI changes in the app or Puzzle Inspector.

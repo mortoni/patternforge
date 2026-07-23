@@ -149,7 +149,7 @@ function AppShellInner({
                   className="flex min-w-0 cursor-pointer items-center gap-2 overflow-hidden text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
                 >
                   <Logo size={28} className="shrink-0" />
-                  <AppTitle className="block min-w-0 max-w-full truncate text-xs" />
+                  <AppTitle className="block min-w-0 max-w-full truncate text-xs tracking-[0.16em]" />
                 </Link>
               </div>
             )}
@@ -287,7 +287,7 @@ function OverlaySidebar({
                   className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 overflow-hidden text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
                 >
                   <Logo size={28} className="shrink-0" />
-                  <AppTitle className="block min-w-0 max-w-full truncate text-xs" />
+                  <AppTitle className="block min-w-0 max-w-full truncate text-xs tracking-[0.16em]" />
                 </Link>
               )}
               <button
@@ -321,7 +321,7 @@ function OverlaySidebar({
                 className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 overflow-hidden text-[var(--foreground)] no-underline transition-opacity hover:opacity-85"
               >
                 <Logo size={28} className="shrink-0" />
-                <AppTitle className="block min-w-0 max-w-full truncate text-xs" />
+                <AppTitle className="block min-w-0 max-w-full truncate text-xs tracking-[0.16em]" />
               </Link>
               <button
                 type="button"

@@ -3,15 +3,24 @@
  * Keeps page rendering free of row-mapping logic.
  */
 
+import { WOODPECKER_SET_IDS } from "@/lib/woodpecker/bundle-schema";
 import type { TrainingSetOverview } from "../types";
 import type { TrainingSetTableRow, TrainingSetSourceLabel, TrainingSetStatusLabel } from "../types";
 
-/** Use set source when present; otherwise fallback. */
+const BUNDLED_SET_IDS = new Set<string>(WOODPECKER_SET_IDS);
+
+/**
+ * Use the set's own source label when it has one. Sets that ship with the app
+ * are labelled by their bundle rather than "Custom" — nothing about them is
+ * user-authored, and there is no way to create a set by hand yet.
+ */
 function deriveSource(overview: TrainingSetOverview): TrainingSetSourceLabel {
   const s = overview.source;
-  if (s === "Lichess" || s === "Custom" || s === "Unknown")
+  if (s === "Woodpecker" || s === "Lichess" || s === "Custom" || s === "Unknown") {
     return s;
-  return s ? (s as TrainingSetSourceLabel) : "Custom";
+  }
+  if (s) return s as TrainingSetSourceLabel;
+  return BUNDLED_SET_IDS.has(overview.trainingSetId) ? "Woodpecker" : "Unknown";
 }
 
 /** Derive status label from cycle state. */

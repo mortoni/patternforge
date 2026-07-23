@@ -225,7 +225,9 @@ export function ProgressPage() {
                   </p>
                   <p className="text-sm text-muted-foreground">Total time invested</p>
                 </div>
-                {cc.averageSessionTimeMs != null ? (
+                {/* With a single session the average and longest just restate
+                    the total, so they only earn their space from two up. */}
+                {cc.sessionCount > 1 && cc.averageSessionTimeMs != null ? (
                   <div className="space-y-1">
                     <p className="text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl">
                       {formatDurationMs(cc.averageSessionTimeMs)}
@@ -233,7 +235,7 @@ export function ProgressPage() {
                     <p className="text-sm text-muted-foreground">Average per session</p>
                   </div>
                 ) : null}
-                {cc.longestSessionMs > 0 ? (
+                {cc.sessionCount > 1 && cc.longestSessionMs > 0 ? (
                   <div className="space-y-1">
                     <p className="text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl">
                       {formatDurationMs(cc.longestSessionMs)}

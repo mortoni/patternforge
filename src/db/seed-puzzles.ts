@@ -154,6 +154,8 @@ function toTrainingSet(setId: WoodpeckerSetId, exerciseIds: string[]): TrainingS
     difficulty: meta.difficulty,
     exerciseIds,
     createdAt: new Date().toISOString(),
+    // Ships with the app; not a user-authored set.
+    source: "Woodpecker",
   };
 }
 
