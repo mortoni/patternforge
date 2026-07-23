@@ -65,9 +65,7 @@ export function MistakeReviewGameContext({
       )}
 
       {sourceNote == null ? (
-        <p className="max-h-23 overflow-hidden text-xs leading-relaxed text-muted-foreground">
-          {FALLBACK_NOTE}
-        </p>
+        <p className="text-xs leading-relaxed text-muted-foreground">{FALLBACK_NOTE}</p>
       ) : (
         <div className="space-y-2">
           <button
@@ -80,9 +78,14 @@ export function MistakeReviewGameContext({
             {showNote ? "Hide solution" : "Show solution"}
           </button>
           {showNote ? (
+            // Source notes are real analysis (median ~230 chars, some far
+            // longer), so scroll rather than clip — a fixed max-height with
+            // overflow:hidden silently swallowed most of the commentary.
+            // tabIndex keeps the scroll region reachable by keyboard.
             <p
               id={noteId}
-              className="max-h-23 overflow-hidden text-xs leading-relaxed text-muted-foreground"
+              tabIndex={0}
+              className="max-h-64 overflow-y-auto whitespace-pre-line pr-1 text-xs leading-relaxed text-muted-foreground"
             >
               {sourceNote}
             </p>
