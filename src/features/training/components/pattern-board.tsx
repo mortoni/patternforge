@@ -251,8 +251,26 @@ export function PatternBoard({
       const allowPreMoveQueue =
         disabled && preMoveEnabled && Boolean(onPreMove);
 
-      const viewOnly =
-        (!onMove && !onPreMove) || (disabled && !allowPreMoveQueue);
+      /** A genuinely static diagram — marketing/editorial, no handlers at all. */
+      const isStaticDiagram = !onMove && !onPreMove;
+      /** An interactive board that is only paused (checking, transitioning…). */
+      const lockedForNow = disabled && !allowPreMoveQueue && !isStaticDiagram;
+
+      /**
+       * Only true diagrams get Chessground's `viewOnly`.
+       *
+       * Chessground binds its pointer handlers in `bindBoard`, which begins
+       * `if (s.viewOnly) return` — and `bindBoard` only runs from `redrawAll`,
+       * which a change of `orientation` triggers. So if the board is redrawn
+       * while `viewOnly` is set, the handlers are never bound, and a later
+       * `viewOnly: false` does not rebind them: the board goes permanently
+       * dead. That is exactly what happened when the next exercise flipped
+       * orientation while the previous one was still transitioning.
+       *
+       * A paused board therefore stays non-viewOnly and is locked through
+       * movable/draggable/selectable instead.
+       */
+      const viewOnly = isStaticDiagram;
 
       let premovableEnabled = false;
       let movableDests = buildLegalDests(fen);
@@ -261,7 +279,7 @@ export function PatternBoard({
         | { set?: (orig: Key, dest: Key) => void }
         | undefined;
 
-      if (viewOnly) {
+      if (viewOnly || lockedForNow) {
         movableColor = undefined;
         movableDests = new Map();
       } else if (allowPreMoveQueue && userColor) {
@@ -357,10 +375,10 @@ export function PatternBoard({
           events: premovableEvents,
         },
         draggable: {
-          enabled: !viewOnly,
+          enabled: !viewOnly && !lockedForNow,
           distance: 8,
         },
-        selectable: { enabled: !editorialBoard },
+        selectable: { enabled: !editorialBoard && !lockedForNow },
         drawable: {
           enabled: false,
           visible: true,

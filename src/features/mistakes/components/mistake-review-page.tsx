@@ -9,11 +9,7 @@ import { TrainingFeedbackPanel } from "@/features/training/components/training-f
 import { MistakeReviewSidePanel } from "./mistake-review-side-panel";
 import type { ReviewInteractionState } from "./mistake-review-side-panel";
 import { getHighlightedSquaresFromMove } from "@/lib/chess/move-highlights";
-import {
-  getsideToMove,
-  parseSideToMoveFromFen,
-  type ChessSideToMove,
-} from "@/lib/chess/side-to-move";
+import { getsideToMove } from "@/lib/chess/side-to-move";
 import {
   submitReviewAttempt,
   skipReviewAttempt,
@@ -37,8 +33,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   const [feedbackExpectedMove, setFeedbackExpectedMove] = React.useState<
     string | undefined
   >();
-  const solvingSideRef = React.useRef<ChessSideToMove>(parseSideToMoveFromFen(""));
-
   const baseFen = state?.exercise.fen ?? "";
   const displayFen = positionFen ?? baseFen;
 
@@ -48,7 +42,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
       setAttemptedMoveUci(null);
       setPuzzleState("idle");
       setFeedbackExpectedMove(undefined);
-      solvingSideRef.current = parseSideToMoveFromFen(state.exercise.fen);
     }
   }, [state?.mistake.id]); // eslint-disable-line react-hooks/exhaustive-deps -- mistake identity only
 
@@ -56,8 +49,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
   const handleBoardMove = React.useCallback(
     async (uci: string, newFen: string) => {
       if (!state) return;
-      const fenBefore = positionFen ?? baseFen;
-      solvingSideRef.current = parseSideToMoveFromFen(fenBefore);
       setPositionFen(newFen);
       setAttemptedMoveUci(uci);
       setPuzzleState("checking");
@@ -76,7 +67,7 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
         setAttemptedMoveUci(null);
       }
     },
-    [state, baseFen, positionFen]
+    [state, baseFen]
   );
 
   const handleSkip = React.useCallback(async () => {
@@ -136,12 +127,6 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
       ? getHighlightedSquaresFromMove(attemptedMoveUci)
       : undefined;
 
-  const sideToMoveFromFen = parseSideToMoveFromFen(displayFen);
-  const turnForLabel =
-    puzzleState === "checking"
-      ? // eslint-disable-next-line react-hooks/refs -- paired write in move handler before this render
-        solvingSideRef.current
-      : sideToMoveFromFen;
   return (
     <div className="mx-auto max-w-5xl px-4 py-5 md:px-5">
       <div className="grid gap-5 lg:grid-cols-[1fr_minmax(260px,300px)]">
@@ -151,8 +136,11 @@ export function MistakeReviewPage({ mistakeId }: MistakeReviewPageProps) {
               fen={displayFen}
               positionSyncKey={mistakeId}
               boardOrientation={
+                // Pinned to the puzzle's side for the whole review — deriving it
+                // from the live turn flipped the board as soon as the attempt
+                // resolved. See the note in training-page.tsx.
                 state.autoBoardOrientation
-                  ? getsideToMove(turnForLabel)
+                  ? getsideToMove(state.exercise.sideToMove)
                   : state.boardOrientation
               }
               onMove={handleBoardMove}

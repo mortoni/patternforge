@@ -212,8 +212,13 @@ export function TrainingPage() {
               fen={displayFen}
               positionSyncKey={readyState!.exercise.id}
               boardOrientation={
+                // The puzzle's own side, not the live turn: the live turn flips
+                // the moment a move is played, which would spin the board
+                // mid-puzzle. It also re-inits Chessground while the board is
+                // disabled, and Chessground skips binding pointer handlers when
+                // it redraws in view-only mode — leaving the board dead.
                 readyState?.autoBoardOrientation
-                  ? getsideToMove(turnForLabel)
+                  ? getsideToMove(readyState.exercise.sideToMove)
                   : readyState!.boardOrientation
               }
               onMove={handleBoardMove}
