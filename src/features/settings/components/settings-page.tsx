@@ -45,7 +45,7 @@ export function SettingsPage() {
           onChangeAutoBoardOrientation={(autoBoardOrientation) =>
             setAutoBoardOrientation(autoBoardOrientation)
           }
-          isAutoBoardOrientation={settings?.autoBoardOrientation ?? false}
+          isAutoBoardOrientation={settings?.autoBoardOrientation ?? true}
           disabled={loading}
         />
         <BoardStyleCard

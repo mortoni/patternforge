@@ -189,6 +189,6 @@ export async function seedDefaultSettingsIfMissing(): Promise<void> {
     boardOrientation: "white",
     boardStyle: "classic-lichess",
     lastTrainingSetId: undefined,
-    autoBoardOrientation: false,
+    autoBoardOrientation: true,
   });
 }

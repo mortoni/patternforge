@@ -23,7 +23,10 @@ const DEFAULTS: Pick<
   boardOrientation: "white",
   boardStyle: "classic-lichess",
   lastTrainingSetId: undefined,
-  autoBoardOrientation: false,
+  // Orient the board to whoever is to move — every mainstream tactics trainer
+  // shows the position from the solver's side. "White"/"Black" stay available
+  // as explicit overrides.
+  autoBoardOrientation: true,
 };
 
 function normalizeSettings(row: AppSettingsSchema | undefined): AppSettingsSchema {

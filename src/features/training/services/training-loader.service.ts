@@ -89,7 +89,7 @@ export async function getActiveTrainingState(): Promise<ActiveTrainingState> {
   const boardOrientation =
     settings?.boardOrientation === "black" ? "black" : "white";
 
-  const autoBoardOrientation = settings?.autoBoardOrientation ?? false  
+  const autoBoardOrientation = settings?.autoBoardOrientation ?? true;
 
   return {
     status: "ready",

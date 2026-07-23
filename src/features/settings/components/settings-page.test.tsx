@@ -51,7 +51,7 @@ describe("SettingsPage", () => {
     expect(screen.getByRole("heading", { name: /training preferences/i })).toBeInTheDocument();
   });
 
-  it("shows current board orientation", async () => {
+  it("defaults board orientation to side to move", async () => {
     render(
       <SettingsProvider>
         <SettingsPage />
@@ -59,10 +59,35 @@ describe("SettingsPage", () => {
     );
 
     const boardGroup = screen.getByRole("radiogroup", { name: /board orientation/i });
+    // Settings without an explicit autoBoardOrientation follow the side to move.
+    expect(
+      within(boardGroup).getByRole("radio", { name: /side to move/i })
+    ).toHaveAttribute("aria-checked", "true");
     expect(within(boardGroup).getByRole("radio", { name: /white/i })).toHaveAttribute(
       "aria-checked",
-      "true"
+      "false"
     );
+  });
+
+  it("shows an explicit board orientation when auto is off", async () => {
+    mockGetSettings.mockResolvedValue({
+      ...defaultSettings,
+      autoBoardOrientation: false,
+    });
+
+    render(
+      <SettingsProvider>
+        <SettingsPage />
+      </SettingsProvider>
+    );
+
+    const boardGroup = screen.getByRole("radiogroup", { name: /board orientation/i });
+    expect(
+      await within(boardGroup).findByRole("radio", { name: /white/i })
+    ).toHaveAttribute("aria-checked", "true");
+    expect(
+      within(boardGroup).getByRole("radio", { name: /side to move/i })
+    ).toHaveAttribute("aria-checked", "false");
   });
 
   it("updates board orientation when option clicked", async () => {

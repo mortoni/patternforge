@@ -21,7 +21,7 @@ export async function putSettings(
     boardOrientation: data.boardOrientation ?? "white",
     boardStyle: data.boardStyle ?? "classic-lichess",
     lastTrainingSetId: data.lastTrainingSetId,
-    autoBoardOrientation: data.autoBoardOrientation ?? false,
+    autoBoardOrientation: data.autoBoardOrientation ?? true,
   });
 }
 

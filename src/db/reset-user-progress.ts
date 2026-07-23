@@ -4,7 +4,8 @@
  *
  * Preserves: trainingSets, exercises
  * Clears: cycleRuns, sessions, exerciseAttempts, mistakeEntries, appInstance
- * Resets: settings to default (theme: system, boardOrientation: white, boardStyle: blueprint, no lastTrainingSetId, autoBoardOrientation: false)
+ * Resets: settings to default (theme: system, boardStyle: classic-lichess,
+ * no lastTrainingSetId, autoBoardOrientation: true — board follows side to move)
  */
 
 import { db } from "./dexie";
@@ -18,7 +19,7 @@ const DEFAULT_SETTINGS = {
   boardOrientation: "white" as const,
   boardStyle: "classic-lichess" as const,
   lastTrainingSetId: undefined as string | undefined,
-  autoBoardOrientation: false as const
+  autoBoardOrientation: true as const
 };
 
 export interface ResetUserProgressResult {
