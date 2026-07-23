@@ -1,15 +1,16 @@
 # Changelog
 
-All notable changes to PatternForge are documented here.
+Notable user-facing changes, newest first.
 
-The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
-this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-While the version stays below `1.0.0`, minor releases may change defaults.
+PatternForge deploys continuously — every merge to `main` ships to production.
+There are no version numbers or release tags; this file is the record of what
+changed and roughly when. Section names follow
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.2.0] — 2026-07-23
+## 2026-07-23
 
-First tracked release. Covers everything since `0.1.0`: offline support, a
-readable-by-default board, and a pass over correctness in the training loop.
+Offline support, a readable-by-default board, and a correctness pass over the
+training loop.
 
 ### Added
 
@@ -19,8 +20,8 @@ readable-by-default board, and a pass over correctness in the training loop.
   service worker, and opening it offline showed a browser error page. Routes you
   have not visited fall back to a branded offline page.
 - **Mistakes Review in the sidebar**, with a live badge counting mistakes still
-  in the review ladder. The feature previously existed but was reachable only by
-  typing the URL.
+  in the review ladder. The feature existed but was reachable only by typing the
+  URL.
 - **"Show solution" toggle in mistake review.** The annotated solution line used
   to sit beside the board before you retried the puzzle, which gave the answer
   away. It is now behind a disclosure and reveals itself once you have answered.
@@ -48,6 +49,9 @@ readable-by-default board, and a pass over correctness in the training loop.
   a 44px touch target on mobile, and Progress hides the average/longest session
   stats until there is more than one session to compare.
 
+> Existing installs keep whatever settings they have already stored. The new
+> board defaults apply to fresh or reset profiles.
+
 ### Fixed
 
 - **Failed saves are no longer silent.** If persisting a move or skip failed
@@ -74,7 +78,7 @@ readable-by-default board, and a pass over correctness in the training loop.
   path to make a move — the surrounding UI is reachable, but the solving loop is
   not.
 
-## [0.1.0]
+## Earlier
 
 Initial local-first training application: Woodpecker training sets, repetition
 cycles, session tracking, mistake review, progress reporting, and settings.
