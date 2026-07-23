@@ -64,7 +64,11 @@ export function MistakeReviewSidePanel({
           </div>
         </dl>
 
-        <MistakeReviewGameContext gameSource={gameSource} note={gameContextNote} />
+        <MistakeReviewGameContext
+          gameSource={gameSource}
+          note={gameContextNote}
+          revealed={resolved}
+        />
 
         <div className="space-y-2 pt-2">
           {!resolved && (
