@@ -82,9 +82,10 @@ describe("SettingsPage", () => {
     );
 
     const boardGroup = screen.getByRole("radiogroup", { name: /board orientation/i });
-    expect(
-      await within(boardGroup).findByRole("radio", { name: /white/i })
-    ).toHaveAttribute("aria-checked", "true");
+    // Wait for the loaded selection, not merely for the radio to exist. The
+    // stored settings arrive asynchronously, so the radio renders unchecked
+    // first and a slower machine can assert in that window.
+    await within(boardGroup).findByRole("radio", { name: /white/i, checked: true });
     expect(
       within(boardGroup).getByRole("radio", { name: /side to move/i })
     ).toHaveAttribute("aria-checked", "false");
