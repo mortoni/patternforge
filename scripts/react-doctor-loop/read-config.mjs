@@ -38,6 +38,17 @@ export const readConfig = (configPath) => {
   if (normalizedWorkingDirectory === ".." || normalizedWorkingDirectory.startsWith("../")) {
     throw new Error("config.workingDirectory must stay inside the repository");
   }
+  // Optional, relative to workingDirectory. Lets a monorepo install and verify
+  // from the workspace root while scanning only the React package, which
+  // workingDirectory alone cannot express because it controls both.
+  const rawScanDirectory = config.scanDirectory ?? ".";
+  if (typeof rawScanDirectory !== "string" || path.isAbsolute(rawScanDirectory)) {
+    throw new Error("config.scanDirectory must be a path relative to the working directory");
+  }
+  const normalizedScanDirectory = path.posix.normalize(rawScanDirectory.replaceAll("\\", "/"));
+  if (normalizedScanDirectory === ".." || normalizedScanDirectory.startsWith("../")) {
+    throw new Error("config.scanDirectory must stay inside the working directory");
+  }
   if (!Array.isArray(config.verificationScripts) || config.verificationScripts.some((value) => typeof value !== "string" || value.length === 0)) {
     throw new Error("config.verificationScripts must be an array of package.json script names");
   }
@@ -69,7 +80,7 @@ export const readConfig = (configPath) => {
     }
   }
 
-  return { ...config, workingDirectory: normalizedWorkingDirectory };
+  return { ...config, workingDirectory: normalizedWorkingDirectory, scanDirectory: normalizedScanDirectory };
 };
 
 if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
@@ -78,6 +89,7 @@ if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToP
     `agent=${config.agent}`,
     `node_version=${config.nodeVersion}`,
     `working_directory=${config.workingDirectory}`,
+    `scan_directory=${config.scanDirectory}`,
   ];
   // Always write to stdout, including under Actions. The shell scripts read
   // these values by piping this command, and a GITHUB_OUTPUT-only branch makes

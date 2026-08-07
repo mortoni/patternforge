@@ -52,7 +52,17 @@ export const selectDiagnostic = (report, config) => {
     compareText(left.id, right.id)
   );
 
-  return eligible[0] ?? null;
+  const selected = eligible[0];
+  if (!selected) return null;
+
+  // React Doctor reports paths relative to the directory it scanned. The agent
+  // and every controller script run from the repository root, so a scoped
+  // monorepo scan would otherwise hand the agent a path that does not resolve.
+  const scanRoot = config.scanDirectory ?? ".";
+  const reportedPath = selected.normalizedFilePath ?? selected.filePath;
+  const repositoryPath = scanRoot === "." ? reportedPath : path.posix.join(scanRoot, reportedPath);
+
+  return { ...selected, repositoryPath };
 };
 
 if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
@@ -63,7 +73,7 @@ if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToP
   mkdirSync(path.dirname(selectedPath), { recursive: true });
   if (selected) {
     writeFileSync(selectedPath, `${JSON.stringify(selected, null, 2)}\n`);
-    console.log(`Selected ${selected.severity} ${selected.plugin}/${selected.rule} at ${selected.filePath}:${selected.line}:${selected.column}`);
+    console.log(`Selected ${selected.severity} ${selected.plugin}/${selected.rule} at ${selected.repositoryPath}:${selected.line}:${selected.column}`);
   }
   process.exitCode = selected ? 0 : 3;
 }
