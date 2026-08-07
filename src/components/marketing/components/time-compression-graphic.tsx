@@ -133,18 +133,16 @@ export function TimeCompressionGraphic({
                 <motion.div
                   className="w-[46%] max-w-[2.25rem] rounded-t-[3px] bg-gradient-to-t from-muted/25 via-foreground/12 to-foreground/22 dark:from-muted/20 dark:via-foreground/10 dark:to-foreground/18"
                   initial={
-                    prefersReducedMotion
-                      ? { height: `${hPct}%` }
-                      : { height: "0%" }
+                    prefersReducedMotion ? { scaleY: 1 } : { scaleY: 0 }
                   }
-                  whileInView={{ height: `${hPct}%` }}
+                  whileInView={{ scaleY: 1 }}
                   viewport={{ once: true, amount: 0.35 }}
                   transition={{
                     duration: prefersReducedMotion ? 0.2 : 0.75,
                     delay: prefersReducedMotion ? 0 : 0.06 * i,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  style={{ originY: 1 }}
+                  style={{ height: `${hPct}%`, originY: 1 }}
                 />
               </div>
             </div>
