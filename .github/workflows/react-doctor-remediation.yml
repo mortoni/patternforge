@@ -67,9 +67,9 @@ jobs:
         with:
           node-version: ${{ steps.config.outputs.node_version }}
 
-      - name: Enable package manager shims
+      - name: Enable and pin the package manager
         if: steps.open_pr.outputs.found != 'true'
-        run: corepack enable
+        run: scripts/react-doctor-loop/enable-package-manager.sh "$LOOP_CONFIG"
 
       - name: Install project dependencies
         if: steps.open_pr.outputs.found != 'true'

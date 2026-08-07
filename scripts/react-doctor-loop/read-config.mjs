@@ -22,6 +22,12 @@ export const readConfig = (configPath) => {
   if (typeof config.nodeVersion !== "string" || config.nodeVersion.length === 0) {
     throw new Error("config.nodeVersion must be a non-empty string");
   }
+  // Optional. Without it, and without a packageManager field in package.json,
+  // Corepack installs the latest release, which may require a newer Node than
+  // config.nodeVersion and fail inside the package manager itself.
+  if (config.packageManagerVersion !== undefined && (typeof config.packageManagerVersion !== "string" || config.packageManagerVersion.length === 0)) {
+    throw new Error("config.packageManagerVersion must be a non-empty string when present");
+  }
   if (typeof config.reactDoctorVersion !== "string" || config.reactDoctorVersion.length === 0) {
     throw new Error("config.reactDoctorVersion must be a non-empty string");
   }
