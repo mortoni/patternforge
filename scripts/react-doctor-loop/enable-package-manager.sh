@@ -6,6 +6,7 @@ working_directory=$(node scripts/react-doctor-loop/read-config.mjs "$config_path
 configured_manager=$(node -e 'const c=JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")); process.stdout.write(c.packageManager)' "$config_path")
 package_manager=$(node scripts/react-doctor-loop/detect-package-manager.mjs "$configured_manager" "$working_directory")
 pinned_version=$(node -e 'const c=JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")); process.stdout.write(c.packageManagerVersion ?? "")' "$config_path")
+working_directory=${working_directory:-.}
 declared_in_package_json=$(node -e 'const c=JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")); process.stdout.write(c.packageManager ?? "")' "$working_directory/package.json")
 
 node_version=$(node scripts/react-doctor-loop/read-config.mjs "$config_path" | sed -n 's/^node_version=//p')

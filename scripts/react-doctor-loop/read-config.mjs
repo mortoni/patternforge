@@ -79,9 +79,11 @@ if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToP
     `node_version=${config.nodeVersion}`,
     `working_directory=${config.workingDirectory}`,
   ];
+  // Always write to stdout, including under Actions. The shell scripts read
+  // these values by piping this command, and a GITHUB_OUTPUT-only branch makes
+  // them silently receive an empty string in CI while still passing locally.
   if (process.env.GITHUB_OUTPUT) {
     appendFileSync(process.env.GITHUB_OUTPUT, `${outputs.join("\n")}\n`);
-  } else {
-    console.log(outputs.join("\n"));
   }
+  console.log(outputs.join("\n"));
 }
