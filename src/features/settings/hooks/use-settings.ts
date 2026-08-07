@@ -77,13 +77,9 @@ export function useSettings(): UseSettingsResult {
     }
 
     /** Capture before optimistic update so we can roll back if Dexie persist fails. */
-    let revertTheme: AppSettingsSchema["theme"] | undefined;
+    const revertTheme = settings?.theme;
     flushSync(() => {
-      setSettings((prev) => {
-        if (!prev) return prev;
-        revertTheme = prev.theme;
-        return { ...prev, theme };
-      });
+      setSettings((prev) => (prev ? { ...prev, theme } : prev));
     });
 
     try {
@@ -97,7 +93,7 @@ export function useSettings(): UseSettingsResult {
       });
       throw e;
     }
-  }, []);
+  }, [settings]);
 
   const setBoardOrientation = useCallback(
     async (boardOrientation: AppSettingsSchema["boardOrientation"]) => {
