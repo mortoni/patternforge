@@ -1,2 +1,9 @@
 minimumReleaseAge: 10080
 trustPolicy: no-downgrade
+
+# Trust checks compare by publish date, not semver, so any release predating a
+# project's adoption of provenance reads as a downgrade. Exempt anything older
+# than 90 days: a real malicious republish carries a fresh publish date and is
+# still refused, and minimumReleaseAge above still quarantines new releases.
+# Requires pnpm 10.27 or newer, which packageManager pins below.
+trustPolicyIgnoreAfter: 129600
