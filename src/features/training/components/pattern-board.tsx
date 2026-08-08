@@ -452,7 +452,6 @@ export function PatternBoard({
     boardOrientation,
     fen,
     positionSyncKey,
-    applyConfig,
   ]);
 
   React.useEffect(
