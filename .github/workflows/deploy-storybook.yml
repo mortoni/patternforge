@@ -26,15 +26,15 @@ jobs:
   chromatic:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       # No version here: pnpm/action-setup reads packageManager from
       # package.json, and pinning in both places is a hard error.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: "20"
           cache: pnpm

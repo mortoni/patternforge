@@ -63,7 +63,7 @@ jobs:
 
       - name: Set up Node.js
         if: steps.open_pr.outputs.found != 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ steps.config.outputs.node_version }}
 
@@ -146,7 +146,7 @@ jobs:
 
       - name: Upload the verified patch
         if: steps.open_pr.outputs.found != 'true' && steps.diagnostic.outputs.found == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: react-doctor-remediation-${{ github.run_id }}
           path: ${{ runner.temp }}/react-doctor-remediation
@@ -172,7 +172,7 @@ jobs:
           persist-credentials: false
 
       - name: Download the verified patch
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: react-doctor-remediation-${{ github.run_id }}
           path: ${{ runner.temp }}/react-doctor-remediation
